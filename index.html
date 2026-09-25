@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Kids Play & Learn — 2 Years Old</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Fredoka:wght@600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#FFF8E7;--pink:#FF6B9D;--yellow:#FFD93D;--green:#6BCB77;--blue:#4D96FF;--orange:#FF8C42;--purple:#9D65C9;--ink:#2d2d2d}
+body{font-family:'Nunito','Fredoka',system-ui,sans-serif;background:var(--bg);color:var(--ink);overflow-x:hidden;overflow-y:auto;user-select:none;-webkit-tap-highlight-color:transparent}
+a{text-decoration:none;color:inherit}
+.kids-header{position:sticky;top:0;z-index:100;background:#fff;border-bottom:4px solid #FFE082;display:flex;align-items:center;gap:.6rem;padding:.55rem .8rem;flex-wrap:wrap;box-shadow:0 4px 12px rgba(0,0,0,.07)}
+.kids-brand{font-family:'Fredoka',sans-serif;font-weight:800;font-size:1.35rem;letter-spacing:-.02em;display:flex;align-items:center;gap:.45rem}
+.kids-brand span.logo{font-size:1.8rem}
+.kids-brand small{font-size:.62rem;font-weight:800;background:var(--yellow);padding:.15rem .4rem;border-radius:999px;letter-spacing:.06em}
+.kids-actions{margin-left:auto;display:flex;gap:.45rem;align-items:center}
+.btn-pill{border:none;border-radius:999px;padding:.55rem .9rem;font-weight:900;font-size:.85rem;cursor:pointer;display:inline-flex;align-items:center;gap:.35rem;transition:transform .08s}
+.btn-pill:active{transform:scale(.96)}
+.btn-mute{background:#f1f5f9;border:2px solid #e2e8f0}
+.btn-back{background:#0f172a;color:#fff}
+.kids-nav{display:flex;gap:.5rem;flex-wrap:wrap;justify-content:center;padding:.7rem .8rem .4rem;background:linear-gradient(#fff, var(--bg));position:sticky;top:44px;z-index:90;touch-action:pan-y;overscroll-behavior:contain}
+.kids-nav::-webkit-scrollbar{display:none}
+.tab{flex:0 0 auto;border:3px solid transparent;background:#fff;border-radius:18px;padding:.55rem .9rem;font-weight:900;font-size:.9rem;cursor:pointer;box-shadow:0 4px 10px rgba(0,0,0,.08);display:flex;align-items:center;gap:.4rem;transition:all .15s;white-space:nowrap}
+.tab span.e{font-size:1.3rem}
+.tab.active{transform:translateY(-2px) scale(1.03);box-shadow:0 8px 18px rgba(0,0,0,.12)}
+.tab[data-tab="colors"].active{background:#FFE4E6;border-color:#FF6B9D}
+.tab[data-tab="animals"].active{background:#E0F2FE;border-color:#4D96FF}
+.tab[data-tab="shapes"].active{background:#FEF9C3;border-color:#EAB308}
+.tab[data-tab="numbers"].active{background:#DCFCE7;border-color:#22C55E}
+.tab[data-tab="abc"].active{background:#F3E8FF;border-color:#A855F7}
+.tab[data-tab="draw"].active{background:#FFE4D6;border-color:#FF8C42}
+.tab[data-tab="bubbles"].active{background:#CFFAFE;border-color:#06B6D4}
+.tab[data-tab="memory"].active{background:#E0E7FF;border-color:#6366F1}
+.wrap{max-width:1100px;margin:0 auto;padding:1rem .9rem 2.5rem;min-height:calc(100vh - 120px)}
+.kid-section{display:none;animation:popIn .28s ease}
+.kid-section.active{display:block}
+@keyframes popIn{from{opacity:0;transform:translateY(8px) scale(.98)}to{opacity:1;transform:none}}
+.card{background:#fff;border-radius:22px;padding:1rem;box-shadow:0 8px 22px rgba(0,0,0,.08);border:3px solid #fff}
+.hint{font-weight:800;color:#64748b;font-size:.9rem;margin:.2rem 0 .9rem;display:flex;align-items:center;gap:.4rem}
+.section-title{font-family:'Fredoka',sans-serif;font-weight:800;font-size:1.7rem;margin:0 0 .15rem;display:flex;align-items:center;gap:.5rem}
+.speak-btn{border:none;background:var(--yellow);width:44px;height:44px;border-radius:50%;font-size:1.2rem;cursor:pointer;box-shadow:0 4px 10px rgba(0,0,0,.12)}
+.speak-btn:active{transform:scale(.92)}
+.color-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:.8rem}
+.color-tile{border-radius:20px;padding:1.1rem .7rem;text-align:center;cursor:pointer;min-height:130px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;border:4px solid rgba(0,0,0,.06);box-shadow:0 6px 14px rgba(0,0,0,.1);transition:transform .12s}
+.color-tile:active{transform:scale(.96)}
+.color-tile .swatch{width:66px;height:66px;border-radius:50%;border:4px solid #fff;box-shadow:0 4px 12px rgba(0,0,0,.18)}
+.color-tile b{font-size:1.05rem;font-weight:900;text-transform:uppercase;letter-spacing:.04em;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.25)}
+.grid-animals{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:.75rem}
+.animal-card,.shape-card{background:#fff;border-radius:20px;padding:1rem .6rem;text-align:center;cursor:pointer;border:3px solid #f1f5f9;box-shadow:0 6px 14px rgba(0,0,0,.07);transition:transform .12s}
+.animal-card:active,.shape-card:active{transform:scale(.96)}
+.animal-card .emoji{font-size:3.2rem;line-height:1}
+.animal-card b,.shape-card b{display:block;margin-top:.45rem;font-size:1.05rem;font-weight:900}
+.animal-card small{color:#64748b;font-weight:800;font-size:.78rem}
+.shape-preview{width:70px;height:70px;margin:0 auto;display:grid;place-items:center;font-size:2.6rem}
+.number-stage{text-align:center}
+.big-number{font-family:'Fredoka',sans-serif;font-size:6.5rem;font-weight:900;line-height:1;color:var(--blue);text-shadow:4px 6px 0 #DBEAFE}
+.count-dots{display:flex;flex-wrap:wrap;justify-content:center;gap:.55rem;margin:1rem auto;max-width:520px;min-height:64px}
+.count-dots span{font-size:2rem;width:52px;height:52px;display:grid;place-items:center;background:#fff;border-radius:14px;box-shadow:0 4px 10px rgba(0,0,0,.08);border:2px solid #f1f5f9}
+.num-controls{display:flex;justify-content:center;gap:.8rem;margin-top:1rem}
+.num-btn{width:74px;height:74px;border-radius:50%;border:none;font-size:2rem;font-weight:900;cursor:pointer;box-shadow:0 6px 14px rgba(0,0,0,.14);color:#fff}
+.num-btn.minus{background:#94a3b8}
+.num-btn.plus{background:var(--green)}
+.num-btn:active{transform:scale(.94)}
+.num-word{font-size:1.4rem;font-weight:900;color:#334155;margin-top:.6rem;text-transform:uppercase;letter-spacing:.06em}
+.abc-stage{text-align:center}
+.abc-letter{font-family:'Fredoka',sans-serif;font-size:7rem;font-weight:900;line-height:1;color:var(--purple);text-shadow:5px 6px 0 #F3E8FF}
+.abc-word{font-size:1.6rem;font-weight:900;margin-top:.2rem}
+.abc-emoji{font-size:3.5rem}
+.abc-nav{display:flex;justify-content:center;gap:.8rem;margin-top:1rem}
+.abc-nav button{width:72px;height:72px;border-radius:50%;border:3px solid #e2e8f0;background:#fff;font-size:1.8rem;cursor:pointer;box-shadow:0 6px 14px rgba(0,0,0,.08)}
+.abc-nav button:active{transform:scale(.94)}
+.abc-grid{margin-top:1.2rem;display:grid;grid-template-columns:repeat(auto-fill,minmax(52px,1fr));gap:.45rem}
+.abc-grid button{border:2px solid #f1f5f9;background:#fff;border-radius:12px;padding:.55rem 0;font-weight:900;cursor:pointer}
+.abc-grid button.active{background:var(--purple);color:#fff;border-color:var(--purple)}
+.draw-toolbar{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;margin-bottom:.7rem}
+.palette{display:flex;gap:.4rem;flex-wrap:wrap}
+.palette button{width:42px;height:42px;border-radius:50%;border:3px solid #fff;box-shadow:0 3px 8px rgba(0,0,0,.15);cursor:pointer}
+.palette button.active{outline:3px solid #0f172a;outline-offset:2px;transform:scale(1.08)}
+.tool-btn{border:2px solid #e2e8f0;background:#fff;border-radius:999px;padding:.5rem .85rem;font-weight:900;cursor:pointer}
+.tool-btn.active{background:#0f172a;color:#fff;border-color:#0f172a}
+canvas#doodle{width:100%;height:420px;background:#fff;border-radius:18px;border:3px solid #f1f5f9;touch-action:none;display:block;box-shadow:inset 0 2px 8px rgba(0,0,0,.06);cursor:crosshair;display:block}
+@media(max-width:640px){canvas#doodle{height:360px}}
+.bubble-area{position:relative;height:440px;background:linear-gradient(180deg,#E0F2FE 0%, #BAE6FD 45%, #F0FDFA 100%);border-radius:22px;overflow:hidden;border:3px solid #fff;box-shadow:inset 0 4px 18px rgba(0,0,0,.06)}
+.bubble{position:absolute;bottom:-80px;border-radius:50%;display:grid;place-items:center;cursor:pointer;user-select:none;box-shadow:inset -8px -10px 18px rgba(255,255,255,.7), 0 6px 12px rgba(0,0,0,.12);border:2px solid rgba(255,255,255,.8);animation:floatUp linear forwards; ;touch-action:manipulation;min-width:60px;min-height:60px;}
+@keyframes floatUp{to{transform:translateY(-520px) translateX(var(--drift,0px))}}
+.bubble:active{transform:scale(.9)!important}
+.bubble-score{position:absolute;top:.7rem;left:.8rem;background:#fff;border-radius:999px;padding:.45rem .85rem;font-weight:900;box-shadow:0 4px 12px rgba(0,0,0,.12);display:flex;gap:.4rem;align-items:center}
+.bubble-controls{position:absolute;top:.7rem;right:.8rem;display:flex;gap:.4rem}
+.mini-btn{border:none;background:#fff;border-radius:999px;padding:.45rem .75rem;font-weight:900;cursor:pointer;box-shadow:0 4px 10px rgba(0,0,0,.12)}
+.memory-stats{display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:.8rem;font-weight:900;color:#334155}
+.memory-stats span{background:#fff;border-radius:999px;padding:.45rem .8rem;box-shadow:0 3px 8px rgba(0,0,0,.07);border:2px solid #f1f5f9}
+.memory-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.6rem;max-width:560px;margin:0 auto}
+@media(min-width:700px){.memory-grid{grid-template-columns:repeat(4,1fr)}}
+.mem-card{aspect-ratio:1;background:#fff;border-radius:16px;display:grid;place-items:center;font-size:2rem;cursor:pointer;border:3px solid #f1f5f9;box-shadow:0 6px 14px rgba(0,0,0,.08);position:relative;transform-style:preserve-3d;transition:transform .22s}
+.mem-card.flipped{background:var(--yellow);border-color:var(--yellow)}
+.mem-card.matched{background:#DCFCE7;border-color:#22C55E;animation:matchedPop .4s}
+@keyframes matchedPop{0%{transform:scale(1)}50%{transform:scale(1.08)}100%{transform:scale(1)}}
+.mem-card .back{font-size:3.0rem;color:#cbd5e1}
+.confetti{position:fixed;inset:0;pointer-events:none;overflow:hidden}
+.confetti i{position:absolute;top:-10px;width:10px;height:14px;border-radius:2px;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(105vh) rotate(720deg)}}
+.kids-footer{margin-top:1.8rem;text-align:center;color:#94a3b8;font-weight:800;font-size:.82rem;padding:1rem}
+.kids-footer a{color:#4D96FF;text-decoration:underline;font-weight:900}
+.splash{position:fixed;width:20px;height:20px;border-radius:50%;pointer-events:none;transform:translate(-50%,-50%) scale(0);animation:splash .5s ease-out forwards;z-index:9999}
+@keyframes splash{to{transform:translate(-50%,-50%) scale(18);opacity:0}}
+.pill-note{background:#FFF7ED;border:2px dashed #FDBA74;border-radius:14px;padding:.7rem .9rem;font-weight:800;color:#9a3412;margin-bottom:.9rem}
+
+/* Sorting drag-drop */
+.sort-wrap{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+@media(max-width:700px){.sort-wrap{grid-template-columns:1fr}}
+.drop-zone{min-height:140px;border:3px dashed #e2e8f0;border-radius:18px;padding:.6rem;display:flex;flex-wrap:wrap;gap:.5rem;align-content:flex-start;background:#fff;transition:all .15s}
+.drop-zone.drag-over{border-color:var(--green);background:#F0FDF4;transform:scale(1.02)}
+.drop-zone h4{width:100%;font-weight:900;text-align:center;margin-bottom:.2rem}
+.draggable{touch-action:none;width:96px;height:96px;border-radius:14px;display:grid;place-items:center;font-size:3.0rem;cursor:grab;user-select:none;box-shadow:0 4px 10px rgba(0,0,0,.12);border:3px solid #fff;transition:transform .15s}
+.draggable:active{cursor:grabbing;transform:scale(1.08) rotate(2deg)}
+.draggable.dragging{opacity:.5;transform:rotate(6deg) scale(.95)}
+.sort-pool{display:flex;flex-wrap:wrap;gap:.8rem;justify-content:center;min-height:130px;padding:.8rem;padding:.6rem;background:#fff;border-radius:18px;border:3px solid #fff;box-shadow:0 6px 14px rgba(0,0,0,.06)}
+/* Puzzle jigsaw */
+.puzzle-board{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem;max-width:520px;margin:0 auto}
+.puzzle-slot{aspect-ratio:1;background:#fff;border:3px dashed #e2e8f0;border-radius:16px;display:grid;place-items:center;font-size:2.6rem;position:relative;overflow:hidden;transition:all .15s}
+.puzzle-slot.filled{border-style:solid;border-color:#22C55E;background:#F0FDF4}
+.puzzle-slot.drag-over{border-color:var(--blue);background:#EFF6FF;transform:scale(1.03)}
+.puzzle-tray{display:flex;flex-wrap:wrap;gap:.6rem;justify-content:center;margin-top:1rem;min-height:90px;padding:.6rem;background:#fff;border-radius:18px;border:3px solid #fff}
+.puzzle-piece{touch-action:none;width:84px;height:84px;border-radius:14px;display:grid;place-items:center;font-size:2.2rem;cursor:grab;background:#fff;border:3px solid #f1f5f9;box-shadow:0 6px 14px rgba(0,0,0,.08)}
+.puzzle-piece.placed{opacity:.25;pointer-events:none}
+/* Fishing */
+.fish-pond{position:relative;height:420px;width:100%;touch-action:pan-y;;max-width:100%;background:linear-gradient(180deg,#38BDF8 0%, #0EA5E9 55%, #1E40AF 100%);border-radius:22px;overflow:hidden;border:3px solid #fff;box-shadow:inset 0 6px 18px rgba(0,0,0,.15)}
+.fish{position:absolute;font-size:2.6rem;cursor:grab;user-select:none;filter:drop-shadow(0 4px 6px rgba(0,0,0,.2));animation:swim linear infinite; touch-action:none}
+@keyframes swim{0%{transform:translateX(-90px) scaleX(1)}45%{transform:translateX(calc(100vw - 40px)) scaleX(1)}50%{transform:translateX(calc(100vw - 40px)) scaleX(-1)}95%{transform:translateX(-90px) scaleX(-1)}100%{transform:translateX(-90px) scaleX(1)}}
+.fish-pond .fish:nth-child(odd){animation-direction:normal}
+.fish.slow{animation-duration:28s !important}
+.fish.medium{animation-duration:32s !important}
+.fish.slowest{animation-duration:38s !important}
+.fish.dragging{animation:none;z-index:10;transform:scale(1.2)}
+.pond-bucket{position:absolute;bottom:12px;right:50%;transform:translateX(50%);width:160px;height:90px;background:#FFD93D;border-radius:12px 12px 18px 18px;border:3px solid #fff;display:grid;place-items:center;font-weight:900;box-shadow:0 6px 14px rgba(0,0,0,.2)}
+.pond-bucket.drag-over{background:#6BCB77;transform:translateX(50%) scale(1.05) !important}
+.bubble-float{position:absolute;bottom:0;background:rgba(255,255,255,.6);border-radius:50%;animation:bubbleRise linear infinite}
+@keyframes bubbleRise{to{transform:translateY(-460px) translateX(20px);opacity:0}}
+/* Music */
+.piano{display:flex;gap:4px;justify-content:center;flex-wrap:wrap;margin-top:.8rem}
+.key{width:64px;height:150px;border-radius:0 0 14px 14px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:.6rem;font-weight:900;cursor:pointer;box-shadow:0 8px 14px rgba(0,0,0,.12);border:3px solid #fff;position:relative;transition:transform .08s}
+.key:active{transform:translateY(4px) scale(.98)}
+.key span.note{font-size:.75rem;color:#64748b}
+.key .emoji{font-size:1.6rem}
+.dancer{font-size:2.8rem;display:inline-block;animation:dance 0.6s ease infinite;opacity:0}
+.dancer.show{opacity:1}
+@keyframes dance{0%,100%{transform:translateY(0) rotate(-6deg)}50%{transform:translateY(-10px) rotate(6deg) scale(1.1)}}
+.floaty{animation:floaty 3s ease-in-out infinite}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.wobble{animation:wobble .5s ease}
+@keyframes wobble{0%,100%{transform:rotate(0)}25%{transform:rotate(-3deg)}75%{transform:rotate(3deg)}}
+
+
+.tab[data-tab="sorting"].active{background:#FEF3C7;border-color:#F59E0B}
+.tab[data-tab="puzzle"].active{background:#FCE7F3;border-color:#EC4899}
+.tab[data-tab="fishing"].active{background:#DBEAFE;border-color:#3B82F6}
+.tab[data-tab="music"].active{background:#E0E7FF;border-color:#8B5CF6}
+
+
+.puzzle-piece.selected{outline:3px solid #EC4899; transform:scale(1.08); box-shadow:0 8px 18px rgba(236,72,153,.3)}
+.sort-pool .draggable.selected{outline:3px solid #22C55E; transform:scale(1.08)}
+.puzzle-slot{cursor:pointer}
+.drop-zone{cursor:pointer}
+
+</style>
+</head>
+<body>
+<header class="kids-header">
+  <div class="kids-brand"><span class="logo">🌈</span> Idris Play <small>2 year-olds</small></div>
+  <div class="kids-actions">
+    <button class="btn-pill btn-mute" id="muteBtn" onclick="toggleMute()">🔊 Sound On</button>
+    <a class="btn-pill btn-back" href="#" onclick="alert('Standalone KidsPlay — no parent dashboard in this build');return false;">🏠 Home</a>
+  </div>
+</header>
+<nav class="kids-nav" id="kidsNav">
+  <button class="tab active" data-tab="colors" onclick="switchTab('colors')"><span class="e">🎨</span> Colors</button>
+  <button class="tab" data-tab="animals" onclick="switchTab('animals')"><span class="e">🦁</span> Animals</button>
+  <button class="tab" data-tab="shapes" onclick="switchTab('shapes')"><span class="e">⭐</span> Shapes</button>
+  <button class="tab" data-tab="numbers" onclick="switchTab('numbers')"><span class="e">🔢</span> Numbers</button>
+  <button class="tab" data-tab="abc" onclick="switchTab('abc')"><span class="e">🔤</span> ABC</button>
+  <button class="tab" data-tab="draw" onclick="switchTab('draw')"><span class="e">✏️</span> Draw</button>
+  <button class="tab" data-tab="bubbles" onclick="switchTab('bubbles')"><span class="e">🫧</span> Bubbles</button>
+  <button class="tab" data-tab="memory" onclick="switchTab('memory')"><span class="e">🧩</span> Memory</button>
+  <button class="tab" data-tab="sorting" onclick="switchTab('sorting')"><span class="e">🎯</span> Sorting</button>
+  <button class="tab" data-tab="puzzle" onclick="switchTab('puzzle')"><span class="e">🧩</span> Puzzle</button>
+  <button class="tab" data-tab="fishing" onclick="switchTab('fishing')"><span class="e">🎣</span> Fishing</button>
+  <button class="tab" data-tab="music" onclick="switchTab('music')"><span class="e">🎵</span> Music</button>
+</nav>
+<div class="wrap">
+  <section id="sec-colors" class="kid-section active">
+    <div style="display:flex;align-items:center;gap:.6rem;flex-wrap:wrap"><h2 class="section-title">🎨 Learn Colors</h2><button class="speak-btn" onclick="speak('Tap a color!')" title="Speak">🔊</button></div>
+    <div class="color-grid" id="colorGrid"></div>
+  </section>
+  <section id="sec-animals" class="kid-section">
+    <div style="display:flex;align-items:center;gap:.6rem;flex-wrap:wrap"><h2 class="section-title">🦁 Animals</h2><button class="speak-btn" onclick="speak('Animals! Tap one')" title="Speak">🔊</button>
+      <div style="margin-left:auto;display:flex;gap:.4rem;align-items:center;background:#fff;padding:.25rem;border-radius:999px;border:2px solid #f1f5f9">
+        <button class="tool-btn" id="animalModeName" onclick="setAnimalMode('name')" style="padding:.3rem .6rem;font-size:.8rem;background:var(--yellow)">🔊 Name</button>
+        <button class="tool-btn" id="animalModeSound" onclick="setAnimalMode('sound')" style="padding:.3rem .6rem;font-size:.8rem">🐾 Sound</button>
+      </div>
+    </div>
+    <div class="grid-animals" id="animalGrid"></div>
+  </section>
+  <section id="sec-shapes" class="kid-section">
+    <div style="display:flex;align-items:center;gap:.6rem"><h2 class="section-title">⭐ Shapes</h2><button class="speak-btn" onclick="speak('Shapes! Tap one')" title="Speak">🔊</button></div>
+    <div class="grid-animals" id="shapeGrid"></div>
+  </section>
+  <section id="sec-numbers" class="kid-section">
+    <div style="display:flex;align-items:center;gap:.6rem"><h2 class="section-title">🔢 Numbers 1–10</h2><button class="speak-btn" onclick="speak('Numbers! Let us count')" title="Speak">🔊</button></div>
+    <div class="card number-stage">
+      <div class="big-number" id="bigNum">1</div>
+      <div class="num-word" id="numWord">One</div>
+      <div class="count-dots" id="countDots"></div>
+      <div class="num-controls">
+        <button class="num-btn minus" onclick="changeNum(-1)">−</button>
+        <button class="num-btn plus" onclick="changeNum(1)">+</button>
+      </div>
+      <div style="margin-top:.9rem;display:flex;gap:.4rem;justify-content:center;flex-wrap:wrap" id="numQuick"></div>
+    </div>
+  </section>
+  <section id="sec-abc" class="kid-section">
+    <div style="display:flex;align-items:center;gap:.6rem"><h2 class="section-title">🔤 Alphabet A–Z</h2><button class="speak-btn" onclick="speak('Alphabet! Learning letters')" title="Speak">🔊</button></div>
+    <div class="card abc-stage">
+      <div class="abc-letter" id="abcLetter">A</div>
+      <div class="abc-emoji" id="abcEmoji">🍎</div>
+      <div class="abc-word" id="abcWord">A for Apple</div>
+      <div class="abc-nav">
+        <button onclick="stepAbc(-1)">◀</button>
+        <button onclick="speakAbc()" style="background:var(--yellow);border-color:var(--yellow)">🔊</button>
+        <button onclick="stepAbc(1)">▶</button>
+      </div>
+      <div class="abc-grid" id="abcGrid"></div>
+    </div>
+  </section>
+  <section id="sec-draw" class="kid-section">
+    <div style="display:flex;align-items:center;gap:.6rem"><h2 class="section-title">✏️ Doodle Pad</h2><button class="speak-btn" onclick="speak('Time to draw!')" title="Speak">🔊</button></div>
+    <div class="card">
+      <div class="draw-toolbar">
+        <div class="palette" id="palette"></div>
+        <div style="display:flex;gap:.4rem;flex-wrap:wrap;margin-left:auto">
+          <button class="tool-btn active" id="btnBrush" onclick="setTool('brush')">🖌️ Brush</button>
+          <button class="tool-btn" id="btnEraser" onclick="setTool('eraser')">🧽 Eraser</button>
+          <button class="tool-btn" onclick="clearCanvas()">🗑️ Clear</button>
+          <button class="tool-btn" onclick="saveDrawing()">💾 Save</button>
+        </div>
+      </div>
+      <div style="display:flex;gap:.6rem;align-items:center;margin-bottom:.6rem">
+        <label style="font-weight:900">Size</label>
+        <input type="range" id="brushSize" min="4" max="36" value="12" style="flex:1;accent-color:#4D96FF">
+        <span id="brushSizeVal" style="font-weight:900;background:#f1f5f9;padding:.25rem .5rem;border-radius:999px">12</span>
+      </div>
+      <canvas id="doodle" width="1000" height="420"></canvas>
+    </div>
+  </section>
+  <section id="sec-bubbles" class="kid-section">
+    <div style="display:flex;align-items:center;gap:.6rem"><h2 class="section-title">🫧 Bubble Pop!</h2><button class="speak-btn" onclick="speak('Pop the bubbles!')" title="Speak">🔊</button></div>
+    <div class="card" style="padding:0;overflow:hidden">
+      <div class="bubble-area" id="bubbleArea">
+        <div class="bubble-score">⭐ Popped: <b id="bubbleScore">0</b></div>
+        <div class="bubble-controls">
+          <button class="mini-btn" onclick="startBubbles()">▶️ Start</button>
+          <button class="mini-btn" onclick="stopBubbles()">⏸️ Pause</button>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="sec-memory" class="kid-section">
+    <div style="display:flex;align-items:center;gap:.6rem"><h2 class="section-title">🧩 Memory Match</h2><button class="speak-btn" onclick="speak('Memory game! Find pairs')" title="Speak">🔊</button></div>
+    <div class="card">
+      <div class="memory-stats">
+        <span>🎯 Moves: <b id="memMoves">0</b></span>
+        <span>✅ Matched: <b id="memMatched">0</b>/8</span>
+        <span style="margin-left:auto"><button class="tool-btn" onclick="initMemory()" style="padding:.3rem .7rem">🔄 New Game</button></span>
+      </div>
+      <div class="memory-grid" id="memoryGrid"></div>
+      <div id="memWin" style="display:none;text-align:center;margin-top:1rem">
+        <div style="font-size:2.4rem">🎉 Amazing! 🎉</div>
+        <div style="font-weight:900;color:#16a34a">You found all pairs!</div>
+        <button class="btn-pill" style="background:var(--green);color:#fff;margin-top:.6rem" onclick="initMemory()">Play Again</button>
+      </div>
+    </div>
+  </section>
+  
+  <section id="sec-sorting" class="kid-section">
+    <div style="display:flex;align-items:center;gap:.6rem"><h2 class="section-title">🎯 Drag & Drop Sorting</h2><button class="speak-btn" onclick="speak('Sort by color! Drag each toy to the right box')" title="Speak">🔊</button></div>
+    <div class="sort-wrap">
+      <div class="card">
+        <h4 style="text-align:center;font-weight:900;margin-bottom:.5rem">🧺 Drag these!</h4>
+        <div class="sort-pool" id="sortPool"></div>
+        <div style="text-align:center;margin-top:.6rem"><button class="tool-btn" onclick="initSort()">🔄 Shuffle</button></div>
+      </div>
+      <div style="display:grid;gap:.6rem">
+        <div class="drop-zone" data-color="red" style="border-color:#EF4444"><h4>🔴 Red</h4></div>
+        <div class="drop-zone" data-color="blue" style="border-color:#3B82F6"><h4>🔵 Blue</h4></div>
+        <div class="drop-zone" data-color="yellow" style="border-color:#EAB308"><h4>🟡 Yellow</h4></div>
+        <div class="drop-zone" data-color="green" style="border-color:#22C55E"><h4>🟢 Green</h4></div>
+      </div>
+    </div>
+    <div id="sortWin" style="display:none;text-align:center;margin-top:1rem" class="card">
+      <div style="font-size:2.2rem">🎉 Perfect Sort! 🎉</div><button class="btn-pill" style="background:var(--green);color:#fff;margin-top:.6rem" onclick="initSort()">Play Again</button>
+    </div>
+  </section>
+
+  <section id="sec-puzzle" class="kid-section">
+    <div style="display:flex;align-items:center;gap:.6rem"><h2 class="section-title">🧩 Animal Puzzle</h2><button class="speak-btn" onclick="speak('Drag pieces to complete the lion puzzle')" title="Speak">🔊</button></div>
+    <div class="card">
+      <div class="puzzle-board" id="puzzleBoard">
+        <div class="puzzle-slot" data-pos="0"></div>
+        <div class="puzzle-slot" data-pos="1"></div>
+        <div class="puzzle-slot" data-pos="2"></div>
+        <div class="puzzle-slot" data-pos="3"></div>
+        <div class="puzzle-slot" data-pos="4"></div>
+        <div class="puzzle-slot" data-pos="5"></div>
+      </div>
+      <div class="puzzle-tray" id="puzzleTray"></div>
+      <div style="text-align:center;margin-top:.8rem;display:flex;gap:.5rem;justify-content:center">
+        <button class="tool-btn" onclick="initPuzzle()">🔄 New Puzzle</button>
+        <button class="tool-btn" onclick="speak('You can do it!')">💡 Hint</button>
+      </div>
+      <div id="puzzleWin" style="display:none;text-align:center;margin-top:1rem">
+        <div style="font-size:2.2rem">🌟 You did it! 🌟</div><div style="font-weight:900;color:#16a34a">The lion is complete!</div><button class="btn-pill" style="background:var(--pink);color:#fff;margin-top:.6rem" onclick="initPuzzle()">Again!</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="sec-fishing" class="kid-section">
+    <div style="display:flex;align-items:center;gap:.6rem"><h2 class="section-title">🎣 Fishing Pond</h2><button class="speak-btn" onclick="speak('Drag fish to the bucket!')" title="Speak">🔊</button></div>
+    <div class="card" style="padding:0;overflow:hidden">
+      <div class="fish-pond" id="fishPond">
+        <div class="pond-bucket" id="pondBucket">🧺 Bucket</div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:.7rem;display:flex;gap:.5rem;justify-content:center">
+      <button class="tool-btn" onclick="initFishing()">🌊 New Fish</button>
+      <button class="tool-btn" onclick="spawnFish()">➕ Add Fish</button>
+    </div>
+  </section>
+
+  <section id="sec-music" class="kid-section">
+    <div style="display:flex;align-items:center;gap:.6rem"><h2 class="section-title">🎵 Music Garden</h2><button class="speak-btn" onclick="speak('Make music! Tap the keys')" title="Speak">🔊</button></div>
+    <details style="margin-top:.4rem;background:#FFF7ED;border:2px solid #FDE68A;border:2px dashed #E2E8F0;border-radius:12px;padding:.5rem;max-width:520px;margin-left:auto;margin-right:auto">
+        <summary style="cursor:pointer;font-weight:900;color:#64748B;font-size:.85rem;list-style:none;text-align:center">🔒 Parent Instruments — tap to show / hide</summary>
+        <div style="display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;margin-top:.6rem">
+          <button class="tool-btn" onclick="setInstrument('piano')" id="btnPiano" style="background:#FFE4E6">🎹 Piano</button>
+          <button class="tool-btn" onclick="setInstrument('xylophone')" id="btnXylo">🎼 Xylophone</button>
+          <button class="tool-btn" onclick="setInstrument('guitar')" id="btnGuitar">🎸 Guitar</button>
+          <button class="tool-btn" onclick="setInstrument('flute')" id="btnFlute">🪈 Flute</button>
+          <button class="tool-btn" onclick="toggleDrum()">🥁 Drum: <span id="drumMode">Off</span></button>
+        </div>
+        <div style="display:flex;gap:.5rem;justify-content:center;margin-top:.6rem">
+          <button class="tool-btn" onclick="clearGarden()" style="font-size:.8rem">🧹 Clear Garden</button>
+        </div>
+      </details>
+<div class="card" style="text-align:center">
+      <div id="musicFlowers" style="font-size:2rem;min-height:42px;display:flex;gap:.4rem;justify-content:center;flex-wrap:wrap"></div>
+      <div class="piano" id="piano"></div>
+      
+      <div style="margin-top:.6rem;display:flex;gap:.4rem;justify-content:center;flex-wrap:wrap;opacity:.7;font-size:.75rem;color:#94A3B8">Tap keys to make music & flowers bloom</div>
+
+      <div style="margin-top:.8rem;display:flex;gap:.5rem;justify-content:center">
+        <div class="draggable" style="background:#FFE4E6" draggable="false" onclick="blip(261,0.4);bloom('🌸')">🌸</div>
+        <div class="draggable" style="background:#E0F2FE" draggable="false" onclick="blip(329,0.4);bloom('🌼')">🌼</div>
+        <div class="draggable" style="background:#FEF9C3" draggable="false" onclick="blip(392,0.4);bloom('🌷')">🌷</div>
+        <div class="draggable" style="background:#DCFCE7" draggable="false" onclick="blip(493,0.4);bloom('🌻')">🌻</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="kids-footer">
+    Made with 💛 for tiny hands. No ads, no tracking.<br>
+    Parent tip: Use <b>🔊 Speak</b> to hear names. Toggle sound with <b>🔊 Sound On/Off</b>.
+  </div>
+</div>
+<div class="confetti" id="confetti"></div>
+<script>
+let muted=false;
+function toggleMute(){muted=!muted;document.getElementById('muteBtn').textContent=muted?'🔇 Sound Off':'🔊 Sound On';if(muted)speechSynthesis.cancel();}
+let kidVoice=null;
+function pickKidVoice(){
+  try{
+    const vs=speechSynthesis.getVoices();
+    // Prefer female, young, en-US, natural
+    const pref = vs.find(v=>/Aria|Jenny|Emma|Olivia|Ana|Lucy|Ivy.*Natural|Google.*UK.*Female/i.test(v.name) && v.lang.startsWith('en')) 
+              || vs.find(v=>v.lang==='en-GB' && v.name.toLowerCase().includes('female'))
+              || vs.find(v=>v.lang==='en-US' && /female|natural/i.test(v.name))
+              || vs.find(v=>v.lang.startsWith('en'))
+              || vs[0];
+    kidVoice=pref||null;
+  }catch(e){}
+}
+try{ speechSynthesis.onvoiceschanged=pickKidVoice; }catch(e){}
+setTimeout(pickKidVoice, 800);
+function speak(text){
+  if(muted)return;
+  // For 2yo, keep it very short and happy - only speak first word if long
+  const short = text.split(' ')[0].length > 8 ? text.split(' ')[0] : text;
+  try{
+    speechSynthesis.cancel();
+    const u=new SpeechSynthesisUtterance(short);
+    u.rate=0.68; u.pitch=1.75; u.volume=0.95; u.lang='en-US';
+    if(kidVoice) u.voice=kidVoice;
+    // Add happy prosody
+    u.text = short;
+    speechSynthesis.speak(u);
+    // Fallback chime if voice fails
+    setTimeout(()=>{ if(speechSynthesis.speaking===false && short.length<12){ try{ blip(520,0.5,'sine',0.18); }catch(e){} } }, 200);
+  }catch(e){
+    try{ blip(600,0.5,'sine',0.18); }catch(e2){}
+  }
+}
+// Alternative AI sound: gentle chime fallback if TTS not available
+function chimeSpeak(text){
+  // For 2yo who can't read, we use chime + emoji instead of voice if needed
+  const map={Red:330, Blue:294, Yellow:392, Green:329, Dog:261, Cat:329, Lion:196, Elephant:147};
+  const f=map[text.split(' ')[0]]||440;
+  blip(f,0.6,'sine',0.14); setTimeout(()=>blip(f*1.25,0.4,'sine',0.11),180);
+}
+function blip(freq=600,dur=0.45,type='sine',vol=0.16){
+  if(muted)return;
+  try{
+    const ctx=new (window.AudioContext||window.webkitAudioContext)();
+    const o=ctx.createOscillator(); const g=ctx.createGain();
+    // Kid friendly: use triangle for soft bell-like tone, gentle attack
+    o.type = (type==='square' ? 'triangle' : 'sine');
+    o.frequency.value=freq;
+    // Add slight vibrato for warmth
+    const vib = ctx.createOscillator(); vib.frequency.value=5; vib.type='sine';
+    const vibGain = ctx.createGain(); vibGain.gain.value=4;
+    vib.connect(vibGain); vibGain.connect(o.frequency);
+    o.connect(g); g.connect(ctx.destination);
+    const now=ctx.currentTime;
+    g.gain.setValueAtTime(0, now);
+    g.gain.linearRampToValueAtTime(vol, now+0.02);
+    g.gain.exponentialRampToValueAtTime(0.0001, now+dur);
+    vib.start(now); o.start(now);
+    vib.stop(now+dur); o.stop(now+dur);
+  }catch(e){}
+}
+function popSound(){blip(880,0.35,'sine',0.14);setTimeout(()=>blip(1100,0.28,'sine',0.11),90);setTimeout(()=>blip(660,0.4,'sine',0.08),170);}
+function splashAt(x,y,color){const s=document.createElement('div');s.className='splash';s.style.left=x+'px';s.style.top=y+'px';s.style.background=color;document.body.appendChild(s);setTimeout(()=>s.remove(),600);}
+function switchTab(name){
+  // ensure game boards are ready when tab opened (fixes puzzle not showing if init missed)
+  if(name==='puzzle' && document.querySelectorAll('.puzzle-piece').length===0){ try{ initPuzzle(); }catch(e){} }
+  if(name==='sorting' && document.querySelectorAll('#sortPool .draggable').length===0){ try{ initSort(); }catch(e){} }
+  if(name==='fishing' && document.querySelectorAll('.fish').length===0){ try{ initFishing(); }catch(e){} }
+  if(name==='music' && document.querySelectorAll('.key').length===0){ try{ initPiano(); }catch(e){} }
+  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.tab===name));document.querySelectorAll('.kid-section').forEach(s=>s.classList.toggle('active',s.id==='sec-'+name));if(name==='bubbles')startBubbles();else stopBubbles();if(name==='draw'){ setTimeout(resizeCanvas, 80); setTimeout(resizeCanvas, 300); }window.scrollTo({top:0,behavior:'smooth'});const titles={colors:'Colors',animals:'Animals',shapes:'Shapes',numbers:'Numbers',abc:'Alphabet',draw:'Drawing',bubbles:'Bubbles',memory:'Memory',sorting:'Sorting',puzzle:'Puzzle',fishing:'Fishing',music:'Music'};speak(titles[name]||name);}
+const colors=[{name:'Red',hex:'#EF4444'},{name:'Blue',hex:'#3B82F6'},{name:'Yellow',hex:'#EAB308'},{name:'Green',hex:'#22C55E'},{name:'Orange',hex:'#F97316'},{name:'Purple',hex:'#A855F7'},{name:'Pink',hex:'#EC4899'},{name:'Brown',hex:'#92400E'},{name:'Black',hex:'#111827'},{name:'White',hex:'#F8FAFC',text:'#334155'},{name:'Cyan',hex:'#06B6D4'},{name:'Lime',hex:'#84CC16'}];
+function renderColors(){const g=document.getElementById('colorGrid');g.innerHTML=colors.map(c=>`<div class="color-tile" style="background:${c.hex};color:${c.text||'#fff'}" onclick="tapColor('${c.name}','${c.hex}',event)"><div class="swatch" style="background:${c.hex}"></div><b style="color:${c.text||'#fff'}">${c.name}</b></div>`).join('');}
+function tapColor(name,hex,e){speak(name);blip(name==='Red'?300:name==='Blue'?400:name==='Yellow'?520:480,0.22,'sine',0.2);const x=e.clientX||window.innerWidth/2,y=e.clientY||window.innerHeight/2;splashAt(x,y,hex);burstConfetti(14,hex);}
+function burstConfetti(n=12,color){const c=document.getElementById('confetti');for(let i=0;i<n;i++){const el=document.createElement('i');el.style.left=(Math.random()*100)+'vw';el.style.background=color||`hsl(${Math.random()*360} 90% 60%)`;el.style.animationDuration=(0.9+Math.random()*0.7)+'s';el.style.transform=`translateY(0) rotate(${Math.random()*360}deg)`;el.style.opacity='0.9';c.appendChild(el);setTimeout(()=>el.remove(),1600);}}
+const animals=[
+  {e:'🐶',n:'Dog',s:'Woof woof!'},{e:'🐱',n:'Cat',s:'Meow!'},{e:'🦁',n:'Lion',s:'Roar!'},{e:'🐘',n:'Elephant',s:'Trumpet!'},{e:'🐒',n:'Monkey',s:'Ooh ooh!'},{e:'🐄',n:'Cow',s:'Moo!'},{e:'🦆',n:'Duck',s:'Quack!'},{e:'🐸',n:'Frog',s:'Ribbit!'},{e:'🐦',n:'Bird',s:'Tweet tweet!'},{e:'🐟',n:'Fish',s:'Blub blub!'},{e:'🐻',n:'Bear',s:'Grrr!'},{e:'🐰',n:'Rabbit',s:'Hop hop!'},
+  {e:'🐯',n:'Tiger',s:'Grrr!'},{e:'🐵',n:'Monkey',s:'Ooh aah!'},{e:'🦊',n:'Fox',s:'Yelp!'},{e:'🐺',n:'Wolf',s:'Awoo!'},{e:'🐴',n:'Horse',s:'Neigh!'},{e:'🦓',n:'Zebra',s:'Hee haw!'},{e:'🦒',n:'Giraffe',s:'Hum!'},{e:'🦘',n:'Kangaroo',s:'Boing!'},{e:'🐨',n:'Koala',s:'Snore!'},{e:'🐼',n:'Panda',s:'Munch!'},{e:'🐧',n:'Penguin',s:'Honk!'},{e:'🦉',n:'Owl',s:'Hoot!'},{e:'🐢',n:'Turtle',s:'Snap!'},{e:'🐊',n:'Crocodile',s:'Snap snap!'},{e:'🦈',n:'Shark',s:'Chomp!'},{e:'🐙',n:'Octopus',s:'Blub!'},{e:'🦋',n:'Butterfly',s:'Flutter!'},{e:'🐝',n:'Bee',s:'Buzz!'},{e:'🐞',n:'Ladybug',s:'Tick!'},{e:'🦄',n:'Unicorn',s:'Neigh ✨!'}
+];
+function renderAnimals(){const g=document.getElementById('animalGrid');g.innerHTML=animals.map(a=>`<div class="animal-card" onclick="tapAnimal('${a.n}','${a.s}')"><div class="emoji">${a.e}</div><b>${a.n}</b><small>${a.s}</small></div>`).join('');}
+let animalMode='name';
+function setAnimalMode(m){ animalMode=m; document.getElementById('animalModeName').style.background=m==='name'?'var(--yellow)':'#fff'; document.getElementById('animalModeSound').style.background=m==='sound'?'var(--yellow)':'#fff'; speak(m==='name'?'Names':'Animal sounds'); }
+function tapAnimal(name,sound){
+  if(animalMode==='sound'){ speak(sound); blip(name==='Lion'? 180 : name==='Elephant'? 120 : 300, 0.5, 'triangle', 0.15); }
+  else { speak(name); }
+  // gentle pop but not too loud
+  setTimeout(()=>popSound(), 150); burstConfetti(10);
+  // haptic
+  try{ navigator.vibrate && navigator.vibrate(20); }catch(e){}
+}
+const shapes=[
+  {n:'Circle',e:'●',c:'#4D96FF'},{n:'Square',e:'■',c:'#FF6B9D'},{n:'Triangle',e:'▲',c:'#22C55E'},{n:'Star',e:'★',c:'#EAB308'},{n:'Heart',e:'♥',c:'#EF4444'},{n:'Diamond',e:'◆',c:'#06B6D4'},{n:'Oval',e:'⬭',c:'#A855F7'},{n:'Rectangle',e:'▬',c:'#F97316'},
+  {n:'Pentagon',e:'⬠',c:'#8B5CF6'},{n:'Hexagon',e:'⬡',c:'#EC4899'},{n:'Octagon',e:'⯃',c:'#F97316'},{n:'Crescent',e:'☽',c:'#06B6D4'}
+];
+function renderShapes(){const g=document.getElementById('shapeGrid');g.innerHTML=shapes.map(s=>`<div class="shape-card" onclick="tapShape('${s.n}')"><div class="shape-preview" style="color:${s.c}">${s.e}</div><b>${s.n}</b></div>`).join('');}
+function tapShape(name){speak(name);blip(650,0.18,'sine',0.2);burstConfetti(8);}
+let curNum=1;const numWords=['Zero','One','Two','Three','Four','Five','Six','Seven','Eight','Nine','Ten'];const numEmoji=['','🍎','🍓','⭐','🐶','🎈','🍪','🦆','🐱','🌟','🎂'];
+function renderNumbers(){document.getElementById('bigNum').textContent=curNum;document.getElementById('numWord').textContent=numWords[curNum];const dots=document.getElementById('countDots');dots.innerHTML=Array.from({length:curNum},()=>`<span>${numEmoji[curNum]||'⭐'}</span>`).join('');dots.querySelectorAll('span').forEach(s=>s.addEventListener('click',()=>{speak(numWords[curNum]);blip(500+curNum*40,0.12)}));const quick=document.getElementById('numQuick');quick.innerHTML=Array.from({length:10},(_,i)=>{const n=i+1;return `<button onclick="setNum(${n})" style="width:46px;height:46px;border-radius:12px;border:3px solid ${n===curNum?'#4D96FF':'#e2e8f0'};background:${n===curNum?'#4D96FF':'#fff'};color:${n===curNum?'#fff':'#334155'};font-weight:900;cursor:pointer">${n}</button>`}).join('');}
+function changeNum(d){setNum(Math.min(10,Math.max(1,curNum+d)));}
+function setNum(n){curNum=n;renderNumbers();speak(numWords[curNum]);blip(520+n*18,0.18);burstConfetti(6);}
+const abc=[{l:'A',w:'Apple',e:'🍎'},{l:'B',w:'Ball',e:'⚽'},{l:'C',w:'Cat',e:'🐱'},{l:'D',w:'Dog',e:'🐶'},{l:'E',w:'Elephant',e:'🐘'},{l:'F',w:'Fish',e:'🐟'},{l:'G',w:'Grapes',e:'🍇'},{l:'H',w:'House',e:'🏠'},{l:'I',w:'Ice Cream',e:'🍦'},{l:'J',w:'Juice',e:'🧃'},{l:'K',w:'Kite',e:'🪁'},{l:'L',w:'Lion',e:'🦁'},{l:'M',w:'Monkey',e:'🐒'},{l:'N',w:'Nest',e:'🪹'},{l:'O',w:'Orange',e:'🍊'},{l:'P',w:'Penguin',e:'🐧'},{l:'Q',w:'Queen',e:'👸'},{l:'R',w:'Rabbit',e:'🐰'},{l:'S',w:'Sun',e:'☀️'},{l:'T',w:'Tiger',e:'🐯'},{l:'U',w:'Umbrella',e:'☂️'},{l:'V',w:'Van',e:'🚐'},{l:'W',w:'Whale',e:'🐳'},{l:'X',w:'Xylophone',e:'🎹'},{l:'Y',w:'Yo-yo',e:'🪀'},{l:'Z',w:'Zebra',e:'🦓'}];
+let abcIdx=0;
+function renderAbc(){const cur=abc[abcIdx];document.getElementById('abcLetter').textContent=cur.l;document.getElementById('abcEmoji').textContent=cur.e;document.getElementById('abcWord').textContent=cur.l+' for '+cur.w;document.getElementById('abcGrid').innerHTML=abc.map((a,i)=>`<button class="${i===abcIdx?'active':''}" onclick="goAbc(${i})">${a.l}</button>`).join('');}
+function speakAbc(){const c=abc[abcIdx];speak(c.l+' for '+c.w);blip(600,0.16);}
+function stepAbc(d){abcIdx=(abcIdx+d+abc.length)%abc.length;renderAbc();speakAbc();}
+function goAbc(i){abcIdx=i;renderAbc();speakAbc();}
+const paletteColors=['#111827','#EF4444','#F97316','#EAB308','#22C55E','#06B6D4','#3B82F6','#A855F7','#EC4899','#FFFFFF'];
+let drawColor='#111827',tool='brush',drawing=false,ctx;
+function initDraw(){const pal=document.getElementById('palette');pal.innerHTML=paletteColors.map(c=>`<button style="background:${c};border-color:${c==='#FFFFFF'?'#e2e8f0':'#fff'}" onclick="pickColor('${c}',this)" class="${c===drawColor?'active':''}"></button>`).join('');const canvas=document.getElementById('doodle');ctx=canvas.getContext('2d');ctx.lineCap='round';ctx.lineJoin='round';resizeCanvas();['mousedown','touchstart'].forEach(ev=>canvas.addEventListener(ev,startDraw,{passive:false}));['mousemove','touchmove'].forEach(ev=>canvas.addEventListener(ev,moveDraw,{passive:false}));['mouseup','touchend','mouseleave','touchcancel'].forEach(ev=>canvas.addEventListener(ev,endDraw));document.getElementById('brushSize').addEventListener('input',e=>document.getElementById('brushSizeVal').textContent=e.target.value);}
+function resizeCanvas(){
+  const canvas=document.getElementById('doodle'); if(!canvas) return;
+  const rect=canvas.getBoundingClientRect();
+  // If hidden, rect is 0 - defer until visible
+  if(rect.width < 50){ setTimeout(resizeCanvas, 200); return; }
+  // Save image
+  let imgData=null;
+  try{ imgData=ctx ? ctx.getImageData(0,0,canvas.width,canvas.height) : null; }catch(e){}
+  // Also try temp canvas copy
+  const tmp=document.createElement('canvas'); 
+  try{ tmp.width=canvas.width; tmp.height=canvas.height; tmp.getContext('2d').drawImage(canvas,0,0); }catch(e){}
+  const dpr=window.devicePixelRatio||1;
+  canvas.width=Math.floor(rect.width*dpr); canvas.height=Math.floor(420*dpr);
+  canvas.style.width=rect.width+'px'; canvas.style.height='420px';
+  ctx=canvas.getContext('2d'); ctx.scale(dpr,dpr); ctx.lineCap='round'; ctx.lineJoin='round'; ctx.lineWidth=12;
+  ctx.strokeStyle=drawColor||'#111827';
+  // Restore
+  try{
+    if(tmp.width>0 && tmp.height>0) ctx.drawImage(tmp,0,0,tmp.width/dpr,tmp.height/dpr);
+  }catch(e){}
+}
+function pickColor(c,btn){drawColor=c;document.querySelectorAll('#palette button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');setTool('brush');}
+function setTool(t){tool=t;document.getElementById('btnBrush').classList.toggle('active',t==='brush');document.getElementById('btnEraser').classList.toggle('active',t==='eraser');}
+function pos(e){const canvas=document.getElementById('doodle');const rect=canvas.getBoundingClientRect();const touch=e.touches?e.touches[0]:e;return {x:(touch.clientX-rect.left),y:(touch.clientY-rect.top)};}
+function startDraw(e){e.preventDefault();drawing=true;const p=pos(e);ctx.beginPath();ctx.moveTo(p.x,p.y);}
+function moveDraw(e){if(!drawing)return;e.preventDefault();const p=pos(e);const size=parseInt(document.getElementById('brushSize').value,10);ctx.lineWidth=size;ctx.strokeStyle=tool==='eraser'?'#FFFFFF':drawColor;ctx.globalCompositeOperation=tool==='eraser'?'destination-out':'source-over';ctx.lineTo(p.x,p.y);ctx.stroke();ctx.beginPath();ctx.moveTo(p.x,p.y);}
+function endDraw(){drawing=false;ctx.beginPath();ctx.globalCompositeOperation='source-over';}
+function clearCanvas(){const canvas=document.getElementById('doodle');ctx.clearRect(0,0,canvas.width,canvas.height);blip(400,0.12);burstConfetti(8,'#4D96FF');}
+function saveDrawing(){const canvas=document.getElementById('doodle');const a=document.createElement('a');a.download='my-drawing.png';a.href=canvas.toDataURL('image/png');a.click();speak('Saved your drawing!');burstConfetti(16);}
+let bubbleTimer=null,bubbleScore=0;const bubbleEmojis=['🫧','💙','💜','💛','💚','🩷','🧡'];
+function startBubbles(){if(bubbleTimer)return;bubbleTimer=setInterval(spawnBubble,900);spawnBubble();spawnBubble();}
+function stopBubbles(){clearInterval(bubbleTimer);bubbleTimer=null;}
+function spawnBubble(){const area=document.getElementById('bubbleArea');if(!area||document.getElementById('sec-bubbles').classList.contains('active')===false)return;const b=document.createElement('div');b.className='bubble';const size=68+Math.random()*38;b.style.width=size+'px';b.style.height=size+'px';b.style.left=(Math.random()*(area.clientWidth-size))+'px';b.style.fontSize=(size*0.5)+'px';b.style.background=`radial-gradient(circle at 30% 30%, rgba(255,255,255,.95), ${`hsl(${180+Math.random()*60} 90% 70%)`})`;b.style.setProperty('--drift',(Math.random()*80-40)+'px');b.style.animationDuration=(12+Math.random()*6)+'s'; // really slow for toddlerb.textContent=bubbleEmojis[Math.floor(Math.random()*bubbleEmojis.length)];b.addEventListener('pointerup', (e)=>{ e.preventDefault(); popBubble(b); });
+  b.addEventListener('click',()=>popBubble(b));b.addEventListener('touchstart',()=>popBubble(b),{passive:true});area.appendChild(b);setTimeout(()=>{if(b.parentNode)b.remove();},6000);}
+function popBubble(el){
+  if(!el || !el.parentNode) return;
+  if(el.dataset.popped==='1') return; el.dataset.popped='1';
+  // Stop animation immediately so it stays under finger
+  el.style.animation='none';
+  el.style.pointerEvents='none';
+  bubbleScore++; const sc=document.getElementById('bubbleScore'); if(sc) sc.textContent=bubbleScore;
+  // Kid friendly pop - louder, happier
+  try{ blip(880,0.5,'sine',0.28); setTimeout(()=>blip(1200,0.35,'sine',0.22),80); }catch(e){}
+  try{ speak(String(bubbleScore)); }catch(e){}
+  burstConfetti(14,'#06B6D4');
+  try{ const r=el.getBoundingClientRect(); splashAt(r.left+r.width/2,r.top+r.height/2,'#7DD3FC'); }catch(e){}
+  el.style.transform='scale(1.6)'; el.style.opacity='0'; el.style.transition='all .28s cubic-bezier(.34,1.56,.64,1)';
+  try{ navigator.vibrate && navigator.vibrate(40); }catch(e){}
+  setTimeout(()=>{ try{ el.remove(); }catch(e){} },300);
+}
+let memCards=[],memFlipped=[],memLock=false,memMoves=0,memMatched=0;const memEmojis=['🐶','🐱','🦁','🐘','🐒','🐸','🦆','🐻'];
+function initMemory(){memCards=[];memFlipped=[];memLock=false;memMoves=0;memMatched=0;document.getElementById('memMoves').textContent='0';document.getElementById('memMatched').textContent='0';document.getElementById('memWin').style.display='none';let pairs=[...memEmojis,...memEmojis];for(let i=pairs.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[pairs[i],pairs[j]]=[pairs[j],pairs[i]];}memCards=pairs.map((e,i)=>({id:i,emoji:e,flipped:false,matched:false}));renderMemory();}
+function renderMemory(){const g=document.getElementById('memoryGrid');g.innerHTML=memCards.map(c=>`<div class="mem-card ${c.flipped||c.matched?'flipped':''} ${c.matched?'matched':''}" onclick="flipMem(${c.id})">${c.flipped||c.matched?c.emoji:'<span class="back">❓</span>'}</div>`).join('');}
+function flipMem(id){if(memLock)return;const card=memCards.find(c=>c.id===id);if(!card||card.flipped||card.matched)return;card.flipped=true;blip(700,0.08);renderMemory();memFlipped.push(card);if(memFlipped.length===2){memMoves++;document.getElementById('memMoves').textContent=memMoves;const [a,b]=memFlipped;if(a.emoji===b.emoji){a.matched=b.matched=true;memMatched++;document.getElementById('memMatched').textContent=memMatched;memFlipped=[];renderMemory();popSound();burstConfetti(12,'#FFD93D');speak('Match!');if(memMatched===8){setTimeout(()=>{document.getElementById('memWin').style.display='block';speak('Amazing! You found all pairs!');burstConfetti(40);},350);}}else{memLock=true;setTimeout(()=>{a.flipped=b.flipped=false;memFlipped=[];memLock=false;renderMemory();blip(220,0.16,'sine',0.18);},780);}}}
+renderColors();renderAnimals();renderShapes();renderNumbers();renderAbc();initDraw();initMemory();window.addEventListener('resize',resizeCanvas);setTimeout(()=>speak('Welcome! Tap colors to start!'),900);
+
+// === DRAG HELPERS (touch + mouse) ===
+let draggedEl=null;
+function enableDrag(container, onDropCheck){
+  // mouse
+  container.addEventListener('dragstart', e=>{
+    if(e.target.classList.contains('draggable')||e.target.classList.contains('puzzle-piece')||e.target.classList.contains('fish')){
+      draggedEl=e.target; e.target.classList.add('dragging'); e.dataTransfer.effectAllowed='move';
+    }
+  });
+  container.addEventListener('dragend', e=>{ if(e.target.classList.contains('dragging')) e.target.classList.remove('dragging'); draggedEl=null; });
+  container.addEventListener('dragover', e=>{ e.preventDefault(); const z=e.target.closest('.drop-zone,.puzzle-slot,.pond-bucket'); if(z) z.classList.add('drag-over'); });
+  container.addEventListener('dragleave', e=>{ const z=e.target.closest('.drop-zone,.puzzle-slot,.pond-bucket'); if(z) z.classList.remove('drag-over'); });
+  container.addEventListener('drop', e=>{
+    e.preventDefault(); const zone=e.target.closest('.drop-zone,.puzzle-slot,.pond-bucket'); if(zone) zone.classList.remove('drag-over');
+    if(draggedEl && zone && onDropCheck) onDropCheck(draggedEl, zone, e);
+    draggedEl=null;
+  });
+  // touch
+  let touchEl=null, clone=null, offsetX=0, offsetY=0;
+  container.addEventListener('touchstart', e=>{
+    const t=e.target.closest('.draggable,.puzzle-piece,.fish'); if(!t) return;
+    touchEl=t; const rect=t.getBoundingClientRect(); const touch=e.touches[0];
+    offsetX=touch.clientX-rect.left-rect.width/2; offsetY=touch.clientY-rect.top-rect.height/2;
+    clone=t.cloneNode(true); clone.style.position='fixed'; clone.style.left=(touch.clientX-offsetX-rect.width/2)+'px'; clone.style.top=(touch.clientY-offsetY)+'px';
+    clone.style.width=rect.width+'px'; clone.style.height=rect.height+'px'; clone.style.pointerEvents='none'; clone.style.opacity='.85'; clone.style.zIndex='9999'; clone.style.transform='rotate(4deg) scale(1.08)';
+    document.body.appendChild(clone); t.style.opacity='.3'; e.preventDefault();
+  }, {passive:false});
+  let startX=0,startY=0, isDragging=false;
+  container.addEventListener('touchstart', e=>{
+    const t=e.target.closest('.draggable,.puzzle-piece,.fish'); if(!t) return;
+    const touch=e.touches[0]; startX=touch.clientX; startY=touch.clientY; isDragging=false;
+  }, {passive:true});
+  container.addEventListener('touchmove', e=>{
+    if(!touchEl||!clone) return;
+    const touch=e.touches[0];
+    const dx=touch.clientX-startX, dy=touch.clientY-startY;
+    // Only start dragging if moved more than 10px and more horizontal than vertical (for puzzle/sort) or any for fish
+    if(!isDragging && Math.hypot(dx,dy) < 10) return;
+    isDragging=true;
+    clone.style.left=(touch.clientX-clone.offsetWidth/2)+'px'; clone.style.top=(touch.clientY-clone.offsetHeight/2)+'px';
+    const el=document.elementFromPoint(touch.clientX,touch.clientY);
+    const zone=el?el.closest('.drop-zone,.puzzle-slot,.pond-bucket'):null;
+    document.querySelectorAll('.drag-over').forEach(x=>x.classList.remove('drag-over'));
+    if(zone) zone.classList.add('drag-over');
+    // Only block scroll when dragging horizontally or when over a zone
+    if(Math.abs(dx) > Math.abs(dy) || zone) e.preventDefault();
+  }, {passive:false});
+  container.addEventListener('touchend', e=>{
+    if(!touchEl) return; const touch=e.changedTouches[0]; const el=document.elementFromPoint(touch.clientX,touch.clientY);
+    const zone=el?el.closest('.drop-zone,.puzzle-slot,.pond-bucket'):null;
+    document.querySelectorAll('.drag-over').forEach(x=>x.classList.remove('drag-over'));
+    if(clone) clone.remove(); touchEl.style.opacity='';
+    if(zone && touchEl && onDropCheck) onDropCheck(touchEl, zone, e);
+    clone=null; touchEl=null;
+  });
+}
+
+// === SORTING GAME ===
+const sortItems=[
+  {emoji:'🍎',color:'red'},{emoji:'🍓',color:'red'},{emoji:'🚗',color:'red'},{emoji:'🎈',color:'red'},
+  {emoji:'🐳',color:'blue'},{emoji:'💧',color:'blue'},{emoji:'🧢',color:'blue'},{emoji:'🦋',color:'blue'},
+  {emoji:'⭐',color:'yellow'},{emoji:'🌻',color:'yellow'},{emoji:'🍋',color:'yellow'},{emoji:'🐥',color:'yellow'},
+  {emoji:'🐸',color:'green'},{emoji:'🥦',color:'green'},{emoji:'🌳',color:'green'},{emoji:'🐢',color:'green'}
+];
+let sortScore=0;
+function initSort(){
+  sortScore=0; document.getElementById('sortProgress').textContent='0/12'; document.getElementById('sortWin').style.display='none';
+  const zones={red:'🔴 Red',blue:'🔵 Blue',yellow:'🟡 Yellow',green:'🟢 Green'};
+  document.querySelectorAll('.drop-zone').forEach(z=>{ const c=z.dataset.color; z.innerHTML=`<h4>${zones[c]}</h4>`; z.classList.remove('drag-over'); });
+  const pool=document.getElementById('sortPool'); pool.innerHTML='';
+  const pick=[...sortItems].sort(()=>Math.random()-0.5).slice(0,12);
+  pick.forEach(it=>{
+    const d=document.createElement('div'); d.className='draggable floaty'; d.draggable=true; d.dataset.color=it.color; d.textContent=it.emoji;
+    d.style.background= it.color==='red'?'#FFE4E6':it.color==='blue'?'#DBEAFE':it.color==='yellow'?'#FEF3C7':'#DCFCE7';
+    d.style.animationDelay=(Math.random()*1)+'s';
+    pool.appendChild(d);
+  });
+}
+function handleSortDrop(el, zone){
+  const want=zone.dataset.color, have=el.dataset.color;
+  if(want===have){
+    const clone=el.cloneNode(true); clone.draggable=false; clone.style.cursor='default'; clone.classList.remove('floaty'); clone.style.background='#F0FDF4'; clone.style.borderColor='#22C55E';
+    zone.appendChild(clone); el.remove(); sortScore++; document.getElementById('sortProgress').textContent=sortScore+'/12';
+    speak(have); blip(700+sortScore*30,0.15); burstConfetti(8, have==='red'?'#EF4444':have==='blue'?'#3B82F6':have==='yellow'?'#EAB308':'#22C55E');
+    zone.classList.add('wobble'); setTimeout(()=>zone.classList.remove('wobble'),500);
+    if(sortScore===12){ document.getElementById('sortWin').style.display='block'; speak('Amazing! You sorted them all!'); burstConfetti(30); }
+  } else {
+    zone.classList.add('wobble'); blip(220,0.35,'sine',0.09); setTimeout(()=>zone.classList.remove('wobble'),400);
+    // shake item
+    el.animate([{transform:'translateX(0)'},{transform:'translateX(-6px)'},{transform:'translateX(6px)'},{transform:'translateX(0)'}],{duration:300});
+  }
+}
+
+// === PUZZLE ===
+const puzzleSets=[
+  {name:'lion', pieces:['🦁','👑','🌟','💛','🍀','🎀'], slots:['🦁','👑','🌟','💛','🍀','🎀']},
+  {name:'frog', pieces:['🐸','💚','🌿','✨','🍄','🌈'], slots:['🐸','💚','🌿','✨','🍄','🌈']},
+  {name:'ocean', pieces:['🐳','🌊','💧','🐚','⭐','🐠'], slots:['🐳','🌊','💧','🐚','⭐','🐠']},
+  {name:'farm', pieces:['🐄','🐓','🌽','🚜','🌻','🥚'], slots:['🐄','🐓','🌽','🚜','🌻','🥚']},
+  {name:'space', pieces:['🚀','⭐','🌙','🪐','☄️','👩‍🚀'], slots:['🚀','⭐','🌙','🪐','☄️','👩‍🚀']}
+];
+let curPuzzle=null, puzzleDone=0;
+function initPuzzle(){
+  const set=puzzleSets[Math.floor(Math.random()*puzzleSets.length)]; curPuzzle=set; puzzleDone=0;
+  document.getElementById('puzzleProgress').textContent='0/6'; document.getElementById('puzzleWin').style.display='none';
+  document.querySelectorAll('.puzzle-slot').forEach((s,i)=>{ 
+    s.dataset.pos=i; s.dataset.want=set.slots[i]; s.classList.remove('filled','drag-over'); 
+    // Ghost hint so kid knows where to put - faded outline
+    s.innerHTML=`<span style="opacity:0.38;font-size:2.6rem;filter:grayscale(0.2)">${set.slots[i]}</span>`;
+    s.style.background='#FFFDF0';
+    s.style.borderColor='#FDE68A';
+  });
+  const tray=document.getElementById('puzzleTray'); tray.innerHTML='';
+  [...set.pieces].sort(()=>Math.random()-0.5).forEach((emoji,i)=>{
+    const idx=set.pieces.indexOf(emoji);
+    const d=document.createElement('div'); d.className='puzzle-piece'; d.draggable=true; d.textContent=emoji; d.dataset.emoji=emoji; d.dataset.correctPos=set.slots.indexOf(emoji);
+    d.style.animationDelay=(i*0.08)+'s'; tray.appendChild(d);
+  });
+}
+function handlePuzzleDrop(el, slot){
+  if(slot.classList.contains('filled')) return;
+  const want=slot.dataset.want, have=el.dataset.emoji;
+  if(want===have){
+    slot.textContent=have; slot.classList.add('filled'); el.classList.add('placed'); puzzleDone++;
+    document.getElementById('puzzleProgress').textContent=puzzleDone+'/6';
+    blip(600+puzzleDone*80,0.12); burstConfetti(6,'#EC4899'); slot.animate([{transform:'scale(0.8)'},{transform:'scale(1.08)'},{transform:'scale(1)'}],{duration:300});
+    speak(have);
+    if(puzzleDone===6){ document.getElementById('puzzleWin').style.display='block'; speak('Puzzle complete! Well done!'); burstConfetti(24); }
+  } else {
+    blip(200,0.35,'sine',0.08); slot.classList.add('wobble'); setTimeout(()=>slot.classList.remove('wobble'),400);
+  }
+}
+
+// === FISHING ===
+let fishCaught=0;
+function initFishing(){
+  const pond=document.getElementById('fishPond'); if(!pond) return;
+  fishCaught=0; const sc=document.getElementById('fishScore'); if(sc) sc.textContent='Caught: 0/6';
+  pond.querySelectorAll('.fish,.bubble-float').forEach(e=>e.remove());
+  // Spawn with delay so pond is visible
+  for(let i=0;i<6;i++) setTimeout(spawnFish, i*400);
+  setTimeout(spawnBubbles, 200);
+}
+function spawnFish(){
+  const pond=document.getElementById('fishPond'); if(!pond) return;
+  const fishEmojis=['🐟','🐠','🐡','🦈','🐙','🦑','🐢','⭐','🐚'];
+  const speeds=['slow','medium','slowest'];
+  const e=fishEmojis[Math.floor(Math.random()*fishEmojis.length)];
+  const f=document.createElement('div'); f.className='fish '+speeds[Math.floor(Math.random()*speeds.length)]; f.draggable=true; f.textContent=e;
+  // Use pond width if visible, else window width
+  const pondW = pond.clientWidth > 50 ? pond.clientWidth : window.innerWidth - 40;
+  f.style.top=(18+Math.random()*280)+'px'; f.style.left='-90px';
+  const dur = 38 + Math.random()*14; // really slow for toddler
+  f.style.animationDuration=dur+'s'; f.style.animationDelay=(Math.random()*0.8)+'s';
+  f.style.fontSize=(2.8 + Math.random()*0.7)+'rem';
+  // Ensure fish is visible and tappable
+  f.style.pointerEvents='auto';
+  pond.appendChild(f);
+  // Fish must be DRAGGED to bucket, not tapped - keep for toddler drag only
+  f.addEventListener('click', (e)=>{ e.stopPropagation(); /* no auto-drop, must drag */ });
+}
+function spawnBubbles(){
+  const pond=document.getElementById('fishPond');
+  for(let i=0;i<8;i++){
+    const b=document.createElement('div'); b.className='bubble-float';
+    b.style.left=(Math.random()*90+5)+'%'; b.style.width=b.style.height=(8+Math.random()*14)+'px';
+    b.style.animationDuration=(3+Math.random()*3)+'s'; b.style.animationDelay=(Math.random()*2)+'s';
+    pond.appendChild(b);
+  }
+}
+function handleFishDrop(el, bucket){
+  if(!el.classList.contains('fish')) return;
+  el.remove(); fishCaught++; document.getElementById('fishScore').textContent='Caught: '+fishCaught+'/6';
+  popSound(); burstConfetti(10,'#38BDF8'); speak(String(fishCaught)); bucket.classList.add('wobble'); setTimeout(()=>bucket.classList.remove('wobble'),400);
+  if(fishCaught>=6){ speak('All fish caught! Great job!'); burstConfetti(20); setTimeout(initFishing,1500); }
+  // keep pond full
+  setTimeout(spawnFish, 600);
+}
+
+// === MUSIC ===
+
+// === CLICK FALLBACK for 2-year-olds (tap piece then tap slot) ===
+let selectedPiece = null;
+function setupPuzzleClickFallback(){
+  document.getElementById('puzzleTray')?.addEventListener('click', e=>{
+    const piece = e.target.closest('.puzzle-piece');
+    if(!piece || piece.classList.contains('placed')) return;
+    // select
+    document.querySelectorAll('.puzzle-piece.selected').forEach(x=>x.classList.remove('selected'));
+    piece.classList.add('selected');
+    selectedPiece = piece;
+    blip(500,0.08);
+    piece.style.outline='3px solid #EC4899';
+    speak('Selected ' + piece.textContent + ', now tap a slot');
+  });
+  document.getElementById('puzzleBoard')?.addEventListener('click', e=>{
+    const slot = e.target.closest('.puzzle-slot');
+    if(!slot || !selectedPiece) return;
+    handlePuzzleDrop(selectedPiece, slot);
+    if(selectedPiece) {
+      selectedPiece.style.outline='';
+      selectedPiece.classList.remove('selected');
+      selectedPiece = null;
+    }
+  });
+  // also allow tapping slot first? no
+}
+let selectedSort = null;
+function setupSortClickFallback(){
+  document.getElementById('sortPool')?.addEventListener('click', e=>{
+    const item = e.target.closest('.draggable');
+    if(!item) return;
+    document.querySelectorAll('.sort-pool .draggable.selected').forEach(x=>{x.classList.remove('selected'); x.style.outline='';});
+    item.classList.add('selected'); selectedSort=item; item.style.outline='3px solid #22C55E'; blip(500,0.08); speak('Now tap a color box');
+  });
+  document.querySelectorAll('.drop-zone').forEach(zone=>{
+    zone.addEventListener('click', e=>{
+      if(!selectedSort) return;
+      handleSortDrop(selectedSort, zone);
+      if(selectedSort){ selectedSort.style.outline=''; selectedSort.classList.remove('selected'); selectedSort=null; }
+    });
+  });
+}
+// Enhance handlePuzzleDrop to also clear selection outline
+const _origPuzzleDrop = handlePuzzleDrop;
+handlePuzzleDrop = function(el, slot){
+  // ensure el is still in DOM and not already placed
+  if(el.classList.contains('placed')) return;
+  const want=slot.dataset.want, have=el.dataset.emoji;
+  if(want===have){
+    slot.innerHTML=`<span style="font-size:2.6rem">${have}</span>`; slot.classList.add('filled'); slot.style.background='#F0FDF4'; slot.style.borderColor='#22C55E'; el.classList.add('placed'); el.style.outline=''; el.classList.remove('selected');
+    puzzleDone++;
+    const prog=document.getElementById('puzzleProgress'); if(prog) prog.textContent=puzzleDone+'/6';
+    blip(600+puzzleDone*80,0.12); burstConfetti(6,'#EC4899'); 
+    if(slot.animate) slot.animate([{transform:'scale(0.8)'},{transform:'scale(1.08)'},{transform:'scale(1)'}],{duration:300});
+    try{ speak(have); }catch(e){}
+    if(puzzleDone===6){ const win=document.getElementById('puzzleWin'); if(win) win.style.display='block'; try{ speak('Puzzle complete! Well done!'); }catch(e){} burstConfetti(24); }
+    // clear selection
+    selectedPiece=null;
+    document.querySelectorAll('.puzzle-piece.selected').forEach(x=>{x.classList.remove('selected'); x.style.outline='';});
+  } else {
+    blip(200,0.35,'sine',0.08); slot.classList.add('wobble'); setTimeout(()=>slot.classList.remove('wobble'),400);
+    // shake
+    if(el.animate) el.animate([{transform:'translateX(0)'},{transform:'translateX(-6px)'},{transform:'translateX(6px)'},{transform:'translateX(0)'}],{duration:300});
+  }
+};
+
+let drum=false;
+const pianoNotes=[
+  {note:'C',freq:261,emoji:'🌸',color:'#FFE4E6', inst:'piano'},
+  {note:'D',freq:293,emoji:'🌼',color:'#FEF3C7', inst:'piano'},
+  {note:'E',freq:329,emoji:'🌷',color:'#FCE7F3', inst:'piano'},
+  {note:'F',freq:349,emoji:'🌻',color:'#DCFCE7', inst:'piano'},
+  {note:'G',freq:392,emoji:'🍀',color:'#DBEAFE', inst:'piano'},
+  {note:'A',freq:440,emoji:'🌺',color:'#E0E7FF', inst:'piano'},
+  {note:'B',freq:493,emoji:'🌹',color:'#FFE4D6', inst:'piano'},
+  {note:'C2',freq:523,emoji:'💮',color:'#F3E8FF', inst:'piano'}
+];
+const instruments = {
+  piano: {type:'sine', dur:0.75},
+  xylophone: {type:'triangle', dur:0.95},
+  guitar: {type:'sawtooth', dur:0.85},
+  drum: {type:'square', dur:0.55},
+  flute: {type:'sine', dur:1.1}
+};
+// Distinct per-instrument pitch offsets
+const instOffsets = {piano:0, xylophone:12, guitar:-12, flute:7, drum:0};
+let currentInst='piano';
+function initPiano(){
+  const p=document.getElementById('piano'); p.innerHTML='';
+  pianoNotes.forEach(n=>{
+    const k=document.createElement('div'); k.className='key'; k.style.background=n.color;
+    k.innerHTML=`<span class="emoji">${n.emoji}</span><b>${n.note}</b><span class="note">${Math.round(n.freq)}Hz</span>`;
+    k.addEventListener('click',()=>{ playNote(n); });
+    k.addEventListener('touchstart',e=>{ e.preventDefault(); playNote(n); }, {passive:false});
+    // drag across
+    k.addEventListener('mouseenter', e=>{ if(e.buttons===1) playNote(n); });
+    p.appendChild(k);
+  });
+}
+function playNote(n){
+  const inst = instruments[currentInst] || instruments.piano;
+  const off = instOffsets[currentInst] || 0;
+  // Louder and distinct
+  if(drum || currentInst==='drum'){ 
+    blip(90+Math.random()*80, inst.dur, 'square', 0.36); 
+    // drum also has low thump
+    setTimeout(()=>blip(60,0.3,'sine',0.22), 40);
+    bloom('🥁'); 
+  }
+  else { 
+    // Shift pitch per instrument for distinct sound
+    const f = n.freq * Math.pow(2, off/12);
+    blip(f, inst.dur, inst.type, 0.32); 
+    // Add harmonic for richness
+    setTimeout(()=>blip(f*2, inst.dur*0.6, 'sine', 0.12), 30);
+    bloom(n.emoji); 
+  }
+  const d=document.getElementById('dancer'); d.classList.remove('show'); void d.offsetWidth; d.classList.add('show'); setTimeout(()=>d.classList.remove('show'),600);
+  // key flash
+  event?.target?.closest('.key')?.animate([{transform:'scale(1)'},{transform:'scale(.96)'},{transform:'scale(1)'}],{duration:150});
+}
+function bloom(emoji){
+  const g=document.getElementById('musicFlowers'); const s=document.createElement('span');
+  s.textContent=emoji; s.style.fontSize='2rem'; s.style.display='inline-block'; s.style.animation='popIn .4s ease, floaty 2s ease infinite';
+  g.appendChild(s); if(g.children.length>18) g.removeChild(g.firstChild);
+  setTimeout(()=>{ s.style.transition='all .5s'; s.style.opacity='0'; s.style.transform='translateY(-30px) scale(1.3)'; setTimeout(()=>s.remove(),500); }, 1800);
+}
+function playSong(){
+  const twinkle=[0,0,4,4,5,5,4, 3,3,2,2,1,1,0, 4,4,3,3,2,2,1, 4,4,3,3,2,2,1, 0,0,4,4,5,5,4, 3,3,2,2,1,1,0];
+  let i=0; const id=setInterval(()=>{
+    if(i>=twinkle.length){ clearInterval(id); return; }
+    playNote(pianoNotes[twinkle[i]%pianoNotes.length]); i++;
+  }, 300);
+}
+function clearGarden(){ document.getElementById('musicFlowers').innerHTML=''; }
+function setInstrument(inst){ currentInst=inst; document.querySelectorAll('[id^=btn]').forEach(b=>b.style.background='#fff'); const map={piano:'btnPiano', xylophone:'btnXylo', guitar:'btnGuitar', flute:'btnFlute'}; const id=map[inst]; if(id){ const el=document.getElementById(id); if(el) el.style.background='#FFE4E6'; } speak(inst); blip(440,0.3); }
+function toggleDrum(){ drum=!drum; document.getElementById('drumMode').textContent=drum?'On':'Off'; speak(drum?'Drum mode on':'Music mode'); if(drum) currentInst='drum'; else currentInst='piano'; }
+
+// Init new games
+setTimeout(()=>{ 
+  try{ initSort(); }catch(e){ console.error('initSort',e); }
+  try{ initPuzzle(); }catch(e){ console.error('initPuzzle',e); }
+  try{ initFishing(); }catch(e){ console.error('initFishing',e); }
+  try{ initPiano(); }catch(e){ console.error('initPiano',e); }
+  try{
+    // Robust drag setup - attach to each section
+    const sSort = document.getElementById('sec-sorting');
+    const sPuzzle = document.getElementById('sec-puzzle');
+    const sFish = document.getElementById('sec-fishing');
+    if(sSort) enableDrag(sSort, handleSortDrop);
+    if(sPuzzle) enableDrag(sPuzzle, handlePuzzleDrop);
+    if(sFish) enableDrag(sFish, handleFishDrop);
+    // Also ensure puzzle click fallback works after drag setup
+    setupPuzzleClickFallback();
+    setupSortClickFallback();
+  }catch(e){ console.error('drag setup',e); }
+  // also enable drop zones directly
+  document.querySelectorAll('.drop-zone,.puzzle-slot,.pond-bucket').forEach(z=>{
+    z.addEventListener('dragover', e=>e.preventDefault());
+  });
+}, 500);
+  // Direct immediate init for toddler - ensure visible even if timeout delayed
+  try{ initSort(); }catch(e){}
+  try{ initPuzzle(); }catch(e){}
+  try{ initFishing(); }catch(e){}
+  try{ if(!document.querySelectorAll('.key').length) initPiano(); }catch(e){}
+  // Immediate fallback for toddler - ensure sorting/puzzle/fishing visible even if timeout missed
+  setTimeout(()=>{ try{ if(document.querySelectorAll('#sortPool .draggable').length===0) initSort(); }catch(e){} }, 800);
+  setTimeout(()=>{ try{ if(document.querySelectorAll('.puzzle-piece').length===0) initPuzzle(); }catch(e){} }, 900);
+  setTimeout(()=>{ try{ if(document.querySelectorAll('.fish').length===0) initFishing(); }catch(e){} }, 1000);
+  // Also ensure bubbles start
+  setTimeout(()=>{ try{ if(document.getElementById('sec-bubbles')?.classList.contains('active')) startBubbles(); }catch(e){} }, 1200);
+
+
+</script>
+</body>
+</html>
