@@ -111,6 +111,22 @@ canvas#doodle{width:100%;height:420px;background:#fff;border-radius:18px;border:
 .abc-sing-lyrics{display:flex;flex-wrap:wrap;gap:.25rem;justify-content:center;margin-top:.7rem;max-width:560px;margin-left:auto;margin-right:auto}
 .abc-sing-lyrics span{font-weight:900;background:#fff;border:2px solid #f1f5f9;border-radius:10px;padding:.25rem .45rem;min-width:34px}
 .abc-sing-lyrics span.singing{background:var(--purple);color:#fff;border-color:var(--purple);transform:scale(1.15)}
+/* Bini-style ABC modes */
+.abc-modes{display:flex;gap:.4rem;justify-content:center;flex-wrap:wrap;margin:.5rem 0}
+.abc-modes button{border:3px solid #f1f5f9;background:#fff;border-radius:999px;padding:.45rem .8rem;font-weight:900;cursor:pointer;font-size:.82rem}
+.abc-modes button.active{background:#A855F7;color:#fff;border-color:#A855F7}
+.abc-panel{display:none}
+.abc-panel.active{display:block}
+#traceCanvas{width:100%;height:300px;background:#FFFDF5;border:3px dashed #FDE68A;border-radius:18px;touch-action:none;display:block}
+@media(max-width:1024px){#traceCanvas{height:260px}}
+.spell-blanks{display:flex;gap:.5rem;justify-content:center;margin:.7rem 0}
+.spell-blanks span{width:56px;height:62px;border-radius:14px;display:grid;place-items:center;font-size:1.8rem;font-weight:900;background:#fff;border:3px dashed #e2e8f0}
+.spell-blanks span.filled{border-style:solid;border-color:#22C55E;background:#F0FDF4}
+.spell-choices{display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap}
+.spell-choices button{width:56px;height:56px;border-radius:14px;font-size:1.6rem;font-weight:900;background:#fff;border:3px solid #f1f5f9;cursor:pointer;box-shadow:0 4px 10px rgba(0,0,0,.08)}
+.phonic-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(64px,1fr));gap:.45rem;margin-top:.6rem}
+.phonic-grid button{border:2px solid #f1f5f9;background:#fff;border-radius:12px;padding:.5rem 0;font-weight:900;cursor:pointer;font-size:1rem}
+.phonic-grid button small{display:block;font-size:.65rem;color:#A855F7}
 .bubble{position:absolute;bottom:-80px;border-radius:50%;display:grid;place-items:center;cursor:pointer;user-select:none;box-shadow:inset -8px -10px 18px rgba(255,255,255,.7), 0 6px 12px rgba(0,0,0,.12);border:2px solid rgba(255,255,255,.8);animation:floatUp linear forwards; ;touch-action:manipulation;min-width:60px;min-height:60px;}
 @keyframes floatUp{to{transform:translateY(-520px) translateX(var(--drift,0px))}}
 .bubble:active{transform:scale(.9)!important}
@@ -257,23 +273,72 @@ canvas#doodle{width:100%;height:420px;background:#fff;border-radius:18px;border:
   </section>
   <section id="sec-abc" class="kid-section">
     <div style="display:flex;align-items:center;gap:.6rem"><h2 class="section-title">🔤 Alphabet A–Z</h2><button class="speak-btn" onclick="speak('Alphabet! Learning letters')" title="Speak">🔊</button></div>
-    <div class="hint">🎵 Sing along slowly — like your ABC song app!</div>
-    <div class="card abc-stage">
+    <div class="hint">🌟 Like your ABC app: sing, trace, phonics & spell!</div>
+    <div class="abc-modes">
+      <button id="abcModeSong" class="active" onclick="setAbcMode('song')">🎵 Song</button>
+      <button id="abcModeLearn" onclick="setAbcMode('learn')">🔤 Learn</button>
+      <button id="abcModeTrace" onclick="setAbcMode('trace')">✏️ Trace</button>
+      <button id="abcModePhonic" onclick="setAbcMode('phonic')">🔊 Phonics</button>
+      <button id="abcModeSpell" onclick="setAbcMode('spell')">📖 Spell</button>
+    </div>
+    <!-- SONG panel (karaoke, like Bini Super Song) -->
+    <div class="card abc-stage abc-panel active" id="abcPanelSong">
       <div class="abc-letter" id="abcLetter">Aa</div>
       <div class="abc-emoji" id="abcEmoji">🍎</div>
       <div class="abc-word" id="abcWord">A for Apple</div>
       <div style="font-size:.85rem;font-weight:900;color:#A855F7;margin-top:.2rem" id="abcPhonic">🔤 says "ah" — a-a-Apple!</div>
+      <div style="display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;margin-top:.7rem">
+        <button class="btn-pill" id="abcSingBtn" style="background:#A855F7;color:#fff;font-size:1rem;padding:.7rem 1.2rem" onclick="singAbcSong()">🎵 Sing ABC Song</button>
+        <button class="btn-pill" id="abcStopBtn" style="background:#f1f5f9;display:none" onclick="stopAbcSong()">⏹️ Stop</button>
+      </div>
+      <div style="font-weight:900;color:#64748b;font-size:.8rem;margin-top:.4rem" id="abcSingStatus">👆 Tap Sing — letters light up + music plays!</div>
+      <div class="abc-sing-lyrics" id="abcSingLyrics"></div>
       <div class="abc-nav">
         <button onclick="stepAbc(-1)">◀</button>
         <button onclick="speakAbc()" style="background:var(--yellow);border-color:var(--yellow)">🔊</button>
         <button onclick="stepAbc(1)">▶</button>
       </div>
-      <div style="display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;margin-top:.7rem">
-        <button class="btn-pill" id="abcSingBtn" style="background:#A855F7;color:#fff" onclick="singAbcSong()">🎵 Sing ABC Song — Slow</button>
-        <button class="btn-pill" id="abcStopBtn" style="background:#f1f5f9;display:none" onclick="stopAbcSong()">⏹️ Stop</button>
+    </div>
+    <!-- LEARN panel -->
+    <div class="card abc-stage abc-panel" id="abcPanelLearn">
+      <div class="abc-letter" id="abcLetter2">Aa</div>
+      <div class="abc-emoji" id="abcEmoji2">🍎</div>
+      <div class="abc-word" id="abcWord2">A for Apple</div>
+      <div class="abc-nav">
+        <button onclick="stepAbc(-1)">◀</button>
+        <button onclick="speakAbc()" style="background:var(--yellow);border-color:var(--yellow)">🔊</button>
+        <button onclick="stepAbc(1)">▶</button>
       </div>
-      <div class="abc-sing-lyrics" id="abcSingLyrics"></div>
       <div class="abc-grid" id="abcGrid"></div>
+    </div>
+    <!-- TRACE panel (like Bini tracing) -->
+    <div class="card abc-panel" id="abcPanelTrace" style="text-align:center">
+      <div style="font-size:1.1rem;font-weight:900">✏️ Trace <b id="traceLetter" style="font-size:1.6rem;color:#A855F7">A</b> <span style="color:#94a3b8">with your finger!</span></div>
+      <div style="display:flex;gap:.5rem;justify-content:center;margin:.5rem 0">
+        <button class="tool-btn" onclick="stepTrace(-1)">◀ Prev</button>
+        <button class="tool-btn" onclick="hearTrace()">🔊 Hear</button>
+        <button class="tool-btn" onclick="clearTrace()">🧹 Clear</button>
+        <button class="tool-btn" onclick="stepTrace(1)">Next ▶</button>
+      </div>
+      <canvas id="traceCanvas" width="600" height="300"></canvas>
+      <div style="font-weight:900;color:#16a34a;margin-top:.4rem;min-height:24px" id="traceStar"></div>
+    </div>
+    <!-- PHONICS panel -->
+    <div class="card abc-panel" id="abcPanelPhonic" style="text-align:center">
+      <div style="font-weight:900">🔊 Tap a letter — hear its SOUND! <span style="color:#A855F7">(phonics like Bini)</span></div>
+      <div class="phonic-grid" id="phonicGrid"></div>
+    </div>
+    <!-- SPELL panel (learn to read) -->
+    <div class="card abc-panel" id="abcPanelSpell" style="text-align:center">
+      <div style="font-weight:900">📖 Tap letters to spell the word!</div>
+      <div style="font-size:3.2rem;margin-top:.3rem" id="spellEmoji">🐱</div>
+      <div class="spell-blanks" id="spellBlanks"></div>
+      <div class="spell-choices" id="spellChoices"></div>
+      <div style="display:flex;gap:.5rem;justify-content:center;margin-top:.7rem">
+        <button class="tool-btn" onclick="hearSpell()">🔊 Hear word</button>
+        <button class="tool-btn" onclick="newSpell()">🔄 New word</button>
+      </div>
+      <div style="font-weight:900;color:#16a34a;margin-top:.4rem;min-height:24px" id="spellMsg"></div>
     </div>
   </section>
   <section id="sec-draw" class="kid-section">
@@ -428,7 +493,7 @@ canvas#doodle{width:100%;height:420px;background:#fff;border-radius:18px;border:
 <div class="confetti" id="confetti"></div>
 <script>
 let muted=false;
-function toggleMute(){muted=!muted;document.getElementById('muteBtn').textContent=muted?'🔇 Muted':'🔊 Sound';if(muted){try{speechSynthesis.cancel()}catch(e){} stopAbcSong();} }
+function toggleMute(){muted=!muted;document.getElementById('muteBtn').textContent=muted?'🔇 Muted':'🔊 Sound';if(muted){try{speechSynthesis.cancel()}catch(e){} try{ if(typeof stopAbcSong==='function') stopAbcSong(); }catch(e){}} }
 let kidVoice=null;
 function pickKidVoice(){
   try{
@@ -515,12 +580,13 @@ function blip(freq=600,dur=0.45,type='sine',vol=0.5){
 function popSound(){blip(880,0.35,'sine',0.5);setTimeout(()=>blip(1100,0.28,'sine',0.45),90);setTimeout(()=>blip(660,0.4,'sine',0.4),170);}
 function splashAt(x,y,color){const s=document.createElement('div');s.className='splash';s.style.left=x+'px';s.style.top=y+'px';s.style.background=color;document.body.appendChild(s);setTimeout(()=>s.remove(),600);}
 function switchTab(name){
-  stopAbcSong(true);
+  try{ if(typeof stopAbcSong==='function') stopAbcSong(true); }catch(e){}
   // ensure game boards are ready when tab opened (fixes puzzle not showing if init missed)
   if(name==='puzzle' && document.querySelectorAll('.puzzle-piece').length===0){ try{ initPuzzle(); }catch(e){} }
   if(name==='sorting' && document.querySelectorAll('#sortPool .draggable').length===0){ try{ initSort(); }catch(e){} }
   if(name==='fishing' && document.querySelectorAll('.fish').length===0){ try{ initFishing(); }catch(e){} }
   if(name==='music' && document.querySelectorAll('.key').length===0){ try{ initPiano(); }catch(e){} }
+  if(name==='abc'){ try{ drawTraceGuide(); }catch(e){} try{ renderPhonics(); }catch(e){} try{ if(!spellWord) newSpell(); }catch(e){} }
   document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.tab===name));document.querySelectorAll('.kid-section').forEach(s=>s.classList.toggle('active',s.id==='sec-'+name));if(name==='bubbles')startBubbles();else stopBubbles();if(name==='draw'){ setTimeout(resizeCanvas, 80); setTimeout(resizeCanvas, 300); }
   // Keep game chooser visible at top (iPad fix) — scroll to content top, not page top overshoot
   try{
@@ -580,65 +646,203 @@ function changeNum(d){setNum(Math.min(10,Math.max(1,curNum+d)));}
 function setNum(n){curNum=n;renderNumbers();speak(numWords[curNum]);blip(520+n*18,0.18);burstConfetti(6);}
 const abc=[{l:'A',w:'Apple',e:'🍎',ph:'ah'},{l:'B',w:'Ball',e:'⚽',ph:'buh'},{l:'C',w:'Cat',e:'🐱',ph:'kuh'},{l:'D',w:'Dog',e:'🐶',ph:'duh'},{l:'E',w:'Elephant',e:'🐘',ph:'eh'},{l:'F',w:'Fish',e:'🐟',ph:'fff'},{l:'G',w:'Grapes',e:'🍇',ph:'guh'},{l:'H',w:'House',e:'🏠',ph:'huh'},{l:'I',w:'Ice Cream',e:'🍦',ph:'ih'},{l:'J',w:'Juice',e:'🧃',ph:'juh'},{l:'K',w:'Kite',e:'🪁',ph:'kuh'},{l:'L',w:'Lion',e:'🦁',ph:'lll'},{l:'M',w:'Monkey',e:'🐒',ph:'mmm'},{l:'N',w:'Nest',e:'🪹',ph:'nnn'},{l:'O',w:'Orange',e:'🍊',ph:'oh'},{l:'P',w:'Penguin',e:'🐧',ph:'puh'},{l:'Q',w:'Queen',e:'👸',ph:'kwuh'},{l:'R',w:'Rabbit',e:'🐰',ph:'rrr'},{l:'S',w:'Sun',e:'☀️',ph:'sss'},{l:'T',w:'Tiger',e:'🐯',ph:'tuh'},{l:'U',w:'Umbrella',e:'☂️',ph:'uh'},{l:'V',w:'Van',e:'🚐',ph:'vvv'},{l:'W',w:'Whale',e:'🐳',ph:'wuh'},{l:'X',w:'Xylophone',e:'🎹',ph:'ks'},{l:'Y',w:'Yo-yo',e:'🪀',ph:'yuh'},{l:'Z',w:'Zebra',e:'🦓',ph:'zzz'}];
 let abcIdx=0;
-function renderAbc(){const cur=abc[abcIdx];const low=cur.l.toLowerCase();document.getElementById('abcLetter').textContent=cur.l+low;document.getElementById('abcEmoji').textContent=cur.e;document.getElementById('abcWord').textContent=cur.l+' for '+cur.w;const ph=document.getElementById('abcPhonic');if(ph)ph.textContent='🔤 '+cur.l+' says "'+cur.ph+'" — '+cur.ph+'-'+cur.ph+'-'+cur.w+'!';document.getElementById('abcGrid').innerHTML=abc.map((a,i)=>`<button class="${i===abcIdx?'active':''}" onclick="goAbc(${i})">${a.l}</button>`).join('');}
+let abcMode='song';
+function setAbcMode(m){
+  abcMode=m; stopAbcSong(true);
+  ['song','learn','trace','phonic','spell'].forEach(x=>{
+    const p=document.getElementById('abcPanel'+x.charAt(0).toUpperCase()+x.slice(1));
+    if(p) p.classList.toggle('active', x===m);
+    const b=document.getElementById('abcMode'+x.charAt(0).toUpperCase()+x.slice(1));
+    if(b) b.classList.toggle('active', x===m);
+  });
+  if(m==='trace'){ setTimeout(drawTraceGuide, 100); speakSlow('Trace the letter!'); }
+  if(m==='phonic'){ renderPhonics(); speakSlow('Tap a letter for its sound!'); }
+  if(m==='spell'){ if(!spellWord) newSpell(); speakSlow('Spell the word!'); }
+  if(m==='song'){ renderSingLyrics(-1); }
+}
+function renderAbc(){
+  const cur=abc[abcIdx];const low=cur.l.toLowerCase();
+  const pairs=[['abcLetter','abcEmoji','abcWord'],['abcLetter2','abcEmoji2','abcWord2']];
+  pairs.forEach(([a,b,c])=>{
+    const e1=document.getElementById(a); if(e1) e1.textContent=(a==='abcLetter'?cur.l+low:cur.l+low);
+    const e2=document.getElementById(b); if(e2) e2.textContent=cur.e;
+    const e3=document.getElementById(c); if(e3) e3.textContent=cur.l+' for '+cur.w;
+  });
+  const ph=document.getElementById('abcPhonic');if(ph)ph.textContent='🔤 '+cur.l+' says "'+cur.ph+'" — '+cur.ph+'-'+cur.ph+'-'+cur.w+'!';
+  const g=document.getElementById('abcGrid'); if(g) g.innerHTML=abc.map((a,i)=>`<button class="${i===abcIdx?'active':''}" onclick="goAbc(${i})">${a.l}</button>`).join('');
+  const t=document.getElementById('traceLetter'); if(t) t.textContent=cur.l;
+}
 function speakAbc(){const c=abc[abcIdx];try{speechSynthesis.cancel()}catch(e){} // slow, song-like: letter... then word... then phonic
   speakSlow(c.l); setTimeout(()=>{ if(!abcSinging) speakSlow(c.l+' for '+c.w); }, 900);
-  blip(520+abcIdx*12,0.5,'sine',0.4);}
-function stepAbc(d){stopAbcSong(true);abcIdx=(abcIdx+d+abc.length)%abc.length;renderAbc();speakAbc();}
-function goAbc(i){stopAbcSong(true);abcIdx=i;renderAbc();speakAbc();}
-// 🎵 Slow ABC sing-along (Twinkle melody timing, like Bini ABC song)
+  blip(520+abcIdx*12,0.6,'sine',0.6);}
+function stepAbc(d){stopAbcSong(true);abcIdx=(abcIdx+d+abc.length)%abc.length;renderAbc();speakAbc();drawTraceGuide();}
+function goAbc(i){stopAbcSong(true);abcIdx=i;renderAbc();speakAbc();drawTraceGuide();}
+// 🎵 ABC sing-along — FIXED: phrase singing like real ABC song + loud melody so it ALWAYS sings even if TTS blocked
 let abcSinging=false, abcSingTimers=[];
 function renderSingLyrics(activeIdx){
   const box=document.getElementById('abcSingLyrics'); if(!box) return;
   if(box.children.length!==abc.length){
-    box.innerHTML=abc.map(a=>`<span>${a.l}</span>`).join('')+`<span style="background:#FFF7ED">🎵</span>`;
+    box.innerHTML=abc.map(a=>`<span>${a.l}</span>`).join('');
   }
   [...box.children].forEach((s,i)=>s.classList.toggle('singing', i===activeIdx));
 }
+function sayLetter(text){
+  // robust single-letter speak: cancel stuck queue first (iPad fix)
+  try{ speechSynthesis.cancel(); }catch(e){}
+  try{
+    const u=new SpeechSynthesisUtterance(text);
+    u.rate=0.42; u.pitch=1.25; u.volume=1.0; u.lang='en-US';
+    if(kidVoice) u.voice=kidVoice;
+    speechSynthesis.speak(u);
+  }catch(e){}
+}
 function singAbcSong(){
   if(abcSinging){ stopAbcSong(); return; }
+  // unlock audio INSIDE tap (iPad requires gesture)
+  try{ getAudioCtx(); }catch(e){}
+  try{ getAudioCtx()?.resume?.(); }catch(e){}
+  try{ speechSynthesis.cancel(); }catch(e){}
   abcSinging=true;
-  document.getElementById('abcSingBtn').style.display='none';
-  document.getElementById('abcStopBtn').style.display='inline-flex';
-  try{speechSynthesis.cancel()}catch(e){}
-  getAudioCtx();
-  // Classic ABC / Twinkle rhythm: 7+7+7+7 groups, slower for toddler (950ms per letter)
-  const melody=[261,261,392,392,440,440,392, 349,349,329,329,293,293,261, 392,392,349,349,329,329,293, 392,392,349,349,329,329,293, 261,261,392,392,440,440,392, 349,349,329,329,293,293,261];
+  const sb=document.getElementById('abcSingBtn'), st=document.getElementById('abcStopBtn'), ss=document.getElementById('abcSingStatus');
+  if(sb) sb.style.display='none'; if(st) st.style.display='inline-flex';
+  if(ss) ss.textContent='🎵 Singing... A B C D E F G...!';
+  // Real ABC phrasing (like Bini Super Song): 4 lines to Twinkle tune
+  const lines=[
+    {letters:[0,1,2,3,4,5,6], notes:[261,261,392,392,440,440,392]},
+    {letters:[7,8,9,10,11,12,13,14,15], notes:[349,349,329,329,293,293,261,261,261]},
+    {letters:[16,17,18,19,20,21], notes:[392,392,349,349,329,329,293]},
+    {letters:[22,23,24,25], notes:[392,392,349,349,329,329,293]},
+    {letters:[23,24,25], notes:[261,261,392,392,440,440,392]},
+  ];
   renderSingLyrics(-1);
-  speakSlow('Lets sing the ABC song!');
-  let t=1200;
-  abc.forEach((item,i)=>{
-    abcSingTimers.push(setTimeout(()=>{
-      abcIdx=i; renderAbc(); renderSingLyrics(i);
-      // sing letter SLOW with TTS + musical note underneath (loud)
-      try{
-        const u=new SpeechSynthesisUtterance(item.l);
-        u.rate=0.45; u.pitch=1.3; u.volume=1.0; u.lang='en-US';
-        if(kidVoice) u.voice=kidVoice;
-        speechSynthesis.speak(u);
-      }catch(e){}
-      const f=melody[i%melody.length]||440;
-      blip(f,0.9,'sine',0.55);
-      try{ navigator.vibrate && navigator.vibrate(15); }catch(e){}
-    }, t));
-    t+=1050; // SLOW — 1 sec per letter for toddler
+  // intro spoken once, then WAIT so it doesn't block letters (this was the bug)
+  sayLetter('Lets sing! A B C!');
+  burstConfetti(12,'#A855F7');
+  let t=1800;
+  const perLetter=850; // slow for toddler
+  lines.forEach((line,li)=>{
+    line.letters.forEach((letterIdx,k)=>{
+      const note=line.notes[k%line.notes.length];
+      abcSingTimers.push(setTimeout(()=>{
+        if(!abcSinging) return;
+        abcIdx=letterIdx; renderAbc(); renderSingLyrics(letterIdx);
+        const L=abc[letterIdx].l;
+        sayLetter(L); // each letter cancels previous -> no iPad queue jam
+        blip(note,1.0,'triangle',0.85); // LOUD melody always heard
+        setTimeout(()=>blip(note,0.9,'sine',0.5),60);
+        try{ navigator.vibrate && navigator.vibrate(12); }catch(e){}
+        if(ss) ss.textContent='🎵 '+abc.slice(0,letterIdx+1).map(a=>a.l).join(' ')+' ...';
+      }, t));
+      t+=perLetter;
+    });
+    // tiny pause between lines
+    t+=350;
   });
   abcSingTimers.push(setTimeout(()=>{
-    renderSingLyrics(26);
-    speakSlow('Now I know my ABCs!');
-    burstConfetti(30,'#A855F7');
-    blip(523,0.8,'sine',0.6); setTimeout(()=>blip(659,0.8,'sine',0.6),250); setTimeout(()=>blip(784,1.0,'sine',0.6),500);
-  }, t+300));
-  abcSingTimers.push(setTimeout(()=>stopAbcSong(true), t+4500));
+    if(!abcSinging) return;
+    renderAbc(); burstConfetti(30,'#A855F7');
+    sayLetter('Now I know my A B Cs!');
+    if(ss) ss.textContent='🌟 Yay! Now I know my ABCs! Next: W X Y and Z!';
+    blip(523,0.9,'triangle',0.85); setTimeout(()=>blip(659,0.9,'triangle',0.85),300); setTimeout(()=>blip(784,1.2,'triangle',0.85),600);
+  }, t+200));
+  abcSingTimers.push(setTimeout(()=>stopAbcSong(true), t+5000));
 }
 function stopAbcSong(silent){
   abcSingTimers.forEach(clearTimeout); abcSingTimers=[];
-  if(abcSinging && !silent){ try{speechSynthesis.cancel()}catch(e){} }
+  const wasSinging=abcSinging;
   abcSinging=false;
-  const b=document.getElementById('abcSingBtn'), s=document.getElementById('abcStopBtn');
+  if(wasSinging && !silent){ try{speechSynthesis.cancel()}catch(e){} }
+  const b=document.getElementById('abcSingBtn'), s=document.getElementById('abcStopBtn'), ss=document.getElementById('abcSingStatus');
   if(b) b.style.display='inline-flex'; if(s) s.style.display='none';
+  if(ss && !silent) ss.textContent='👆 Tap Sing — letters light up + music plays!';
   const box=document.getElementById('abcSingLyrics'); if(box && !silent) [...box.children].forEach(x=>x.classList.remove('singing'));
 }
+// --- TRACE (Bini-style letter tracing) ---
+let traceDrawn=0;
+function drawTraceGuide(){
+  const cv=document.getElementById('traceCanvas'); if(!cv) return;
+  const r=cv.getBoundingClientRect(); const W=cv.width=600, H=cv.height=300;
+  const c=cv.getContext('2d'); c.clearRect(0,0,W,H);
+  traceDrawn=0; const ms=document.getElementById('traceStar'); if(ms) ms.textContent='';
+  const L=abc[abcIdx].l;
+  c.save();
+  c.font='900 200px Fredoka, Nunito, sans-serif'; c.textAlign='center'; c.textBaseline='middle';
+  c.lineWidth=3; c.setLineDash([14,12]); c.strokeStyle='#C4B5FD';
+  c.strokeText(L, W/2, H/2+10);
+  c.setLineDash([]); c.fillStyle='rgba(168,85,247,0.10)';
+  c.fillText(L, W/2, H/2+10);
+  c.restore();
+  // start dot
+  c.fillStyle='#22C55E'; c.beginPath(); c.arc(W/2-60,H/2-70,14,0,7); c.fill();
+  c.fillStyle='#fff'; c.font='900 18px sans-serif'; c.textAlign='center'; c.fillText('▶',W/2-60,H/2-64);
+  if(!cv.dataset.bound){
+    cv.dataset.bound='1';
+    let drawing=false, last=null;
+    const getP=e=>{ const rect=cv.getBoundingClientRect(); const p=e.touches?e.touches[0]:e; return {x:(p.clientX-rect.left)*(cv.width/rect.width), y:(p.clientY-rect.top)*(cv.height/rect.height)}; };
+    cv.addEventListener('pointerdown',e=>{ drawing=true; last=getP(e); getAudioCtx(); e.preventDefault(); try{cv.setPointerCapture(e.pointerId)}catch(_){} },{passive:false});
+    cv.addEventListener('pointermove',e=>{ if(!drawing) return; e.preventDefault(); const p=getP(e); const c2=cv.getContext('2d'); c2.strokeStyle='#EC4899'; c2.lineWidth=16; c2.lineCap='round'; c2.beginPath(); c2.moveTo(last.x,last.y); c2.lineTo(p.x,p.y); c2.stroke(); last=p; traceDrawn++; if(traceDrawn%40===0) blip(500+traceDrawn,0.3,'sine',0.5); if(traceDrawn===220){ const m=document.getElementById('traceStar'); if(m) m.textContent='🌟 Great tracing!'; burstConfetti(16,'#EC4899'); speakSlow('Great!'); try{navigator.vibrate&&navigator.vibrate(30)}catch(_){} } },{passive:false});
+    ['pointerup','pointercancel','pointerleave'].forEach(ev=>cv.addEventListener(ev,()=>{ drawing=false; }));
+  }
+}
+function clearTrace(){ drawTraceGuide(); blip(400,0.3,'sine',0.5); }
+function hearTrace(){ const c=abc[abcIdx]; sayLetter(c.l+'. '+c.l+' for '+c.w); blip(520,0.6,'sine',0.6); }
+function stepTrace(d){ stopAbcSong(true); abcIdx=(abcIdx+d+abc.length)%abc.length; renderAbc(); drawTraceGuide(); hearTrace(); }
+// --- PHONICS (Bini-style letter sounds) ---
+function renderPhonics(){
+  const g=document.getElementById('phonicGrid'); if(!g) return;
+  g.innerHTML=abc.map((a,i)=>`<button onclick="playPhonic(${i})">${a.l}<small>${a.ph}</small></button>`).join('');
+}
+function playPhonic(i){
+  const a=abc[i]; abcIdx=i; renderAbc();
+  // say sound twice slowly, like Bini phonics
+  try{ speechSynthesis.cancel(); }catch(e){}
+  try{
+    const u=new SpeechSynthesisUtterance(a.ph+'. '+a.ph+'. '+a.w);
+    u.rate=0.5; u.pitch=1.3; u.volume=1.0; u.lang='en-US'; if(kidVoice) u.voice=kidVoice;
+    speechSynthesis.speak(u);
+  }catch(e){}
+  blip(440+i*14,0.7,'triangle',0.7);
+  burstConfetti(6,'#A855F7');
+  try{ navigator.vibrate&&navigator.vibrate(15);}catch(e){}
+}
+// --- SPELL / READ (Bini-style blend C-A-T) ---
+const spellWords=[{w:'CAT',e:'🐱'},{w:'DOG',e:'🐶'},{w:'SUN',e:'☀️'},{w:'PIG',e:'🐷'},{w:'BUS',e:'🚌'},{w:'EGG',e:'🥚'},{w:'ANT',e:'🐜'},{w:'BEE',e:'🐝'},{w:'COW',e:'🐄'},{w:'HEN',e:'🐔'}];
+let spellWord=null, spellFound=[];
+function newSpell(){
+  spellWord=spellWords[Math.floor(Math.random()*spellWords.length)];
+  spellFound=Array(spellWord.w.length).fill('');
+  const em=document.getElementById('spellEmoji'); if(em) em.textContent=spellWord.e;
+  const ms=document.getElementById('spellMsg'); if(ms) ms.textContent='';
+  renderSpell();
+}
+function renderSpell(){
+  const b=document.getElementById('spellBlanks'); if(!b||!spellWord) return;
+  b.innerHTML=spellWord.w.split('').map((ch,i)=>`<span class="${spellFound[i]?'filled':''}">${spellFound[i]||'?'}</span>`).join('');
+  const ch=document.getElementById('spellChoices'); if(!ch) return;
+  const letters=[...spellWord.w.split('')].sort(()=>Math.random()-0.5);
+  // add 2 decoys
+  const decoys=abc.map(a=>a.l).filter(l=>!spellWord.w.includes(l)).sort(()=>Math.random()-0.5).slice(0,2);
+  const all=[...letters,...decoys].sort(()=>Math.random()-0.5);
+  ch.innerHTML=all.map(l=>`<button onclick="tapSpell('${l}')">${l}</button>`).join('');
+}
+function tapSpell(l){
+  if(!spellWord) return;
+  const idx=spellFound.findIndex((v,i)=>!v && spellWord.w[i]===l);
+  if(idx>=0){
+    spellFound[idx]=l; sayLetter(l); blip(600+idx*150,0.5,'triangle',0.7); renderSpell();
+    if(spellFound.join('')===spellWord.w){
+      const ms=document.getElementById('spellMsg'); if(ms) ms.textContent='🎉 '+spellWord.w+'! You read it!';
+      // blend: C... A... T... CAT!
+      try{ speechSynthesis.cancel(); }catch(e){}
+      sayLetter(spellWord.w.split('').join('. ')+'. '+spellWord.w);
+      burstConfetti(24,'#22C55E'); setTimeout(newSpell, 2600);
+    }
+  } else {
+    blip(200,0.4,'sine',0.5);
+    try{ event?.target?.animate?.([{transform:'translateX(0)'},{transform:'translateX(-6px)'},{transform:'translateX(6px)'},{transform:'translateX(0)'}],{duration:300}); }catch(e){}
+  }
+}
+function hearSpell(){ if(spellWord) sayLetter(spellWord.w); }
 const paletteColors=['#111827','#EF4444','#F97316','#EAB308','#22C55E','#06B6D4','#3B82F6','#A855F7','#EC4899','#FFFFFF'];
 let drawColor='#111827',tool='brush',drawing=false,ctx;
 function initDraw(){const pal=document.getElementById('palette');pal.innerHTML=paletteColors.map(c=>`<button style="background:${c};border-color:${c==='#FFFFFF'?'#e2e8f0':'#fff'}" onclick="pickColor('${c}',this)" class="${c===drawColor?'active':''}"></button>`).join('');const canvas=document.getElementById('doodle');ctx=canvas.getContext('2d');ctx.lineCap='round';ctx.lineJoin='round';resizeCanvas();['mousedown','touchstart'].forEach(ev=>canvas.addEventListener(ev,startDraw,{passive:false}));['mousemove','touchmove'].forEach(ev=>canvas.addEventListener(ev,moveDraw,{passive:false}));['mouseup','touchend','mouseleave','touchcancel'].forEach(ev=>canvas.addEventListener(ev,endDraw));document.getElementById('brushSize').addEventListener('input',e=>document.getElementById('brushSizeVal').textContent=e.target.value);}
@@ -1061,6 +1265,10 @@ setTimeout(()=>{
   try{ initPuzzle(); }catch(e){}
   try{ initFishing(); }catch(e){}
   try{ if(!document.querySelectorAll('.key').length) initPiano(); }catch(e){}
+  try{ renderPhonics(); }catch(e){}
+  try{ newSpell(); }catch(e){}
+  try{ renderSingLyrics(-1); }catch(e){}
+  try{ drawTraceGuide(); }catch(e){}
   // Immediate fallback for toddler - ensure sorting/puzzle/fishing visible even if timeout missed
   setTimeout(()=>{ try{ if(document.querySelectorAll('#sortPool .draggable').length===0) initSort(); }catch(e){} }, 800);
   setTimeout(()=>{ try{ if(document.querySelectorAll('.puzzle-piece').length===0) initPuzzle(); }catch(e){} }, 900);
