@@ -3,7 +3,10 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-<title>Kids Play & Learn — 2 Years Old</title>
+<title>Kids Play & Learn</title>
+<meta name="description" content="Interactive, educational games designed for 2-year-old toddlers featuring peek-a-boo animals, animal feeding, rainbow pop-it fidget toy, beep-beep vehicles, bubble popping with surprise toys, tap-to-catch fishing pond, 4-piece jigsaw puzzles, color sorting, piano music garden, and learning colors, numbers, shapes, and ABCs." />
+<meta property="og:title" content="Kids Play & Learn" />
+<meta property="og:description" content="Interactive, educational games designed for 2-year-old toddlers featuring peek-a-boo animals, animal feeding, rainbow pop-it fidget toy, beep-beep vehicles, bubble popping with surprise toys, tap-to-catch fishing pond, 4-piece jigsaw puzzles, color sorting, piano music garden, and learning colors, numbers, shapes, and ABCs." />
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Fredoka:wght@600;700&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -18,8 +21,25 @@ a{text-decoration:none;color:inherit}
 .kids-actions{margin-left:auto;display:flex;gap:.35rem;align-items:center;flex-shrink:0}
 .btn-pill{border:none;border-radius:999px;padding:.45rem .7rem;font-weight:900;font-size:.78rem;cursor:pointer;display:inline-flex;align-items:center;gap:.3rem;transition:transform .08s}
 .btn-pill:active{transform:scale(.96)}
+.btn-voice{background:linear-gradient(135deg,#FEF3C7,#FDE68A);border:2px solid #F59E0B;color:#78350F;box-shadow:0 3px 8px rgba(245,158,11,0.22);font-weight:900}
+.btn-voice.speaking{animation:voicePulse .5s infinite alternate ease-in-out;border-color:#10B981;background:#D1FAE5;color:#065F46}
+@keyframes voicePulse{0%{transform:scale(1)}100%{transform:scale(1.06);box-shadow:0 0 12px rgba(16,185,129,0.55)}}
 .btn-mute{background:#f1f5f9;border:2px solid #e2e8f0}
 .btn-back{background:#0f172a;color:#fff}
+/* Kid-Friendly AI Voice Modal */
+.voice-modal-backdrop{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(15,23,42,0.65);backdrop-filter:blur(5px);z-index:9999;display:flex;align-items:center;justify-content:center;padding:1rem;animation:popIn .2s ease}
+.voice-modal-card{background:#fff;border-radius:28px;max-width:480px;width:100%;padding:1.3rem;box-shadow:0 20px 45px rgba(0,0,0,0.25);border:4px solid #FDE68A}
+.voice-card{display:flex;align-items:center;gap:.8rem;padding:.75rem .9rem;border-radius:20px;border:3px solid #E2E8F0;background:#F8FAFC;margin-bottom:.7rem;cursor:pointer;transition:all .15s}
+.voice-card:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,0.08)}
+.voice-card.active{border-color:#10B981;background:#ECFDF5;box-shadow:0 6px 16px rgba(16,185,129,0.22)}
+.voice-avatar{font-size:2.5rem;line-height:1;width:56px;height:56px;border-radius:18px;display:grid;place-items:center;background:#fff;box-shadow:0 4px 10px rgba(0,0,0,0.06);border:2px solid #F1F5F9;flex-shrink:0}
+.voice-info{flex:1;min-width:0}
+.voice-name{font-weight:900;font-size:1.05rem;color:#0F172A;display:flex;align-items:center;gap:.4rem}
+.voice-desc{font-size:.8rem;color:#64748B;font-weight:700;line-height:1.3;margin-top:.2rem}
+.voice-listen-btn{background:#fff;border:2px solid #CBD5E1;border-radius:999px;padding:.35rem .65rem;font-weight:900;font-size:.78rem;cursor:pointer;display:inline-flex;align-items:center;gap:.25rem;flex-shrink:0;box-shadow:0 2px 6px rgba(0,0,0,0.06)}
+.voice-listen-btn:hover{background:#F1F5F9;border-color:#94A3B8}
+.voice-listen-btn:active{transform:scale(.94)}
+.voice-select-badge{background:#10B981;color:#fff;border-radius:999px;padding:.2rem .55rem;font-size:.75rem;font-weight:900}
 .kids-nav{display:flex;gap:.45rem;flex-wrap:nowrap;justify-content:flex-start;padding:.5rem .6rem .55rem;background:linear-gradient(#fff, var(--bg));overflow-x:auto;overscroll-behavior:contain;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 .kids-nav::-webkit-scrollbar{display:none}
 .tab{flex:0 0 auto;border:3px solid transparent;background:#fff;border-radius:16px;padding:.45rem .75rem;font-weight:900;font-size:.82rem;cursor:pointer;box-shadow:0 4px 10px rgba(0,0,0,.08);display:flex;align-items:center;gap:.35rem;transition:all .15s;white-space:nowrap;min-height:44px}
@@ -108,25 +128,385 @@ canvas#doodle{width:100%;height:420px;background:#fff;border-radius:18px;border:
 .home-card .he{font-size:3rem;line-height:1}
 .home-card b{display:block;margin-top:.4rem;font-size:1rem;font-weight:900}
 .home-card small{display:block;color:#64748b;font-weight:800;font-size:.72rem;margin-top:.15rem}
-.abc-sing-lyrics{display:flex;flex-wrap:wrap;gap:.25rem;justify-content:center;margin-top:.7rem;max-width:560px;margin-left:auto;margin-right:auto}
-.abc-sing-lyrics span{font-weight:900;background:#fff;border:2px solid #f1f5f9;border-radius:10px;padding:.25rem .45rem;min-width:34px}
-.abc-sing-lyrics span.singing{background:var(--purple);color:#fff;border-color:var(--purple);transform:scale(1.15)}
-/* Bini-style ABC modes */
-.abc-modes{display:flex;gap:.4rem;justify-content:center;flex-wrap:wrap;margin:.5rem 0}
-.abc-modes button{border:3px solid #f1f5f9;background:#fff;border-radius:999px;padding:.45rem .8rem;font-weight:900;cursor:pointer;font-size:.82rem}
-.abc-modes button.active{background:#A855F7;color:#fff;border-color:#A855F7}
+/* Enhanced ABC Sing-Along Styles */
+.abc-sing-header{display:flex;align-items:center;justify-content:center;gap:.75rem;margin-bottom:.6rem;background:#FAF5FF;border-radius:18px;padding:.65rem .95rem;border:2.5px solid #E9D5FF;box-shadow:0 4px 12px rgba(168,85,247,0.08)}
+.singer-mascot{font-size:2.4rem;display:inline-block;animation:mascotHop .55s infinite alternate ease-in-out;line-height:1;cursor:pointer;filter:drop-shadow(0 4px 6px rgba(0,0,0,0.1))}
+@keyframes mascotHop{0%{transform:translateY(0) scale(1) rotate(-6deg)}100%{transform:translateY(-8px) scale(1.12) rotate(6deg)}}
+.abc-now-singing{text-align:left}
+.abc-now-singing b{display:block;color:#7E22CE;font-size:1.05rem;line-height:1.2}
+.abc-now-singing span{display:block;color:#6B21A8;font-size:.82rem;font-weight:800}
+.abc-sing-controls{display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;margin-top:.7rem}
+.abc-sing-settings{display:flex;gap:.4rem;justify-content:center;align-items:center;flex-wrap:wrap;margin-top:.6rem;font-size:.78rem;font-weight:800;color:#64748b}
+.abc-sing-settings button{border:2px solid #e2e8f0;background:#fff;border-radius:999px;padding:.32rem .7rem;font-weight:900;cursor:pointer;font-size:.78rem;color:#475569;transition:all .15s}
+.abc-sing-settings button.active{background:#A855F7;color:#fff;border-color:#A855F7}
+.abc-sing-lyrics-wrap{overflow-x:auto;padding:.4rem 0;max-width:100%;-webkit-overflow-scrolling:touch}
+.abc-sing-lyrics{display:flex;flex-wrap:wrap;gap:.35rem;justify-content:center;margin-top:.4rem;max-width:580px;margin-left:auto;margin-right:auto}
+.abc-sing-lyrics span{font-weight:900;background:#fff;border:3px solid #e2e8f0;border-radius:12px;padding:.35rem .45rem;min-width:38px;height:42px;display:inline-flex;align-items:center;justify-content:center;font-size:1.15rem;cursor:pointer;user-select:none;transition:all .15s;box-shadow:0 3px 8px rgba(0,0,0,.06)}
+.abc-sing-lyrics span:active{transform:scale(.92)}
+.abc-sing-lyrics span.singing{background:linear-gradient(135deg, #A855F7, #EC4899);color:#fff;border-color:#FDE047;transform:scale(1.22);box-shadow:0 0 18px rgba(168,85,247,0.7);z-index:2;animation:singPulse .35s infinite alternate ease-in-out}
+@keyframes singPulse{from{transform:scale(1.18)}to{transform:scale(1.26)}}
+.abc-note-pop{position:absolute;font-size:1.8rem;pointer-events:none;animation:floatNote 0.85s ease-out forwards;z-index:10}
+@keyframes floatNote{0%{opacity:0;transform:translateY(0) scale(0.6)}30%{opacity:1;transform:translateY(-20px) scale(1.2) rotate(15deg)}100%{opacity:0;transform:translateY(-60px) scale(1) rotate(-15deg)}}
+/* === BINI BAMBINI "ABC GAMES: LEARN & READ" STYLES === */
+.abc-modes{display:flex;gap:.4rem;justify-content:center;flex-wrap:wrap;margin:.6rem 0}
+.abc-modes button{border:3px solid #f1f5f9;background:#fff;border-radius:999px;padding:.5rem .85rem;font-weight:900;cursor:pointer;font-size:.85rem;box-shadow:0 3px 8px rgba(0,0,0,0.06);transition:all .15s}
+.abc-modes button:active{transform:scale(0.94)}
+.abc-modes button.active{background:linear-gradient(135deg, #A855F7, #EC4899);color:#fff;border-color:#FDE047;box-shadow:0 6px 14px rgba(168,85,247,0.35)}
 .abc-panel{display:none}
 .abc-panel.active{display:block}
-#traceCanvas{width:100%;height:300px;background:#FFFDF5;border:3px dashed #FDE68A;border-radius:18px;touch-action:none;display:block}
+
+/* Live Letter Animated Character Component */
+.live-letter{
+  position:relative;
+  display:inline-flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  user-select:none;
+  cursor:pointer;
+  transition:transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.live-letter:active{ transform: scale(0.92); }
+.live-letter.jumping{ animation: liveJump 0.55s ease-in-out; }
+@keyframes liveJump{
+  0%{ transform: translateY(0) scale(1); }
+  35%{ transform: translateY(-38px) scale(1.15) rotate(-6deg); }
+  65%{ transform: translateY(-44px) scale(1.18) rotate(6deg); }
+  85%{ transform: translateY(3px) scale(0.96); }
+  100%{ transform: translateY(0) scale(1); }
+}
+.live-letter-body{
+  position:relative;
+  width:88px;
+  height:102px;
+  border-radius:26px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:'Fredoka','Nunito',sans-serif;
+  font-size:4.2rem;
+  font-weight:900;
+  color:#fff;
+  border:4px solid rgba(255,255,255,0.9);
+  box-shadow:0 10px 22px rgba(0,0,0,0.15), inset 0 -6px 0 rgba(0,0,0,0.15), inset 0 6px 0 rgba(255,255,255,0.4);
+  background:var(--letter-color, #A855F7);
+  animation:idleFloat 3s infinite ease-in-out alternate;
+}
+.live-letter.large .live-letter-body{
+  width:130px;
+  height:150px;
+  border-radius:36px;
+  font-size:6.2rem;
+  border-width:5px;
+}
+@keyframes idleFloat{
+  0%{ transform: translateY(0) rotate(0deg); }
+  100%{ transform: translateY(-7px) rotate(2deg); }
+}
+.live-eyes{
+  position:absolute;
+  top:14px;
+  display:flex;
+  gap:10px;
+  z-index:3;
+}
+.live-letter.large .live-eyes{ top:22px; gap:16px; }
+.live-eye{
+  width:16px;
+  height:20px;
+  background:#fff;
+  border-radius:50%;
+  border:2.5px solid #1e293b;
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  animation:eyeBlink 3.4s infinite ease-in-out;
+}
+.live-letter.large .live-eye{ width:24px; height:30px; border-width:3px; }
+@keyframes eyeBlink{
+  0%, 90%, 100%{ transform: scaleY(1); }
+  95%{ transform: scaleY(0.12); }
+}
+.live-pupil{
+  width:7px;
+  height:8px;
+  background:#0f172a;
+  border-radius:50%;
+  position:relative;
+  animation:pupilGlance 4s infinite alternate;
+}
+.live-letter.large .live-pupil{ width:11px; height:13px; }
+.live-pupil::after{
+  content:'';
+  position:absolute;
+  top:1px;
+  left:1px;
+  width:3px;
+  height:3px;
+  background:#fff;
+  border-radius:50%;
+}
+@keyframes pupilGlance{
+  0%, 30%{ transform: translate(0, 0); }
+  50%{ transform: translate(2px, -1px); }
+  80%{ transform: translate(-2px, 0); }
+  100%{ transform: translate(0, 1px); }
+}
+.live-mouth{
+  position:absolute;
+  bottom:16px;
+  width:16px;
+  height:8px;
+  border-bottom:3.5px solid #1e293b;
+  border-radius:0 0 10px 10px;
+  z-index:3;
+}
+.live-letter.large .live-mouth{ bottom:26px; width:26px; height:12px; border-bottom-width:5px; }
+.live-blush{
+  position:absolute;
+  top:22px;
+  width:10px;
+  height:6px;
+  background:rgba(244,114,182,0.9);
+  border-radius:50%;
+  z-index:2;
+}
+.live-letter.large .live-blush{ top:36px; width:16px; height:9px; }
+.live-blush.left{ left:10px; }
+.live-blush.right{ right:10px; }
+.live-arms{
+  position:absolute;
+  top:44%;
+  width:100%;
+  display:flex;
+  justify-content:space-between;
+  pointer-events:none;
+}
+.live-arm{
+  width:15px;
+  height:15px;
+  border-radius:50%;
+  background:#fff;
+  border:3px solid var(--letter-color, #A855F7);
+  box-shadow:0 3px 6px rgba(0,0,0,0.12);
+  animation:waveArm 1.5s infinite alternate ease-in-out;
+}
+.live-letter.large .live-arm{ width:22px; height:22px; border-width:4px; }
+.live-arm.left{ margin-left:-9px; }
+.live-arm.right{ margin-right:-9px; animation-delay:0.75s; }
+@keyframes waveArm{
+  0%{ transform: translateY(0); }
+  100%{ transform: translateY(-8px); }
+}
+.live-feet{
+  display:flex;
+  gap:18px;
+  margin-top:-6px;
+  z-index:1;
+}
+.live-letter.large .live-feet{ gap:28px; margin-top:-9px; }
+.live-foot{
+  width:22px;
+  height:13px;
+  background:#f59e0b;
+  border-radius:10px 10px 6px 6px;
+  border:2px solid #d97706;
+  box-shadow:0 3px 6px rgba(0,0,0,0.14);
+}
+.live-letter.large .live-foot{ width:34px; height:18px; border-radius:14px 14px 8px 8px; border-width:3px; }
+
+/* === LETTERS IN BOXES (Bini Trademark Word Kit) === */
+.bini-boxes-stage{
+  background:linear-gradient(180deg, #F0F9FF 0%, #E0F2FE 100%);
+  border:3.5px solid #BAE6FD;
+  border-radius:28px;
+  padding:1.2rem .8rem;
+  margin:0.8rem 0;
+  position:relative;
+  overflow:hidden;
+  box-shadow:inset 0 4px 14px rgba(56,189,248,0.12);
+}
+.bini-target-word{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:0.7rem;
+  margin-bottom:0.8rem;
+}
+.bini-toy-preview{
+  font-size:3.6rem;
+  animation:toyWiggle 1.8s infinite alternate ease-in-out;
+  cursor:pointer;
+  line-height:1;
+}
+@keyframes toyWiggle{
+  0%{ transform: rotate(-6deg) scale(1); }
+  100%{ transform: rotate(6deg) scale(1.1); }
+}
+.bini-box-slots{
+  display:flex;
+  justify-content:center;
+  gap:0.8rem;
+  flex-wrap:wrap;
+  margin:0.9rem 0;
+}
+.bini-box{
+  width:90px;
+  height:108px;
+  background:#fff;
+  border:4px dashed #93C5FD;
+  border-radius:22px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  box-shadow:0 8px 18px rgba(0,0,0,0.06);
+  transition:all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.bini-box.filled{
+  border-style:solid;
+  border-color:#22C55E;
+  background:#F0FDF4;
+  transform:scale(1.08);
+  box-shadow:0 8px 22px rgba(34,197,94,0.3);
+}
+.bini-box-ribbon{
+  position:absolute;
+  top:-11px;
+  font-size:1.5rem;
+  line-height:1;
+}
+.bini-box-ghost{
+  font-size:3.2rem;
+  font-weight:900;
+  color:#CBD5E1;
+  font-family:'Fredoka','Nunito',sans-serif;
+}
+.bini-conveyor{
+  background:#FEF3C7;
+  border:3px solid #FDE68A;
+  border-radius:22px;
+  padding:0.9rem 0.6rem;
+  display:flex;
+  justify-content:center;
+  gap:0.9rem;
+  flex-wrap:wrap;
+  min-height:120px;
+  align-items:center;
+  margin-top:0.8rem;
+  box-shadow:inset 0 3px 8px rgba(245,158,11,0.1);
+}
+.bini-celebrate-overlay{
+  position:absolute;
+  inset:0;
+  background:rgba(255,255,255,0.94);
+  display:none;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  z-index:20;
+  border-radius:26px;
+  animation:popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.bini-celebrate-overlay.active{ display:flex; }
+@keyframes popIn{ from{ opacity:0; transform:scale(0.85); } to{ opacity:1; transform:scale(1); } }
+
+/* === BINI LETTER BUBBLE POP === */
+.bini-bubble-sky{
+  height:350px;
+  background:linear-gradient(180deg, #BAE6FD 0%, #E0F2FE 70%, #FEF9C3 100%);
+  border-radius:26px;
+  position:relative;
+  overflow:hidden;
+  border:3.5px solid #7DD3FC;
+  touch-action:none;
+  box-shadow:inset 0 4px 14px rgba(0,0,0,0.06);
+}
+.bini-bubble-letter{
+  position:absolute;
+  bottom:-90px;
+  width:80px;
+  height:80px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  cursor:pointer;
+  user-select:none;
+  box-shadow:inset -6px -8px 16px rgba(255,255,255,0.85), 0 8px 18px rgba(0,0,0,0.12);
+  border:3px solid rgba(255,255,255,0.9);
+  animation:bubbleFloatUp linear forwards;
+}
+@keyframes bubbleFloatUp{
+  to{ transform: translateY(-480px) translateX(var(--drift, 0px)); }
+}
+.bini-star-jar{
+  position:absolute;
+  top:12px;
+  left:14px;
+  background:#fff;
+  border-radius:999px;
+  padding:0.4rem 0.95rem;
+  font-weight:900;
+  font-size:0.95rem;
+  box-shadow:0 4px 12px rgba(0,0,0,0.12);
+  border:2.5px solid #FDE047;
+  display:flex;
+  align-items:center;
+  gap:0.4rem;
+  z-index:5;
+}
+
+/* === BINI LETTER PEEKABOO === */
+.bini-peek-grid{
+  display:grid;
+  grid-template-columns:repeat(2, 1fr);
+  gap:0.9rem;
+  max-width:440px;
+  margin:0.8rem auto;
+}
+.bini-peek-card{
+  height:145px;
+  background:#fff;
+  border-radius:22px;
+  border:3.5px solid #E2E8F0;
+  box-shadow:0 8px 16px rgba(0,0,0,0.08);
+  position:relative;
+  overflow:hidden;
+  cursor:pointer;
+  display:grid;
+  place-items:center;
+  transition:transform 0.15s;
+}
+.bini-peek-card:active{ transform:scale(0.95); }
+.bini-peek-cover{
+  position:absolute;
+  inset:0;
+  background:#FEF3C7;
+  border:3px solid #F59E0B;
+  border-radius:18px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  font-size:2.8rem;
+  transition:all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  z-index:2;
+}
+.bini-peek-card.revealed .bini-peek-cover{
+  transform:translateY(-120%);
+  opacity:0;
+  pointer-events:none;
+}
+
+/* === BINI PHONICS GRID === */
+.phonic-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(72px,1fr));gap:.5rem;margin-top:.7rem}
+.phonic-grid button{border:3px solid #f1f5f9;background:#fff;border-radius:16px;padding:.6rem 0;font-weight:900;cursor:pointer;font-size:1.1rem;box-shadow:0 4px 10px rgba(0,0,0,0.06);transition:all .15s}
+.phonic-grid button:active{transform:scale(0.92)}
+.phonic-grid button small{display:block;font-size:.7rem;color:#A855F7}
+#traceCanvas{width:100%;height:300px;background:#FFFDF5;border:3px dashed #FDE68A;border-radius:20px;touch-action:none;display:block}
 @media(max-width:1024px){#traceCanvas{height:260px}}
-.spell-blanks{display:flex;gap:.5rem;justify-content:center;margin:.7rem 0}
-.spell-blanks span{width:56px;height:62px;border-radius:14px;display:grid;place-items:center;font-size:1.8rem;font-weight:900;background:#fff;border:3px dashed #e2e8f0}
-.spell-blanks span.filled{border-style:solid;border-color:#22C55E;background:#F0FDF4}
-.spell-choices{display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap}
-.spell-choices button{width:56px;height:56px;border-radius:14px;font-size:1.6rem;font-weight:900;background:#fff;border:3px solid #f1f5f9;cursor:pointer;box-shadow:0 4px 10px rgba(0,0,0,.08)}
-.phonic-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(64px,1fr));gap:.45rem;margin-top:.6rem}
-.phonic-grid button{border:2px solid #f1f5f9;background:#fff;border-radius:12px;padding:.5rem 0;font-weight:900;cursor:pointer;font-size:1rem}
-.phonic-grid button small{display:block;font-size:.65rem;color:#A855F7}
 .bubble{position:absolute;bottom:-80px;border-radius:50%;display:grid;place-items:center;cursor:pointer;user-select:none;box-shadow:inset -8px -10px 18px rgba(255,255,255,.7), 0 6px 12px rgba(0,0,0,.12);border:2px solid rgba(255,255,255,.8);animation:floatUp linear forwards; ;touch-action:manipulation;min-width:60px;min-height:60px;}
 @keyframes floatUp{to{transform:translateY(-520px) translateX(var(--drift,0px))}}
 .bubble:active{transform:scale(.9)!important}
@@ -161,8 +541,8 @@ canvas#doodle{width:100%;height:420px;background:#fff;border-radius:18px;border:
 .draggable:active{cursor:grabbing;transform:scale(1.08) rotate(2deg)}
 .draggable.dragging{opacity:.5;transform:rotate(6deg) scale(.95)}
 .sort-pool{display:flex;flex-wrap:wrap;gap:.8rem;justify-content:center;min-height:130px;padding:.8rem;padding:.6rem;background:#fff;border-radius:18px;border:3px solid #fff;box-shadow:0 6px 14px rgba(0,0,0,.06)}
-/* Puzzle jigsaw */
-.puzzle-board{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem;max-width:520px;margin:0 auto}
+/* Puzzle jigsaw (2x2 toddler friendly) */
+.puzzle-board{display:grid;grid-template-columns:repeat(2,1fr);gap:.8rem;max-width:360px;margin:0 auto}
 .puzzle-slot{aspect-ratio:1;background:#fff;border:3px dashed #e2e8f0;border-radius:16px;display:grid;place-items:center;font-size:2.6rem;position:relative;overflow:hidden;transition:all .15s}
 .puzzle-slot.filled{border-style:solid;border-color:#22C55E;background:#F0FDF4}
 .puzzle-slot.drag-over{border-color:var(--blue);background:#EFF6FF;transform:scale(1.03)}
@@ -201,7 +581,69 @@ canvas#doodle{width:100%;height:420px;background:#fff;border-radius:18px;border:
 .tab[data-tab="puzzle"].active{background:#FCE7F3;border-color:#EC4899}
 .tab[data-tab="fishing"].active{background:#DBEAFE;border-color:#3B82F6}
 .tab[data-tab="music"].active{background:#E0E7FF;border-color:#8B5CF6}
+.tab[data-tab="peekaboo"].active{background:#FEF9C3;border-color:#F59E0B}
+.tab[data-tab="feeding"].active{background:#FFEDD5;border-color:#F97316}
+.tab[data-tab="popit"].active{background:#FCE7F3;border-color:#EC4899}
+.tab[data-tab="vehicles"].active{background:#E0F2FE;border-color:#0284C7}
 
+/* Peek-a-boo */
+.peek-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;max-width:650px;margin:0 auto}
+@media(max-width:550px){.peek-grid{gap:.65rem}}
+.peek-card{background:#fff;border-radius:24px;border:4px solid #f1f5f9;box-shadow:0 8px 20px rgba(0,0,0,.08);padding:1.2rem .8rem;text-align:center;cursor:pointer;position:relative;overflow:hidden;min-height:190px;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:transform .15s,box-shadow .15s;touch-action:manipulation}
+.peek-card:active{transform:scale(.95)}
+.peek-cover{font-size:4.2rem;line-height:1;transition:transform .3s cubic-bezier(.34,1.56,.64,1);filter:drop-shadow(0 4px 6px rgba(0,0,0,.1))}
+.peek-card.open .peek-cover{transform:scale(0);height:0;margin:0;opacity:0;display:none}
+.peek-creature{display:none;flex-direction:column;align-items:center;animation:creaturePop .4s cubic-bezier(.34,1.56,.64,1) forwards}
+.peek-card.open .peek-creature{display:flex}
+@keyframes creaturePop{0%{transform:scale(0) translateY(20px);opacity:0}70%{transform:scale(1.2) translateY(-8px)}100%{transform:scale(1) translateY(0);opacity:1}}
+.peek-creature .creature-emoji{font-size:4.4rem;line-height:1;filter:drop-shadow(0 6px 12px rgba(0,0,0,.15))}
+.peek-creature b{font-size:1.2rem;font-weight:900;margin-top:.4rem;color:#1e293b}
+.peek-creature small{font-size:.85rem;font-weight:800;color:#64748b}
+.peek-hint{font-size:.9rem;font-weight:900;margin-top:.4rem;color:#64748b}
+
+/* Feeding */
+.feed-wrap{max-width:640px;margin:0 auto;text-align:center}
+.buddy-picker{display:flex;gap:.6rem;justify-content:center;margin-bottom:.8rem;flex-wrap:wrap}
+.buddy-btn{border:3px solid #e2e8f0;background:#fff;border-radius:20px;padding:.5rem .9rem;font-size:1.8rem;cursor:pointer;transition:transform .12s,border-color .12s;box-shadow:0 4px 10px rgba(0,0,0,.06)}
+.buddy-btn.active{border-color:#F59E0B;background:#FEF3C7;transform:scale(1.1)}
+.buddy-stage{position:relative;background:linear-gradient(180deg,#FEF3C7 0%,#FFFBEB 100%);border-radius:28px;border:4px solid #FDE68A;padding:1.5rem 1rem 1rem;min-height:260px;box-shadow:0 8px 24px rgba(245,158,11,.15);display:flex;flex-direction:column;align-items:center;justify-content:center}
+.buddy-face{font-size:6.2rem;line-height:1;filter:drop-shadow(0 8px 16px rgba(0,0,0,.12));transition:transform .15s}
+.buddy-face.chewing{animation:buddyChew .45s ease-in-out infinite}
+@keyframes buddyChew{0%,100%{transform:scale(1) translateY(0)}50%{transform:scale(1.15,0.9) translateY(6px)}}
+.buddy-mouth-zone{margin-top:.5rem;background:#fff;border:3px dashed #F59E0B;border-radius:999px;padding:.5rem 1.4rem;font-weight:900;color:#B45309;font-size:1.05rem;display:inline-flex;align-items:center;gap:.4rem;box-shadow:0 4px 12px rgba(245,158,11,.15);transition:all .15s}
+.buddy-mouth-zone.drag-over{transform:scale(1.12);background:#FEF3C7;border-color:#D97706}
+.food-tray{display:grid;grid-template-columns:repeat(4,1fr);gap:.6rem;margin-top:1rem}
+@media(max-width:550px){.food-tray{grid-template-columns:repeat(3,1fr)}}
+.food-btn{background:#fff;border:3px solid #f1f5f9;border-radius:20px;padding:.8rem .4rem;text-align:center;font-size:2.6rem;cursor:pointer;box-shadow:0 6px 14px rgba(0,0,0,.08);transition:transform .12s,box-shadow .12s;touch-action:manipulation;position:relative}
+.food-btn:active{transform:scale(.92)}
+.food-btn span.food-name{display:block;font-size:.78rem;font-weight:900;color:#475569;margin-top:.2rem}
+
+/* Pop-It */
+.popit-stage{max-width:520px;margin:0 auto;text-align:center}
+.popit-board{background:linear-gradient(135deg,#FDE047 0%,#F472B6 50%,#60A5FA 100%);border-radius:32px;padding:1.2rem;box-shadow:0 12px 30px rgba(0,0,0,.15),inset 0 4px 10px rgba(255,255,255,.6);border:6px solid #fff;display:grid;grid-template-columns:repeat(5,1fr);gap:.7rem;margin:1rem auto;transition:transform .5s cubic-bezier(.34,1.56,.64,1);touch-action:manipulation}
+@media(max-width:480px){.popit-board{gap:.45rem;padding:.8rem;border-radius:24px}}
+.popit-bubble{aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 35% 35%, #fff 0%, currentColor 50%, rgba(0,0,0,.25) 100%);box-shadow:0 8px 14px rgba(0,0,0,.22),inset 0 -4px 8px rgba(0,0,0,.2),inset 0 4px 8px rgba(255,255,255,.8);cursor:pointer;display:grid;place-items:center;font-size:1.6rem;border:3px solid rgba(255,255,255,.7);transition:transform .12s,box-shadow .12s,background .12s;user-select:none;-webkit-user-select:none;touch-action:manipulation}
+.popit-bubble:active{transform:scale(.92)}
+.popit-bubble.popped{transform:scale(.88);background:radial-gradient(circle at 60% 60%, rgba(0,0,0,.25) 0%, currentColor 60%, #fff 100%) !important;box-shadow:inset 0 6px 12px rgba(0,0,0,.35),0 2px 4px rgba(0,0,0,.1) !important;opacity:.88}
+
+/* Vehicles */
+.vehicle-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:.8rem;margin-top:.8rem}
+.vehicle-card{background:#fff;border-radius:22px;border:3px solid #f1f5f9;box-shadow:0 8px 18px rgba(0,0,0,.08);padding:1rem .6rem;text-align:center;cursor:pointer;transition:transform .12s,border-color .12s;touch-action:manipulation;position:relative;overflow:hidden}
+.vehicle-card:active{transform:scale(.94)}
+.vehicle-card .ve{font-size:3.5rem;line-height:1;transition:transform .2s}
+.vehicle-card b{display:block;font-size:1.05rem;font-weight:900;margin-top:.4rem;color:#1e293b}
+.vehicle-card small{display:block;font-size:.78rem;font-weight:800;color:#F97316;margin-top:.15rem}
+.vehicle-stage{margin-top:1rem;height:140px;background:linear-gradient(180deg,#93C5FD 0%,#BAE6FD 55%,#475569 55%,#334155 100%);border-radius:24px;border:4px solid #fff;box-shadow:inset 0 4px 14px rgba(0,0,0,.15);position:relative;overflow:hidden}
+.stage-sky-clouds{position:absolute;top:10px;left:10px;font-size:1.4rem;opacity:.65;pointer-events:none}
+.stage-road-line{position:absolute;top:76%;left:0;right:0;height:4px;border-top:3px dashed #FDE047}
+.zoom-runner{position:absolute;bottom:8px;font-size:4.0rem;left:-100px;line-height:1;transition:none;filter:drop-shadow(0 6px 12px rgba(0,0,0,.35));cursor:pointer;touch-action:manipulation;z-index:5}
+.zoom-runner.driving{animation:vehicleBouncing .4s ease-in-out infinite}
+@keyframes vehicleBouncing{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-6px) rotate(2deg)}}
+.vehicle-card.driving-now{border-color:#F59E0B;background:#FEF3C7;transform:scale(1.04)}
+
+/* Touch sparkles */
+.touch-sparkle{position:fixed;pointer-events:none;font-size:1.8rem;transform:translate(-50%,-50%) scale(1);animation:sparkleFly .7s ease-out forwards;z-index:99999}
+@keyframes sparkleFly{0%{opacity:1;transform:translate(-50%,-50%) scale(0.6) rotate(0deg)}50%{transform:translate(-50%,-70%) scale(1.3) rotate(180deg)}100%{opacity:0;transform:translate(-50%,-100%) scale(0.4) rotate(360deg)}}
 
 .puzzle-piece.selected{outline:3px solid #EC4899; transform:scale(1.08); box-shadow:0 8px 18px rgba(236,72,153,.3)}
 .sort-pool .draggable.selected{outline:3px solid #22C55E; transform:scale(1.08)}
@@ -213,32 +655,50 @@ canvas#doodle{width:100%;height:420px;background:#fff;border-radius:18px;border:
 <body>
 <div class="top-sticky">
 <header class="kids-header">
-  <div class="kids-brand"><span class="logo">🌈</span> Idris Play <small>2 year-olds</small></div>
+  <div class="kids-brand"><span class="logo">🔤</span> ABC Games <small>Learn & Read</small></div>
   <div class="kids-actions">
+    <button class="btn-pill btn-voice" id="voiceSelectBtn" onclick="openVoiceModal()" title="Change AI Voice">
+      <span id="voiceBtnEmoji">🧸</span> <span id="voiceBtnName">Puck</span> ▾
+    </button>
     <button class="btn-pill btn-mute" id="muteBtn" onclick="toggleMute()">🔊 Sound</button>
     <button class="btn-pill btn-back" onclick="switchTab('home')">🏠 Home</button>
   </div>
 </header>
 <nav class="kids-nav" id="kidsNav">
   <button class="tab active" data-tab="home" onclick="switchTab('home')"><span class="e">🏠</span> Home</button>
-  <button class="tab" data-tab="colors" onclick="switchTab('colors')"><span class="e">🎨</span> Colors</button>
-  <button class="tab" data-tab="animals" onclick="switchTab('animals')"><span class="e">🦁</span> Animals</button>
-  <button class="tab" data-tab="shapes" onclick="switchTab('shapes')"><span class="e">⭐</span> Shapes</button>
-  <button class="tab" data-tab="numbers" onclick="switchTab('numbers')"><span class="e">🔢</span> Numbers</button>
-  <button class="tab" data-tab="abc" onclick="switchTab('abc')"><span class="e">🔤</span> ABC</button>
-  <button class="tab" data-tab="draw" onclick="switchTab('draw')"><span class="e">✏️</span> Draw</button>
+  <button class="tab" data-tab="abc" onclick="switchTab('abc')"><span class="e">🔤</span> ABC Games</button>
+  <button class="tab" data-tab="peekaboo" onclick="switchTab('peekaboo')"><span class="e">🙈</span> Peek-a-Boo</button>
+  <button class="tab" data-tab="feeding" onclick="switchTab('feeding')"><span class="e">🥕</span> Feed Buddy</button>
+  <button class="tab" data-tab="popit" onclick="switchTab('popit')"><span class="e">🫧</span> Pop-It</button>
+  <button class="tab" data-tab="vehicles" onclick="switchTab('vehicles')"><span class="e">🚗</span> Vehicles</button>
   <button class="tab" data-tab="bubbles" onclick="switchTab('bubbles')"><span class="e">🫧</span> Bubbles</button>
-  <button class="tab" data-tab="memory" onclick="switchTab('memory')"><span class="e">🧩</span> Memory</button>
-  <button class="tab" data-tab="sorting" onclick="switchTab('sorting')"><span class="e">🎯</span> Sorting</button>
-  <button class="tab" data-tab="puzzle" onclick="switchTab('puzzle')"><span class="e">🧩</span> Puzzle</button>
+  <button class="tab" data-tab="animals" onclick="switchTab('animals')"><span class="e">🦁</span> Animals</button>
   <button class="tab" data-tab="fishing" onclick="switchTab('fishing')"><span class="e">🎣</span> Fishing</button>
   <button class="tab" data-tab="music" onclick="switchTab('music')"><span class="e">🎵</span> Music</button>
+  <button class="tab" data-tab="colors" onclick="switchTab('colors')"><span class="e">🎨</span> Colors</button>
+  <button class="tab" data-tab="shapes" onclick="switchTab('shapes')"><span class="e">⭐</span> Shapes</button>
+  <button class="tab" data-tab="numbers" onclick="switchTab('numbers')"><span class="e">🔢</span> Numbers</button>
+  <button class="tab" data-tab="draw" onclick="switchTab('draw')"><span class="e">✏️</span> Draw</button>
+  <button class="tab" data-tab="sorting" onclick="switchTab('sorting')"><span class="e">🎯</span> Sorting</button>
+  <button class="tab" data-tab="puzzle" onclick="switchTab('puzzle')"><span class="e">🧩</span> Puzzle</button>
+  <button class="tab" data-tab="memory" onclick="switchTab('memory')"><span class="e">🃏</span> Memory</button>
 </nav>
 </div>
 <div class="wrap">
   <section id="sec-home" class="kid-section active">
-    <div style="display:flex;align-items:center;gap:.6rem"><h2 class="section-title">🌈 Pick a Game!</h2><button class="speak-btn" onclick="speak('Pick a game!')" title="Speak">🔊</button></div>
-    <div class="hint">👆 Tap a big picture to play — like your ABC app!</div>
+    <div style="display:flex;align-items:center;gap:.6rem"><h2 class="section-title">🌈 Pick a Game!</h2><button class="speak-btn" onclick="speak('Pick a game! Welcome to ABC Games!')" title="Speak">🔊</button></div>
+    <div class="hint">👆 Tap a big picture to play — ABC Games, Animals, Vehicles & Puzzles!</div>
+    
+    <!-- Featured Bini ABC Games Hero Banner -->
+    <div style="background:linear-gradient(135deg,#EFF6FF,#FAF5FF);border:3px solid #DDD6FE;border-radius:24px;padding:1rem .9rem;margin-bottom:1rem;display:flex;align-items:center;gap:.9rem;cursor:pointer;box-shadow:0 8px 20px rgba(168,85,247,0.12);transition:transform .15s" onclick="switchTab('abc')">
+      <div style="font-size:3.2rem;line-height:1;animation:toyWiggle 1.5s infinite alternate ease-in-out">🔤</div>
+      <div>
+        <div style="font-size:1.15rem;font-weight:900;color:#6B21A8">ABC Games: Learn & Read!</div>
+        <div style="font-size:.8rem;font-weight:800;color:#64748b">📦 Letters in Boxes • 🔤 Live Letters • ✏️ Tracing • 🫧 Bubbles • 🎵 Song</div>
+      </div>
+      <button class="btn-pill" style="margin-left:auto;background:linear-gradient(135deg,#A855F7,#7C3AED);color:#fff;padding:.6rem 1.1rem;font-size:.9rem;box-shadow:0 4px 12px rgba(168,85,247,0.3)">PLAY ▶</button>
+    </div>
+
     <div class="home-grid" id="homeGrid"></div>
   </section>
   <section id="sec-colors" class="kid-section">
@@ -272,48 +732,95 @@ canvas#doodle{width:100%;height:420px;background:#fff;border-radius:18px;border:
     </div>
   </section>
   <section id="sec-abc" class="kid-section">
-    <div style="display:flex;align-items:center;gap:.6rem"><h2 class="section-title">🔤 Alphabet A–Z</h2><button class="speak-btn" onclick="speak('Alphabet! Learning letters')" title="Speak">🔊</button></div>
-    <div class="hint">🌟 Like your ABC app: sing, trace, phonics & spell!</div>
+    <div style="display:flex;align-items:center;gap:.6rem;flex-wrap:wrap">
+      <h2 class="section-title">🔤 ABC Games: Learn & Read</h2>
+      <button class="speak-btn" onclick="speak('ABC Games! Learn and read letters with Live Letters!')" title="Speak">🔊</button>
+    </div>
+    <div class="hint">🌟 Official Bini-style games: Letters in Boxes, Live Letters, Tracing, Bubbles, Song & Peekaboo!</div>
+    
     <div class="abc-modes">
-      <button id="abcModeSong" class="active" onclick="setAbcMode('song')">🎵 Song</button>
-      <button id="abcModeLearn" onclick="setAbcMode('learn')">🔤 Learn</button>
-      <button id="abcModeTrace" onclick="setAbcMode('trace')">✏️ Trace</button>
+      <button id="abcModeBoxes" class="active" onclick="setAbcMode('boxes')">📦 Letters in Boxes</button>
+      <button id="abcModeLive" onclick="setAbcMode('live')">🔤 Live Letters</button>
+      <button id="abcModeTrace" onclick="setAbcMode('trace')">✏️ Magic Trace</button>
+      <button id="abcModeBubbles" onclick="setAbcMode('bubbles')">🫧 Letter Bubbles</button>
+      <button id="abcModeSong" onclick="setAbcMode('song')">🎵 ABC Song</button>
+      <button id="abcModePeek" onclick="setAbcMode('peek')">🙈 Peekaboo</button>
       <button id="abcModePhonic" onclick="setAbcMode('phonic')">🔊 Phonics</button>
-      <button id="abcModeSpell" onclick="setAbcMode('spell')">📖 Spell</button>
     </div>
-    <!-- SONG panel (karaoke, like Bini Super Song) -->
-    <div class="card abc-stage abc-panel active" id="abcPanelSong">
-      <div class="abc-letter" id="abcLetter">Aa</div>
-      <div class="abc-emoji" id="abcEmoji">🍎</div>
-      <div class="abc-word" id="abcWord">A for Apple</div>
-      <div style="font-size:.85rem;font-weight:900;color:#A855F7;margin-top:.2rem" id="abcPhonic">🔤 says "ah" — a-a-Apple!</div>
-      <div style="display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;margin-top:.7rem">
-        <button class="btn-pill" id="abcSingBtn" style="background:#A855F7;color:#fff;font-size:1rem;padding:.7rem 1.2rem" onclick="singAbcSong()">🎵 Sing ABC Song</button>
-        <button class="btn-pill" id="abcStopBtn" style="background:#f1f5f9;display:none" onclick="stopAbcSong()">⏹️ Stop</button>
+
+    <!-- 1. 📦 LETTERS IN BOXES (Bini Trademark Word Building Kit) -->
+    <div class="card abc-panel active" id="abcPanelBoxes">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem">
+        <div>
+          <b style="font-size:1.15rem;color:#0284C7">📦 Catch Letters in Boxes!</b>
+          <span style="display:block;font-size:.8rem;color:#64748b;font-weight:800">Tap the walking letters to pack the boxes & build a toy!</span>
+        </div>
+        <div style="display:flex;gap:.35rem;flex-wrap:wrap" id="biniWordTabs"></div>
       </div>
-      <div style="font-weight:900;color:#64748b;font-size:.8rem;margin-top:.4rem" id="abcSingStatus">👆 Tap Sing — letters light up + music plays!</div>
-      <div class="abc-sing-lyrics" id="abcSingLyrics"></div>
-      <div class="abc-nav">
-        <button onclick="stepAbc(-1)">◀</button>
-        <button onclick="speakAbc()" style="background:var(--yellow);border-color:var(--yellow)">🔊</button>
-        <button onclick="stepAbc(1)">▶</button>
+
+      <div class="bini-boxes-stage" id="biniBoxStage">
+        <!-- Target word & toy -->
+        <div class="bini-target-word">
+          <div class="bini-toy-preview" id="biniToyPreview" onclick="hearBiniWord()" title="Tap to hear word!">🐱</div>
+          <div>
+            <div style="font-size:1.4rem;font-weight:900;color:#0f172a" id="biniTargetWordText">CAT</div>
+            <button class="tool-btn" style="padding:.25rem .6rem;font-size:.78rem;background:#fff" onclick="hearBiniWord()">🔊 Hear Word</button>
+          </div>
+        </div>
+
+        <!-- The Gift Boxes -->
+        <div class="bini-box-slots" id="biniBoxSlots"></div>
+
+        <!-- Conveyor with walking Live Letters -->
+        <div style="font-size:.82rem;font-weight:900;color:#92400e;text-align:center;margin-top:.4rem">
+          👇 Tap the running Live Letters to jump into the boxes!
+        </div>
+        <div class="bini-conveyor" id="biniConveyor"></div>
+
+        <!-- Celebration Overlay when word is completed -->
+        <div class="bini-celebrate-overlay" id="biniCelebrateOverlay">
+          <div style="font-size:4.8rem;animation:toyWiggle .8s infinite alternate ease-in-out" id="biniCelebratedToy">🐱</div>
+          <h3 style="font-size:1.8rem;font-weight:900;color:#059669;margin:.4rem 0" id="biniCelebratedTitle">Awesome! CAT!</h3>
+          <p style="font-weight:800;color:#475569;margin-bottom:.8rem" id="biniCelebratedSub">You packed all letters into the boxes!</p>
+          <button class="btn-pill" style="background:linear-gradient(135deg,#22C55E,#16A34A);color:#fff;font-size:1.1rem;padding:.7rem 1.6rem;box-shadow:0 6px 16px rgba(34,197,94,0.4)" onclick="nextBiniWord()">Next Toy ▶</button>
+        </div>
+      </div>
+
+      <div style="display:flex;justify-content:center;gap:.6rem;margin-top:.6rem">
+        <button class="tool-btn" onclick="prevBiniWord()">◀ Prev Toy</button>
+        <button class="tool-btn" onclick="hearBiniWord()">🔊 Pronounce</button>
+        <button class="tool-btn" onclick="nextBiniWord()">Next Toy ▶</button>
       </div>
     </div>
-    <!-- LEARN panel -->
-    <div class="card abc-stage abc-panel" id="abcPanelLearn">
-      <div class="abc-letter" id="abcLetter2">Aa</div>
-      <div class="abc-emoji" id="abcEmoji2">🍎</div>
-      <div class="abc-word" id="abcWord2">A for Apple</div>
-      <div class="abc-nav">
-        <button onclick="stepAbc(-1)">◀</button>
-        <button onclick="speakAbc()" style="background:var(--yellow);border-color:var(--yellow)">🔊</button>
-        <button onclick="stepAbc(1)">▶</button>
+
+    <!-- 2. 🔤 LIVE LETTERS MEET & GREET -->
+    <div class="card abc-stage abc-panel" id="abcPanelLive">
+      <div style="margin-bottom:.6rem;text-align:center">
+        <b style="font-size:1.15rem;color:#7C3AED">🔤 Meet the Live Letters!</b>
+        <span style="display:block;font-size:.82rem;color:#64748b;font-weight:800">Tap the character to watch it jump, blink, giggle & speak!</span>
       </div>
-      <div class="abc-grid" id="abcGrid"></div>
+
+      <div style="display:flex;justify-content:center;align-items:center;min-height:180px;margin:1rem 0">
+        <div id="liveLetterHeroContainer"></div>
+      </div>
+
+      <div style="font-size:1.4rem;font-weight:900;margin-top:.4rem" id="liveHeroName">Letter A — Apple 🍎</div>
+      <div style="font-size:.9rem;font-weight:900;color:#A855F7;margin-top:.2rem" id="liveHeroPhonic">🔤 says "ah" — /ah/ /ah/ Apple!</div>
+
+      <div class="abc-nav" style="margin-top:.8rem">
+        <button onclick="stepLiveLetter(-1)" title="Previous Letter">◀</button>
+        <button onclick="hearLiveHero()" style="background:var(--yellow);border-color:var(--yellow)" title="Hear Sound">🔊</button>
+        <button onclick="stepLiveLetter(1)" title="Next Letter">▶</button>
+      </div>
+
+      <div style="font-size:.85rem;font-weight:900;color:#475569;margin-top:1rem;text-align:center">👆 Tap any Live Letter below:</div>
+      <div style="display:flex;flex-wrap:wrap;gap:.45rem;justify-content:center;margin-top:.5rem" id="liveLetterGrid"></div>
     </div>
-    <!-- TRACE panel (like Bini tracing) -->
+
+    <!-- 3. ✏️ MAGIC STAR TRACING -->
     <div class="card abc-panel" id="abcPanelTrace" style="text-align:center">
-      <div style="font-size:1.1rem;font-weight:900">✏️ Trace <b id="traceLetter" style="font-size:1.6rem;color:#A855F7">A</b> <span style="color:#94a3b8">with your finger!</span></div>
+      <div style="font-size:1.15rem;font-weight:900;color:#DB2777">✏️ Magic Star Finger Tracing</div>
+      <div style="font-size:.85rem;font-weight:800;color:#64748b;margin-bottom:.5rem">Trace the letter path to bring the Live Letter to life!</div>
       <div style="display:flex;gap:.5rem;justify-content:center;margin:.5rem 0">
         <button class="tool-btn" onclick="stepTrace(-1)">◀ Prev</button>
         <button class="tool-btn" onclick="hearTrace()">🔊 Hear</button>
@@ -321,24 +828,89 @@ canvas#doodle{width:100%;height:420px;background:#fff;border-radius:18px;border:
         <button class="tool-btn" onclick="stepTrace(1)">Next ▶</button>
       </div>
       <canvas id="traceCanvas" width="600" height="300"></canvas>
-      <div style="font-weight:900;color:#16a34a;margin-top:.4rem;min-height:24px" id="traceStar"></div>
+      <div style="font-weight:900;color:#16a34a;margin-top:.4rem;min-height:28px" id="traceStar"></div>
     </div>
-    <!-- PHONICS panel -->
-    <div class="card abc-panel" id="abcPanelPhonic" style="text-align:center">
-      <div style="font-weight:900">🔊 Tap a letter — hear its SOUND! <span style="color:#A855F7">(phonics like Bini)</span></div>
-      <div class="phonic-grid" id="phonicGrid"></div>
-    </div>
-    <!-- SPELL panel (learn to read) -->
-    <div class="card abc-panel" id="abcPanelSpell" style="text-align:center">
-      <div style="font-weight:900">📖 Tap letters to spell the word!</div>
-      <div style="font-size:3.2rem;margin-top:.3rem" id="spellEmoji">🐱</div>
-      <div class="spell-blanks" id="spellBlanks"></div>
-      <div class="spell-choices" id="spellChoices"></div>
-      <div style="display:flex;gap:.5rem;justify-content:center;margin-top:.7rem">
-        <button class="tool-btn" onclick="hearSpell()">🔊 Hear word</button>
-        <button class="tool-btn" onclick="newSpell()">🔄 New word</button>
+
+    <!-- 4. 🫧 LETTER BUBBLE POP -->
+    <div class="card abc-panel" id="abcPanelBubbles">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.6rem;flex-wrap:wrap;gap:.4rem">
+        <div>
+          <b style="font-size:1.15rem;color:#0284C7">🫧 Letter Bubble Pop!</b>
+          <span style="display:block;font-size:.8rem;color:#64748b;font-weight:800">Pop the bubbles to free the Live Letters into the Star Jar!</span>
+        </div>
+        <button class="tool-btn" style="background:#fff" onclick="spawnBiniBubble()">➕ More Bubbles</button>
       </div>
-      <div style="font-weight:900;color:#16a34a;margin-top:.4rem;min-height:24px" id="spellMsg"></div>
+
+      <div class="bini-bubble-sky" id="biniBubbleSky">
+        <div class="bini-star-jar">⭐ Stars: <b id="biniBubbleScore" style="color:#D97706">0</b></div>
+      </div>
+    </div>
+
+    <!-- 5. 🎵 ABC SONG MUSICAL KARAOKE -->
+    <div class="card abc-stage abc-panel" id="abcPanelSong">
+      <div class="abc-sing-header">
+        <span id="abcSingerMascot" class="singer-mascot" onclick="cycleAbcMascot()" title="Tap mascot to change buddy!">⭐</span>
+        <div class="abc-now-singing">
+          <b id="abcSingTitle">🎵 ABC Sing-Along Musical</b>
+          <span id="abcSingLyricLine">Sing the alphabet with chimes, piano & beat!</span>
+        </div>
+      </div>
+
+      <div style="position:relative;margin:0.5rem 0;" id="abcStageCenter">
+        <div class="abc-letter" id="abcLetter">Aa</div>
+        <div class="abc-emoji" id="abcEmoji" style="cursor:pointer;" onclick="sparkleActiveLetter()" title="Tap for fun sparkle!">🍎</div>
+        <div class="abc-word" id="abcWord">A for Apple</div>
+        <div style="font-size:.9rem;font-weight:900;color:#A855F7;margin-top:.2rem" id="abcPhonic">🔤 says "ah" — a-a-Apple!</div>
+      </div>
+
+      <div class="abc-sing-controls">
+        <button class="btn-pill" id="abcSingBtn" style="background:linear-gradient(135deg,#A855F7,#7C3AED);color:#fff;font-size:1.05rem;padding:.75rem 1.4rem;box-shadow:0 6px 16px rgba(168,85,247,0.35);" onclick="singAbcSong()">🎵 Play ABC Song</button>
+        <button class="btn-pill" id="abcTapSingBtn" style="background:linear-gradient(135deg,#F59E0B,#D97706);color:#fff;font-size:1.05rem;padding:.75rem 1.3rem;box-shadow:0 6px 16px rgba(245,158,11,0.35);" onclick="tapSingNext()">👆 Tap to Sing!</button>
+        <button class="btn-pill" id="abcStopBtn" style="background:#fee2e2;color:#b91c1c;border:2px solid #fca5a5;display:none;font-weight:900;" onclick="stopAbcSong()">⏹️ Stop Song</button>
+      </div>
+
+      <div class="abc-sing-settings">
+        <span>Tempo:</span>
+        <button id="abcTempoSlow" class="active" onclick="setAbcTempo('toddler')">🐢 Toddler Slow</button>
+        <button id="abcTempoFast" onclick="setAbcTempo('dance')">🐰 Happy Bouncy</button>
+        <span style="margin-left:.4rem">Instrument:</span>
+        <button id="abcInstBox" class="active" onclick="setAbcInst('musicbox')">🔔 Music Box</button>
+        <button id="abcInstPiano" onclick="setAbcInst('piano')">🎹 Piano</button>
+        <button id="abcInstMarimba" onclick="setAbcInst('marimba')">🎶 Marimba</button>
+      </div>
+
+      <div style="font-weight:900;color:#64748b;font-size:.84rem;margin-top:.6rem" id="abcSingStatus">
+        👆 Tap <b>Play ABC Song</b> or tap letters below to sing each note!
+      </div>
+
+      <div class="abc-sing-lyrics-wrap">
+        <div class="abc-sing-lyrics" id="abcSingLyrics"></div>
+      </div>
+
+      <div class="abc-nav">
+        <button onclick="stepAbc(-1)" title="Previous Letter">◀</button>
+        <button onclick="speakAbc()" style="background:var(--yellow);border-color:var(--yellow)" title="Hear Letter">🔊</button>
+        <button onclick="stepAbc(1)" title="Next Letter">▶</button>
+      </div>
+    </div>
+
+    <!-- 6. 🙈 LETTER PEEKABOO -->
+    <div class="card abc-panel" id="abcPanelPeek">
+      <div style="text-align:center;margin-bottom:.8rem">
+        <b style="font-size:1.15rem;color:#D97706">🙈 Letter Peekaboo!</b>
+        <span style="display:block;font-size:.82rem;color:#64748b;font-weight:800">Tap where the Live Letter is hiding to make it pop out!</span>
+      </div>
+      <div class="bini-peek-grid" id="biniPeekGrid"></div>
+      <div style="text-align:center;margin-top:.8rem">
+        <button class="btn-pill" style="background:var(--yellow);border:2px solid #EAB308;font-weight:900" onclick="initLetterPeekaboo()">🔄 Hide Letters Again</button>
+      </div>
+    </div>
+
+    <!-- 7. 🔊 PHONICS SOUNDBOARD -->
+    <div class="card abc-panel" id="abcPanelPhonic" style="text-align:center">
+      <div style="font-weight:900;font-size:1.1rem;color:#7C3AED">🔊 Tap a letter — hear its SOUND! (Bini Phonics)</div>
+      <div style="font-size:.82rem;font-weight:800;color:#64748b;margin-top:.2rem">Learn letter sounds: A says /ah/, B says /buh/, C says /kuh/!</div>
+      <div class="phonic-grid" id="phonicGrid"></div>
     </div>
   </section>
   <section id="sec-draw" class="kid-section">
@@ -415,17 +987,15 @@ canvas#doodle{width:100%;height:420px;background:#fff;border-radius:18px;border:
 
   <section id="sec-puzzle" class="kid-section">
     <div style="display:flex;align-items:center;gap:.6rem"><h2 class="section-title">🧩 Animal Puzzle</h2><button class="speak-btn" onclick="speak('Drag pieces to complete the lion puzzle')" title="Speak">🔊</button>
-      <span style="margin-left:auto;background:#fff;border-radius:999px;padding:.35rem .7rem;font-weight:900;border:2px solid #f1f5f9">🧩 <b id="puzzleProgress">0/6</b></span>
+      <span style="margin-left:auto;background:#fff;border-radius:999px;padding:.35rem .7rem;font-weight:900;border:2px solid #f1f5f9">🧩 <b id="puzzleProgress">0/4</b></span>
     </div>
-    <div class="hint">👆 Tap a piece, then tap the faded picture — or drag!</div>
+    <div class="hint">👆 Tap a piece to auto-fit, or drag to the slot!</div>
     <div class="card">
       <div class="puzzle-board" id="puzzleBoard">
         <div class="puzzle-slot" data-pos="0"></div>
         <div class="puzzle-slot" data-pos="1"></div>
         <div class="puzzle-slot" data-pos="2"></div>
         <div class="puzzle-slot" data-pos="3"></div>
-        <div class="puzzle-slot" data-pos="4"></div>
-        <div class="puzzle-slot" data-pos="5"></div>
       </div>
       <div class="puzzle-tray" id="puzzleTray"></div>
       <div style="text-align:center;margin-top:.8rem;display:flex;gap:.5rem;justify-content:center">
@@ -485,65 +1055,393 @@ canvas#doodle{width:100%;height:420px;background:#fff;border-radius:18px;border:
     </div>
   </section>
 
+  <!-- 🙈 PEEK-A-BOO -->
+  <section id="sec-peekaboo" class="kid-section">
+    <div style="display:flex;align-items:center;gap:.6rem;flex-wrap:wrap">
+      <h2 class="section-title">🙈 Peek-a-Boo Surprise!</h2>
+      <button class="speak-btn" onclick="speak('Peek a boo! Tap to see who is hiding!')" title="Speak">🔊</button>
+      <button class="tool-btn" style="margin-left:auto;background:var(--yellow)" onclick="hideAllPeek()">🙈 Hide All</button>
+    </div>
+    <div class="hint">👆 Tap a door, bush, box, or cloud to see who is hiding!</div>
+    <div class="peek-grid" id="peekGrid"></div>
+  </section>
+
+  <!-- 🥕 FEED THE ANIMAL -->
+  <section id="sec-feeding" class="kid-section">
+    <div style="display:flex;align-items:center;gap:.6rem;flex-wrap:wrap">
+      <h2 class="section-title">🥕 Feed Your Buddy!</h2>
+      <button class="speak-btn" onclick="speak('Feed the hungry animal! Tap the yummy food!')" title="Speak">🔊</button>
+      <span style="margin-left:auto;background:#fff;border-radius:999px;padding:.35rem .8rem;font-weight:900;border:2px solid #FDE68A;color:#B45309">😋 Treats: <b id="treatsCount">0</b></span>
+    </div>
+    <div class="hint">👆 Tap any food to feed your hungry friend! Nom nom nom!</div>
+    <div class="card feed-wrap">
+      <div class="buddy-picker" id="buddyPicker"></div>
+      <div class="buddy-stage" id="buddyStage">
+        <div class="buddy-face" id="buddyFace">🐰</div>
+        <div id="buddyMouthZone" class="buddy-mouth-zone">👄 Open Wide! Tap Food Below 👇</div>
+        <div id="buddySpeech" style="font-size:1.15rem;font-weight:900;color:#B45309;margin-top:.4rem;min-height:28px">"I am hungry! Please feed me!"</div>
+      </div>
+      <div class="food-tray" id="foodTray"></div>
+    </div>
+  </section>
+
+  <!-- 🫧 POP-IT FIDGET -->
+  <section id="sec-popit" class="kid-section">
+    <div style="display:flex;align-items:center;gap:.6rem;flex-wrap:wrap">
+      <h2 class="section-title">🫧 Rainbow Pop-It Fidget!</h2>
+      <button class="speak-btn" onclick="speak('Pop the rainbow bubbles!')" title="Speak">🔊</button>
+      <span style="margin-left:auto;background:#fff;border-radius:999px;padding:.35rem .8rem;font-weight:900;border:2px solid #FCE7F3;color:#DB2777">⭐ Popped: <b id="popitCount">0/20</b></span>
+      <button class="tool-btn" style="background:var(--pink);color:#fff" onclick="resetPopIt()">🔄 Flip Over</button>
+    </div>
+    <div class="hint">👆 Tap or slide your finger across bubbles to pop them down!</div>
+    <div class="card popit-stage">
+      <div class="popit-board" id="popitBoard"></div>
+      <div style="margin-top:.8rem;font-size:1.1rem;font-weight:900;color:#9333EA" id="popitCheer">Pop all 20 to flip the board! ✨</div>
+    </div>
+  </section>
+
+  <!-- 🚗 VEHICLES -->
+  <section id="sec-vehicles" class="kid-section">
+    <div style="display:flex;align-items:center;gap:.6rem;flex-wrap:wrap">
+      <h2 class="section-title">🚗 Beep-Beep Vehicles!</h2>
+      <button class="speak-btn" onclick="speak('Beep beep! Tap a car to hear it go!')" title="Speak">🔊</button>
+      <div style="margin-left:auto;display:flex;gap:.4rem;align-items:center">
+        <button class="tool-btn" id="btnSpeedSlow" onclick="setVehicleSpeed('slow')" style="background:var(--yellow);font-size:.85rem;padding:.35rem .75rem">🐢 Gentle & Slow</button>
+        <button class="tool-btn" id="btnSpeedFast" onclick="setVehicleSpeed('medium')" style="font-size:.85rem;padding:.35rem .75rem">🚗 Faster</button>
+      </div>
+    </div>
+    <div class="hint">👆 Tap a car — it drives gently across the road! Tap the car while driving to honk! 🎺</div>
+    <div class="card">
+      <div class="vehicle-stage" id="vehicleStage">
+        <div class="stage-sky-clouds">☁️ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ☁️ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ☁️</div>
+        <div class="stage-road-line"></div>
+        <div class="zoom-runner" id="zoomRunner" onclick="honkMovingVehicle()" title="Tap to honk!">🚗</div>
+      </div>
+      <div id="vehicleCaption" style="text-align:center;font-size:1.15rem;font-weight:900;color:#0284C7;margin-top:.6rem;min-height:28px">👆 Tap a vehicle below to drive gently!</div>
+      <div class="vehicle-grid" id="vehicleGrid"></div>
+    </div>
+  </section>
+
   <div class="kids-footer">
     Made with 💛 for tiny hands. No ads, no tracking.<br>
     Parent tip: Use <b>🔊 Speak</b> to hear names. Toggle sound with <b>🔊 Sound On/Off</b>.
   </div>
 </div>
+
+<!-- Kid-Friendly AI Voice Picker Modal -->
+<div id="voiceModal" class="voice-modal-backdrop" style="display:none" onclick="if(event.target===this) closeVoiceModal()">
+  <div class="voice-modal-card">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.5rem;">
+      <h3 style="font-family:'Fredoka',sans-serif;font-weight:900;font-size:1.35rem;margin:0;display:flex;align-items:center;gap:.4rem;">
+        🎙️ Kid-Friendly AI Voices
+      </h3>
+      <button onclick="closeVoiceModal()" style="border:none;background:#F1F5F9;width:34px;height:34px;border-radius:50%;cursor:pointer;font-weight:900;font-size:1.1rem;">✕</button>
+    </div>
+    <p style="margin:0 0 .9rem;color:#64748B;font-size:.88rem;font-weight:700;">
+      Warm, expressive voices powered by Gemini AI — replaces robotic speech with friendly toddler voices!
+    </p>
+    <div class="voice-options" id="voiceOptionsList"></div>
+    <div style="margin-top:.9rem;padding-top:.8rem;border-top:2px solid #F1F5F9;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem;">
+      <div style="font-size:.78rem;color:#94A3B8;font-weight:800;display:flex;align-items:center;gap:.3rem;">
+        <span>✨</span> Powered by Gemini 3.8 AI
+      </div>
+      <button class="btn-pill" style="background:#0F172A;color:#fff;padding:.5rem 1.1rem;font-size:.85rem;" onclick="closeVoiceModal()">Done 🎈</button>
+    </div>
+  </div>
+</div>
+
 <div class="confetti" id="confetti"></div>
 <script>
-let muted=false;
-function toggleMute(){muted=!muted;document.getElementById('muteBtn').textContent=muted?'🔇 Muted':'🔊 Sound';if(muted){try{speechSynthesis.cancel()}catch(e){} try{ if(typeof stopAbcSong==='function') stopAbcSong(); }catch(e){}} }
-let kidVoice=null;
-function pickKidVoice(){
+// === 🎙️ GEMINI AI KID-FRIENDLY VOICE ENGINE ===
+let muted = false;
+let currentAiVoice = localStorage.getItem('ai_kid_voice') || 'Puck';
+const aiAudioCache = new Map();
+let currentAiAudio = null;
+let currentSpeechId = 0;
+
+const AI_VOICES = {
+  Puck: {
+    id: 'Puck',
+    name: 'Puck',
+    title: 'Playful Kid Buddy',
+    emoji: '🧸',
+    desc: 'Joyful, bouncy cartoon friend — lots of laughs and cheerful giggles! (Toddler Favorite)',
+    color: '#D97706',
+    bg: '#FEF3C7',
+    border: '#F59E0B',
+    sample: "Hi there! I'm Puck! Let's play and have fun together!"
+  },
+  Kore: {
+    id: 'Kore',
+    name: 'Kore',
+    title: 'Sweet & Gentle Friend',
+    emoji: '🌸',
+    desc: 'Warm, soft, loving preschool voice — soothing, encouraging, and clear!',
+    color: '#DB2777',
+    bg: '#FCE7F3',
+    border: '#EC4899',
+    sample: "Hello sweetheart! Let's learn colors and ABCs today!"
+  },
+  Zephyr: {
+    id: 'Zephyr',
+    name: 'Zephyr',
+    title: 'Sunny & Bright Narrator',
+    emoji: '🌟',
+    desc: 'Crisp, upbeat storybook narrator — vibrant and full of excitement!',
+    color: '#2563EB',
+    bg: '#EFF6FF',
+    border: '#3B82F6',
+    sample: "Hey friend! Ready for an amazing adventure? Let's go!"
+  }
+};
+
+function updateVoiceButtonUI(){
+  const info = AI_VOICES[currentAiVoice] || AI_VOICES.Puck;
+  const emojiEl = document.getElementById('voiceBtnEmoji');
+  const nameEl = document.getElementById('voiceBtnName');
+  if(emojiEl) emojiEl.textContent = info.emoji;
+  if(nameEl) nameEl.textContent = info.name;
+}
+
+function openVoiceModal(){
+  const modal = document.getElementById('voiceModal');
+  const list = document.getElementById('voiceOptionsList');
+  if(!modal || !list) return;
+
+  list.innerHTML = Object.values(AI_VOICES).map(v => {
+    const isAct = v.id === currentAiVoice;
+    return `
+      <div class="voice-card ${isAct ? 'active' : ''}" style="${isAct ? 'background:'+v.bg+';border-color:'+v.border+';' : ''}" onclick="selectAiVoice('${v.id}')">
+        <div class="voice-avatar" style="background:${v.bg};">${v.emoji}</div>
+        <div class="voice-info">
+          <div class="voice-name">
+            <span>${v.name}</span>
+            <small style="font-weight:800;color:${v.color};font-size:.78rem;">• ${v.title}</small>
+            ${isAct ? '<span class="voice-select-badge">Active</span>' : ''}
+          </div>
+          <div class="voice-desc">${v.desc}</div>
+        </div>
+        <button class="voice-listen-btn" onclick="event.stopPropagation(); testAiVoiceSample('${v.id}')" title="Hear voice sample">
+          <span>▶</span> Listen
+        </button>
+      </div>
+    `;
+  }).join('');
+
+  modal.style.display = 'flex';
+}
+
+function closeVoiceModal(){
+  const modal = document.getElementById('voiceModal');
+  if(modal) modal.style.display = 'none';
+}
+
+function selectAiVoice(voiceId){
+  if(AI_VOICES[voiceId]){
+    currentAiVoice = voiceId;
+    try{ localStorage.setItem('ai_kid_voice', voiceId); }catch(e){}
+    updateVoiceButtonUI();
+    openVoiceModal();
+    testAiVoiceSample(voiceId);
+    prefetchAiAudio();
+  }
+}
+
+function testAiVoiceSample(voiceId){
+  const voice = AI_VOICES[voiceId];
+  if(!voice) return;
+  playAiVoice(voice.sample, { voice: voice.id, forceFetch: true });
+}
+
+function indicateSpeechActivity(isSpeaking){
+  const btn = document.getElementById('voiceSelectBtn');
+  if(btn) btn.classList.toggle('speaking', isSpeaking);
+}
+
+function stopAllSpeech(){
+  currentSpeechId++;
+  indicateSpeechActivity(false);
   try{
-    const vs=speechSynthesis.getVoices();
-    // Prefer female, young, en-US, natural
-    const pref = vs.find(v=>/Aria|Jenny|Emma|Olivia|Ana|Lucy|Ivy.*Natural|Google.*UK.*Female/i.test(v.name) && v.lang.startsWith('en')) 
-              || vs.find(v=>v.lang==='en-GB' && v.name.toLowerCase().includes('female'))
-              || vs.find(v=>v.lang==='en-US' && /female|natural/i.test(v.name))
-              || vs.find(v=>v.lang.startsWith('en'))
-              || vs[0];
-    kidVoice=pref||null;
+    if(currentAiAudio){
+      currentAiAudio.pause();
+      currentAiAudio.currentTime = 0;
+      currentAiAudio = null;
+    }
+  }catch(e){}
+  try{
+    if('speechSynthesis' in window){
+      window.speechSynthesis.cancel();
+    }
   }catch(e){}
 }
-try{ speechSynthesis.onvoiceschanged=pickKidVoice; }catch(e){}
-setTimeout(pickKidVoice, 800);
-// Shared loud AudioContext (iPad needs resume on tap, and reusing = louder + no throttle)
-let _audioCtx=null;
+
+function toggleMute(){
+  muted = !muted;
+  const mBtn = document.getElementById('muteBtn');
+  if(mBtn) mBtn.textContent = muted ? '🔇 Muted' : '🔊 Sound';
+  if(muted){
+    stopAllSpeech();
+    try{ if(typeof stopAbcSong === 'function') stopAbcSong(); }catch(e){}
+  } else {
+    playAiVoice('Sound on!');
+  }
+}
+
+// Fallback browser speech (tuned warm & natural if offline)
+let kidVoice = null;
+function pickKidVoice(){
+  try{
+    if(!('speechSynthesis' in window)) return;
+    const vs = speechSynthesis.getVoices();
+    const pref = vs.find(v => /Jenny|Aria|Emma|Ana|Olivia|Victoria|Samantha|Natural|Google.*UK.*Female/i.test(v.name) && v.lang.startsWith('en'))
+              || vs.find(v => v.lang === 'en-US' && /female|natural/i.test(v.name))
+              || vs.find(v => v.lang.startsWith('en'))
+              || vs[0];
+    kidVoice = pref || null;
+  }catch(e){}
+}
+try{ if('speechSynthesis' in window) speechSynthesis.onvoiceschanged = pickKidVoice; }catch(e){}
+setTimeout(pickKidVoice, 600);
+
+// Shared loud AudioContext
+let _audioCtx = null;
 function getAudioCtx(){
   try{
-    if(!_audioCtx) _audioCtx=new (window.AudioContext||window.webkitAudioContext)();
-    if(_audioCtx.state==='suspended') _audioCtx.resume();
+    if(!_audioCtx) _audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    if(_audioCtx.state === 'suspended') _audioCtx.resume();
     return _audioCtx;
   }catch(e){ return null; }
 }
 document.addEventListener('pointerdown', ()=>{ getAudioCtx(); }, {passive:true});
-function speak(text, slowMode){
-  if(muted)return;
-  // For 2yo, keep it very short and happy - only speak first word if long
-  const short = text.split(' ')[0].length > 8 ? text.split(' ')[0] : text;
+
+function fallbackSpeech(phrase){
+  if(muted || !('speechSynthesis' in window)) return;
   try{
     speechSynthesis.cancel();
-    const u=new SpeechSynthesisUtterance(short);
-    u.rate= slowMode ? 0.5 : 0.62; u.pitch=1.4; u.volume=1.0; u.lang='en-US';
-    if(kidVoice) u.voice=kidVoice;
-    // Add happy prosody
-    u.text = short;
+    const u = new SpeechSynthesisUtterance(phrase);
+    u.rate = 0.88;
+    u.pitch = 1.15;
+    u.volume = 1.0;
+    u.lang = 'en-US';
+    if(kidVoice) u.voice = kidVoice;
     speechSynthesis.speak(u);
-    // Fallback chime if voice fails
-    setTimeout(()=>{ if(speechSynthesis.speaking===false && short.length<12){ try{ blip(520,0.5,'sine',0.4); }catch(e){} } }, 200);
   }catch(e){
-    try{ blip(600,0.5,'sine',0.4); }catch(e2){}
+    try{ blip(520, 0.4, 'triangle', 0.5); }catch(e2){}
   }
 }
+
+// Core AI Kid-Voice Player: plays studio-quality Gemini 3.8 Flash Lite TTS
+async function playAiVoice(text, options = {}){
+  if(muted || !text) return;
+  const thisSpeechId = ++currentSpeechId;
+  const rawPhrase = String(text).trim();
+  if(!rawPhrase) return;
+
+  const phrase = rawPhrase.slice(0, 150);
+  const voice = options.voice || currentAiVoice || 'Puck';
+  const cacheKey = `${voice}:${phrase.toLowerCase()}`;
+
+  indicateSpeechActivity(true);
+
+  // 1. Instant cache playback (<5ms)
+  if(aiAudioCache.has(cacheKey) && !options.forceFetch){
+    try{
+      const audioUrl = aiAudioCache.get(cacheKey);
+      if(currentAiAudio){
+        try{ currentAiAudio.pause(); }catch(e){}
+      }
+      const audio = new Audio(audioUrl);
+      currentAiAudio = audio;
+      audio.onended = () => { if(currentSpeechId === thisSpeechId) indicateSpeechActivity(false); };
+      audio.onerror = () => { if(currentSpeechId === thisSpeechId) fallbackSpeech(phrase); };
+      await audio.play();
+      return;
+    }catch(err){
+      console.warn('Cache play error:', err);
+    }
+  }
+
+  // 2. Fetch from Gemini AI TTS server endpoint
+  try{
+    const res = await fetch(`/api/tts?text=${encodeURIComponent(phrase)}&voice=${encodeURIComponent(voice)}`);
+    if(!res.ok) throw new Error('TTS status ' + res.status);
+    const blob = await res.blob();
+    const blobUrl = URL.createObjectURL(blob);
+    aiAudioCache.set(cacheKey, blobUrl);
+
+    if(currentSpeechId !== thisSpeechId || muted){
+      return;
+    }
+
+    if(currentAiAudio){
+      try{ currentAiAudio.pause(); }catch(e){}
+    }
+    const audio = new Audio(blobUrl);
+    currentAiAudio = audio;
+    audio.onended = () => { if(currentSpeechId === thisSpeechId) indicateSpeechActivity(false); };
+    audio.onerror = () => { if(currentSpeechId === thisSpeechId) fallbackSpeech(phrase); };
+    await audio.play();
+  }catch(err){
+    console.warn('AI voice fetch failed, using natural fallback:', err);
+    if(currentSpeechId === thisSpeechId && !muted){
+      fallbackSpeech(phrase);
+    }
+  }
+}
+
+// Background prefetching for common toddler words to achieve 0ms latency
+const commonToddlerPhrases = [
+  'A', 'B', 'C', 'D', 'Apple', 'Ball', 'Cat', 'Dog', 'Elephant',
+  'Red', 'Blue', 'Yellow', 'Green', 'Orange', 'Purple',
+  'One', 'Two', 'Three', 'Circle', 'Square', 'Star', 'Heart',
+  'Car', 'Train', 'Bus', 'Boat',
+  'Yay!', 'Good job!', 'Great reading!', 'Pop!', 'Match!', 'Super!', 'Peek a boo!'
+];
+let isPrefetching = false;
+function prefetchAiAudio(phrases = commonToddlerPhrases, voice = currentAiVoice){
+  if(isPrefetching) return;
+  isPrefetching = true;
+  let idx = 0;
+  function step(){
+    if(idx >= phrases.length){
+      isPrefetching = false;
+      return;
+    }
+    const text = phrases[idx++];
+    const key = `${voice}:${text.toLowerCase()}`;
+    if(!aiAudioCache.has(key)){
+      fetch(`/api/tts?text=${encodeURIComponent(text)}&voice=${encodeURIComponent(voice)}`)
+        .then(r => {
+          if(!r.ok) throw new Error('Status ' + r.status);
+          return r.blob();
+        })
+        .then(blob => {
+          aiAudioCache.set(key, URL.createObjectURL(blob));
+          setTimeout(step, 250);
+        })
+        .catch(() => setTimeout(step, 800));
+    } else {
+      setTimeout(step, 40);
+    }
+  }
+  setTimeout(step, 1000);
+}
+
+// Universal speak functions across whole app — redirects to Gemini AI Kid Voice
+function speak(text, slowMode){
+  if(muted || !text) return;
+  playAiVoice(text);
+}
 function speakSlow(text){ speak(text, true); }
-// Alternative AI sound: gentle chime fallback if TTS not available
+function sayLetter(text){ playAiVoice(text); }
+function singSayLetter(text){ playAiVoice(text); }
+
+// Alternative AI musical chime fallback
 function chimeSpeak(text){
-  // For 2yo who can't read, we use chime + emoji instead of voice if needed
-  const map={Red:330, Blue:294, Yellow:392, Green:329, Dog:261, Cat:329, Lion:196, Elephant:147};
-  const f=map[text.split(' ')[0]]||440;
-  blip(f,0.6,'sine',0.14); setTimeout(()=>blip(f*1.25,0.4,'sine',0.11),180);
+  const map = {Red:330, Blue:294, Yellow:392, Green:329, Dog:261, Cat:329, Lion:196, Elephant:147};
+  const f = map[String(text).split(' ')[0]] || 440;
+  blip(f, 0.5, 'triangle', 0.5);
+  setTimeout(()=>blip(f*1.25, 0.4, 'sine', 0.4), 180);
 }
 function blip(freq=600,dur=0.45,type='sine',vol=0.5){
   if(muted)return;
@@ -577,42 +1475,415 @@ function blip(freq=600,dur=0.45,type='sine',vol=0.5){
     }catch(e){}
   }catch(e){}
 }
-function popSound(){blip(880,0.35,'sine',0.5);setTimeout(()=>blip(1100,0.28,'sine',0.45),90);setTimeout(()=>blip(660,0.4,'sine',0.4),170);}
+function popSound(){soundPop();}
+function soundPop(){
+  if(muted) return;
+  try{
+    const ctx = getAudioCtx(); if(!ctx) return;
+    const osc = ctx.createOscillator();
+    const g = ctx.createGain();
+    const now = ctx.currentTime;
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(820, now);
+    osc.frequency.exponentialRampToValueAtTime(140, now + 0.12);
+    g.gain.setValueAtTime(0.85, now);
+    g.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+    osc.connect(g); g.connect(ctx.destination);
+    osc.start(now); osc.stop(now + 0.13);
+  }catch(e){}
+}
+function soundChomp(){
+  if(muted) return;
+  try{
+    const ctx = getAudioCtx(); if(!ctx) return;
+    [0, 0.08, 0.16].forEach((delay, idx) => {
+      const osc = ctx.createOscillator();
+      const g = ctx.createGain();
+      const now = ctx.currentTime + delay;
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(320 - idx * 40, now);
+      osc.frequency.exponentialRampToValueAtTime(110, now + 0.07);
+      g.gain.setValueAtTime(0.7, now);
+      g.gain.exponentialRampToValueAtTime(0.001, now + 0.07);
+      osc.connect(g); g.connect(ctx.destination);
+      osc.start(now); osc.stop(now + 0.08);
+    });
+  }catch(e){}
+}
+function soundBoing(){
+  if(muted) return;
+  try{
+    const ctx = getAudioCtx(); if(!ctx) return;
+    const osc = ctx.createOscillator();
+    const g = ctx.createGain();
+    const now = ctx.currentTime;
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(260, now);
+    osc.frequency.exponentialRampToValueAtTime(680, now + 0.22);
+    g.gain.setValueAtTime(0.75, now);
+    g.gain.exponentialRampToValueAtTime(0.001, now + 0.28);
+    osc.connect(g); g.connect(ctx.destination);
+    osc.start(now); osc.stop(now + 0.3);
+  }catch(e){}
+}
+function soundHonk(){
+  if(muted) return;
+  try{
+    const ctx = getAudioCtx(); if(!ctx) return;
+    [380, 480].forEach(f => {
+      const osc = ctx.createOscillator();
+      const g = ctx.createGain();
+      const now = ctx.currentTime;
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(f, now);
+      g.gain.setValueAtTime(0.45, now);
+      g.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+      osc.connect(g); g.connect(ctx.destination);
+      osc.start(now); osc.stop(now + 0.26);
+    });
+  }catch(e){}
+}
+function soundSiren(){
+  if(muted) return;
+  try{
+    const ctx = getAudioCtx(); if(!ctx) return;
+    const osc = ctx.createOscillator();
+    const g = ctx.createGain();
+    const now = ctx.currentTime;
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(650, now);
+    osc.frequency.linearRampToValueAtTime(950, now + 0.2);
+    osc.frequency.linearRampToValueAtTime(650, now + 0.4);
+    g.gain.setValueAtTime(0.5, now);
+    g.gain.exponentialRampToValueAtTime(0.001, now + 0.45);
+    osc.connect(g); g.connect(ctx.destination);
+    osc.start(now); osc.stop(now + 0.46);
+  }catch(e){}
+}
+function soundTrain(){
+  if(muted) return;
+  try{
+    const ctx = getAudioCtx(); if(!ctx) return;
+    [440, 554, 659].forEach(f => {
+      const osc = ctx.createOscillator();
+      const g = ctx.createGain();
+      const now = ctx.currentTime;
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(f, now);
+      g.gain.setValueAtTime(0.35, now);
+      g.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
+      osc.connect(g); g.connect(ctx.destination);
+      osc.start(now); osc.stop(now + 0.42);
+    });
+  }catch(e){}
+}
+
+// === DISTINCT VEHICLE AUDIO TRIGGERS ===
+function soundVehicleFireTruck(){
+  if(muted) return;
+  try{
+    const ctx = getAudioCtx(); if(!ctx) return;
+    const now = ctx.currentTime;
+    // 1. Initial low brass air horn burst
+    [196, 247].forEach(freq => {
+      const osc = ctx.createOscillator();
+      const g = ctx.createGain();
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(freq, now);
+      g.gain.setValueAtTime(0.5, now);
+      g.gain.exponentialRampToValueAtTime(0.001, now + 0.18);
+      osc.connect(g); g.connect(ctx.destination);
+      osc.start(now); osc.stop(now + 0.2);
+    });
+    // 2. High fire wailing siren sweep
+    const osc = ctx.createOscillator();
+    const g = ctx.createGain();
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(520, now + 0.15);
+    osc.frequency.linearRampToValueAtTime(880, now + 0.45);
+    osc.frequency.linearRampToValueAtTime(560, now + 0.75);
+    g.gain.setValueAtTime(0.001, now);
+    g.gain.setValueAtTime(0.55, now + 0.16);
+    g.gain.exponentialRampToValueAtTime(0.001, now + 0.8);
+    osc.connect(g); g.connect(ctx.destination);
+    osc.start(now + 0.15); osc.stop(now + 0.82);
+  }catch(e){}
+}
+
+function soundVehiclePoliceCar(){
+  if(muted) return;
+  try{
+    const ctx = getAudioCtx(); if(!ctx) return;
+    const now = ctx.currentTime;
+    // Fast oscillating police yelp siren (2 fast cycles)
+    const osc = ctx.createOscillator();
+    const g = ctx.createGain();
+    osc.type = 'sawtooth';
+    osc.frequency.setValueAtTime(700, now);
+    osc.frequency.linearRampToValueAtTime(1250, now + 0.14);
+    osc.frequency.linearRampToValueAtTime(700, now + 0.28);
+    osc.frequency.linearRampToValueAtTime(1300, now + 0.42);
+    osc.frequency.linearRampToValueAtTime(750, now + 0.58);
+    g.gain.setValueAtTime(0.45, now);
+    g.gain.exponentialRampToValueAtTime(0.001, now + 0.62);
+    osc.connect(g); g.connect(ctx.destination);
+    osc.start(now); osc.stop(now + 0.64);
+  }catch(e){}
+}
+
+function soundVehicleTractor(){
+  if(muted) return;
+  try{
+    const ctx = getAudioCtx(); if(!ctx) return;
+    const now = ctx.currentTime;
+    // 4 rhythmic low diesel combustion chugs (putt-putt-putt-putt)
+    [0, 0.11, 0.22, 0.33].forEach((delay, i) => {
+      const osc = ctx.createOscillator();
+      const g = ctx.createGain();
+      const t = now + delay;
+      osc.type = 'square';
+      osc.frequency.setValueAtTime(80 + (i%2)*25, t);
+      osc.frequency.exponentialRampToValueAtTime(45, t + 0.08);
+      g.gain.setValueAtTime(0.6, t);
+      g.gain.exponentialRampToValueAtTime(0.001, t + 0.08);
+      osc.connect(g); g.connect(ctx.destination);
+      osc.start(t); osc.stop(t + 0.09);
+    });
+  }catch(e){}
+}
+
+function soundVehicleTrain(){
+  if(muted) return;
+  try{
+    const ctx = getAudioCtx(); if(!ctx) return;
+    const now = ctx.currentTime;
+    // Real brass locomotive dual whistle chord: TOOT... TOOT!
+    const chord = [392, 493.88, 587.33];
+    chord.forEach(f => {
+      const osc = ctx.createOscillator();
+      const g = ctx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(f, now);
+      g.gain.setValueAtTime(0.35, now);
+      g.gain.exponentialRampToValueAtTime(0.001, now + 0.24);
+      osc.connect(g); g.connect(ctx.destination);
+      osc.start(now); osc.stop(now + 0.25);
+    });
+    chord.forEach(f => {
+      const osc = ctx.createOscillator();
+      const g = ctx.createGain();
+      const t = now + 0.28;
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(f, t);
+      g.gain.setValueAtTime(0.4, t);
+      g.gain.exponentialRampToValueAtTime(0.001, t + 0.42);
+      osc.connect(g); g.connect(ctx.destination);
+      osc.start(t); osc.stop(t + 0.44);
+    });
+  }catch(e){}
+}
+
+function soundVehicleAirplane(){
+  if(muted) return;
+  try{
+    const ctx = getAudioCtx(); if(!ctx) return;
+    const now = ctx.currentTime;
+    // Jet turbine spooling up and soaring whoosh
+    const osc = ctx.createOscillator();
+    const g = ctx.createGain();
+    osc.type = 'sawtooth';
+    osc.frequency.setValueAtTime(140, now);
+    osc.frequency.exponentialRampToValueAtTime(720, now + 0.65);
+    g.gain.setValueAtTime(0.05, now);
+    g.gain.linearRampToValueAtTime(0.4, now + 0.35);
+    g.gain.exponentialRampToValueAtTime(0.001, now + 0.72);
+    osc.connect(g); g.connect(ctx.destination);
+    osc.start(now); osc.stop(now + 0.75);
+
+    const osc2 = ctx.createOscillator();
+    const g2 = ctx.createGain();
+    osc2.type = 'sine';
+    osc2.frequency.setValueAtTime(280, now);
+    osc2.frequency.exponentialRampToValueAtTime(1440, now + 0.65);
+    g2.gain.setValueAtTime(0.02, now);
+    g2.gain.linearRampToValueAtTime(0.25, now + 0.35);
+    g2.gain.exponentialRampToValueAtTime(0.001, now + 0.72);
+    osc2.connect(g2); g2.connect(ctx.destination);
+    osc2.start(now); osc2.stop(now + 0.75);
+  }catch(e){}
+}
+
+function soundVehicleRaceCar(){
+  if(muted) return;
+  try{
+    const ctx = getAudioCtx(); if(!ctx) return;
+    const now = ctx.currentTime;
+    // V10 Engine rev-up, shift, and accelerate (VROOOM!)
+    const osc = ctx.createOscillator();
+    const g = ctx.createGain();
+    osc.type = 'sawtooth';
+    osc.frequency.setValueAtTime(160, now);
+    osc.frequency.exponentialRampToValueAtTime(540, now + 0.28);
+    osc.frequency.setValueAtTime(360, now + 0.30);
+    osc.frequency.exponentialRampToValueAtTime(680, now + 0.65);
+    g.gain.setValueAtTime(0.5, now);
+    g.gain.exponentialRampToValueAtTime(0.001, now + 0.7);
+    osc.connect(g); g.connect(ctx.destination);
+    osc.start(now); osc.stop(now + 0.72);
+  }catch(e){}
+}
+
+function soundVehicleAmbulance(){
+  if(muted) return;
+  try{
+    const ctx = getAudioCtx(); if(!ctx) return;
+    const now = ctx.currentTime;
+    // Two-tone European Ambulance (Nee-Naw-Nee-Naw)
+    const tones = [587.33, 440, 587.33, 440];
+    tones.forEach((freq, idx) => {
+      const osc = ctx.createOscillator();
+      const g = ctx.createGain();
+      const t = now + idx * 0.16;
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq, t);
+      g.gain.setValueAtTime(0.48, t);
+      g.gain.exponentialRampToValueAtTime(0.001, t + 0.15);
+      osc.connect(g); g.connect(ctx.destination);
+      osc.start(t); osc.stop(t + 0.16);
+    });
+  }catch(e){}
+}
+
+function soundVehicleHelicopter(){
+  if(muted) return;
+  try{
+    const ctx = getAudioCtx(); if(!ctx) return;
+    const now = ctx.currentTime;
+    // 5 heavy rotor blade chops (whump-whump-whump-whump-whump)
+    for(let i=0; i<5; i++){
+      const osc = ctx.createOscillator();
+      const g = ctx.createGain();
+      const t = now + i * 0.11;
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(120, t);
+      osc.frequency.exponentialRampToValueAtTime(45, t + 0.08);
+      g.gain.setValueAtTime(0.7, t);
+      g.gain.exponentialRampToValueAtTime(0.001, t + 0.08);
+      osc.connect(g); g.connect(ctx.destination);
+      osc.start(t); osc.stop(t + 0.09);
+    }
+  }catch(e){}
+}
+function soundCheer(){
+  if(muted) return;
+  try{
+    const ctx = getAudioCtx(); if(!ctx) return;
+    const chord = [523.25, 659.25, 783.99, 1046.50];
+    chord.forEach((freq, idx) => {
+      const osc = ctx.createOscillator();
+      const g = ctx.createGain();
+      const now = ctx.currentTime + idx * 0.08;
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(freq, now);
+      g.gain.setValueAtTime(0.5, now);
+      g.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
+      osc.connect(g); g.connect(ctx.destination);
+      osc.start(now); osc.stop(now + 0.45);
+    });
+  }catch(e){}
+}
 function splashAt(x,y,color){const s=document.createElement('div');s.className='splash';s.style.left=x+'px';s.style.top=y+'px';s.style.background=color;document.body.appendChild(s);setTimeout(()=>s.remove(),600);}
+
+// Touch sparkles trail
+function createTouchSparkle(x, y) {
+  const chars = ['⭐', '✨', '💖', '🌟', '🌸', '🎈', '💫'];
+  const char = chars[Math.floor(Math.random() * chars.length)];
+  const el = document.createElement('div');
+  el.className = 'touch-sparkle';
+  el.textContent = char;
+  el.style.left = x + 'px';
+  el.style.top = y + 'px';
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 700);
+}
+let lastSparkleTime = 0;
+document.addEventListener('pointermove', (e) => {
+  const now = Date.now();
+  if (now - lastSparkleTime > 70) {
+    lastSparkleTime = now;
+    createTouchSparkle(e.clientX, e.clientY);
+  }
+}, { passive: true });
+document.addEventListener('pointerdown', (e) => {
+  createTouchSparkle(e.clientX, e.clientY);
+}, { passive: true });
+
 function switchTab(name){
   try{ if(typeof stopAbcSong==='function') stopAbcSong(true); }catch(e){}
-  // ensure game boards are ready when tab opened (fixes puzzle not showing if init missed)
+  if(name==='peekaboo' && document.querySelectorAll('.peek-card').length===0){ try{ initPeekaboo(); }catch(e){} }
+  if(name==='feeding' && document.querySelectorAll('.buddy-btn').length===0){ try{ initFeeding(); }catch(e){} }
+  if(name==='popit' && document.querySelectorAll('.popit-bubble').length===0){ try{ initPopIt(); }catch(e){} }
+  if(name==='vehicles' && document.querySelectorAll('.vehicle-card').length===0){ try{ initVehicles(); }catch(e){} }
   if(name==='puzzle' && document.querySelectorAll('.puzzle-piece').length===0){ try{ initPuzzle(); }catch(e){} }
   if(name==='sorting' && document.querySelectorAll('#sortPool .draggable').length===0){ try{ initSort(); }catch(e){} }
   if(name==='fishing' && document.querySelectorAll('.fish').length===0){ try{ initFishing(); }catch(e){} }
   if(name==='music' && document.querySelectorAll('.key').length===0){ try{ initPiano(); }catch(e){} }
-  if(name==='abc'){ try{ drawTraceGuide(); }catch(e){} try{ renderPhonics(); }catch(e){} try{ if(!spellWord) newSpell(); }catch(e){} }
-  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.tab===name));document.querySelectorAll('.kid-section').forEach(s=>s.classList.toggle('active',s.id==='sec-'+name));if(name==='bubbles')startBubbles();else stopBubbles();if(name==='draw'){ setTimeout(resizeCanvas, 80); setTimeout(resizeCanvas, 300); }
-  // Keep game chooser visible at top (iPad fix) — scroll to content top, not page top overshoot
+  if(name==='abc'){ try{ setAbcMode(abcMode || 'boxes'); }catch(e){} }
+  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.tab===name));
+  document.querySelectorAll('.kid-section').forEach(s=>s.classList.toggle('active',s.id==='sec-'+name));
+  if(name==='bubbles') startBubbles(); else stopBubbles();
+  if(name==='draw'){ setTimeout(resizeCanvas, 80); setTimeout(resizeCanvas, 300); }
   try{
     const sec=document.getElementById('sec-'+name);
     if(sec){ sec.scrollIntoView({behavior:'smooth',block:'start'}); }
     else window.scrollTo({top:0,behavior:'smooth'});
-    // offset for sticky bar
     setTimeout(()=>window.scrollBy(0,-110),50);
   }catch(e){ window.scrollTo({top:0,behavior:'smooth'}); }
-  // keep active tab visible in horizontal scroll
   try{ document.querySelector('.tab[data-tab="'+name+'"]')?.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'}); }catch(e){}
-  const titles={home:'Pick a game!',colors:'Colors',animals:'Animals',shapes:'Shapes',numbers:'Numbers',abc:'Alphabet',draw:'Drawing',bubbles:'Bubbles',memory:'Memory',sorting:'Sorting',puzzle:'Puzzle',fishing:'Fishing',music:'Music'};speak(titles[name]||name);}
-// Bini-style home: big picture buttons
+  const titles={
+    home:'Pick a game!',
+    peekaboo:'Peek a boo!',
+    feeding:'Feed your buddy!',
+    popit:'Pop it fidget!',
+    vehicles:'Vehicles and horns!',
+    bubbles:'Bubbles',
+    animals:'Animals',
+    fishing:'Fishing',
+    music:'Music',
+    colors:'Colors',
+    shapes:'Shapes',
+    numbers:'Numbers',
+    abc:'Alphabet',
+    draw:'Drawing',
+    sorting:'Sorting',
+    puzzle:'Puzzle',
+    memory:'Memory'
+  };
+  speak(titles[name]||name);
+  if(name === 'colors') prefetchAiAudio(['Red','Blue','Yellow','Green','Orange','Purple','Pink']);
+  else if(name === 'animals') prefetchAiAudio(['Dog','Cat','Lion','Elephant','Cow','Duck','Sheep','Pig']);
+  else if(name === 'shapes') prefetchAiAudio(['Circle','Square','Triangle','Star','Heart']);
+  else if(name === 'vehicles') prefetchAiAudio(['Car','Fire Truck','Train','Plane','Boat']);
+  else if(name === 'abc') prefetchAiAudio(['A','B','C','D','Apple','Ball','Cat','Dog']);
+}
+
 const homeGames=[
-  {id:'colors',e:'🎨',n:'Colors',c:'#FFE4E6',s:'Learn red, blue...'},
-  {id:'animals',e:'🦁',n:'Animals',c:'#E0F2FE',s:'Roar! Woof!'},
+  {id:'abc',e:'🔤',n:'ABC Games',c:'#F3E8FF',s:'Learn & Read with Live Letters!'},
+  {id:'peekaboo',e:'🙈',n:'Peek-a-Boo',c:'#FEF9C3',s:'Who is hiding?'},
+  {id:'feeding',e:'🥕',n:'Feed Buddy',c:'#FFEDD5',s:'Nom nom nom!'},
+  {id:'popit',e:'🫧',n:'Pop-It Toy',c:'#FCE7F3',s:'Rainbow bubbles'},
+  {id:'vehicles',e:'🚗',n:'Vehicles',c:'#E0F2FE',s:'Beep beep horns!'},
+  {id:'bubbles',e:'🫧',n:'Bubble Pop',c:'#CFFAFE',s:'Surprise toys!'},
+  {id:'animals',e:'🦁',n:'Animals',c:'#DCFCE7',s:'Roar & Woof!'},
+  {id:'fishing',e:'🎣',n:'Fishing Pond',c:'#DBEAFE',s:'Tap & catch fish!'},
+  {id:'music',e:'🎵',n:'Music Garden',c:'#EDE9FE',s:'Piano & sounds'},
+  {id:'colors',e:'🎨',n:'Colors',c:'#FFE4E6',s:'Red, blue, yellow'},
+  {id:'numbers',e:'🔢',n:'Numbers',c:'#DCFCE7',s:'Count 1 to 10'},
   {id:'shapes',e:'⭐',n:'Shapes',c:'#FEF9C3',s:'Stars & hearts'},
-  {id:'numbers',e:'🔢',n:'Numbers',c:'#DCFCE7',s:'Count 1-10'},
-  {id:'abc',e:'🔤',n:'ABC Song',c:'#F3E8FF',s:'Sing A to Z!'},
-  {id:'draw',e:'✏️',n:'Draw',c:'#FFE4D6',s:'Magic paint'},
-  {id:'bubbles',e:'🫧',n:'Bubbles',c:'#CFFAFE',s:'Pop pop!'},
-  {id:'memory',e:'🧩',n:'Memory',c:'#E0E7FF',s:'Find pairs'},
-  {id:'sorting',e:'🎯',n:'Sorting',c:'#FEF3C7',s:'Sort by color'},
-  {id:'puzzle',e:'🧩',n:'Puzzle',c:'#FCE7F3',s:'Animal puzzle'},
-  {id:'fishing',e:'🎣',n:'Fishing',c:'#DBEAFE',s:'Catch fish!'},
-  {id:'music',e:'🎵',n:'Music',c:'#EDE9FE',s:'Loud piano!'},
+  {id:'draw',e:'✏️',n:'Doodle Pad',c:'#FFE4D6',s:'Magic paint'},
+  {id:'sorting',e:'🎯',n:'Toy Sorting',c:'#FEF3C7',s:'Sort by color'},
+  {id:'puzzle',e:'🧩',n:'Animal Puzzle',c:'#FCE7F3',s:'Easy 4-piece jigsaw'},
+  {id:'memory',e:'🃏',n:'Memory Match',c:'#E0E7FF',s:'Find pairs'}
 ];
 function renderHome(){const g=document.getElementById('homeGrid');if(!g)return;g.innerHTML=homeGames.map(h=>`<div class="home-card" style="background:${h.c}" onclick="switchTab('${h.id}')"><div class="he">${h.e}</div><b>${h.n}</b><small>${h.s}</small></div>`).join('');}
 const colors=[{name:'Red',hex:'#EF4444'},{name:'Blue',hex:'#3B82F6'},{name:'Yellow',hex:'#EAB308'},{name:'Green',hex:'#22C55E'},{name:'Orange',hex:'#F97316'},{name:'Purple',hex:'#A855F7'},{name:'Pink',hex:'#EC4899'},{name:'Brown',hex:'#92400E'},{name:'Black',hex:'#111827'},{name:'White',hex:'#F8FAFC',text:'#334155'},{name:'Cyan',hex:'#06B6D4'},{name:'Lime',hex:'#84CC16'}];
@@ -646,116 +1917,840 @@ function changeNum(d){setNum(Math.min(10,Math.max(1,curNum+d)));}
 function setNum(n){curNum=n;renderNumbers();speak(numWords[curNum]);blip(520+n*18,0.18);burstConfetti(6);}
 const abc=[{l:'A',w:'Apple',e:'🍎',ph:'ah'},{l:'B',w:'Ball',e:'⚽',ph:'buh'},{l:'C',w:'Cat',e:'🐱',ph:'kuh'},{l:'D',w:'Dog',e:'🐶',ph:'duh'},{l:'E',w:'Elephant',e:'🐘',ph:'eh'},{l:'F',w:'Fish',e:'🐟',ph:'fff'},{l:'G',w:'Grapes',e:'🍇',ph:'guh'},{l:'H',w:'House',e:'🏠',ph:'huh'},{l:'I',w:'Ice Cream',e:'🍦',ph:'ih'},{l:'J',w:'Juice',e:'🧃',ph:'juh'},{l:'K',w:'Kite',e:'🪁',ph:'kuh'},{l:'L',w:'Lion',e:'🦁',ph:'lll'},{l:'M',w:'Monkey',e:'🐒',ph:'mmm'},{l:'N',w:'Nest',e:'🪹',ph:'nnn'},{l:'O',w:'Orange',e:'🍊',ph:'oh'},{l:'P',w:'Penguin',e:'🐧',ph:'puh'},{l:'Q',w:'Queen',e:'👸',ph:'kwuh'},{l:'R',w:'Rabbit',e:'🐰',ph:'rrr'},{l:'S',w:'Sun',e:'☀️',ph:'sss'},{l:'T',w:'Tiger',e:'🐯',ph:'tuh'},{l:'U',w:'Umbrella',e:'☂️',ph:'uh'},{l:'V',w:'Van',e:'🚐',ph:'vvv'},{l:'W',w:'Whale',e:'🐳',ph:'wuh'},{l:'X',w:'Xylophone',e:'🎹',ph:'ks'},{l:'Y',w:'Yo-yo',e:'🪀',ph:'yuh'},{l:'Z',w:'Zebra',e:'🦓',ph:'zzz'}];
 let abcIdx=0;
-let abcMode='song';
-function setAbcMode(m){
-  abcMode=m; stopAbcSong(true);
-  ['song','learn','trace','phonic','spell'].forEach(x=>{
-    const p=document.getElementById('abcPanel'+x.charAt(0).toUpperCase()+x.slice(1));
-    if(p) p.classList.toggle('active', x===m);
-    const b=document.getElementById('abcMode'+x.charAt(0).toUpperCase()+x.slice(1));
-    if(b) b.classList.toggle('active', x===m);
-  });
-  if(m==='trace'){ setTimeout(drawTraceGuide, 100); speakSlow('Trace the letter!'); }
-  if(m==='phonic'){ renderPhonics(); speakSlow('Tap a letter for its sound!'); }
-  if(m==='spell'){ if(!spellWord) newSpell(); speakSlow('Spell the word!'); }
-  if(m==='song'){ renderSingLyrics(-1); }
+let abcMode='boxes';
+
+const liveLetterColors = [
+  '#EC4899','#3B82F6','#F59E0B','#10B981','#8B5CF6','#EF4444','#06B6D4','#F97316',
+  '#84CC16','#A855F7','#14B8A6','#6366F1','#E11D48','#0D9488','#D97706','#2563EB',
+  '#7C3AED','#DB2777','#EA580C','#059669','#4F46E5','#0284C7','#C026D3','#65A30D',
+  '#9333EA','#CA8A04'
+];
+
+function soundSqueak(){
+  if(muted) return;
+  try{
+    const ctx = getAudioCtx(); if(!ctx) return;
+    const now = ctx.currentTime;
+    const osc = ctx.createOscillator();
+    const g = ctx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(680, now);
+    osc.frequency.exponentialRampToValueAtTime(1450, now + 0.08);
+    osc.frequency.exponentialRampToValueAtTime(820, now + 0.16);
+    g.gain.setValueAtTime(0.001, now);
+    g.gain.linearRampToValueAtTime(0.5, now + 0.015);
+    g.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
+    osc.connect(g); g.connect(ctx.destination);
+    osc.start(now); osc.stop(now + 0.22);
+  }catch(e){}
 }
+
+function getLiveLetterHTML(letter, color, isLarge = false, extraClass = ''){
+  const lColor = color || liveLetterColors[(letter.charCodeAt(0) - 65) % liveLetterColors.length] || '#A855F7';
+  return `
+    <div class="live-letter ${isLarge ? 'large' : ''} ${extraClass}" style="--letter-color:${lColor};" onclick="tapLiveLetter('${letter}','${lColor}',event)">
+      <div class="live-letter-body">
+        <span class="live-letter-char">${letter}</span>
+        <div class="live-eyes">
+          <div class="live-eye"><div class="live-pupil"></div></div>
+          <div class="live-eye"><div class="live-pupil"></div></div>
+        </div>
+        <div class="live-mouth"></div>
+        <div class="live-blush left"></div>
+        <div class="live-blush right"></div>
+        <div class="live-arms">
+          <div class="live-arm left"></div>
+          <div class="live-arm right"></div>
+        </div>
+      </div>
+      <div class="live-feet">
+        <div class="live-foot"></div>
+        <div class="live-foot"></div>
+      </div>
+    </div>
+  `;
+}
+
+function tapLiveLetter(letter, color, e){
+  soundSqueak();
+  const item = abc.find(a => a.l === letter) || { w: 'Word', ph: letter.toLowerCase() };
+  singSayLetter(`${letter}! ${letter} says "${item.ph}"! ${item.w}!`);
+  const el = e?.currentTarget;
+  if(el){
+    el.classList.add('jumping');
+    setTimeout(()=>el.classList.remove('jumping'), 600);
+  }
+  const x = e?.clientX || window.innerWidth/2, y = e?.clientY || window.innerHeight/2;
+  splashAt(x, y, color || '#A855F7');
+  burstConfetti(10, color || '#A855F7');
+  spawnSongNote(['✨','⭐','💖','🎉'][Math.floor(Math.random()*4)], el);
+}
+
+// === 1. LETTERS IN BOXES GAME (Bini Signature Feature) ===
+const biniWords = [
+  { word: 'CAT', emoji: '🐱', sound: 'Meow! Meow!', name: 'Cat', color: '#F472B6' },
+  { word: 'DOG', emoji: '🐶', sound: 'Woof! Woof!', name: 'Dog', color: '#60A5FA' },
+  { word: 'CAR', emoji: '🚗', sound: 'Vroom! Beep beep!', name: 'Car', color: '#EF4444' },
+  { word: 'SUN', emoji: '☀️', sound: 'Shine! Sunny day!', name: 'Sun', color: '#FBBF24' },
+  { word: 'FISH', emoji: '🐟', sound: 'Blub blub blub!', name: 'Fish', color: '#38BDF8' },
+  { word: 'DUCK', emoji: '🦆', sound: 'Quack! Quack!', name: 'Duck', color: '#FACC15' },
+  { word: 'STAR', emoji: '⭐', sound: 'Twinkle twinkle!', name: 'Star', color: '#A855F7' },
+  { word: 'BEAR', emoji: '🐻', sound: 'Grrr! Big bear!', name: 'Bear', color: '#FB923C' }
+];
+let biniWordIdx = 0;
+let biniBoxesPacked = {};
+
+function initLettersInBoxes(idx = biniWordIdx){
+  biniWordIdx = (idx + biniWords.length) % biniWords.length;
+  const current = biniWords[biniWordIdx];
+  biniBoxesPacked = {};
+
+  const tabs = document.getElementById('biniWordTabs');
+  if(tabs){
+    tabs.innerHTML = biniWords.map((w, i) => `
+      <button class="tool-btn ${i===biniWordIdx ? 'active' : ''}" style="${i===biniWordIdx ? 'background:#0284C7;color:#fff;border-color:#0284C7;font-weight:900;' : 'background:#fff;font-weight:900;'}" onclick="initLettersInBoxes(${i})">
+        ${w.emoji} ${w.word}
+      </button>
+    `).join('');
+  }
+
+  const preview = document.getElementById('biniToyPreview');
+  if(preview) preview.textContent = current.emoji;
+  const textEl = document.getElementById('biniTargetWordText');
+  if(textEl) textEl.textContent = current.word;
+
+  const slots = document.getElementById('biniBoxSlots');
+  if(slots){
+    slots.innerHTML = current.word.split('').map((letter, i) => `
+      <div class="bini-box" id="biniBox_${i}" data-letter="${letter}" data-slot="${i}">
+        <span class="bini-box-ribbon">🎀</span>
+        <span class="bini-box-ghost">${letter}</span>
+      </div>
+    `).join('');
+  }
+
+  const overlay = document.getElementById('biniCelebrateOverlay');
+  if(overlay) overlay.classList.remove('active');
+
+  const lettersPool = current.word.split('');
+  const extraLetters = ['A','B','C','D','M','S','T','P'].filter(x => !lettersPool.includes(x)).slice(0, 2);
+  const allLetters = [...lettersPool, ...extraLetters].sort(() => Math.random() - 0.5);
+
+  const conveyor = document.getElementById('biniConveyor');
+  if(conveyor){
+    conveyor.innerHTML = allLetters.map((letter) => `
+      <div class="running-letter-wrap" data-letter="${letter}" onclick="packLetterToBox('${letter}', this)" title="Tap letter to jump in box!">
+        ${getLiveLetterHTML(letter, null, false, 'running-letter')}
+      </div>
+    `).join('');
+  }
+}
+
+function packLetterToBox(letter, wrapEl){
+  const current = biniWords[biniWordIdx];
+  const wordLetters = current.word.split('');
+
+  let targetSlot = -1;
+  for(let i = 0; i < wordLetters.length; i++){
+    if(wordLetters[i] === letter && !biniBoxesPacked[i]){
+      targetSlot = i;
+      break;
+    }
+  }
+
+  if(targetSlot !== -1){
+    biniBoxesPacked[targetSlot] = letter;
+    const boxEl = document.getElementById(`biniBox_${targetSlot}`);
+    if(boxEl){
+      boxEl.classList.add('filled');
+      boxEl.innerHTML = `
+        <span class="bini-box-ribbon">🌟</span>
+        ${getLiveLetterHTML(letter, null, false, 'bini-packed-char')}
+      `;
+    }
+
+    if(wrapEl){
+      wrapEl.style.transform = 'scale(0) translateY(-60px)';
+      wrapEl.style.opacity = '0';
+      wrapEl.style.pointerEvents = 'none';
+      setTimeout(()=>wrapEl.remove(), 250);
+    }
+
+    blip(440 + targetSlot * 90, 0.35, 'triangle', 0.6);
+    soundPop();
+    singSayLetter(letter);
+    burstConfetti(10, '#22C55E');
+
+    const packedCount = Object.keys(biniBoxesPacked).length;
+    if(packedCount === wordLetters.length){
+      setTimeout(celebrateBiniWord, 400);
+    }
+  } else {
+    soundSqueak();
+    singSayLetter(`${letter}! Try another letter!`);
+    if(wrapEl){
+      wrapEl.style.transform = 'translateX(8px)';
+      setTimeout(()=>wrapEl.style.transform = 'translateX(-8px)', 100);
+      setTimeout(()=>wrapEl.style.transform = 'translateX(0)', 200);
+    }
+  }
+}
+
+function celebrateBiniWord(){
+  const current = biniWords[biniWordIdx];
+  const overlay = document.getElementById('biniCelebrateOverlay');
+  const toyEl = document.getElementById('biniCelebratedToy');
+  const titleEl = document.getElementById('biniCelebratedTitle');
+  const subEl = document.getElementById('biniCelebratedSub');
+
+  if(toyEl) toyEl.textContent = current.emoji;
+  if(titleEl) titleEl.textContent = `Super! You packed ${current.word}!`;
+  if(subEl) subEl.textContent = `${current.emoji} ${current.sound}`;
+
+  if(overlay) overlay.classList.add('active');
+
+  blip(523, 0.4, 'triangle', 0.7);
+  setTimeout(()=>blip(659, 0.4, 'triangle', 0.7), 140);
+  setTimeout(()=>blip(784, 0.5, 'triangle', 0.7), 280);
+  setTimeout(()=>blip(1046, 0.8, 'triangle', 0.8), 420);
+
+  burstConfetti(40, '#22C55E');
+  setTimeout(()=>burstConfetti(35, '#F59E0B'), 300);
+
+  speakSlow(`Awesome! You spelled ${current.word}! ${current.sound}`);
+}
+
+function hearBiniWord(){
+  const current = biniWords[biniWordIdx];
+  speakSlow(`${current.word}! ${current.name}! ${current.sound}`);
+  blip(520, 0.35, 'sine', 0.5);
+}
+
+function nextBiniWord(){
+  initLettersInBoxes(biniWordIdx + 1);
+}
+
+function prevBiniWord(){
+  initLettersInBoxes(biniWordIdx - 1);
+}
+
+// === 2. LIVE LETTERS HERO MEET & GREET ===
+function renderLiveLetterHero(){
+  const cur = abc[abcIdx];
+  const color = liveLetterColors[abcIdx % liveLetterColors.length];
+  const container = document.getElementById('liveLetterHeroContainer');
+  if(container){
+    container.innerHTML = getLiveLetterHTML(cur.l, color, true);
+  }
+  const nameEl = document.getElementById('liveHeroName');
+  if(nameEl) nameEl.textContent = `Letter ${cur.l} — ${cur.w} ${cur.e}`;
+  const phonicEl = document.getElementById('liveHeroPhonic');
+  if(phonicEl) phonicEl.textContent = `🔤 says "${cur.ph}" — /${cur.ph}/ /${cur.ph}/ ${cur.w}!`;
+
+  const grid = document.getElementById('liveLetterGrid');
+  if(grid && grid.children.length !== abc.length){
+    grid.innerHTML = abc.map((a, i) => `
+      <button class="tool-btn ${i===abcIdx?'active':''}" style="font-size:1.1rem;font-weight:900;padding:.4rem .7rem;border-radius:14px;background:${i===abcIdx?'#7C3AED':'#fff'};color:${i===abcIdx?'#fff':'#334155'};border:2.5px solid ${i===abcIdx?'#FDE047':'#e2e8f0'};" onclick="goLiveLetter(${i})">
+        ${a.l}
+      </button>
+    `).join('');
+  }
+}
+
+function stepLiveLetter(d){
+  abcIdx = (abcIdx + d + abc.length) % abc.length;
+  renderLiveLetterHero();
+  hearLiveHero();
+}
+
+function goLiveLetter(i){
+  abcIdx = i;
+  renderLiveLetterHero();
+  hearLiveHero();
+}
+
+function hearLiveHero(){
+  const cur = abc[abcIdx];
+  const color = liveLetterColors[abcIdx % liveLetterColors.length];
+  soundSqueak();
+  singSayLetter(`Letter ${cur.l}! ${cur.l} says "${cur.ph}"! ${cur.w}!`);
+  burstConfetti(12, color);
+}
+
+// === 3. LETTER BUBBLE POP GAME ===
+let biniBubbleTimer = null;
+let biniBubbleScore = 0;
+
+function startBiniBubbles(){
+  stopBiniBubbles();
+  biniBubbleTimer = setInterval(spawnBiniBubble, 1100);
+  spawnBiniBubble();
+  spawnBiniBubble();
+}
+
+function stopBiniBubbles(){
+  if(biniBubbleTimer){ clearInterval(biniBubbleTimer); biniBubbleTimer = null; }
+}
+
+function spawnBiniBubble(){
+  const sky = document.getElementById('biniBubbleSky');
+  if(!sky) return;
+  const randIdx = Math.floor(Math.random() * abc.length);
+  const cur = abc[randIdx];
+  const color = liveLetterColors[randIdx % liveLetterColors.length];
+
+  const bubble = document.createElement('div');
+  bubble.className = 'bini-bubble-letter';
+  bubble.style.left = (Math.random() * (sky.clientWidth - 90) + 10) + 'px';
+  bubble.style.setProperty('--drift', ((Math.random() - 0.5) * 80) + 'px');
+  bubble.style.animationDuration = (4.5 + Math.random() * 2.5) + 's';
+  bubble.style.background = `radial-gradient(circle at 35% 35%, rgba(255,255,255,0.95), ${color}77 60%, ${color} 100%)`;
+
+  bubble.innerHTML = `<span style="font-size:2.4rem;font-weight:900;color:#fff;text-shadow:0 2px 5px rgba(0,0,0,0.3)">${cur.l}</span>`;
+
+  bubble.addEventListener('pointerdown', (e) => {
+    e.stopPropagation();
+    popBiniBubble(bubble, cur, color);
+  });
+
+  sky.appendChild(bubble);
+  setTimeout(() => bubble.remove(), 7500);
+}
+
+function popBiniBubble(bubble, letterObj, color){
+  bubble.style.transform = 'scale(1.4)';
+  bubble.style.opacity = '0';
+  soundPop();
+  soundSqueak();
+  singSayLetter(`${letterObj.l}! ${letterObj.w}!`);
+  burstConfetti(12, color);
+
+  biniBubbleScore++;
+  const scoreEl = document.getElementById('biniBubbleScore');
+  if(scoreEl) scoreEl.textContent = biniBubbleScore;
+
+  setTimeout(() => bubble.remove(), 120);
+}
+
+// === 4. LETTER PEEKABOO / HIDE & SEEK ===
+const peekCovers = [
+  { icon: '☁️', name: 'Fluffy Cloud' },
+  { icon: '🌿', name: 'Green Bush' },
+  { icon: '🎁', name: 'Gift Box' },
+  { icon: '📦', name: 'Mystery Crate' }
+];
+
+function initLetterPeekaboo(){
+  const grid = document.getElementById('biniPeekGrid');
+  if(!grid) return;
+  const chosen = [...abc].sort(() => Math.random() - 0.5).slice(0, 4);
+
+  grid.innerHTML = chosen.map((item, i) => {
+    const cover = peekCovers[i % peekCovers.length];
+    const color = liveLetterColors[(item.l.charCodeAt(0) - 65) % liveLetterColors.length];
+    return `
+      <div class="bini-peek-card" onclick="revealLetterPeek(this, '${item.l}', '${color}', '${item.w}', '${item.ph}')">
+        <div class="bini-peek-cover">
+          <div>${cover.icon}</div>
+          <div style="font-size:.82rem;font-weight:900;color:#92400e;margin-top:.2rem">Tap to peek! 👀</div>
+        </div>
+        <div style="transform:scale(0.85)">
+          ${getLiveLetterHTML(item.l, color)}
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function revealLetterPeek(cardEl, letter, color, word, ph){
+  if(cardEl.classList.contains('revealed')) return;
+  cardEl.classList.add('revealed');
+  soundPop();
+  soundSqueak();
+  singSayLetter(`Peek-a-boo! Letter ${letter}! /${ph}/ /${ph}/ ${word}!`);
+  burstConfetti(14, color);
+}
+
+// === BINI ABC MODE SWITCHER ===
+function setAbcMode(m){
+  abcMode = m;
+  stopAbcSong(true);
+  stopBiniBubbles();
+
+  ['boxes', 'live', 'trace', 'bubbles', 'song', 'peek', 'phonic'].forEach(x => {
+    const p = document.getElementById('abcPanel' + x.charAt(0).toUpperCase() + x.slice(1));
+    if(p) p.classList.toggle('active', x === m);
+    const b = document.getElementById('abcMode' + x.charAt(0).toUpperCase() + x.slice(1));
+    if(b) b.classList.toggle('active', x === m);
+  });
+
+  if(m === 'boxes'){ initLettersInBoxes(); speakSlow('Catch letters into boxes!'); }
+  if(m === 'live'){ renderLiveLetterHero(); speakSlow('Meet the Live Letters!'); }
+  if(m === 'trace'){ setTimeout(drawTraceGuide, 100); speakSlow('Trace the letter!'); }
+  if(m === 'bubbles'){ startBiniBubbles(); speakSlow('Pop the letter bubbles!'); }
+  if(m === 'song'){ renderSingLyrics(-1); }
+  if(m === 'peek'){ initLetterPeekaboo(); speakSlow('Find where the Live Letters are hiding!'); }
+  if(m === 'phonic'){ renderPhonics(); speakSlow('Tap a letter for its sound!'); }
+}
+
 function renderAbc(){
   const cur=abc[abcIdx];const low=cur.l.toLowerCase();
-  const pairs=[['abcLetter','abcEmoji','abcWord'],['abcLetter2','abcEmoji2','abcWord2']];
+  const pairs=[['abcLetter','abcEmoji','abcWord']];
   pairs.forEach(([a,b,c])=>{
-    const e1=document.getElementById(a); if(e1) e1.textContent=(a==='abcLetter'?cur.l+low:cur.l+low);
+    const e1=document.getElementById(a); if(e1) e1.textContent=cur.l+low;
     const e2=document.getElementById(b); if(e2) e2.textContent=cur.e;
     const e3=document.getElementById(c); if(e3) e3.textContent=cur.l+' for '+cur.w;
   });
   const ph=document.getElementById('abcPhonic');if(ph)ph.textContent='🔤 '+cur.l+' says "'+cur.ph+'" — '+cur.ph+'-'+cur.ph+'-'+cur.w+'!';
-  const g=document.getElementById('abcGrid'); if(g) g.innerHTML=abc.map((a,i)=>`<button class="${i===abcIdx?'active':''}" onclick="goAbc(${i})">${a.l}</button>`).join('');
   const t=document.getElementById('traceLetter'); if(t) t.textContent=cur.l;
 }
-function speakAbc(){const c=abc[abcIdx];try{speechSynthesis.cancel()}catch(e){} // slow, song-like: letter... then word... then phonic
-  speakSlow(c.l); setTimeout(()=>{ if(!abcSinging) speakSlow(c.l+' for '+c.w); }, 900);
-  blip(520+abcIdx*12,0.6,'sine',0.6);}
-function stepAbc(d){stopAbcSong(true);abcIdx=(abcIdx+d+abc.length)%abc.length;renderAbc();speakAbc();drawTraceGuide();}
-function goAbc(i){stopAbcSong(true);abcIdx=i;renderAbc();speakAbc();drawTraceGuide();}
-// 🎵 ABC sing-along — FIXED: phrase singing like real ABC song + loud melody so it ALWAYS sings even if TTS blocked
-let abcSinging=false, abcSingTimers=[];
-function renderSingLyrics(activeIdx){
-  const box=document.getElementById('abcSingLyrics'); if(!box) return;
-  if(box.children.length!==abc.length){
-    box.innerHTML=abc.map(a=>`<span>${a.l}</span>`).join('');
-  }
-  [...box.children].forEach((s,i)=>s.classList.toggle('singing', i===activeIdx));
+
+function speakAbc(){
+  const c = abc[abcIdx];
+  stopAllSpeech();
+  playAiVoice(`${c.l}! ${c.l} is for ${c.w}!`);
+  blip(520 + abcIdx * 12, 0.4, 'sine', 0.5);
 }
-function sayLetter(text){
-  // robust single-letter speak: cancel stuck queue first (iPad fix)
+
+function stepAbc(d){
+  stopAbcSong(true);
+  abcIdx=(abcIdx+d+abc.length)%abc.length;
+  renderAbc();
+  speakAbc();
+  drawTraceGuide();
+}
+
+function goAbc(i){
+  stopAbcSong(true);
+  abcIdx=i;
+  renderAbc();
+  speakAbc();
+  drawTraceGuide();
+}
+// 🎵 ABC SING-ALONG MUSICAL ENGINE FOR TODDLERS
+let abcSinging = false, abcSingTimers = [];
+let abcSongTempo = 'toddler'; // 'toddler' (gentle slow) or 'dance' (upbeat)
+let abcSongInst = 'musicbox';  // 'musicbox', 'piano', 'marimba'
+let abcTapSingIndex = 0;
+let abcMascots = ['⭐','🐻','🐥','🐰','🐶','🐱','🦁','🦄'];
+let abcMascotIdx = 0;
+
+function cycleAbcMascot(){
+  abcMascotIdx = (abcMascotIdx + 1) % abcMascots.length;
+  const m = document.getElementById('abcSingerMascot');
+  if(m){
+    m.textContent = abcMascots[abcMascotIdx];
+    m.classList.remove('mascotHop');
+    void m.offsetWidth;
+  }
+  soundPop();
+  burstConfetti(8, '#A855F7');
+}
+
+function setAbcTempo(t){
+  abcSongTempo = t;
+  document.getElementById('abcTempoSlow')?.classList.toggle('active', t==='toddler');
+  document.getElementById('abcTempoFast')?.classList.toggle('active', t==='dance');
+  blip(t==='toddler' ? 440 : 587, 0.2, 'sine', 0.4);
+  if(abcSinging){
+    stopAbcSong(true);
+    setTimeout(singAbcSong, 150);
+  }
+}
+
+function setAbcInst(i){
+  abcSongInst = i;
+  document.getElementById('abcInstBox')?.classList.toggle('active', i==='musicbox');
+  document.getElementById('abcInstPiano')?.classList.toggle('active', i==='piano');
+  document.getElementById('abcInstMarimba')?.classList.toggle('active', i==='marimba');
+  playAbcMelodyNote(523.25, 0.4, abcSongInst);
+}
+
+// Rich Web Audio Synthesizer for ABC Song
+function playAbcMelodyNote(freq, durSec = 0.5, inst = 'musicbox'){
+  if(muted) return;
+  try{
+    const ctx = getAudioCtx(); if(!ctx) return;
+    const now = ctx.currentTime;
+    const gain = ctx.createGain();
+    gain.connect(ctx.destination);
+
+    if(inst === 'musicbox'){
+      // Bell-like music box chime: fundamental + octaves + sparkle overtone
+      const osc1 = ctx.createOscillator();
+      const osc2 = ctx.createOscillator();
+      const osc3 = ctx.createOscillator();
+      osc1.type = 'sine'; osc1.frequency.setValueAtTime(freq, now);
+      osc2.type = 'sine'; osc2.frequency.setValueAtTime(freq * 2.0, now);
+      osc3.type = 'triangle'; osc3.frequency.setValueAtTime(freq * 3.01, now);
+
+      gain.gain.setValueAtTime(0.001, now);
+      gain.gain.linearRampToValueAtTime(0.55, now + 0.008);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + durSec + 0.25);
+
+      const g2 = ctx.createGain(); g2.gain.value = 0.35;
+      const g3 = ctx.createGain(); g3.gain.value = 0.15;
+      osc1.connect(gain);
+      osc2.connect(g2); g2.connect(gain);
+      osc3.connect(g3); g3.connect(gain);
+
+      osc1.start(now); osc1.stop(now + durSec + 0.3);
+      osc2.start(now); osc2.stop(now + durSec + 0.3);
+      osc3.start(now); osc3.stop(now + durSec + 0.3);
+    } else if(inst === 'piano'){
+      // Warm toy piano
+      const osc = ctx.createOscillator();
+      const oscSub = ctx.createOscillator();
+      const filter = ctx.createBiquadFilter();
+      filter.type = 'lowpass';
+      filter.frequency.setValueAtTime(2200, now);
+
+      osc.type = 'triangle'; osc.frequency.setValueAtTime(freq, now);
+      oscSub.type = 'sine'; oscSub.frequency.setValueAtTime(freq * 2, now);
+
+      gain.gain.setValueAtTime(0.001, now);
+      gain.gain.linearRampToValueAtTime(0.65, now + 0.012);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + durSec + 0.15);
+
+      osc.connect(filter);
+      oscSub.connect(filter);
+      filter.connect(gain);
+
+      osc.start(now); osc.stop(now + durSec + 0.2);
+      oscSub.start(now); oscSub.stop(now + durSec + 0.2);
+    } else {
+      // Marimba / Xylophone
+      const osc = ctx.createOscillator();
+      const oscHarm = ctx.createOscillator();
+      osc.type = 'sine';
+      // Pitch drop on mallet attack
+      osc.frequency.setValueAtTime(freq * 1.3, now);
+      osc.frequency.exponentialRampToValueAtTime(freq, now + 0.02);
+
+      oscHarm.type = 'triangle';
+      oscHarm.frequency.setValueAtTime(freq * 4.0, now);
+
+      gain.gain.setValueAtTime(0.001, now);
+      gain.gain.linearRampToValueAtTime(0.7, now + 0.006);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + durSec * 0.9 + 0.08);
+
+      const gH = ctx.createGain(); gH.gain.value = 0.25;
+      osc.connect(gain);
+      oscHarm.connect(gH); gH.connect(gain);
+
+      osc.start(now); osc.stop(now + durSec + 0.1);
+      oscHarm.start(now); oscHarm.stop(now + 0.08);
+    }
+  }catch(e){}
+}
+
+function playAbcChord(chordName, durSec = 0.5){
+  if(muted) return;
+  try{
+    const ctx = getAudioCtx(); if(!ctx) return;
+    const now = ctx.currentTime;
+    const chords = {
+      'C': [130.81, 261.63, 329.63],
+      'F': [174.61, 261.63, 349.23],
+      'G': [196.00, 293.66, 392.00]
+    };
+    const notes = chords[chordName] || chords['C'];
+    const gain = ctx.createGain();
+    gain.gain.setValueAtTime(0.001, now);
+    gain.gain.linearRampToValueAtTime(0.18, now + 0.02);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + durSec + 0.2);
+    gain.connect(ctx.destination);
+
+    notes.forEach((f, idx)=>{
+      const o = ctx.createOscillator();
+      o.type = idx === 0 ? 'triangle' : 'sine';
+      o.frequency.setValueAtTime(f, now);
+      o.connect(gain);
+      o.start(now); o.stop(now + durSec + 0.25);
+    });
+  }catch(e){}
+}
+
+function playAbcDrum(type){
+  if(muted) return;
+  try{
+    const ctx = getAudioCtx(); if(!ctx) return;
+    const now = ctx.currentTime;
+    if(type === 'kick'){
+      // Gentle toddler kick
+      const osc = ctx.createOscillator();
+      const g = ctx.createGain();
+      osc.frequency.setValueAtTime(115, now);
+      osc.frequency.exponentialRampToValueAtTime(42, now + 0.09);
+      g.gain.setValueAtTime(0.35, now);
+      g.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
+      osc.connect(g); g.connect(ctx.destination);
+      osc.start(now); osc.stop(now + 0.11);
+    } else if(type === 'tick'){
+      // Woodblock tick
+      const osc = ctx.createOscillator();
+      const g = ctx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(980, now);
+      g.gain.setValueAtTime(0.25, now);
+      g.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+      osc.connect(g); g.connect(ctx.destination);
+      osc.start(now); osc.stop(now + 0.045);
+    } else if(type === 'crash'){
+      // Shimmer chime crash
+      [1046, 1318, 1567].forEach((cf, idx)=>{
+        const osc = ctx.createOscillator();
+        const g = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(cf, now + idx * 0.02);
+        g.gain.setValueAtTime(0.2, now + idx * 0.02);
+        g.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+        osc.connect(g); g.connect(ctx.destination);
+        osc.start(now + idx * 0.02); osc.stop(now + 0.38);
+      });
+    }
+  }catch(e){}
+}
+
+function spawnSongNote(emoji, targetEl){
+  try{
+    const el = document.createElement('div');
+    el.className = 'abc-note-pop';
+    el.textContent = emoji || '🎵';
+    const stage = document.getElementById('abcStageCenter') || document.body;
+    const rect = targetEl ? targetEl.getBoundingClientRect() : stage.getBoundingClientRect();
+    const stageRect = stage.getBoundingClientRect();
+    el.style.left = (targetEl ? (rect.left - stageRect.left + rect.width / 2 - 12) : (stageRect.width * (0.2 + Math.random() * 0.6))) + 'px';
+    el.style.top = (targetEl ? (rect.top - stageRect.top - 10) : (stageRect.height * 0.4)) + 'px';
+    stage.appendChild(el);
+    setTimeout(()=>el.remove(), 900);
+  }catch(e){}
+}
+
+function sparkleActiveLetter(){
+  const emoji = document.getElementById('abcEmoji');
+  if(emoji){
+    emoji.style.transform = 'scale(1.25) rotate(10deg)';
+    setTimeout(()=>emoji.style.transform = 'scale(1) rotate(0deg)', 200);
+  }
+  burstConfetti(12, '#A855F7');
+  soundPop();
+  spawnSongNote('✨', emoji);
+}
+
+// Full classic Alphabet Song composition (Twinkle / Alphabet tune)
+const abcSongSteps = [
+  // Line 1: A B C D E F G
+  { idx: 0, text: 'A', note: 261.63, beats: 1, chord: 'C', drum: 'kick', line: 'A B C D E F G' },
+  { idx: 1, text: 'B', note: 261.63, beats: 1, chord: 'C', drum: 'tick', line: 'A B C D E F G' },
+  { idx: 2, text: 'C', note: 392.00, beats: 1, chord: 'C', drum: 'kick', line: 'A B C D E F G' },
+  { idx: 3, text: 'D', note: 392.00, beats: 1, chord: 'C', drum: 'tick', line: 'A B C D E F G' },
+  { idx: 4, text: 'E', note: 440.00, beats: 1, chord: 'F', drum: 'kick', line: 'A B C D E F G' },
+  { idx: 5, text: 'F', note: 440.00, beats: 1, chord: 'F', drum: 'tick', line: 'A B C D E F G' },
+  { idx: 6, text: 'G', note: 392.00, beats: 2, chord: 'C', drum: 'crash', line: 'A B C D E F G', pause: 0.35 },
+
+  // Line 2: H I J K L-M-N-O-P
+  { idx: 7, text: 'H', note: 349.23, beats: 1, chord: 'F', drum: 'kick', line: 'H I J K L-M-N-O-P' },
+  { idx: 8, text: 'I', note: 349.23, beats: 1, chord: 'F', drum: 'tick', line: 'H I J K L-M-N-O-P' },
+  { idx: 9, text: 'J', note: 329.63, beats: 1, chord: 'C', drum: 'kick', line: 'H I J K L-M-N-O-P' },
+  { idx: 10, text: 'K', note: 329.63, beats: 1, chord: 'C', drum: 'tick', line: 'H I J K L-M-N-O-P' },
+  // Classic toddler rapid bounce!
+  { idx: 11, text: 'L', note: 293.66, beats: 0.5, chord: 'G', drum: 'kick', line: 'L-M-N-O-P!' },
+  { idx: 12, text: 'M', note: 293.66, beats: 0.5, chord: 'G', drum: 'tick', line: 'L-M-N-O-P!' },
+  { idx: 13, text: 'N', note: 293.66, beats: 0.5, chord: 'G', drum: 'kick', line: 'L-M-N-O-P!' },
+  { idx: 14, text: 'O', note: 293.66, beats: 0.5, chord: 'G', drum: 'tick', line: 'L-M-N-O-P!' },
+  { idx: 15, text: 'P', note: 261.63, beats: 2, chord: 'C', drum: 'crash', line: 'L-M-N-O-P!', pause: 0.35 },
+
+  // Line 3: Q R S, T U V
+  { idx: 16, text: 'Q', note: 392.00, beats: 1, chord: 'C', drum: 'kick', line: 'Q R S... T U V' },
+  { idx: 17, text: 'R', note: 392.00, beats: 1, chord: 'C', drum: 'tick', line: 'Q R S... T U V' },
+  { idx: 18, text: 'S', note: 349.23, beats: 2, chord: 'G', drum: 'crash', line: 'Q R S... T U V', pause: 0.25 },
+  { idx: 19, text: 'T', note: 329.63, beats: 1, chord: 'C', drum: 'kick', line: 'Q R S... T U V' },
+  { idx: 20, text: 'U', note: 329.63, beats: 1, chord: 'C', drum: 'tick', line: 'Q R S... T U V' },
+  { idx: 21, text: 'V', note: 293.66, beats: 2, chord: 'G', drum: 'crash', line: 'Q R S... T U V', pause: 0.35 },
+
+  // Line 4: W X, Y and Z!
+  { idx: 22, text: 'W', note: 392.00, beats: 1, chord: 'C', drum: 'kick', line: 'W X, Y and Z!' },
+  { idx: 23, text: 'X', note: 392.00, beats: 1, chord: 'C', drum: 'tick', line: 'W X, Y and Z!' },
+  { idx: 24, text: 'Y', note: 349.23, beats: 1, chord: 'F', drum: 'kick', line: 'W X, Y and Z!' },
+  { idx: -1, text: 'and', note: 329.63, beats: 0.8, chord: 'G', drum: 'tick', line: 'W X, Y and Z!' },
+  { idx: 25, text: 'Z', note: 261.63, beats: 2.2, chord: 'C', drum: 'crash', line: 'W X, Y and Z!', pause: 0.4 },
+
+  // Outro Part 1: "Now I know my ABCs"
+  { idx: -1, text: 'Now', note: 261.63, beats: 0.9, chord: 'C', drum: 'kick', line: 'Now I know my ABCs!' },
+  { idx: -1, text: 'I', note: 261.63, beats: 0.9, chord: 'C', drum: 'tick', line: 'Now I know my ABCs!' },
+  { idx: -1, text: 'know', note: 392.00, beats: 0.9, chord: 'C', drum: 'kick', line: 'Now I know my ABCs!' },
+  { idx: -1, text: 'my', note: 392.00, beats: 0.9, chord: 'C', drum: 'tick', line: 'Now I know my ABCs!' },
+  { idx: 0, text: 'A', note: 440.00, beats: 0.7, chord: 'F', drum: 'kick', line: 'Now I know my ABCs!' },
+  { idx: 1, text: 'B', note: 440.00, beats: 0.7, chord: 'F', drum: 'tick', line: 'Now I know my ABCs!' },
+  { idx: 2, text: 'Cs!', note: 392.00, beats: 2.2, chord: 'C', drum: 'crash', line: 'Now I know my ABCs!', pause: 0.35 },
+
+  // Outro Part 2: "Next time won't you sing with me!"
+  { idx: -1, text: 'Next', note: 349.23, beats: 0.9, chord: 'F', drum: 'kick', line: "Next time won't you sing with me!" },
+  { idx: -1, text: 'time', note: 349.23, beats: 0.9, chord: 'F', drum: 'tick', line: "Next time won't you sing with me!" },
+  { idx: -1, text: "won't", note: 329.63, beats: 0.9, chord: 'C', drum: 'kick', line: "Next time won't you sing with me!" },
+  { idx: -1, text: 'you', note: 329.63, beats: 0.9, chord: 'C', drum: 'tick', line: "Next time won't you sing with me!" },
+  { idx: -1, text: 'sing', note: 293.66, beats: 0.9, chord: 'G', drum: 'kick', line: "Next time won't you sing with me!" },
+  { idx: -1, text: 'with', note: 293.66, beats: 0.9, chord: 'G', drum: 'tick', line: "Next time won't you sing with me!" },
+  { idx: -1, text: 'me! 🌟', note: 261.63, beats: 3.0, chord: 'C', drum: 'crash', line: "Next time won't you sing with me!", finale: true }
+];
+
+function renderSingLyrics(activeIdx){
+  const box = document.getElementById('abcSingLyrics'); if(!box) return;
+  if(box.children.length !== abc.length){
+    box.innerHTML = abc.map((a, i) => `<span class="sing-pill" data-idx="${i}" onclick="tapSingLetter(${i})">${a.l}</span>`).join('');
+  }
+  [...box.children].forEach((s, i) => {
+    const isAct = i === activeIdx;
+    s.classList.toggle('singing', isAct);
+    if(isAct){
+      try{ s.scrollIntoView({behavior: 'smooth', block: 'nearest', inline: 'center'}); }catch(e){}
+    }
+  });
+}
+
+function singSayLetter(text){
   try{ speechSynthesis.cancel(); }catch(e){}
   try{
-    const u=new SpeechSynthesisUtterance(text);
-    u.rate=0.42; u.pitch=1.25; u.volume=1.0; u.lang='en-US';
-    if(kidVoice) u.voice=kidVoice;
+    const u = new SpeechSynthesisUtterance(text);
+    u.rate = 0.88;
+    u.pitch = 1.35;
+    u.volume = 1.0;
+    u.lang = 'en-US';
+    if(kidVoice) u.voice = kidVoice;
     speechSynthesis.speak(u);
   }catch(e){}
 }
+
+function executeSongStep(step){
+  // 1. Play melody note
+  const beatSec = (abcSongTempo === 'toddler' ? 0.58 : 0.42);
+  const durSec = step.beats * beatSec;
+  playAbcMelodyNote(step.note, durSec, abcSongInst);
+  playAbcChord(step.chord, durSec);
+  if(step.drum) playAbcDrum(step.drum);
+
+  // 2. Update visual stage
+  if(step.idx >= 0){
+    abcIdx = step.idx;
+    renderAbc();
+    renderSingLyrics(step.idx);
+    const box = document.getElementById('abcSingLyrics');
+    if(box && box.children[step.idx]){
+      spawnSongNote(['🎵','🎶','⭐','✨'][step.idx % 4], box.children[step.idx]);
+    }
+  }
+
+  // 3. Update title/lyrics line
+  const lineEl = document.getElementById('abcSingLyricLine');
+  if(lineEl) lineEl.textContent = step.line || 'Singing ABCs!';
+  const statusEl = document.getElementById('abcSingStatus');
+  if(statusEl){
+    if(step.idx >= 0){
+      statusEl.innerHTML = `🎵 Singing <b>${abc[step.idx].l}</b> for <b>${abc[step.idx].w}</b>!`;
+    } else {
+      statusEl.innerHTML = `🎶 <b>${step.text}</b>`;
+    }
+  }
+
+  // 4. Sing / Speak
+  singSayLetter(step.text);
+
+  // 5. Celebration or effects
+  if(step.drum === 'crash'){
+    burstConfetti(10, '#EC4899');
+    try{ navigator.vibrate && navigator.vibrate(15); }catch(e){}
+  }
+  if(step.finale){
+    burstConfetti(36, '#A855F7');
+    setTimeout(()=>burstConfetti(28, '#F59E0B'), 350);
+  }
+}
+
+// Toddler Tap-To-Sing: every tap advances to next note/letter!
+function tapSingNext(){
+  stopAbcSong(true);
+  try{ getAudioCtx(); }catch(e){}
+  try{ getAudioCtx()?.resume?.(); }catch(e){}
+
+  const step = abcSongSteps[abcTapSingIndex];
+  executeSongStep(step);
+  sparkleActiveLetter();
+
+  abcTapSingIndex = (abcTapSingIndex + 1) % abcSongSteps.length;
+}
+
+// Tap any letter directly on the rainbow board to sing that note!
+function tapSingLetter(i){
+  stopAbcSong(true);
+  try{ getAudioCtx(); }catch(e){}
+  try{ getAudioCtx()?.resume?.(); }catch(e){}
+
+  abcIdx = i;
+  renderAbc();
+  renderSingLyrics(i);
+
+  // Find step with this letter
+  const step = abcSongSteps.find(s => s.idx === i) || {
+    idx: i, text: abc[i].l, note: 261.63 + (i * 12), chord: 'C', beats: 1.5, drum: 'crash'
+  };
+  executeSongStep(step);
+  sparkleActiveLetter();
+}
+
 function singAbcSong(){
   if(abcSinging){ stopAbcSong(); return; }
-  // unlock audio INSIDE tap (iPad requires gesture)
   try{ getAudioCtx(); }catch(e){}
   try{ getAudioCtx()?.resume?.(); }catch(e){}
   try{ speechSynthesis.cancel(); }catch(e){}
-  abcSinging=true;
-  const sb=document.getElementById('abcSingBtn'), st=document.getElementById('abcStopBtn'), ss=document.getElementById('abcSingStatus');
-  if(sb) sb.style.display='none'; if(st) st.style.display='inline-flex';
-  if(ss) ss.textContent='🎵 Singing... A B C D E F G...!';
-  // Real ABC phrasing (like Bini Super Song): 4 lines to Twinkle tune
-  const lines=[
-    {letters:[0,1,2,3,4,5,6], notes:[261,261,392,392,440,440,392]},
-    {letters:[7,8,9,10,11,12,13,14,15], notes:[349,349,329,329,293,293,261,261,261]},
-    {letters:[16,17,18,19,20,21], notes:[392,392,349,349,329,329,293]},
-    {letters:[22,23,24,25], notes:[392,392,349,349,329,329,293]},
-    {letters:[23,24,25], notes:[261,261,392,392,440,440,392]},
-  ];
+
+  abcSinging = true;
+  abcTapSingIndex = 0;
+  const sb = document.getElementById('abcSingBtn'), st = document.getElementById('abcStopBtn'), ss = document.getElementById('abcSingStatus');
+  if(sb) sb.style.display = 'none';
+  if(st) st.style.display = 'inline-flex';
+  if(ss) ss.innerHTML = '🎵 <b>Singing the ABC Song!</b> Sing along!';
+
   renderSingLyrics(-1);
-  // intro spoken once, then WAIT so it doesn't block letters (this was the bug)
-  sayLetter('Lets sing! A B C!');
-  burstConfetti(12,'#A855F7');
-  let t=1800;
-  const perLetter=850; // slow for toddler
-  lines.forEach((line,li)=>{
-    line.letters.forEach((letterIdx,k)=>{
-      const note=line.notes[k%line.notes.length];
-      abcSingTimers.push(setTimeout(()=>{
-        if(!abcSinging) return;
-        abcIdx=letterIdx; renderAbc(); renderSingLyrics(letterIdx);
-        const L=abc[letterIdx].l;
-        sayLetter(L); // each letter cancels previous -> no iPad queue jam
-        blip(note,1.0,'triangle',0.85); // LOUD melody always heard
-        setTimeout(()=>blip(note,0.9,'sine',0.5),60);
-        try{ navigator.vibrate && navigator.vibrate(12); }catch(e){}
-        if(ss) ss.textContent='🎵 '+abc.slice(0,letterIdx+1).map(a=>a.l).join(' ')+' ...';
-      }, t));
-      t+=perLetter;
-    });
-    // tiny pause between lines
-    t+=350;
+  singSayLetter("Let's sing the ABC song!");
+  burstConfetti(14, '#A855F7');
+
+  const beatSec = (abcSongTempo === 'toddler' ? 580 : 420);
+  let curDelay = 1400; // brief intro pause
+
+  abcSongSteps.forEach((step, sIdx)=>{
+    abcSingTimers.push(setTimeout(()=>{
+      if(!abcSinging) return;
+      executeSongStep(step);
+    }, curDelay));
+
+    curDelay += step.beats * beatSec;
+    if(step.pause){
+      curDelay += step.pause * 1000;
+    }
   });
+
   abcSingTimers.push(setTimeout(()=>{
     if(!abcSinging) return;
-    renderAbc(); burstConfetti(30,'#A855F7');
-    sayLetter('Now I know my A B Cs!');
-    if(ss) ss.textContent='🌟 Yay! Now I know my ABCs! Next: W X Y and Z!';
-    blip(523,0.9,'triangle',0.85); setTimeout(()=>blip(659,0.9,'triangle',0.85),300); setTimeout(()=>blip(784,1.2,'triangle',0.85),600);
-  }, t+200));
-  abcSingTimers.push(setTimeout(()=>stopAbcSong(true), t+5000));
+    stopAbcSong(true);
+    if(ss) ss.innerHTML = '🌟 <b>Yay! Great singing!</b> Tap Play to sing again!';
+  }, curDelay + 1200));
 }
+
 function stopAbcSong(silent){
-  abcSingTimers.forEach(clearTimeout); abcSingTimers=[];
-  const wasSinging=abcSinging;
-  abcSinging=false;
-  if(wasSinging && !silent){ try{speechSynthesis.cancel()}catch(e){} }
-  const b=document.getElementById('abcSingBtn'), s=document.getElementById('abcStopBtn'), ss=document.getElementById('abcSingStatus');
-  if(b) b.style.display='inline-flex'; if(s) s.style.display='none';
-  if(ss && !silent) ss.textContent='👆 Tap Sing — letters light up + music plays!';
-  const box=document.getElementById('abcSingLyrics'); if(box && !silent) [...box.children].forEach(x=>x.classList.remove('singing'));
+  abcSingTimers.forEach(clearTimeout);
+  abcSingTimers = [];
+  const wasSinging = abcSinging;
+  abcSinging = false;
+  if(wasSinging && !silent){
+    try{ speechSynthesis.cancel(); }catch(e){}
+  }
+  const b = document.getElementById('abcSingBtn'), s = document.getElementById('abcStopBtn'), ss = document.getElementById('abcSingStatus');
+  if(b) b.style.display = 'inline-flex';
+  if(s) s.style.display = 'none';
+  if(ss && !silent) ss.innerHTML = '👆 Tap <b>Play ABC Song</b> or tap letters below to sing each note!';
+  const box = document.getElementById('abcSingLyrics');
+  if(box && !silent) [...box.children].forEach(x => x.classList.remove('singing'));
 }
 // --- TRACE (Bini-style letter tracing) ---
 let traceDrawn=0;
@@ -780,7 +2775,7 @@ function drawTraceGuide(){
     let drawing=false, last=null;
     const getP=e=>{ const rect=cv.getBoundingClientRect(); const p=e.touches?e.touches[0]:e; return {x:(p.clientX-rect.left)*(cv.width/rect.width), y:(p.clientY-rect.top)*(cv.height/rect.height)}; };
     cv.addEventListener('pointerdown',e=>{ drawing=true; last=getP(e); getAudioCtx(); e.preventDefault(); try{cv.setPointerCapture(e.pointerId)}catch(_){} },{passive:false});
-    cv.addEventListener('pointermove',e=>{ if(!drawing) return; e.preventDefault(); const p=getP(e); const c2=cv.getContext('2d'); c2.strokeStyle='#EC4899'; c2.lineWidth=16; c2.lineCap='round'; c2.beginPath(); c2.moveTo(last.x,last.y); c2.lineTo(p.x,p.y); c2.stroke(); last=p; traceDrawn++; if(traceDrawn%40===0) blip(500+traceDrawn,0.3,'sine',0.5); if(traceDrawn===220){ const m=document.getElementById('traceStar'); if(m) m.textContent='🌟 Great tracing!'; burstConfetti(16,'#EC4899'); speakSlow('Great!'); try{navigator.vibrate&&navigator.vibrate(30)}catch(_){} } },{passive:false});
+    cv.addEventListener('pointermove',e=>{ if(!drawing) return; e.preventDefault(); const p=getP(e); const c2=cv.getContext('2d'); c2.strokeStyle='#EC4899'; c2.lineWidth=16; c2.lineCap='round'; c2.beginPath(); c2.moveTo(last.x,last.y); c2.lineTo(p.x,p.y); c2.stroke(); last=p; traceDrawn++; if(traceDrawn%35===0) blip(500+traceDrawn,0.25,'sine',0.4); if(traceDrawn===220){ const m=document.getElementById('traceStar'); if(m) m.innerHTML='🌟 <b>Super!</b> Live Letter came alive! 🎉'; burstConfetti(28,'#EC4899'); soundSqueak(); speakSlow(`Great job! Live Letter ${L} is alive!`); try{navigator.vibrate&&navigator.vibrate(30)}catch(_){} } },{passive:false});
     ['pointerup','pointercancel','pointerleave'].forEach(ev=>cv.addEventListener(ev,()=>{ drawing=false; }));
   }
 }
@@ -790,20 +2785,19 @@ function stepTrace(d){ stopAbcSong(true); abcIdx=(abcIdx+d+abc.length)%abc.lengt
 // --- PHONICS (Bini-style letter sounds) ---
 function renderPhonics(){
   const g=document.getElementById('phonicGrid'); if(!g) return;
-  g.innerHTML=abc.map((a,i)=>`<button onclick="playPhonic(${i})">${a.l}<small>${a.ph}</small></button>`).join('');
+  g.innerHTML=abc.map((a,i)=>{
+    const color = liveLetterColors[i % liveLetterColors.length];
+    return `<button onclick="playPhonic(${i})" style="border-color:${color};background:#fff;border-width:2.5px;"><span style="color:${color};font-size:1.3rem;font-weight:900;">${a.l}</span><small style="color:#64748b;font-weight:800;">/${a.ph}/ • ${a.e}</small></button>`;
+  }).join('');
 }
 function playPhonic(i){
-  const a=abc[i]; abcIdx=i; renderAbc();
-  // say sound twice slowly, like Bini phonics
-  try{ speechSynthesis.cancel(); }catch(e){}
-  try{
-    const u=new SpeechSynthesisUtterance(a.ph+'. '+a.ph+'. '+a.w);
-    u.rate=0.5; u.pitch=1.3; u.volume=1.0; u.lang='en-US'; if(kidVoice) u.voice=kidVoice;
-    speechSynthesis.speak(u);
-  }catch(e){}
-  blip(440+i*14,0.7,'triangle',0.7);
-  burstConfetti(6,'#A855F7');
-  try{ navigator.vibrate&&navigator.vibrate(15);}catch(e){}
+  const a = abc[i]; abcIdx = i; renderAbc();
+  stopAllSpeech();
+  playAiVoice(`${a.l}! ${a.ph}... ${a.ph}... ${a.w}!`);
+  soundSqueak();
+  blip(440 + i * 14, 0.45, 'triangle', 0.6);
+  burstConfetti(10, liveLetterColors[i % liveLetterColors.length]);
+  try{ navigator.vibrate && navigator.vibrate(15); }catch(e){}
 }
 // --- SPELL / READ (Bini-style blend C-A-T) ---
 const spellWords=[{w:'CAT',e:'🐱'},{w:'DOG',e:'🐶'},{w:'SUN',e:'☀️'},{w:'PIG',e:'🐷'},{w:'BUS',e:'🚌'},{w:'EGG',e:'🥚'},{w:'ANT',e:'🐜'},{w:'BEE',e:'🐝'},{w:'COW',e:'🐄'},{w:'HEN',e:'🐔'}];
@@ -829,20 +2823,22 @@ function tapSpell(l){
   if(!spellWord) return;
   const idx=spellFound.findIndex((v,i)=>!v && spellWord.w[i]===l);
   if(idx>=0){
-    spellFound[idx]=l; sayLetter(l); blip(600+idx*150,0.5,'triangle',0.7); renderSpell();
+    spellFound[idx]=l;
+    playAiVoice(l);
+    blip(600+idx*150,0.45,'triangle',0.6);
+    renderSpell();
     if(spellFound.join('')===spellWord.w){
       const ms=document.getElementById('spellMsg'); if(ms) ms.textContent='🎉 '+spellWord.w+'! You read it!';
-      // blend: C... A... T... CAT!
-      try{ speechSynthesis.cancel(); }catch(e){}
-      sayLetter(spellWord.w.split('').join('. ')+'. '+spellWord.w);
-      burstConfetti(24,'#22C55E'); setTimeout(newSpell, 2600);
+      playAiVoice(spellWord.w + '! Hooray, you spelled ' + spellWord.w + '!');
+      burstConfetti(24,'#22C55E');
+      setTimeout(newSpell, 2600);
     }
   } else {
-    blip(200,0.4,'sine',0.5);
+    blip(220,0.35,'sine',0.4);
     try{ event?.target?.animate?.([{transform:'translateX(0)'},{transform:'translateX(-6px)'},{transform:'translateX(6px)'},{transform:'translateX(0)'}],{duration:300}); }catch(e){}
   }
 }
-function hearSpell(){ if(spellWord) sayLetter(spellWord.w); }
+function hearSpell(){ if(spellWord) playAiVoice(spellWord.w); }
 const paletteColors=['#111827','#EF4444','#F97316','#EAB308','#22C55E','#06B6D4','#3B82F6','#A855F7','#EC4899','#FFFFFF'];
 let drawColor='#111827',tool='brush',drawing=false,ctx;
 function initDraw(){const pal=document.getElementById('palette');pal.innerHTML=paletteColors.map(c=>`<button style="background:${c};border-color:${c==='#FFFFFF'?'#e2e8f0':'#fff'}" onclick="pickColor('${c}',this)" class="${c===drawColor?'active':''}"></button>`).join('');const canvas=document.getElementById('doodle');ctx=canvas.getContext('2d');ctx.lineCap='round';ctx.lineJoin='round';resizeCanvas();['mousedown','touchstart'].forEach(ev=>canvas.addEventListener(ev,startDraw,{passive:false}));['mousemove','touchmove'].forEach(ev=>canvas.addEventListener(ev,moveDraw,{passive:false}));['mouseup','touchend','mouseleave','touchcancel'].forEach(ev=>canvas.addEventListener(ev,endDraw));document.getElementById('brushSize').addEventListener('input',e=>document.getElementById('brushSizeVal').textContent=e.target.value);}
@@ -875,24 +2871,70 @@ function moveDraw(e){if(!drawing)return;e.preventDefault();const p=pos(e);const 
 function endDraw(){drawing=false;ctx.beginPath();ctx.globalCompositeOperation='source-over';}
 function clearCanvas(){const canvas=document.getElementById('doodle');ctx.clearRect(0,0,canvas.width,canvas.height);blip(400,0.12);burstConfetti(8,'#4D96FF');}
 function saveDrawing(){const canvas=document.getElementById('doodle');const a=document.createElement('a');a.download='my-drawing.png';a.href=canvas.toDataURL('image/png');a.click();speak('Saved your drawing!');burstConfetti(16);}
-let bubbleTimer=null,bubbleScore=0;const bubbleEmojis=['🫧','💙','💜','💛','💚','🩷','🧡'];
-function startBubbles(){stopBubbles();bubbleTimer=setInterval(spawnBubble,450);spawnBubble();spawnBubble();spawnBubble();}
+let bubbleTimer=null,bubbleScore=0;
+const surpriseToys=[
+  {e:'🧸',n:'Teddy'},{e:'🎈',n:'Balloon'},{e:'🚗',n:'Car'},{e:'🐶',n:'Puppy'},
+  {e:'🐱',n:'Kitty'},{e:'🍓',n:'Strawberry'},{e:'🍦',n:'Ice cream'},{e:'🐥',n:'Duckling'},
+  {e:'🍭',n:'Lollipop'},{e:'⭐',n:'Star'},{e:'💖',n:'Heart'},{e:'🦋',n:'Butterfly'}
+];
+function startBubbles(){stopBubbles();bubbleTimer=setInterval(spawnBubble,420);spawnBubble();spawnBubble();spawnBubble();}
 function stopBubbles(){if(bubbleTimer)clearInterval(bubbleTimer);bubbleTimer=null;}
-function spawnBubble(){const area=document.getElementById('bubbleArea');if(!area||document.getElementById('sec-bubbles').classList.contains('active')===false)return;const b=document.createElement('div');b.className='bubble';const size=68+Math.random()*38;b.style.width=size+'px';b.style.height=size+'px';b.style.left=(Math.random()*Math.max(40,(area.clientWidth-size)))+'px';b.style.fontSize=(size*0.5)+'px';b.style.background=`radial-gradient(circle at 30% 30%, rgba(255,255,255,.95), ${`hsl(${180+Math.random()*60} 90% 70%)`})`;b.style.setProperty('--drift',(Math.random()*80-40)+'px');b.style.animationDuration=(4.2+Math.random()*2.4)+'s'; // faster for toddler fun
-b.textContent=bubbleEmojis[Math.floor(Math.random()*bubbleEmojis.length)];b.addEventListener('pointerup', (e)=>{ e.preventDefault(); popBubble(b); });
-  b.addEventListener('click',()=>popBubble(b));b.addEventListener('touchstart',()=>popBubble(b),{passive:true});area.appendChild(b);setTimeout(()=>{if(b.parentNode)b.remove();},7500);}
+function spawnBubble(){
+  const area=document.getElementById('bubbleArea');
+  if(!area||document.getElementById('sec-bubbles').classList.contains('active')===false)return;
+  const b=document.createElement('div');
+  b.className='bubble';
+  const size=72+Math.random()*40;
+  b.style.width=size+'px';
+  b.style.height=size+'px';
+  b.style.left=(Math.random()*Math.max(40,(area.clientWidth-size)))+'px';
+  b.style.background=`radial-gradient(circle at 30% 30%, rgba(255,255,255,.98), ${`hsl(${180+Math.random()*60} 90% 75%)`})`;
+  b.style.setProperty('--drift',(Math.random()*80-40)+'px');
+  b.style.animationDuration=(4.0+Math.random()*2.2)+'s';
+  const toy=surpriseToys[Math.floor(Math.random()*surpriseToys.length)];
+  b.dataset.toyName=toy.n;
+  b.dataset.toyEmoji=toy.e;
+  b.innerHTML=`<span style="font-size:${size*0.48}px;pointer-events:none;filter:drop-shadow(0 2px 4px rgba(0,0,0,.15))">${toy.e}</span>`;
+  b.addEventListener('pointerup', (e)=>{ e.preventDefault(); popBubble(b); });
+  b.addEventListener('click',()=>popBubble(b));
+  b.addEventListener('touchstart',()=>popBubble(b),{passive:true});
+  area.appendChild(b);
+  setTimeout(()=>{if(b.parentNode)b.remove();},7500);
+}
 function popBubble(el){
   if(!el || !el.parentNode) return;
   if(el.dataset.popped==='1') return; el.dataset.popped='1';
-  // Stop animation immediately so it stays under finger
   el.style.animation='none';
   el.style.pointerEvents='none';
   bubbleScore++; const sc=document.getElementById('bubbleScore'); if(sc) sc.textContent=bubbleScore;
-  // Kid friendly pop - LOUDER, happier
-  try{ blip(880,0.5,'sine',0.6); setTimeout(()=>blip(1200,0.35,'sine',0.55),80); }catch(e){}
-  try{ speak(String(bubbleScore)); }catch(e){}
+  soundPop();
+  const toyName = el.dataset.toyName || 'Bubble';
+  const toyEmoji = el.dataset.toyEmoji || '⭐';
+  speak('Pop! ' + toyName + '!');
   burstConfetti(14,'#06B6D4');
   try{ const r=el.getBoundingClientRect(); splashAt(r.left+r.width/2,r.top+r.height/2,'#7DD3FC'); }catch(e){}
+  
+  // Toy pops out and floats up
+  try{
+    const toyBurst = document.createElement('div');
+    toyBurst.textContent = toyEmoji;
+    toyBurst.style.position = 'fixed';
+    const r = el.getBoundingClientRect();
+    toyBurst.style.left = (r.left + r.width/2) + 'px';
+    toyBurst.style.top = (r.top + r.height/2) + 'px';
+    toyBurst.style.fontSize = '3.5rem';
+    toyBurst.style.pointerEvents = 'none';
+    toyBurst.style.zIndex = '99999';
+    toyBurst.style.transition = 'all 0.6s cubic-bezier(.34,1.56,.64,1)';
+    toyBurst.style.transform = 'translate(-50%, -50%) scale(1.6) rotate(15deg)';
+    document.body.appendChild(toyBurst);
+    setTimeout(() => {
+      toyBurst.style.opacity = '0';
+      toyBurst.style.transform = 'translate(-50%, -100%) scale(2.2) rotate(30deg)';
+      setTimeout(() => toyBurst.remove(), 600);
+    }, 250);
+  }catch(e){}
+
   el.style.transform='scale(1.6)'; el.style.opacity='0'; el.style.transition='all .28s cubic-bezier(.34,1.56,.64,1)';
   try{ navigator.vibrate && navigator.vibrate(40); }catch(e){}
   setTimeout(()=>{ try{ el.remove(); }catch(e){} },300);
@@ -1002,32 +3044,43 @@ function handleSortDrop(el, zone){
   try{ selectedSort=null; document.querySelectorAll('.sort-pool .draggable.selected').forEach(x=>{x.classList.remove('selected'); x.style.outline='';}); }catch(e){}
 }
 
-// === PUZZLE ===
+// === PUZZLE (Toddler Friendly 4-piece 2x2) ===
 const puzzleSets=[
-  {name:'lion', pieces:['🦁','👑','🌟','💛','🍀','🎀'], slots:['🦁','👑','🌟','💛','🍀','🎀']},
-  {name:'frog', pieces:['🐸','💚','🌿','✨','🍄','🌈'], slots:['🐸','💚','🌿','✨','🍄','🌈']},
-  {name:'ocean', pieces:['🐳','🌊','💧','🐚','⭐','🐠'], slots:['🐳','🌊','💧','🐚','⭐','🐠']},
-  {name:'farm', pieces:['🐄','🐓','🌽','🚜','🌻','🥚'], slots:['🐄','🐓','🌽','🚜','🌻','🥚']},
-  {name:'space', pieces:['🚀','⭐','🌙','🪐','☄️','👩‍🚀'], slots:['🚀','⭐','🌙','🪐','☄️','👩‍🚀']}
+  {name:'lion', pieces:['🦁','👑','⭐','💛'], slots:['🦁','👑','⭐','💛']},
+  {name:'puppy', pieces:['🐶','🎾','🦴','💖'], slots:['🐶','🎾','🦴','💖']},
+  {name:'frog', pieces:['🐸','🌿','🍄','🌈'], slots:['🐸','🌿','🍄','🌈']},
+  {name:'ocean', pieces:['🐳','🌊','🐠','⭐'], slots:['🐳','🌊','🐠','⭐']},
+  {name:'farm', pieces:['🐮','🌻','🚜','🍎'], slots:['🐮','🌻','🚜','🍎']}
 ];
 let curPuzzle=null, puzzleDone=0;
 function setPuzzleProgress(t){ const el=document.getElementById('puzzleProgress'); if(el) el.textContent=t; }
 function initPuzzle(){
   try{
-  const set=puzzleSets[Math.floor(Math.random()*puzzleSets.length)]; curPuzzle=set; puzzleDone=0;
-  setPuzzleProgress('0/6'); const win=document.getElementById('puzzleWin'); if(win) win.style.display='none';
-  document.querySelectorAll('.puzzle-slot').forEach((s,i)=>{ 
-    s.dataset.pos=i; s.dataset.want=set.slots[i]; s.classList.remove('filled','drag-over'); 
-    // Ghost hint so kid knows where to put - faded outline
-    s.innerHTML=`<span style="opacity:0.38;font-size:2.6rem;filter:grayscale(0.2)">${set.slots[i]}</span>`;
-    s.style.background='#FFFDF0';
-    s.style.borderColor='#FDE68A';
-  });
-  const tray=document.getElementById('puzzleTray'); if(!tray) return; tray.innerHTML='';
-  [...set.pieces].sort(()=>Math.random()-0.5).forEach((emoji,i)=>{
-    const d=document.createElement('div'); d.className='puzzle-piece'; d.draggable=true; d.textContent=emoji; d.dataset.emoji=emoji; d.dataset.correctPos=set.slots.indexOf(emoji);
-    d.style.animationDelay=(i*0.08)+'s'; tray.appendChild(d);
-  });
+    const set=puzzleSets[Math.floor(Math.random()*puzzleSets.length)]; curPuzzle=set; puzzleDone=0;
+    setPuzzleProgress('0/4'); const win=document.getElementById('puzzleWin'); if(win) win.style.display='none';
+    document.querySelectorAll('.puzzle-slot').forEach((s,i)=>{ 
+      s.dataset.pos=i; s.dataset.want=set.slots[i]; s.classList.remove('filled','drag-over'); 
+      s.innerHTML=`<span style="opacity:0.38;font-size:2.8rem;filter:grayscale(0.2)">${set.slots[i]}</span>`;
+      s.style.background='#FFFDF0';
+      s.style.borderColor='#FDE68A';
+    });
+    const tray=document.getElementById('puzzleTray'); if(!tray) return; tray.innerHTML='';
+    [...set.pieces].sort(()=>Math.random()-0.5).forEach((emoji,i)=>{
+      const d=document.createElement('div'); d.className='puzzle-piece'; d.draggable=true; d.textContent=emoji; d.dataset.emoji=emoji; d.dataset.correctPos=set.slots.indexOf(emoji);
+      d.style.animationDelay=(i*0.08)+'s'; 
+      // Tap piece automatically places into matching slot for toddlers!
+      d.addEventListener('click', (e)=>{
+        e.stopPropagation();
+        if(d.classList.contains('placed')) return;
+        const want = d.dataset.emoji;
+        const slot = document.querySelector(`.puzzle-slot[data-want="${want}"]`);
+        if(slot && !slot.classList.contains('filled')){
+          soundBoing();
+          handlePuzzleDrop(d, slot);
+        }
+      });
+      tray.appendChild(d);
+    });
   }catch(e){ console.error('initPuzzle', e); }
 }
 function handlePuzzleDrop(el, slot){
@@ -1035,49 +3088,82 @@ function handlePuzzleDrop(el, slot){
   if(slot.classList.contains('filled')) return;
   const want=slot.dataset.want, have=el.dataset.emoji;
   if(want===have){
-    slot.textContent=have; slot.classList.add('filled'); el.classList.add('placed'); puzzleDone++;
-    setPuzzleProgress(puzzleDone+'/6');
-    blip(600+puzzleDone*80,0.4,'sine',0.5); burstConfetti(6,'#EC4899'); try{ slot.animate([{transform:'scale(0.8)'},{transform:'scale(1.08)'},{transform:'scale(1)'}],{duration:300}); }catch(e){}
+    slot.innerHTML=`<span style="font-size:2.8rem">${have}</span>`; slot.classList.add('filled'); slot.style.background='#F0FDF4'; slot.style.borderColor='#22C55E'; el.classList.add('placed'); el.style.outline=''; el.classList.remove('selected');
+    puzzleDone++;
+    setPuzzleProgress(puzzleDone+'/4');
+    blip(600+puzzleDone*90,0.4,'sine',0.55); burstConfetti(10,'#EC4899'); try{ slot.animate([{transform:'scale(0.8)'},{transform:'scale(1.12)'},{transform:'scale(1)'}],{duration:300}); }catch(e){}
     speak(have);
-    if(puzzleDone>=6){ const w=document.getElementById('puzzleWin'); if(w) w.style.display='block'; speak('Puzzle complete! Well done!'); burstConfetti(24); }
+    try{ navigator.vibrate && navigator.vibrate(25); }catch(e){}
+    if(puzzleDone>=4){
+      const w=document.getElementById('puzzleWin'); if(w) w.style.display='block';
+      speak('Puzzle complete! Wonderful job!'); soundCheer(); burstConfetti(35);
+    }
   } else {
     blip(200,0.35,'sine',0.4); slot.classList.add('wobble'); setTimeout(()=>slot.classList.remove('wobble'),400);
   }
 }
 
-// === FISHING ===
+// === FISHING (Tap to catch for 2yo + Drag supported) ===
 let fishCaught=0;
 function initFishing(){
   const pond=document.getElementById('fishPond'); if(!pond) return;
   fishCaught=0; const sc=document.getElementById('fishScore'); if(sc) sc.textContent='Caught: 0/6';
   pond.querySelectorAll('.fish,.bubble-float').forEach(e=>e.remove());
-  // Spawn with delay so pond is visible
   for(let i=0;i<6;i++) setTimeout(spawnFish, i*400);
   setTimeout(spawnBubbles, 200);
 }
+function catchFishDirect(fishEl){
+  if(!fishEl || fishEl.dataset.caught==='1') return;
+  fishEl.dataset.caught='1';
+  fishEl.style.animation='none';
+  fishEl.style.pointerEvents='none';
+  soundBoing();
+  const bucket=document.getElementById('pondBucket');
+  const r=fishEl.getBoundingClientRect();
+  splashAt(r.left+r.width/2, r.top+r.height/2, '#38BDF8');
+  fishEl.style.transition='all .55s cubic-bezier(.34,1.56,.64,1)';
+  fishEl.style.transform='translateY(-60px) rotate(360deg) scale(1.3)';
+  setTimeout(()=>{
+    if(bucket){
+      const bRect=bucket.getBoundingClientRect();
+      const pRect=fishEl.parentElement.getBoundingClientRect();
+      fishEl.style.left=(bRect.left - pRect.left + bRect.width/2 - 20)+'px';
+      fishEl.style.top=(bRect.top - pRect.top)+'px';
+      fishEl.style.transform='scale(0.3)';
+      fishEl.style.opacity='0';
+    }
+    setTimeout(()=>{
+      handleFishDrop(fishEl, bucket);
+    }, 250);
+  }, 280);
+}
 function spawnFish(){
   const pond=document.getElementById('fishPond'); if(!pond) return;
-  const fishEmojis=['🐟','🐠','🐡','🦈','🐙','🦑','🐢','⭐','🐚'];
+  const fishEmojis=['🐟','🐠','🐡','🐬','🐙','🐢','⭐','🦐'];
   const speeds=['slow','medium','slowest'];
   const e=fishEmojis[Math.floor(Math.random()*fishEmojis.length)];
   const f=document.createElement('div'); f.className='fish '+speeds[Math.floor(Math.random()*speeds.length)]; f.draggable=true; f.textContent=e;
-  // Use pond width if visible, else window width
-  const pondW = pond.clientWidth > 50 ? pond.clientWidth : window.innerWidth - 40;
-  f.style.top=(18+Math.random()*280)+'px'; f.style.left='-90px';
-  const dur = 38 + Math.random()*14; // really slow for toddler
+  f.style.top=(20+Math.random()*260)+'px'; f.style.left='-90px';
+  const dur = 34 + Math.random()*12;
   f.style.animationDuration=dur+'s'; f.style.animationDelay=(Math.random()*0.8)+'s';
-  f.style.fontSize=(2.8 + Math.random()*0.7)+'rem';
-  // Ensure fish is visible and tappable
+  f.style.fontSize=(3.0 + Math.random()*0.6)+'rem';
   f.style.pointerEvents='auto';
+  // Tap or touch directly catches the fish!
+  f.addEventListener('pointerdown', (ev)=>{
+    ev.stopPropagation();
+    catchFishDirect(f);
+  });
+  f.addEventListener('click', (ev)=>{
+    ev.stopPropagation();
+    catchFishDirect(f);
+  });
   pond.appendChild(f);
-  // Fish must be DRAGGED to bucket, not tapped - keep for toddler drag only
-  f.addEventListener('click', (e)=>{ e.stopPropagation(); /* no auto-drop, must drag */ });
 }
 function spawnBubbles(){
   const pond=document.getElementById('fishPond');
   for(let i=0;i<8;i++){
     const b=document.createElement('div'); b.className='bubble-float';
-    b.style.left=(Math.random()*90+5)+'%'; b.style.width=b.style.height=(8+Math.random()*14)+'px';
+    b.style.left=(Math.random()*90+5)+'%'; b.style.width=b.style.height=(10+Math.random()*16)+'px';
     b.style.animationDuration=(3+Math.random()*3)+'s'; b.style.animationDelay=(Math.random()*2)+'s';
     pond.appendChild(b);
   }
@@ -1085,81 +3171,401 @@ function spawnBubbles(){
 function handleFishDrop(el, bucket){
   if(!el || !el.classList || !el.classList.contains('fish')) return;
   el.remove(); fishCaught++; const fs=document.getElementById('fishScore'); if(fs) fs.textContent='Caught: '+fishCaught+'/6';
-  popSound(); burstConfetti(10,'#38BDF8'); speak(String(fishCaught)); if(bucket){ bucket.classList.add('wobble'); setTimeout(()=>bucket.classList.remove('wobble'),400); }
-  if(fishCaught>=6){ speak('All fish caught! Great job!'); burstConfetti(20); setTimeout(initFishing,1500); }
-  // keep pond full
-  setTimeout(spawnFish, 600);
+  soundPop(); burstConfetti(12,'#38BDF8'); speak('Caught a fish!'); if(bucket){ bucket.classList.add('wobble'); setTimeout(()=>bucket.classList.remove('wobble'),400); }
+  if(fishCaught>=6){ soundCheer(); speak('All fish caught! Splash! Great job!'); burstConfetti(30); setTimeout(initFishing,1800); }
+  setTimeout(spawnFish, 700);
 }
 
-// === MUSIC ===
+// === NEW TODDLER GAMES ===
 
-// === CLICK FALLBACK for 2-year-olds (tap piece then tap slot) ===
+// 1. PEEK-A-BOO
+const peekSpots = [
+  {id:'barn', name:'Barn', cover:'🏡', creatures:[
+    {e:'🐶', n:'Puppy', s:'Woof woof! Happy doggy!'},
+    {e:'🐮', n:'Cow', s:'Moooo! Sweet cow!'},
+    {e:'🐴', n:'Pony', s:'Neigh! Clip clop!'}
+  ], bg:'#FFE4E6', hint:'Knock on the Red Barn!'},
+  {id:'bush', name:'Bush', cover:'🌳', creatures:[
+    {e:'🐰', n:'Bunny', s:'Hop hop! Fluffy bunny!'},
+    {e:'🐥', n:'Chick', s:'Cheep cheep! Baby chick!'},
+    {e:'🐸', n:'Froggy', s:'Ribbit! Jump jump!'}
+  ], bg:'#DCFCE7', hint:'Rustle the Big Bush!'},
+  {id:'box', name:'Present', cover:'🎁', creatures:[
+    {e:'🧸', n:'Teddy', s:'Hug hug! Cute teddy bear!'},
+    {e:'🐱', n:'Kitty', s:'Meow meow! Purr purr!'},
+    {e:'🐵', n:'Monkey', s:'Ooh ooh aah aah!'}
+  ], bg:'#FEF9C3', hint:'Unwrap the Gift Box!'},
+  {id:'cloud', name:'Cloud', cover:'☁️', creatures:[
+    {e:'☀️', n:'Sun', s:'Hello sunshine! Bright smile!'},
+    {e:'🌈', n:'Rainbow', s:'Rainbow! Red, yellow, blue!'},
+    {e:'🦄', n:'Unicorn', s:'Sparkle neigh! Magic unicorn!'}
+  ], bg:'#E0F2FE', hint:'Tickle the Fluffy Cloud!'}
+];
+let peekCreatureIdx = [0, 0, 0, 0];
+function initPeekaboo(){
+  const g = document.getElementById('peekGrid');
+  if(!g) return;
+  g.innerHTML = peekSpots.map((spot, i) => {
+    const c = spot.creatures[peekCreatureIdx[i] % spot.creatures.length];
+    return `
+      <div class="peek-card" id="peekCard_${i}" style="background:${spot.bg}" onclick="tapPeek(${i})">
+        <div class="peek-cover" id="peekCover_${i}">${spot.cover}</div>
+        <div class="peek-creature" id="peekCreature_${i}">
+          <div class="creature-emoji">${c.e}</div>
+          <b>${c.n}</b>
+          <small>${c.s}</small>
+        </div>
+        <div class="peek-hint" id="peekHint_${i}">${spot.hint}</div>
+      </div>
+    `;
+  }).join('');
+}
+function tapPeek(i){
+  const card = document.getElementById('peekCard_' + i);
+  if(!card) return;
+  const spot = peekSpots[i];
+  const isOpen = card.classList.contains('open');
+  if(!isOpen){
+    card.classList.add('open');
+    soundBoing();
+    const c = spot.creatures[peekCreatureIdx[i] % spot.creatures.length];
+    speak('Peek a boo! ' + c.n + '! ' + c.s);
+    burstConfetti(14);
+    try{ navigator.vibrate && navigator.vibrate(30); }catch(e){}
+    peekCreatureIdx[i]++;
+  } else {
+    card.classList.remove('open');
+    blip(400, 0.2, 'sine', 0.4);
+    speak('Bye bye!');
+    setTimeout(() => {
+      const creatureEl = document.getElementById('peekCreature_' + i);
+      const nextC = spot.creatures[peekCreatureIdx[i] % spot.creatures.length];
+      if(creatureEl){
+        creatureEl.innerHTML = `<div class="creature-emoji">${nextC.e}</div><b>${nextC.n}</b><small>${nextC.s}</small>`;
+      }
+    }, 300);
+  }
+}
+function hideAllPeek(){
+  document.querySelectorAll('.peek-card.open').forEach(card => card.classList.remove('open'));
+  speak('All hiding!');
+  blip(350, 0.2);
+}
+
+// 2. FEEDING GAME
+const buddies = [
+  {id:'bunny', name:'Bunny', face:'🐰', hungryFace:'🐰', chewingFace:'😋', love:'🥕', cheer:'Mmm crunchy carrot!'},
+  {id:'monkey', name:'Monkey', face:'🐵', hungryFace:'🐵', chewingFace:'😋', love:'🍌', cheer:'Ooh ooh banana!'},
+  {id:'panda', name:'Panda', face:'🐼', hungryFace:'🐼', chewingFace:'😍', love:'🍎', cheer:'Yummy juicy apple!'},
+  {id:'kitty', name:'Kitty', face:'🐱', hungryFace:'🐱', chewingFace:'😻', love:'🐟', cheer:'Meow! Delicious fish!'}
+];
+let currentBuddy = buddies[0];
+let treatsEaten = 0;
+const buddyFoods = [
+  {e:'🥕', n:'Carrot', sound:'Crunch!'},
+  {e:'🍌', n:'Banana', sound:'Yum yum!'},
+  {e:'🍎', n:'Apple', sound:'Sweet apple!'},
+  {e:'🍓', n:'Berry', sound:'Juicy strawberry!'},
+  {e:'🍪', n:'Cookie', sound:'Sweet cookie!'},
+  {e:'🥛', n:'Milk', sound:'Gulp gulp milk!'},
+  {e:'🍉', n:'Melon', sound:'Watermelon!'},
+  {e:'🧀', n:'Cheese', sound:'Yummy cheese!'}
+];
+function initFeeding(){
+  const bp = document.getElementById('buddyPicker');
+  if(bp){
+    bp.innerHTML = buddies.map((b, idx) => `
+      <button class="buddy-btn ${b.id===currentBuddy.id?'active':''}" onclick="selectBuddy(${idx})">${b.face} <span style="font-size:1rem;font-weight:900">${b.name}</span></button>
+    `).join('');
+  }
+  const ft = document.getElementById('foodTray');
+  if(ft){
+    ft.innerHTML = buddyFoods.map((f, idx) => `
+      <div class="food-btn draggable" draggable="true" onclick="feedBuddy(${idx}, event)">
+        ${f.e}
+        <span class="food-name">${f.n}</span>
+      </div>
+    `).join('');
+  }
+  updateBuddyDisplay();
+}
+function selectBuddy(idx){
+  currentBuddy = buddies[idx];
+  document.querySelectorAll('.buddy-btn').forEach((btn, i) => btn.classList.toggle('active', i === idx));
+  updateBuddyDisplay();
+  speak(currentBuddy.name + ' is hungry!');
+  soundBoing();
+}
+function updateBuddyDisplay(){
+  const faceEl = document.getElementById('buddyFace');
+  if(faceEl) faceEl.textContent = currentBuddy.face;
+  const sp = document.getElementById('buddySpeech');
+  if(sp) sp.textContent = `"${currentBuddy.name} wants ${currentBuddy.love}!"`;
+}
+function feedBuddy(foodIdx, event){
+  const food = buddyFoods[foodIdx];
+  const faceEl = document.getElementById('buddyFace');
+  const speechEl = document.getElementById('buddySpeech');
+  const mouthZone = document.getElementById('buddyMouthZone');
+  if(!faceEl || !speechEl) return;
+
+  soundChomp();
+  treatsEaten++;
+  const tc = document.getElementById('treatsCount');
+  if(tc) tc.textContent = treatsEaten;
+
+  faceEl.classList.add('chewing');
+  faceEl.textContent = currentBuddy.chewingFace;
+  if(mouthZone){
+    mouthZone.classList.add('drag-over');
+    mouthZone.textContent = '😋 Nom Nom Nom!';
+  }
+
+  if(event && (event.clientX || event.touches)){
+    const x = event.clientX || (event.touches && event.touches[0].clientX) || window.innerWidth/2;
+    const y = event.clientY || (event.touches && event.touches[0].clientY) || window.innerHeight/2;
+    splashAt(x, y, '#F59E0B');
+  }
+
+  burstConfetti(12, '#F59E0B');
+  try{ navigator.vibrate && navigator.vibrate(35); }catch(e){}
+
+  const praises = ['Yum yum!', 'Delicious!', 'Thank you!', 'Nom nom nom!', 'So yummy!'];
+  const praise = (food.e === currentBuddy.love) ? ('Super! ' + currentBuddy.cheer) : praises[treatsEaten % praises.length];
+  speechEl.textContent = `"${praise}"`;
+  speak(praise);
+
+  setTimeout(() => {
+    faceEl.classList.remove('chewing');
+    faceEl.textContent = currentBuddy.face;
+    if(mouthZone){
+      mouthZone.classList.remove('drag-over');
+      mouthZone.textContent = '👄 Open Wide! Tap Food Below 👇';
+    }
+    if(treatsEaten % 4 === 0){
+      soundBoing();
+      speechEl.textContent = '"Burp! Hehe, excuse me! 🤭"';
+      setTimeout(() => speak('Excuse me! Hehe!'), 400);
+      burstConfetti(20, '#F59E0B');
+    }
+  }, 1200);
+}
+
+// 3. POP-IT FIDGET TOY
+const popitRows = [
+  {color:'#F43F5E', bg:'#FFE4E6', items:['❤️','⭐','🍓','🎀','🌸']},
+  {color:'#EAB308', bg:'#FEF9C3', items:['☀️','🌟','🐥','🍌','🍋']},
+  {color:'#22C55E', bg:'#DCFCE7', items:['🍀','🍏','🐸','🐢','🍃']},
+  {color:'#06B6D4', bg:'#CFFAFE', items:['💎','🌊','🐳','🐬','💧']}
+];
+let popitState = Array(20).fill(false);
+function initPopIt(){
+  const board = document.getElementById('popitBoard');
+  if(!board) return;
+  board.innerHTML = '';
+  let idx = 0;
+  popitRows.forEach((row) => {
+    row.items.forEach((item) => {
+      const bubble = document.createElement('div');
+      bubble.className = 'popit-bubble' + (popitState[idx] ? ' popped' : '');
+      bubble.style.color = row.color;
+      bubble.textContent = item;
+      bubble.dataset.idx = idx;
+      const thisIdx = idx;
+      bubble.addEventListener('pointerdown', (e) => {
+        e.preventDefault();
+        tapPopItBubble(thisIdx);
+      });
+      board.appendChild(bubble);
+      idx++;
+    });
+  });
+  updatePopitCount();
+}
+function tapPopItBubble(idx){
+  soundPop();
+  popitState[idx] = !popitState[idx];
+  const board = document.getElementById('popitBoard');
+  if(!board) return;
+  const bubble = board.children[idx];
+  if(bubble){
+    bubble.classList.toggle('popped', popitState[idx]);
+    bubble.style.transform = popitState[idx] ? 'scale(0.86)' : 'scale(1.08)';
+    setTimeout(() => {
+      if(bubble) bubble.style.transform = popitState[idx] ? 'scale(0.88)' : 'scale(1)';
+    }, 120);
+    burstConfetti(6, bubble.style.color);
+  }
+  try{ navigator.vibrate && navigator.vibrate(25); }catch(e){}
+  updatePopitCount();
+}
+function updatePopitCount(){
+  const count = popitState.filter(Boolean).length;
+  const countEl = document.getElementById('popitCount');
+  if(countEl) countEl.textContent = `${count}/20`;
+  const cheerEl = document.getElementById('popitCheer');
+  if(count === 20){
+    if(cheerEl) cheerEl.textContent = '🎉 All popped! Flipped over! ✨';
+    soundCheer();
+    speak('All popped! Great job!');
+    burstConfetti(35);
+    const board = document.getElementById('popitBoard');
+    if(board){
+      board.style.transform = 'rotateY(180deg) scale(0.95)';
+      setTimeout(() => {
+        resetPopIt();
+        board.style.transform = 'rotateY(0deg) scale(1)';
+      }, 700);
+    }
+  } else if(count > 0 && cheerEl){
+    cheerEl.textContent = `✨ ${20 - count} more bubbles to pop!`;
+  }
+}
+function resetPopIt(){
+  popitState = Array(20).fill(false);
+  const board = document.getElementById('popitBoard');
+  if(board){
+    [...board.children].forEach(b => b.classList.remove('popped'));
+  }
+  updatePopitCount();
+  soundBoing();
+  speak('Flip it over! Pop again!');
+}
+
+// 4. VEHICLES
+const vehiclesList = [
+  {e:'🚒', n:'Fire Truck', s:'Wee-woo! Fire truck!', playSound: soundVehicleFireTruck, color:'#EF4444'},
+  {e:'🚓', n:'Police Car', s:'Whoop whoop! Police car!', playSound: soundVehiclePoliceCar, color:'#3B82F6'},
+  {e:'🚜', n:'Tractor', s:'Chugga chugga! Farm tractor!', playSound: soundVehicleTractor, color:'#16A34A'},
+  {e:'🚂', n:'Train', s:'Choo choo! All aboard!', playSound: soundVehicleTrain, color:'#9333EA'},
+  {e:'✈️', n:'Airplane', s:'Whoosh! Flying in the sky!', playSound: soundVehicleAirplane, color:'#0284C7'},
+  {e:'🏎️', n:'Race Car', s:'Vroom vroom! Fast car!', playSound: soundVehicleRaceCar, color:'#F97316'},
+  {e:'🚑', n:'Ambulance', s:'Nee-naw! Help is coming!', playSound: soundVehicleAmbulance, color:'#EC4899'},
+  {e:'🚁', n:'Helicopter', s:'Thump thump! Flying copter!', playSound: soundVehicleHelicopter, color:'#EAB308'}
+];
+function initVehicles(){
+  const g = document.getElementById('vehicleGrid');
+  if(!g) return;
+  g.innerHTML = vehiclesList.map((v, i) => `
+    <div class="vehicle-card" onclick="tapVehicle(${i})">
+      <div class="ve" id="veIcon_${i}">${v.e}</div>
+      <b>${v.n}</b>
+      <small>${v.s}</small>
+    </div>
+  `).join('');
+}
+let vehicleSpeedDuration = 4.5;
+let vehicleDriveTimer = null;
+let currentDrivingVehicle = null;
+
+function setVehicleSpeed(mode){
+  if(mode === 'slow'){
+    vehicleSpeedDuration = 4.5;
+    const bs = document.getElementById('btnSpeedSlow'); if(bs) bs.style.background = 'var(--yellow)';
+    const bf = document.getElementById('btnSpeedFast'); if(bf) bf.style.background = '#fff';
+    speak('Slow and gentle!');
+  } else {
+    vehicleSpeedDuration = 2.6;
+    const bf = document.getElementById('btnSpeedFast'); if(bf) bf.style.background = 'var(--yellow)';
+    const bs = document.getElementById('btnSpeedSlow'); if(bs) bs.style.background = '#fff';
+    speak('Faster!');
+  }
+}
+
+function honkMovingVehicle(){
+  if(!currentDrivingVehicle) return;
+  // Distinct cheerful honk when tapping the moving car on the road
+  soundHonk();
+  speak('Beep beep!');
+  burstConfetti(10, currentDrivingVehicle.color);
+  const runner = document.getElementById('zoomRunner');
+  if(runner){
+    runner.style.transform = 'scale(1.28) translateY(-8px)';
+    setTimeout(() => { runner.style.transform = ''; }, 250);
+  }
+}
+
+function tapVehicle(i){
+  const v = vehiclesList[i];
+  currentDrivingVehicle = v;
+  if(vehicleDriveTimer) clearTimeout(vehicleDriveTimer);
+
+  // Play each vehicle's distinct engine / horn / siren sound effect!
+  if(typeof v.playSound === 'function'){
+    v.playSound();
+  }
+
+  speak(v.s, true);
+  burstConfetti(14, v.color);
+  try{ navigator.vibrate && navigator.vibrate(30); }catch(e){}
+
+  // Highlight card currently driving
+  document.querySelectorAll('.vehicle-card').forEach((c, idx) => c.classList.toggle('driving-now', idx === i));
+
+  const caption = document.getElementById('vehicleCaption');
+  if(caption) caption.textContent = `${v.e} ${v.n} is driving! "${v.s}"`;
+
+  const runner = document.getElementById('zoomRunner');
+  if(runner){
+    runner.textContent = v.e;
+    runner.classList.remove('driving');
+    runner.style.transition = 'none';
+    runner.style.left = '-100px';
+    void runner.offsetWidth;
+    runner.classList.add('driving');
+    // Smooth, gentle toddler speed across the screen (4.5s)
+    runner.style.transition = `left ${vehicleSpeedDuration}s ease-in-out`;
+    runner.style.left = 'calc(100% + 90px)';
+
+    // Play subtle secondary sound pulse of this vehicle mid-drive
+    const midPoint = (vehicleSpeedDuration * 1000) * 0.45;
+    setTimeout(() => {
+      if(currentDrivingVehicle === v && typeof v.playSound === 'function'){
+        v.playSound();
+      }
+    }, midPoint);
+
+    vehicleDriveTimer = setTimeout(() => {
+      runner.classList.remove('driving');
+      document.querySelectorAll('.vehicle-card').forEach(c => c.classList.remove('driving-now'));
+      if(caption) caption.textContent = '👆 Tap another vehicle to drive!';
+    }, vehicleSpeedDuration * 1000 + 100);
+  }
+
+  const icon = document.getElementById('veIcon_' + i);
+  if(icon){
+    icon.style.transform = 'scale(1.3) rotate(8deg)';
+    setTimeout(() => { icon.style.transform = 'scale(1) rotate(0deg)'; }, 400);
+  }
+}
+
+// Click fallbacks for sorting and puzzle
 let selectedPiece = null;
 function setupPuzzleClickFallback(){
   document.getElementById('puzzleTray')?.addEventListener('click', e=>{
     const piece = e.target.closest('.puzzle-piece');
     if(!piece || piece.classList.contains('placed')) return;
-    // select
-    document.querySelectorAll('.puzzle-piece.selected').forEach(x=>x.classList.remove('selected'));
-    piece.classList.add('selected');
-    selectedPiece = piece;
-    blip(500,0.08);
-    piece.style.outline='3px solid #EC4899';
-    speak('Selected ' + piece.textContent + ', now tap a slot');
-  });
-  document.getElementById('puzzleBoard')?.addEventListener('click', e=>{
-    const slot = e.target.closest('.puzzle-slot');
-    if(!slot || !selectedPiece) return;
-    handlePuzzleDrop(selectedPiece, slot);
-    if(selectedPiece) {
-      selectedPiece.style.outline='';
-      selectedPiece.classList.remove('selected');
-      selectedPiece = null;
+    const want = piece.dataset.emoji;
+    const slot = document.querySelector(`.puzzle-slot[data-want="${want}"]`);
+    if(slot && !slot.classList.contains('filled')){
+      soundBoing();
+      handlePuzzleDrop(piece, slot);
     }
   });
-  // also allow tapping slot first? no
 }
 let selectedSort = null;
 function setupSortClickFallback(){
   document.getElementById('sortPool')?.addEventListener('click', e=>{
     const item = e.target.closest('.draggable');
     if(!item) return;
-    document.querySelectorAll('.sort-pool .draggable.selected').forEach(x=>{x.classList.remove('selected'); x.style.outline='';});
-    item.classList.add('selected'); selectedSort=item; item.style.outline='3px solid #22C55E'; blip(500,0.08); speak('Now tap a color box');
-  });
-  document.querySelectorAll('.drop-zone').forEach(zone=>{
-    zone.addEventListener('click', e=>{
-      if(!selectedSort) return;
-      handleSortDrop(selectedSort, zone);
-      if(selectedSort){ selectedSort.style.outline=''; selectedSort.classList.remove('selected'); selectedSort=null; }
-    });
+    const col = item.dataset.color;
+    const zone = document.querySelector(`.drop-zone[data-color="${col}"]`);
+    if(zone){
+      soundBoing();
+      handleSortDrop(item, zone);
+    }
   });
 }
-// Enhance handlePuzzleDrop to also clear selection outline
-const _origPuzzleDrop = handlePuzzleDrop;
-handlePuzzleDrop = function(el, slot){
-  if(!el || !slot) return;
-  // ensure el is still in DOM and not already placed
-  if(el.classList.contains('placed')) return;
-  const want=slot.dataset.want, have=el.dataset.emoji;
-  if(want===have){
-    slot.innerHTML=`<span style="font-size:2.6rem">${have}</span>`; slot.classList.add('filled'); slot.style.background='#F0FDF4'; slot.style.borderColor='#22C55E'; el.classList.add('placed'); el.style.outline=''; el.classList.remove('selected');
-    puzzleDone++;
-    setPuzzleProgress(puzzleDone+'/6');
-    blip(600+puzzleDone*80,0.5,'sine',0.55); burstConfetti(6,'#EC4899'); 
-    if(slot.animate) slot.animate([{transform:'scale(0.8)'},{transform:'scale(1.08)'},{transform:'scale(1)'}],{duration:300});
-    try{ speak(have); }catch(e){}
-    try{ navigator.vibrate && navigator.vibrate(25); }catch(e){}
-    if(puzzleDone>=6){ const win=document.getElementById('puzzleWin'); if(win) win.style.display='block'; try{ speak('Puzzle complete! Well done!'); }catch(e){} burstConfetti(24); }
-    // clear selection
-    selectedPiece=null;
-    document.querySelectorAll('.puzzle-piece.selected').forEach(x=>{x.classList.remove('selected'); x.style.outline='';});
-  } else {
-    blip(200,0.4,'sine',0.45); slot.classList.add('wobble'); setTimeout(()=>slot.classList.remove('wobble'),400);
-    // shake
-    if(el.animate) el.animate([{transform:'translateX(0)'},{transform:'translateX(-6px)'},{transform:'translateX(6px)'},{transform:'translateX(0)'}],{duration:300});
-  }
-};
 
 let drum=false;
 const pianoNotes=[
@@ -1239,6 +3645,10 @@ function toggleDrum(){ drum=!drum; document.getElementById('drumMode').textConte
 
 // Init new games
 setTimeout(()=>{ 
+  try{ initPeekaboo(); }catch(e){}
+  try{ initFeeding(); }catch(e){}
+  try{ initPopIt(); }catch(e){}
+  try{ initVehicles(); }catch(e){}
   try{ initSort(); }catch(e){ console.error('initSort',e); }
   try{ initPuzzle(); }catch(e){ console.error('initPuzzle',e); }
   try{ initFishing(); }catch(e){ console.error('initFishing',e); }
@@ -1248,32 +3658,47 @@ setTimeout(()=>{
     const sSort = document.getElementById('sec-sorting');
     const sPuzzle = document.getElementById('sec-puzzle');
     const sFish = document.getElementById('sec-fishing');
+    const sFeed = document.getElementById('sec-feeding');
     if(sSort) enableDrag(sSort, handleSortDrop);
     if(sPuzzle) enableDrag(sPuzzle, handlePuzzleDrop);
     if(sFish) enableDrag(sFish, handleFishDrop);
+    if(sFeed) enableDrag(sFeed, (el, zone) => {
+      const idx = [...document.querySelectorAll('#foodTray .food-btn')].indexOf(el);
+      if(idx >= 0) feedBuddy(idx, null);
+    });
     // Also ensure puzzle click fallback works after drag setup
     setupPuzzleClickFallback();
     setupSortClickFallback();
   }catch(e){ console.error('drag setup',e); }
   // also enable drop zones directly
-  document.querySelectorAll('.drop-zone,.puzzle-slot,.pond-bucket').forEach(z=>{
+  document.querySelectorAll('.drop-zone,.puzzle-slot,.pond-bucket,.buddy-mouth-zone').forEach(z=>{
     z.addEventListener('dragover', e=>e.preventDefault());
   });
 }, 500);
   // Direct immediate init for toddler - ensure visible even if timeout delayed
+  try{ initLettersInBoxes(); }catch(e){}
+  try{ updateVoiceButtonUI(); }catch(e){}
+  try{ prefetchAiAudio(); }catch(e){}
+  try{ renderLiveLetterHero(); }catch(e){}
+  try{ initPeekaboo(); }catch(e){}
+  try{ initFeeding(); }catch(e){}
+  try{ initPopIt(); }catch(e){}
+  try{ initVehicles(); }catch(e){}
   try{ initSort(); }catch(e){}
   try{ initPuzzle(); }catch(e){}
   try{ initFishing(); }catch(e){}
   try{ if(!document.querySelectorAll('.key').length) initPiano(); }catch(e){}
   try{ renderPhonics(); }catch(e){}
-  try{ newSpell(); }catch(e){}
   try{ renderSingLyrics(-1); }catch(e){}
   try{ drawTraceGuide(); }catch(e){}
-  // Immediate fallback for toddler - ensure sorting/puzzle/fishing visible even if timeout missed
-  setTimeout(()=>{ try{ if(document.querySelectorAll('#sortPool .draggable').length===0) initSort(); }catch(e){} }, 800);
-  setTimeout(()=>{ try{ if(document.querySelectorAll('.puzzle-piece').length===0) initPuzzle(); }catch(e){} }, 900);
+  // Immediate fallback for toddler - ensure games visible even if timeout missed
+  setTimeout(()=>{ try{ if(document.querySelectorAll('.peek-card').length===0) initPeekaboo(); }catch(e){} }, 700);
+  setTimeout(()=>{ try{ if(document.querySelectorAll('.food-btn').length===0) initFeeding(); }catch(e){} }, 750);
+  setTimeout(()=>{ try{ if(document.querySelectorAll('.popit-bubble').length===0) initPopIt(); }catch(e){} }, 800);
+  setTimeout(()=>{ try{ if(document.querySelectorAll('.vehicle-card').length===0) initVehicles(); }catch(e){} }, 850);
+  setTimeout(()=>{ try{ if(document.querySelectorAll('#sortPool .draggable').length===0) initSort(); }catch(e){} }, 900);
+  setTimeout(()=>{ try{ if(document.querySelectorAll('.puzzle-piece').length===0) initPuzzle(); }catch(e){} }, 950);
   setTimeout(()=>{ try{ if(document.querySelectorAll('.fish').length===0) initFishing(); }catch(e){} }, 1000);
-  // Also ensure bubbles start
   setTimeout(()=>{ try{ if(document.getElementById('sec-bubbles')?.classList.contains('active')) startBubbles(); }catch(e){} }, 1200);
 
 
