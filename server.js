@@ -12,27 +12,6 @@ const HOST = '0.0.0.0';
 
 app.use(express.json());
 
-import fs from 'fs';
-
-// If running in an environment where .env was populated or contains the actual key
-if (fs.existsSync('.env')) {
-  try {
-    const envFile = fs.readFileSync('.env', 'utf8');
-    for (const line of envFile.split('\n')) {
-      const m = line.match(/^\s*([A-Za-z0-9_]+)\s*=\s*(.*)?\s*$/);
-      if (m) {
-        const k = m[1];
-        const v = (m[2] || '').trim().replace(/^['"]|['"]$/g, '');
-        if (v && (!process.env[k] || process.env[k] === 'MY_GEMINI_API_KEY')) {
-          process.env[k] = v;
-        }
-      }
-    }
-  } catch (e) {
-    console.error('Failed reading .env:', e.message);
-  }
-}
-
 // Initialize Google GenAI with required headers
 const ai = new GoogleGenAI({
   apiKey: process.env.GEMINI_API_KEY,
@@ -88,6 +67,10 @@ async function synthesizeSpeech(rawText, reqVoice) {
 
   if (!cleanText) {
     throw new Error('Text parameter is empty');
+  }
+
+  if (!process.env.GEMINI_API_KEY || process.env.GEMINI_API_KEY === 'MY_GEMINI_API_KEY') {
+    throw new Error('GEMINI_API_KEY is not configured on the server');
   }
 
   const cacheKey = `${voiceName}:${cleanText.toLowerCase()}`;
