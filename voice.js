@@ -218,6 +218,18 @@ export function ensurePack(phrases) {
       render(voice, text, true).then(() => { packDone++; }, () => { packDone++; });
     }
   }
+  // Remove recordings the app no longer says (e.g. after changing a sentence), so the pack stays small.
+  const wanted = new Set(list.map(phraseKey));
+  let removed = 0;
+  for (const voice of voices) {
+    const p = pack(voice).phrases;
+    for (const key of Object.keys(p)) {
+      if (wanted.has(key)) continue;
+      try { fs.unlinkSync(path.join(PACK_DIR, voice, p[key])); } catch { /* already gone */ }
+      delete p[key]; removed++; savePackSoon(voice);
+    }
+  }
+  if (removed) console.log(`🎙️  Removed ${removed} old recordings no longer used.`);
   if (missing) console.log(`🎙️  Recording ${missing} new sentences into the voice pack (runs in the background)...`);
   return missing;
 }

@@ -128,7 +128,7 @@ canvas#doodle{width:100%;height:420px;background:#fff;border-radius:18px;border:
   .grid-animals{grid-template-columns:repeat(auto-fill,minmax(105px,1fr));gap:.55rem}
   .animal-card .emoji{font-size:2.4rem}
 }
-/* Bini-style home grid */
+/* home grid */
 .home-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:.7rem;margin-top:.6rem}
 @media(min-width:700px){.home-grid{grid-template-columns:repeat(4,1fr)}}
 .home-card{border-radius:22px;padding:1rem .6rem;text-align:center;cursor:pointer;border:3px solid #fff;box-shadow:0 8px 18px rgba(0,0,0,.1);transition:transform .12s;background:#fff}
@@ -155,7 +155,7 @@ canvas#doodle{width:100%;height:420px;background:#fff;border-radius:18px;border:
 @keyframes singPulse{from{transform:scale(1.18)}to{transform:scale(1.26)}}
 .abc-note-pop{position:absolute;font-size:1.8rem;pointer-events:none;animation:floatNote 0.85s ease-out forwards;z-index:10}
 @keyframes floatNote{0%{opacity:0;transform:translateY(0) scale(0.6)}30%{opacity:1;transform:translateY(-20px) scale(1.2) rotate(15deg)}100%{opacity:0;transform:translateY(-60px) scale(1) rotate(-15deg)}}
-/* === BINI BAMBINI "ABC GAMES: LEARN & READ" STYLES === */
+/* === ABC GAMES STYLES === */
 .abc-modes{display:flex;gap:.4rem;justify-content:center;flex-wrap:wrap;margin:.6rem 0}
 .abc-modes button{border:3px solid #f1f5f9;background:#fff;border-radius:999px;padding:.5rem .85rem;font-weight:900;cursor:pointer;font-size:.85rem;box-shadow:0 3px 8px rgba(0,0,0,0.06);transition:all .15s}
 .abc-modes button:active{transform:scale(0.94)}
@@ -324,7 +324,7 @@ canvas#doodle{width:100%;height:420px;background:#fff;border-radius:18px;border:
 }
 .live-letter.large .live-foot{ width:34px; height:18px; border-radius:14px 14px 8px 8px; border-width:3px; }
 
-/* === LETTERS IN BOXES (Bini Trademark Word Kit) === */
+/* === LETTERS IN BOXES (Idris Play) === */
 .bini-boxes-stage{
   background:linear-gradient(180deg, #F0F9FF 0%, #E0F2FE 100%);
   border:3.5px solid #BAE6FD;
@@ -421,7 +421,7 @@ canvas#doodle{width:100%;height:420px;background:#fff;border-radius:18px;border:
 .bini-celebrate-overlay.active{ display:flex; }
 @keyframes popIn{ from{ opacity:0; transform:scale(0.85); } to{ opacity:1; transform:scale(1); } }
 
-/* === BINI LETTER BUBBLE POP === */
+/* === LETTER BUBBLE POP === */
 .bini-bubble-sky{
   height:350px;
   background:linear-gradient(180deg, #BAE6FD 0%, #E0F2FE 70%, #FEF9C3 100%);
@@ -466,7 +466,7 @@ canvas#doodle{width:100%;height:420px;background:#fff;border-radius:18px;border:
   z-index:5;
 }
 
-/* === BINI LETTER PEEKABOO === */
+/* === LETTER PEEKABOO === */
 .bini-peek-grid{
   display:grid;
   grid-template-columns:repeat(2, 1fr);
@@ -508,7 +508,7 @@ canvas#doodle{width:100%;height:420px;background:#fff;border-radius:18px;border:
   pointer-events:none;
 }
 
-/* === BINI PHONICS GRID === */
+/* === PHONICS GRID === */
 .phonic-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(72px,1fr));gap:.5rem;margin-top:.7rem}
 .phonic-grid button{border:3px solid #f1f5f9;background:#fff;border-radius:16px;padding:.6rem 0;font-weight:900;cursor:pointer;font-size:1.1rem;box-shadow:0 4px 10px rgba(0,0,0,0.06);transition:all .15s}
 .phonic-grid button:active{transform:scale(0.92)}
@@ -770,6 +770,7 @@ body.in-game .game-bar{display:flex;animation:barIn .3s ease-out}
 @media (hover:hover){.app-icon:hover .app-tile{transform:translateY(-3px)}}
 </style>
 <link rel="stylesheet" href="css/fun.css" />
+<link rel="stylesheet" href="css/learn.css" />
 </head>
 <body>
 <!-- ===== APP SHELL: splash, game bar, parent zone ===== -->
@@ -862,7 +863,7 @@ body.in-game .game-bar{display:flex;animation:barIn .3s ease-out}
       <h2 class="section-title">🔤 ABC Games: Learn & Read</h2>
       <button class="speak-btn" onclick="speak('ABC Games! Learn and read letters with Live Letters!')" title="Speak">🔊</button>
     </div>
-    <div class="hint">🌟 Official Bini-style games: Letters in Boxes, Live Letters, Tracing, Bubbles, Song & Peekaboo!</div>
+    <div class="hint">🌟 Letters in Boxes, Live Letters, Tracing, Bubbles, Song & Peekaboo!</div>
     
     <div class="abc-modes">
       <button id="abcModeBoxes" class="active" onclick="setAbcMode('boxes')">📦 Letters in Boxes</button>
@@ -874,7 +875,7 @@ body.in-game .game-bar{display:flex;animation:barIn .3s ease-out}
       <button id="abcModePhonic" onclick="setAbcMode('phonic')">🔊 Phonics</button>
     </div>
 
-    <!-- 1. 📦 LETTERS IN BOXES (Bini Trademark Word Building Kit) -->
+    <!-- 1. 📦 LETTERS IN BOXES (Idris Play) -->
     <div class="card abc-panel active" id="abcPanelBoxes">
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem">
         <div>
@@ -1034,7 +1035,7 @@ body.in-game .game-bar{display:flex;animation:barIn .3s ease-out}
 
     <!-- 7. 🔊 PHONICS SOUNDBOARD -->
     <div class="card abc-panel" id="abcPanelPhonic" style="text-align:center">
-      <div style="font-weight:900;font-size:1.1rem;color:#7C3AED">🔊 Tap a letter — hear its SOUND! (Bini Phonics)</div>
+      <div style="font-weight:900;font-size:1.1rem;color:#7C3AED">🔊 Tap a letter — hear its SOUND!</div>
       <div style="font-size:.82rem;font-weight:800;color:#64748b;margin-top:.2rem">Learn letter sounds: A says /ah/, B says /buh/, C says /kuh/!</div>
       <div class="phonic-grid" id="phonicGrid"></div>
     </div>
@@ -2089,7 +2090,11 @@ const homeGames=[
   {id:'memory',e:'🃏',n:'Memory Match',c:'#E0E7FF',s:'Find pairs'}
 ];
 const ICON_COLORS=[['#C084FC','#9333EA','#7E22CE'],['#FDE047','#FACC15','#CA8A04'],['#FDBA74','#FB923C','#EA580C'],['#F9A8D4','#EC4899','#BE185D'],['#7DD3FC','#38BDF8','#0284C7'],['#67E8F9','#22D3EE','#0891B2'],['#86EFAC','#4ADE80','#16A34A'],['#93C5FD','#3B82F6','#1D4ED8'],['#C4B5FD','#8B5CF6','#6D28D9'],['#FDA4AF','#FB7185','#E11D48'],['#6EE7B7','#34D399','#059669'],['#FDE68A','#FBBF24','#D97706'],['#FDBA74','#F97316','#C2410C'],['#FCA5A5','#F87171','#DC2626'],['#F0ABFC','#D946EF','#A21CAF'],['#A5B4FC','#6366F1','#4338CA']];
-function renderHome(){const g=document.getElementById('homeGrid');if(!g)return;g.innerHTML=homeGames.map((h,i)=>{const c=h.colors||ICON_COLORS[i%ICON_COLORS.length];const isNew=h.isNew&&!store.get('seen',[]).includes(h.id);return `<button class="app-icon" style="--i:${i};--c1:${c[0]};--c2:${c[1]};--c3:${c[2]}" data-game="${h.id}" onclick="launchGame('${h.id}',this)"><span class="app-tile"><span class="app-emoji">${h.e}</span>${isNew?'':playedToday(h.id)?'':'<span class="app-new"></span>'}</span>${isNew?'<span class="app-ribbon">NEW</span>':''}<span class="app-label">${h.n}</span></button>`;}).join('');}
+// Launcher sections: letters first (his favourite), then play, then numbers/colours/shapes.
+const HOME_CATS=[['abc','🔤 Letters & Reading'],['play','🎈 Play & Make'],['123','🔢 Numbers, Colours & Shapes']];
+const HOME_CAT_OF={abc:'abc',numbers:'123',shapes:'123',colors:'123',sorting:'123',memory:'123',puzzle:'123'};
+const homeCat=h=>h.cat||HOME_CAT_OF[h.id]||'play';
+function renderHome(){const g=document.getElementById('homeGrid');if(!g)return;let n=0;g.innerHTML=HOME_CATS.map(([cat,title])=>{const list=homeGames.filter(h=>homeCat(h)===cat);if(!list.length)return '';return `<div class="launch-head" style="--i:${n}">${title}</div>`+list.map(h=>{const i=n++;const c=h.colors||ICON_COLORS[i%ICON_COLORS.length];const isNew=h.isNew&&!store.get('seen',[]).includes(h.id);return `<button class="app-icon" style="--i:${i};--c1:${c[0]};--c2:${c[1]};--c3:${c[2]}" data-game="${h.id}" onclick="launchGame('${h.id}',this)"><span class="app-tile"><span class="app-emoji">${h.e}</span>${isNew?'':playedToday(h.id)?'':'<span class="app-new"></span>'}</span>${isNew?'<span class="app-ribbon">NEW</span>':''}<span class="app-label">${h.n}</span></button>`;}).join('');}).join('');}
 const colors=[{name:'Red',hex:'#EF4444'},{name:'Blue',hex:'#3B82F6'},{name:'Yellow',hex:'#EAB308'},{name:'Green',hex:'#22C55E'},{name:'Orange',hex:'#F97316'},{name:'Purple',hex:'#A855F7'},{name:'Pink',hex:'#EC4899'},{name:'Brown',hex:'#92400E'},{name:'Black',hex:'#111827'},{name:'White',hex:'#F8FAFC',text:'#334155'},{name:'Cyan',hex:'#06B6D4'},{name:'Lime',hex:'#84CC16'}];
 function renderColors(){const g=document.getElementById('colorGrid');g.innerHTML=colors.map(c=>`<div class="color-tile" style="background:${c.hex};color:${c.text||'#fff'}" onclick="tapColor('${c.name}','${c.hex}',event)"><div class="swatch" style="background:${c.hex}"></div><b style="color:${c.text||'#fff'}">${c.name}</b></div>`).join('');}
 function tapColor(name,hex,e){speak(name);blip(name==='Red'?300:name==='Blue'?400:name==='Yellow'?520:480,0.22,'sine',0.2);const x=e.clientX||window.innerWidth/2,y=e.clientY||window.innerHeight/2;splashAt(x,y,hex);burstConfetti(14,hex);}
@@ -2119,7 +2124,7 @@ let curNum=1;const numWords=['Zero','One','Two','Three','Four','Five','Six','Sev
 function renderNumbers(){document.getElementById('bigNum').textContent=curNum;document.getElementById('numWord').textContent=numWords[curNum];const dots=document.getElementById('countDots');dots.innerHTML=Array.from({length:curNum},()=>`<span>${numEmoji[curNum]||'⭐'}</span>`).join('');dots.querySelectorAll('span').forEach(s=>s.addEventListener('click',()=>{speak(numWords[curNum]);blip(500+curNum*40,0.12)}));const quick=document.getElementById('numQuick');quick.innerHTML=Array.from({length:10},(_,i)=>{const n=i+1;return `<button onclick="setNum(${n})" style="width:46px;height:46px;border-radius:12px;border:3px solid ${n===curNum?'#4D96FF':'#e2e8f0'};background:${n===curNum?'#4D96FF':'#fff'};color:${n===curNum?'#fff':'#334155'};font-weight:900;cursor:pointer">${n}</button>`}).join('');}
 function changeNum(d){setNum(Math.min(10,Math.max(1,curNum+d)));}
 function setNum(n){curNum=n;renderNumbers();speak(numWords[curNum]);blip(520+n*18,0.18);burstConfetti(6);}
-const abc=[{l:'A',w:'Apple',e:'🍎',ph:'ah'},{l:'B',w:'Ball',e:'⚽',ph:'buh'},{l:'C',w:'Cat',e:'🐱',ph:'kuh'},{l:'D',w:'Dog',e:'🐶',ph:'duh'},{l:'E',w:'Elephant',e:'🐘',ph:'eh'},{l:'F',w:'Fish',e:'🐟',ph:'fff'},{l:'G',w:'Grapes',e:'🍇',ph:'guh'},{l:'H',w:'House',e:'🏠',ph:'huh'},{l:'I',w:'Ice Cream',e:'🍦',ph:'ih'},{l:'J',w:'Juice',e:'🧃',ph:'juh'},{l:'K',w:'Kite',e:'🪁',ph:'kuh'},{l:'L',w:'Lion',e:'🦁',ph:'lll'},{l:'M',w:'Monkey',e:'🐒',ph:'mmm'},{l:'N',w:'Nest',e:'🪹',ph:'nnn'},{l:'O',w:'Orange',e:'🍊',ph:'oh'},{l:'P',w:'Penguin',e:'🐧',ph:'puh'},{l:'Q',w:'Queen',e:'👸',ph:'kwuh'},{l:'R',w:'Rabbit',e:'🐰',ph:'rrr'},{l:'S',w:'Sun',e:'☀️',ph:'sss'},{l:'T',w:'Tiger',e:'🐯',ph:'tuh'},{l:'U',w:'Umbrella',e:'☂️',ph:'uh'},{l:'V',w:'Van',e:'🚐',ph:'vvv'},{l:'W',w:'Whale',e:'🐳',ph:'wuh'},{l:'X',w:'Xylophone',e:'🎹',ph:'ks'},{l:'Y',w:'Yo-yo',e:'🪀',ph:'yuh'},{l:'Z',w:'Zebra',e:'🦓',ph:'zzz'}];
+const abc=[{l:'A',w:'Apple',e:'🍎',ph:'ah'},{l:'B',w:'Ball',e:'⚽',ph:'buh'},{l:'C',w:'Cat',e:'🐱',ph:'kuh'},{l:'D',w:'Dog',e:'🐶',ph:'duh'},{l:'E',w:'Elephant',e:'🐘',ph:'eh'},{l:'F',w:'Fish',e:'🐟',ph:'fuh'},{l:'G',w:'Grapes',e:'🍇',ph:'guh'},{l:'H',w:'House',e:'🏠',ph:'huh'},{l:'I',w:'Ice Cream',e:'🍦',ph:'ih'},{l:'J',w:'Juice',e:'🧃',ph:'juh'},{l:'K',w:'Kite',e:'🪁',ph:'kuh'},{l:'L',w:'Lion',e:'🦁',ph:'luh'},{l:'M',w:'Monkey',e:'🐒',ph:'muh'},{l:'N',w:'Nest',e:'🪹',ph:'nuh'},{l:'O',w:'Orange',e:'🍊',ph:'oh'},{l:'P',w:'Penguin',e:'🐧',ph:'puh'},{l:'Q',w:'Queen',e:'👸',ph:'kwuh'},{l:'R',w:'Rabbit',e:'🐰',ph:'ruh'},{l:'S',w:'Sun',e:'☀️',ph:'suh'},{l:'T',w:'Tiger',e:'🐯',ph:'tuh'},{l:'U',w:'Umbrella',e:'☂️',ph:'uh'},{l:'V',w:'Van',e:'🚐',ph:'vuh'},{l:'W',w:'Whale',e:'🐳',ph:'wuh'},{l:'X',w:'Xylophone',e:'🎹',ph:'eks'},{l:'Y',w:'Yo-yo',e:'🪀',ph:'yuh'},{l:'Z',w:'Zebra',e:'🦓',ph:'zuh'}];
 let abcIdx=0;
 let abcMode='boxes';
 
@@ -2190,7 +2195,7 @@ function tapLiveLetter(letter, color, e){
   spawnSongNote(['✨','⭐','💖','🎉'][Math.floor(Math.random()*4)], el);
 }
 
-// === 1. LETTERS IN BOXES GAME (Bini Signature Feature) ===
+// === 1. LETTERS IN BOXES GAME (Idris Play) ===
 const biniWords = [
   { word: 'CAT', emoji: '🐱', sound: 'Meow! Meow!', name: 'Cat', color: '#F472B6' },
   { word: 'DOG', emoji: '🐶', sound: 'Woof! Woof!', name: 'Dog', color: '#60A5FA' },
@@ -4127,6 +4132,8 @@ renderStars();
 updateInstallUI();
 </script>
 <script src="js/fun.js"></script>
+<script src="js/strokes.js"></script>
+<script src="js/learn.js"></script>
 <script src="js/phrases.js"></script>
 </body>
 </html>

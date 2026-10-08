@@ -28,6 +28,17 @@ Notes:
 - Mispronounced words can be respelled in `RESPELL` in `voice.js` (e.g. `Idris → Eedris`).
 - Anything not recorded uses the device's most natural **female** voice.
 
+## 🔤 Learning pack (`js/learn.js` + `js/strokes.js` + `css/learn.css`)
+Seven learning games (our own designs), grouped on the launcher under **Letters & Reading** and **Numbers**:
+- **✏️ Trace It** — trace A–Z, a–z, 1–10 and the child's own name, with a green start dot, direction arrow and stroke order (strokes in `js/strokes.js`). Stars mark finished letters.
+- **🧩 Word Builder** — tap the letters into the boxes (CAT → FROG → APPLE, 48 words), hear each letter sound, then the sounds blend into the word. Extra “wrong” letters appear at higher levels.
+- **🔡 Big & Small** — find the little letter that matches the big one (A → a … Z → z).
+- **👏 Clap & Say** — clap the syllables of a word (ba·na·na).
+- **🖌️ Magic Paint** — rub the paint away to find a hidden letter and its picture.
+- **🔍 Letter Hide & Seek** — find the letter hiding behind trees, houses and boxes.
+- **🔢 Count & Connect** — count things and pick the number, then join the dots 1→10 to make a shape.
+Progress for each game is saved on the device.
+
 ## 🆕 Fun pack (`js/fun.js` + `css/fun.css`)
 Six new games, shown first on the launcher with a **NEW** ribbon until played:
 - **🥚 Surprise Eggs** — tap 4 times to crack an egg; a baby animal pops out and joins the shelf.

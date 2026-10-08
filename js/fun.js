@@ -672,6 +672,9 @@ window.funPhrases = name => {
   return p;
 };
 
+// Shared toolkit for other game packs (js/learn.js).
+window.IdrisPlay = { addGame, sfx, celebrate, sparkleAt, stagePoint, el, pick, rand, later, $, GAMES };
+
 // ===================== Launcher: new games go first with a NEW ribbon =====================
 const NEW_ORDER = ['eggs', 'bath', 'faces', 'rocket', 'garden', 'fireworks'];
 const meta = { eggs: 'Tap to hatch!', bath: 'Scrub-a-dub!', faces: 'Make me silly', rocket: 'Blast off!', garden: 'Grow flowers', fireworks: 'Boom! Sparkle!' };
