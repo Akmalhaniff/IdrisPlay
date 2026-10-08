@@ -1,8 +1,6 @@
 {
-  "name": "Kids Play & Learn",
+  "name": "Idris Play",
   "description": "Interactive, educational games designed for 2-year-old toddlers featuring peek-a-boo animals, animal feeding, rainbow pop-it fidget toy, beep-beep vehicles, bubble popping with surprise toys, tap-to-catch fishing pond, 4-piece jigsaw puzzles, color sorting, piano music garden, and learning colors, numbers, shapes, and ABCs.",
   "permissions": [],
-  "capabilities": [
-    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
-  ]
+  "capabilities": []
 }

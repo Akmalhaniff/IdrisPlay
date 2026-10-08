@@ -2,8 +2,16 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-<title>Kids Play & Learn</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+<title>Idris Play</title>
+<meta name="theme-color" content="#FF8C42" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="Idris Play" />
+<link rel="manifest" href="manifest.webmanifest" />
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
 <meta name="description" content="Interactive, educational games designed for 2-year-old toddlers featuring peek-a-boo animals, animal feeding, rainbow pop-it fidget toy, beep-beep vehicles, bubble popping with surprise toys, tap-to-catch fishing pond, 4-piece jigsaw puzzles, color sorting, piano music garden, and learning colors, numbers, shapes, and ABCs." />
 <meta property="og:title" content="Kids Play & Learn" />
 <meta property="og:description" content="Interactive, educational games designed for 2-year-old toddlers featuring peek-a-boo animals, animal feeding, rainbow pop-it fidget toy, beep-beep vehicles, bubble popping with surprise toys, tap-to-catch fishing pond, 4-piece jigsaw puzzles, color sorting, piano music garden, and learning colors, numbers, shapes, and ABCs." />
@@ -650,56 +658,174 @@ canvas#doodle{width:100%;height:420px;background:#fff;border-radius:18px;border:
 .puzzle-slot{cursor:pointer}
 .drop-zone{cursor:pointer}
 
+/* ===================== APP SHELL ===================== */
+html,body{overscroll-behavior:none;touch-action:manipulation;-webkit-touch-callout:none;-webkit-user-select:none}
+html{background:var(--bg)}
+body{min-height:100dvh;background:radial-gradient(circle at 15% 0%,#FFE9C7 0,transparent 40%),radial-gradient(circle at 100% 30%,#FFE1EC 0,transparent 35%),var(--bg);background-attachment:fixed}
+img{-webkit-user-drag:none}
+.kids-footer{display:none}
+.wrap{min-height:100dvh;padding-top:calc(.6rem + env(safe-area-inset-top));padding-left:max(.7rem,env(safe-area-inset-left));padding-right:max(.7rem,env(safe-area-inset-right));padding-bottom:calc(2rem + env(safe-area-inset-bottom))}
+body.in-game .wrap{padding-top:calc(84px + env(safe-area-inset-top))}
+.kid-section:not(#sec-home) .section-title{display:none}
+.kid-section.active{animation:screenIn .32s cubic-bezier(.2,.9,.3,1.2)}
+#sec-home.active{animation:homeIn .3s ease-out}
+@keyframes screenIn{from{opacity:0;transform:translateX(40px) scale(.97)}to{opacity:1;transform:none}}
+@keyframes homeIn{from{opacity:0;transform:scale(1.04)}to{opacity:1;transform:none}}
+
+/* Splash */
+.app-splash{position:fixed;inset:0;z-index:20000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;background:linear-gradient(160deg,#FFB84D 0%,#FF6B9D 55%,#9D65C9 100%);color:#fff;cursor:pointer;overflow:hidden;transition:opacity .45s,transform .45s}
+.app-splash.hide{opacity:0;transform:scale(1.15);pointer-events:none}
+.splash-logo{width:min(42vw,200px);height:auto;border-radius:24%;box-shadow:0 18px 40px rgba(0,0,0,.25);animation:logoBob 1.6s ease-in-out infinite alternate}
+@keyframes logoBob{from{transform:translateY(-6px) rotate(-3deg)}to{transform:translateY(6px) rotate(3deg)}}
+.splash-title{font-family:'Fredoka',sans-serif;font-weight:700;font-size:clamp(2.4rem,9vw,4rem);letter-spacing:-.02em;text-shadow:0 4px 0 rgba(0,0,0,.15)}
+.splash-play{width:120px;height:120px;border-radius:50%;border:none;background:#fff;color:#FF6B9D;font-size:3.2rem;padding-left:10px;box-shadow:0 10px 0 #E2E8F0,0 18px 40px rgba(0,0,0,.25);animation:playPulse 1s ease-in-out infinite alternate;cursor:pointer}
+@keyframes playPulse{from{transform:scale(1)}to{transform:scale(1.1)}}
+.splash-tip{font-weight:900;font-size:1.2rem;opacity:.95}
+.splash-floaters span{position:absolute;font-size:2.4rem;opacity:.55;animation:floatUp 7s linear infinite}
+.splash-floaters span:nth-child(1){left:6%;animation-delay:0s}.splash-floaters span:nth-child(2){left:20%;animation-delay:-3s}
+.splash-floaters span:nth-child(3){left:34%;animation-delay:-5s}.splash-floaters span:nth-child(4){left:50%;animation-delay:-1.5s}
+.splash-floaters span:nth-child(5){left:64%;animation-delay:-4s}.splash-floaters span:nth-child(6){left:76%;animation-delay:-6s}
+.splash-floaters span:nth-child(7){left:88%;animation-delay:-2s}.splash-floaters span:nth-child(8){left:42%;animation-delay:-6.5s}
+@keyframes floatUp{from{top:110%;transform:rotate(-15deg)}to{top:-15%;transform:rotate(15deg)}}
+
+/* Game bar */
+.game-bar{position:fixed;top:0;left:0;right:0;z-index:500;display:none;align-items:center;gap:.6rem;padding:calc(.5rem + env(safe-area-inset-top)) max(.7rem,env(safe-area-inset-right)) .5rem max(.7rem,env(safe-area-inset-left));background:rgba(255,248,231,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:0 4px 14px rgba(0,0,0,.06)}
+body.in-game .game-bar{display:flex;animation:barIn .3s ease-out}
+@keyframes barIn{from{transform:translateY(-100%)}to{transform:none}}
+.gb-home{width:64px;height:64px;flex-shrink:0;border-radius:22px;border:none;background:linear-gradient(180deg,#FFA45C,#FF8C42);font-size:2rem;box-shadow:0 6px 0 #D96A1E,0 10px 18px rgba(255,140,66,.35);cursor:pointer;transition:transform .1s}
+.gb-home:active{transform:translateY(4px);box-shadow:0 2px 0 #D96A1E}
+.gb-title{flex:1;min-width:0;border:none;background:none;font-family:'Fredoka',sans-serif;font-weight:700;font-size:clamp(1.15rem,4.5vw,1.6rem);color:var(--ink);text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer}
+.star-pill{border:none;flex-shrink:0;display:inline-flex;align-items:center;gap:.3rem;background:linear-gradient(180deg,#FFE066,#FFC300);color:#7A4A00;font-weight:900;font-size:1.15rem;padding:.55rem .9rem;border-radius:999px;box-shadow:0 4px 0 #E0A800,0 8px 14px rgba(255,195,0,.3);cursor:pointer}
+.star-pill.big{font-size:1.35rem;padding:.7rem 1.1rem}
+.star-pill.bump{animation:starBump .5s}
+@keyframes starBump{0%,100%{transform:scale(1)}40%{transform:scale(1.35) rotate(-8deg)}}
+
+/* Home */
+.home-hero{display:flex;align-items:center;gap:.8rem;margin:.2rem 0 1.1rem}
+.mascot{width:84px;height:84px;flex-shrink:0;border-radius:50%;border:5px solid #fff;background:linear-gradient(180deg,#FFE9A8,#FFD93D);font-size:3rem;line-height:1;box-shadow:0 8px 20px rgba(0,0,0,.12);cursor:pointer;animation:mascotIdle 2.4s ease-in-out infinite}
+.mascot.talk{animation:mascotTalk .25s ease-in-out 6 alternate}
+@keyframes mascotIdle{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg) translateY(-3px)}}
+@keyframes mascotTalk{from{transform:scale(1)}to{transform:scale(1.12) rotate(6deg)}}
+.hello{flex:1;min-width:0}
+.hello-hi{font-family:'Fredoka',sans-serif;font-weight:700;font-size:clamp(1.8rem,7vw,2.6rem);line-height:1.05;color:#FF6B9D;text-shadow:0 3px 0 #FFE1EC}
+.hello-sub{font-weight:900;color:#64748b;font-size:clamp(.95rem,3.5vw,1.15rem)}
+.launcher{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:1rem .6rem;padding-bottom:5rem}
+@media(min-width:700px){.launcher{grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:1.4rem 1rem}}
+.app-icon{border:none;background:none;display:flex;flex-direction:column;align-items:center;gap:.45rem;cursor:pointer;opacity:0;animation:iconIn .45s cubic-bezier(.2,.9,.3,1.4) forwards;animation-delay:calc(var(--i) * 35ms);font-family:inherit}
+@keyframes iconIn{from{opacity:0;transform:scale(.4) translateY(20px)}to{opacity:1;transform:none}}
+.app-tile{position:relative;width:100%;aspect-ratio:1;border-radius:30%;display:grid;place-items:center;background:linear-gradient(160deg,var(--c1),var(--c2));box-shadow:0 7px 0 var(--c3),0 14px 22px rgba(0,0,0,.14);transition:transform .1s,box-shadow .1s;overflow:hidden}
+.app-tile::before{content:'';position:absolute;inset:6% 10% auto;height:38%;border-radius:999px;background:linear-gradient(rgba(255,255,255,.5),rgba(255,255,255,0))}
+.app-icon:active .app-tile{transform:translateY(6px) scale(.97);box-shadow:0 1px 0 var(--c3),0 4px 8px rgba(0,0,0,.1)}
+.app-emoji{position:relative;font-size:clamp(3rem,13vw,4.4rem);line-height:1;filter:drop-shadow(0 4px 3px rgba(0,0,0,.18))}
+.app-icon.wiggle .app-emoji{animation:emojiWiggle .9s ease-in-out}
+@keyframes emojiWiggle{0%,100%{transform:none}20%{transform:rotate(-14deg) scale(1.1)}40%{transform:rotate(12deg) scale(1.15)}60%{transform:rotate(-8deg)}80%{transform:rotate(5deg)}}
+.app-label{font-weight:900;font-size:clamp(.9rem,3.3vw,1.05rem);color:var(--ink);text-align:center;line-height:1.15}
+.app-new{position:absolute;top:8%;right:8%;width:14px;height:14px;border-radius:50%;background:#EF4444;border:3px solid #fff}
+.app-icon.launching .app-tile{animation:launch .35s ease-in forwards}
+@keyframes launch{to{transform:scale(1.25);opacity:.2}}
+
+/* Parent gear (press & hold) */
+.parent-gear{position:fixed;right:max(12px,env(safe-area-inset-right));bottom:calc(12px + env(safe-area-inset-bottom));width:46px;height:46px;border-radius:50%;border:none;background:rgba(255,255,255,.75);box-shadow:0 3px 10px rgba(0,0,0,.1);display:grid;place-items:center;font-size:1.3rem;opacity:.6;cursor:pointer;z-index:400;touch-action:none}
+.parent-gear svg{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}
+.parent-gear .ring{fill:none;stroke:#FF8C42;stroke-width:4;stroke-dasharray:107;stroke-dashoffset:107}
+.parent-gear.holding .ring{transition:stroke-dashoffset 2s linear;stroke-dashoffset:0}
+.parent-gear.holding{opacity:1}
+.gear-tip{position:fixed;right:68px;bottom:calc(20px + env(safe-area-inset-bottom));background:#0f172a;color:#fff;font-weight:800;font-size:.8rem;padding:.4rem .7rem;border-radius:10px;z-index:401;animation:popIn .2s}
+
+/* Parent panel & sticker book */
+.pp-backdrop{position:fixed;inset:0;z-index:9000;background:rgba(15,23,42,.55);backdrop-filter:blur(5px);display:flex;align-items:center;justify-content:center;padding:1rem}
+.pp-card,.sticker-card{background:#fff;border-radius:28px;width:100%;max-width:460px;max-height:90dvh;overflow:auto;padding:1.2rem;box-shadow:0 20px 45px rgba(0,0,0,.25);animation:popIn .22s}
+.sticker-card{max-width:620px;border:5px solid #FFE066}
+.pp-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:.8rem}
+.pp-head h3{font-family:'Fredoka',sans-serif;font-size:1.4rem}
+.pp-x{border:none;background:#F1F5F9;width:38px;height:38px;border-radius:50%;font-weight:900;font-size:1.1rem;cursor:pointer}
+.pp-x.big{width:56px;height:56px;font-size:1.5rem}
+.pp-row{display:flex;align-items:center;justify-content:space-between;gap:.8rem;padding:.65rem 0;border-bottom:2px solid #F1F5F9;font-weight:800}
+.pp-row input{flex:0 1 200px;min-width:0;border:2px solid #E2E8F0;border-radius:12px;padding:.5rem .7rem;font:inherit;-webkit-user-select:text;user-select:text}
+.pp-install{background:linear-gradient(135deg,#FF8C42,#FF6B9D);color:#fff}
+.pp-help{font-size:.82rem;color:#64748b;font-weight:700}
+.voice-status{font-size:.82rem;font-weight:800;color:#047857;background:#ECFDF5;border-radius:12px;padding:.5rem .7rem;margin:.4rem 0 .7rem;line-height:1.35}
+.voice-status:empty{display:none}
+.voice-status.bad{color:#92400E;background:#FFFBEB}
+.pp-help:not(:empty){padding:.5rem 0}
+.pp-note{font-size:.8rem;color:#64748b;font-weight:700;margin-top:.8rem;line-height:1.4}
+.sticker-progress{display:flex;align-items:center;gap:.6rem;font-weight:900;color:#7A4A00;margin-bottom:1rem}
+.sticker-bar{flex:1;height:18px;border-radius:999px;background:#FEF3C7;overflow:hidden;border:2px solid #FDE68A}
+.sticker-bar i{display:block;height:100%;background:linear-gradient(90deg,#FFE066,#FFC300);border-radius:999px;transition:width .5s}
+.sticker-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(74px,1fr));gap:.6rem}
+.sticker{aspect-ratio:1;border-radius:22px;display:grid;place-items:center;font-size:2.6rem;background:#F8FAFC;border:3px dashed #E2E8F0;cursor:pointer}
+.sticker.got{background:linear-gradient(160deg,#FFF7D6,#FFE7F0);border:3px solid #fff;box-shadow:0 5px 12px rgba(0,0,0,.1)}
+.sticker.got:active{transform:scale(1.15) rotate(-6deg)}
+.sticker.locked{opacity:.45;font-size:1.8rem}
+.sticker.locked.next{opacity:1;border-color:#FFE066;background:#FFFBEB;animation:emojiWiggle 2s ease-in-out infinite}
+.sticker.fresh{animation:stickerNew 1s ease-out}
+@keyframes stickerNew{0%{transform:scale(0) rotate(-90deg)}70%{transform:scale(1.3) rotate(10deg)}100%{transform:none}}
+
+/* Star rewards */
+.fly-star{position:fixed;z-index:15000;font-size:2.4rem;pointer-events:none;transition:transform .8s cubic-bezier(.5,-0.3,.6,1),opacity .8s;filter:drop-shadow(0 4px 6px rgba(0,0,0,.2))}
+.sticker-toast{position:fixed;left:50%;top:40%;z-index:16000;transform:translate(-50%,-50%) scale(0);background:#fff;border:6px solid #FFE066;border-radius:32px;padding:1.2rem 1.6rem;text-align:center;font-weight:900;font-size:1.3rem;box-shadow:0 20px 50px rgba(0,0,0,.25);pointer-events:none;transition:transform .35s cubic-bezier(.2,.9,.3,1.4)}
+.sticker-toast.show{transform:translate(-50%,-50%) scale(1)}
+.sticker-toast .big{display:block;font-size:5rem;line-height:1.1;animation:emojiWiggle 1s ease-in-out}
+
+@media (hover:hover){.app-icon:hover .app-tile{transform:translateY(-3px)}}
 </style>
+<link rel="stylesheet" href="css/fun.css" />
 </head>
 <body>
-<div class="top-sticky">
-<header class="kids-header">
-  <div class="kids-brand"><span class="logo">🔤</span> ABC Games <small>Learn & Read</small></div>
-  <div class="kids-actions">
-    <button class="btn-pill btn-voice" id="voiceSelectBtn" onclick="openVoiceModal()" title="Change AI Voice">
-      <span id="voiceBtnEmoji">🧸</span> <span id="voiceBtnName">Puck</span> ▾
-    </button>
-    <button class="btn-pill btn-mute" id="muteBtn" onclick="toggleMute()">🔊 Sound</button>
-    <button class="btn-pill btn-back" onclick="switchTab('home')">🏠 Home</button>
-  </div>
-</header>
-<nav class="kids-nav" id="kidsNav">
-  <button class="tab active" data-tab="home" onclick="switchTab('home')"><span class="e">🏠</span> Home</button>
-  <button class="tab" data-tab="abc" onclick="switchTab('abc')"><span class="e">🔤</span> ABC Games</button>
-  <button class="tab" data-tab="peekaboo" onclick="switchTab('peekaboo')"><span class="e">🙈</span> Peek-a-Boo</button>
-  <button class="tab" data-tab="feeding" onclick="switchTab('feeding')"><span class="e">🥕</span> Feed Buddy</button>
-  <button class="tab" data-tab="popit" onclick="switchTab('popit')"><span class="e">🫧</span> Pop-It</button>
-  <button class="tab" data-tab="vehicles" onclick="switchTab('vehicles')"><span class="e">🚗</span> Vehicles</button>
-  <button class="tab" data-tab="bubbles" onclick="switchTab('bubbles')"><span class="e">🫧</span> Bubbles</button>
-  <button class="tab" data-tab="animals" onclick="switchTab('animals')"><span class="e">🦁</span> Animals</button>
-  <button class="tab" data-tab="fishing" onclick="switchTab('fishing')"><span class="e">🎣</span> Fishing</button>
-  <button class="tab" data-tab="music" onclick="switchTab('music')"><span class="e">🎵</span> Music</button>
-  <button class="tab" data-tab="colors" onclick="switchTab('colors')"><span class="e">🎨</span> Colors</button>
-  <button class="tab" data-tab="shapes" onclick="switchTab('shapes')"><span class="e">⭐</span> Shapes</button>
-  <button class="tab" data-tab="numbers" onclick="switchTab('numbers')"><span class="e">🔢</span> Numbers</button>
-  <button class="tab" data-tab="draw" onclick="switchTab('draw')"><span class="e">✏️</span> Draw</button>
-  <button class="tab" data-tab="sorting" onclick="switchTab('sorting')"><span class="e">🎯</span> Sorting</button>
-  <button class="tab" data-tab="puzzle" onclick="switchTab('puzzle')"><span class="e">🧩</span> Puzzle</button>
-  <button class="tab" data-tab="memory" onclick="switchTab('memory')"><span class="e">🃏</span> Memory</button>
-</nav>
+<!-- ===== APP SHELL: splash, game bar, parent zone ===== -->
+<div id="appSplash" class="app-splash" onclick="startApp()">
+  <div class="splash-floaters" aria-hidden="true"><span>⭐</span><span>🎈</span><span>🦁</span><span>🎵</span><span>🌈</span><span>🐟</span><span>🚗</span><span>🫧</span></div>
+  <img class="splash-logo" src="icons/icon.svg" alt="" />
+  <div class="splash-title">Idris Play</div>
+  <button class="splash-play" aria-label="Play">▶</button>
+  <div class="splash-tip">Tap to play!</div>
 </div>
+
+<div class="game-bar" id="gameBar">
+  <button class="gb-home" onclick="goHome()" aria-label="Home">🏠</button>
+  <button class="gb-title" id="gbTitle" onclick="speak(this.dataset.say||'')"><span id="gbEmoji">🎮</span> <span id="gbName">Game</span></button>
+  <button class="star-pill" onclick="openStickers()" aria-label="My stickers">⭐ <b class="starCount">0</b></button>
+</div>
+
+<div id="parentPanel" class="pp-backdrop" style="display:none" onclick="if(event.target===this) closeParent()">
+  <div class="pp-card">
+    <div class="pp-head"><h3>👨‍👩‍👦 Parent Corner</h3><button class="pp-x" onclick="closeParent()">✕</button></div>
+    <label class="pp-row"><span>Child's name</span><input id="ppName" maxlength="20" autocomplete="off" oninput="setKidName(this.value)" /></label>
+    <div class="pp-row"><span>Voice</span>
+      <button class="btn-pill btn-voice" id="voiceSelectBtn" onclick="openVoiceModal()" title="Change AI Voice"><span id="voiceBtnEmoji">💖</span> <span id="voiceBtnName">Heart</span> ▾</button>
+    </div>
+    <div class="voice-status pp-help"></div>
+    <div class="pp-row"><span>Sound</span><button class="btn-pill btn-mute" id="muteBtn" onclick="toggleMute()">🔊 Sound</button></div>
+    <div class="pp-row"><span>Full screen</span><button class="btn-pill btn-mute" onclick="toggleFullscreen()">⛶ Toggle</button></div>
+    <div class="pp-row" id="ppInstallRow"><span>Install on this device</span><button class="btn-pill pp-install" id="ppInstall" onclick="installApp()">📲 Install</button></div>
+    <div class="pp-help" id="ppInstallHelp"></div>
+    <div class="pp-row"><span>Stars: <b class="starCount">0</b></span><button class="btn-pill btn-mute" onclick="resetStars()">↺ Reset stars</button></div>
+    <p class="pp-note">Tip: On Android/iPad, use <b>Screen pinning</b> / <b>Guided Access</b> so little hands can't leave the app. No ads, no tracking.</p>
+  </div>
+</div>
+
+<div id="stickerBook" class="pp-backdrop" style="display:none" onclick="if(event.target===this) closeStickers()">
+  <div class="sticker-card">
+    <div class="pp-head"><h3>⭐ My Stickers</h3><button class="pp-x big" onclick="closeStickers()">✕</button></div>
+    <div class="sticker-progress"><div class="sticker-bar"><i id="stickerBar"></i></div><span id="stickerNext"></span></div>
+    <div class="sticker-grid" id="stickerGrid"></div>
+  </div>
+</div>
+
+<div id="stickerToast" class="sticker-toast" aria-live="polite"></div>
+
 <div class="wrap">
   <section id="sec-home" class="kid-section active">
-    <div style="display:flex;align-items:center;gap:.6rem"><h2 class="section-title">🌈 Pick a Game!</h2><button class="speak-btn" onclick="speak('Pick a game! Welcome to ABC Games!')" title="Speak">🔊</button></div>
-    <div class="hint">👆 Tap a big picture to play — ABC Games, Animals, Vehicles & Puzzles!</div>
-    
-    <!-- Featured Bini ABC Games Hero Banner -->
-    <div style="background:linear-gradient(135deg,#EFF6FF,#FAF5FF);border:3px solid #DDD6FE;border-radius:24px;padding:1rem .9rem;margin-bottom:1rem;display:flex;align-items:center;gap:.9rem;cursor:pointer;box-shadow:0 8px 20px rgba(168,85,247,0.12);transition:transform .15s" onclick="switchTab('abc')">
-      <div style="font-size:3.2rem;line-height:1;animation:toyWiggle 1.5s infinite alternate ease-in-out">🔤</div>
-      <div>
-        <div style="font-size:1.15rem;font-weight:900;color:#6B21A8">ABC Games: Learn & Read!</div>
-        <div style="font-size:.8rem;font-weight:800;color:#64748b">📦 Letters in Boxes • 🔤 Live Letters • ✏️ Tracing • 🫧 Bubbles • 🎵 Song</div>
+    <div class="home-hero">
+      <button class="mascot" id="mascot" onclick="mascotTap()" aria-label="Say hello">🦁</button>
+      <div class="hello">
+        <div class="hello-hi">Hi <span class="kidName">Idris</span>!</div>
+        <div class="hello-sub">What shall we play?</div>
       </div>
-      <button class="btn-pill" style="margin-left:auto;background:linear-gradient(135deg,#A855F7,#7C3AED);color:#fff;padding:.6rem 1.1rem;font-size:.9rem;box-shadow:0 4px 12px rgba(168,85,247,0.3)">PLAY ▶</button>
+      <button class="star-pill big" onclick="openStickers()" aria-label="My stickers">⭐ <b class="starCount">0</b></button>
     </div>
-
-    <div class="home-grid" id="homeGrid"></div>
+    <div class="launcher" id="homeGrid"></div>
+    <button class="parent-gear" id="parentGear" aria-label="Parent corner (hold)"><svg viewBox="0 0 40 40"><circle class="ring" cx="20" cy="20" r="17"/></svg><span>⚙️</span></button>
   </section>
   <section id="sec-colors" class="kid-section">
     <div style="display:flex;align-items:center;gap:.6rem;flex-wrap:wrap"><h2 class="section-title">🎨 Learn Colors</h2><button class="speak-btn" onclick="speak('Tap a color!')" title="Speak">🔊</button></div>
@@ -1138,12 +1264,13 @@ canvas#doodle{width:100%;height:420px;background:#fff;border-radius:18px;border:
       <button onclick="closeVoiceModal()" style="border:none;background:#F1F5F9;width:34px;height:34px;border-radius:50%;cursor:pointer;font-weight:900;font-size:1.1rem;">✕</button>
     </div>
     <p style="margin:0 0 .9rem;color:#64748B;font-size:.88rem;font-weight:700;">
-      Warm, expressive voices powered by Gemini AI — replaces robotic speech with friendly toddler voices!
+      Natural, human-sounding female voices made right on this computer — free, private, and they work offline.
     </p>
+    <div class="voice-status"></div>
     <div class="voice-options" id="voiceOptionsList"></div>
     <div style="margin-top:.9rem;padding-top:.8rem;border-top:2px solid #F1F5F9;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem;">
       <div style="font-size:.78rem;color:#94A3B8;font-weight:800;display:flex;align-items:center;gap:.3rem;">
-        <span>✨</span> Powered by Gemini 3.8 AI
+        <span>✨</span> Kokoro natural voice
       </div>
       <button class="btn-pill" style="background:#0F172A;color:#fff;padding:.5rem 1.1rem;font-size:.85rem;" onclick="closeVoiceModal()">Done 🎈</button>
     </div>
@@ -1152,51 +1279,141 @@ canvas#doodle{width:100%;height:420px;background:#fff;border-radius:18px;border:
 
 <div class="confetti" id="confetti"></div>
 <script>
-// === 🎙️ GEMINI AI KID-FRIENDLY VOICE ENGINE ===
+// --- App shell state (declared first: renderHome() runs during startup) ---
+const store = {
+  get(k, d){ try{ const v = localStorage.getItem('idp_'+k); return v === null ? d : JSON.parse(v); }catch(e){ return d; } },
+  set(k, v){ try{ localStorage.setItem('idp_'+k, JSON.stringify(v)); }catch(e){} }
+};
+let kidName = store.get('name', 'Idris');
+let stars = store.get('stars', 0);
+let currentScreen = 'home';
+const STICKERS = ['🦁','🐶','🐱','🦄','🐸','🐼','🐧','🦋','🐝','🐞','🐢','🐙','🦕','🦖','🐳','🦊','🐰','🐻','🐨','🐯','🚀','🚒','🚂','🚁','🎈','🌈','🍦','🍩','🍓','🍉','🌻','🎁','⚽','🎸','👑','🏰'];
+const STARS_PER_STICKER = 5;
+
+function todayKey(){ const d = new Date(); return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate(); }
+function playedToday(id){ const p = store.get('played', {}); return p.day === todayKey() && (p.ids||[]).includes(id); }
+function markPlayed(id){
+  let p = store.get('played', {});
+  if(p.day !== todayKey()) p = { day: todayKey(), ids: [] };
+  if(!p.ids.includes(id)) p.ids.push(id);
+  store.set('played', p);
+  const seen = store.get('seen', []);
+  if(!seen.includes(id)){ seen.push(id); store.set('seen', seen); }
+}
+// === 🎙️ NATURAL KID VOICE ENGINE ===
+// Where the voice comes from, best first:
+//  1. the pre-recorded voice pack (voice/<voice>/*.mp3) published with the app — works on the iPad, offline;
+//  2. the live natural voice from the PC server (`npm start`), for anything not recorded yet;
+//  3. the device's own most natural female voice.
 let muted = false;
-let currentAiVoice = localStorage.getItem('ai_kid_voice') || 'Puck';
-const aiAudioCache = new Map();
-let currentAiAudio = null;
+let currentAiVoice = (()=>{ try{ return localStorage.getItem('ai_kid_voice'); }catch(e){ return null; } })() || 'af_heart';
 let currentSpeechId = 0;
+let currentVoiceSource = null;
+let aiVoiceStatus = null;            // {ok, reason, pack} from the PC server, if there is one
+const voicePacks = {};               // voice -> {phrases: {key: file}} | null while loading / missing
+const voiceBuffers = new Map();      // clip url -> Promise<AudioBuffer>
+const phraseKey = t => String(t || '').replace(/\s+/g, ' ').trim().toLowerCase();   // same rule as voice.js
+const onPublishedSite = /github\.io$/.test(location.hostname);
+
+async function loadVoicePack(voice){
+  if(voice in voicePacks) return voicePacks[voice];
+  voicePacks[voice] = null;
+  try{
+    const r = await fetch(`voice/${voice}/index.json`, { cache: 'no-cache' });
+    if(r.ok) voicePacks[voice] = await r.json();
+  }catch(e){}
+  try{ renderVoiceStatus(); }catch(e){}
+  if(voicePacks[voice]) saveVoicePackOffline(voice);
+  return voicePacks[voice];
+}
+
+// Quietly store the whole voice pack on the device so the app talks with no internet.
+async function saveVoicePackOffline(voice){
+  if(!('caches' in window) || !location.protocol.startsWith('http')) return;
+  try{
+    const cache = await caches.open('idrisplay-voice-' + voice);
+    const files = [...new Set(Object.values(voicePacks[voice].phrases))];
+    let i = 0;
+    const worker = async () => {
+      while(i < files.length){
+        const url = `voice/${voice}/${files[i++]}`;
+        if(!(await cache.match(url))) { try{ await cache.add(url); }catch(e){} }
+      }
+    };
+    await Promise.all([worker(), worker(), worker()]);
+  }catch(e){}
+}
+
+async function checkAiVoice(){
+  if(onPublishedSite || !location.protocol.startsWith('http')){
+    aiVoiceStatus = { ok:false, reason:'no-server' };
+  } else {
+    try{
+      const r = await fetch('api/tts/status');
+      aiVoiceStatus = r.ok ? await r.json() : { ok:false, reason:'no-server' };
+    }catch(e){ aiVoiceStatus = { ok:false, reason: navigator.onLine === false ? 'offline' : 'no-server' }; }
+  }
+  try{ renderVoiceStatus(); }catch(e){}
+  clearTimeout(checkAiVoice.timer);
+  const p = aiVoiceStatus.pack;
+  if(aiVoiceStatus.reason === 'loading' || (p && p.done < p.total)) checkAiVoice.timer = setTimeout(checkAiVoice, 5000);
+  if(aiVoiceStatus.ok && !checkAiVoice.sentPhrases && window.allSpeechPhrases){
+    // Running on the PC: hand the server every sentence so it can record the voice pack for the iPad.
+    checkAiVoice.sentPhrases = true;
+    try{
+      const phrases = await allSpeechPhrases();
+      const r = await fetch('api/voice/phrases', { method:'POST', headers:{ 'Content-Type':'application/json' }, body: JSON.stringify({ phrases }) });
+      if(r.ok && (await r.json()).missing) setTimeout(checkAiVoice, 2000);
+    }catch(e){}
+  }
+  return aiVoiceStatus;
+}
+
+function renderVoiceStatus(){
+  const st = aiVoiceStatus, packReady = !!voicePacks[currentAiVoice], p = st && st.pack;
+  const recording = p && p.done < p.total ? ` 🎙️ Recording sentences for the iPad: ${p.done} / ${p.total}…` : '';
+  const ipadTip = ' For a nicer device voice on iPad: Settings → Accessibility → Read & Speak → Voices → English → download “Ava (Premium)”.';
+  const msg = packReady ? '✅ Natural voice is on — saved on this device, works offline.' + recording
+    : !st ? '⏳ Checking the voice…'
+    : st.ok ? '✅ Natural voice is on (from this PC).' + recording
+    : st.reason === 'loading' ? '⏳ Natural voice is getting ready (the very first start downloads it, a few minutes). Using the device voice until then.'
+    : st.reason === 'offline' ? '📴 Offline — using the device voice.' + ipadTip
+    : '⚠️ Natural voice not found — using the device voice.' + ipadTip;
+  document.querySelectorAll('.voice-status').forEach(el => { el.textContent = msg; el.classList.toggle('bad', !packReady && !(st && st.ok)); });
+}
 
 const AI_VOICES = {
-  Puck: {
-    id: 'Puck',
-    name: 'Puck',
-    title: 'Playful Kid Buddy',
-    emoji: '🧸',
-    desc: 'Joyful, bouncy cartoon friend — lots of laughs and cheerful giggles! (Toddler Favorite)',
-    color: '#D97706',
-    bg: '#FEF3C7',
-    border: '#F59E0B',
-    sample: "Hi there! I'm Puck! Let's play and have fun together!"
+  af_heart: {
+    id: 'af_heart', name: 'Heart', title: 'Warm & Sweet', emoji: '💖',
+    desc: 'The most natural, human-sounding voice — warm and loving. (Recommended)',
+    color: '#DB2777', bg: '#FCE7F3', border: '#EC4899',
+    sample: "Hi sweetie! I'm so happy to play with you today!"
   },
-  Kore: {
-    id: 'Kore',
-    name: 'Kore',
-    title: 'Sweet & Gentle Friend',
-    emoji: '🌸',
-    desc: 'Warm, soft, loving preschool voice — soothing, encouraging, and clear!',
-    color: '#DB2777',
-    bg: '#FCE7F3',
-    border: '#EC4899',
-    sample: "Hello sweetheart! Let's learn colors and ABCs today!"
+  af_bella: {
+    id: 'af_bella', name: 'Bella', title: 'Bright & Lively', emoji: '🎈',
+    desc: 'Cheerful and full of energy — great for fun, busy games.',
+    color: '#D97706', bg: '#FEF3C7', border: '#F59E0B',
+    sample: "Yay! You found me! Let's have so much fun together!"
   },
-  Zephyr: {
-    id: 'Zephyr',
-    name: 'Zephyr',
-    title: 'Sunny & Bright Narrator',
-    emoji: '🌟',
-    desc: 'Crisp, upbeat storybook narrator — vibrant and full of excitement!',
-    color: '#2563EB',
-    bg: '#EFF6FF',
-    border: '#3B82F6',
-    sample: "Hey friend! Ready for an amazing adventure? Let's go!"
+  af_nicole: {
+    id: 'af_nicole', name: 'Nicole', title: 'Soft & Calm', emoji: '🌙',
+    desc: 'Soft and soothing — lovely for quiet play and bedtime.',
+    color: '#6D28D9', bg: '#EDE9FE', border: '#8B5CF6',
+    sample: "Hello little one. Shall we look at the animals together?"
+  },
+  bf_emma: {
+    id: 'bf_emma', name: 'Emma', title: 'Gentle Storyteller', emoji: '🌷',
+    desc: 'A gentle British voice, like a kind nursery teacher.',
+    color: '#2563EB', bg: '#EFF6FF', border: '#3B82F6',
+    sample: "Good morning, friend! Ready to learn colours and A B C?"
   }
 };
+const DEFAULT_AI_VOICE = 'af_heart';
+// Older versions saved male voices (e.g. Puck); switch those to the new default.
+if(!AI_VOICES[currentAiVoice]) currentAiVoice = DEFAULT_AI_VOICE;
 
 function updateVoiceButtonUI(){
-  const info = AI_VOICES[currentAiVoice] || AI_VOICES.Puck;
+  const info = AI_VOICES[currentAiVoice] || AI_VOICES[DEFAULT_AI_VOICE];
   const emojiEl = document.getElementById('voiceBtnEmoji');
   const nameEl = document.getElementById('voiceBtnName');
   if(emojiEl) emojiEl.textContent = info.emoji;
@@ -1242,15 +1459,14 @@ function selectAiVoice(voiceId){
     try{ localStorage.setItem('ai_kid_voice', voiceId); }catch(e){}
     updateVoiceButtonUI();
     openVoiceModal();
-    testAiVoiceSample(voiceId);
-    prefetchAiAudio();
+    loadVoicePack(voiceId).then(() => { renderVoiceStatus(); testAiVoiceSample(voiceId); prefetchAiAudio(); });
   }
 }
 
 function testAiVoiceSample(voiceId){
   const voice = AI_VOICES[voiceId];
   if(!voice) return;
-  playAiVoice(voice.sample, { voice: voice.id, forceFetch: true });
+  playAiVoice(voice.sample, { voice: voice.id });
 }
 
 function indicateSpeechActivity(isSpeaking){
@@ -1261,13 +1477,7 @@ function indicateSpeechActivity(isSpeaking){
 function stopAllSpeech(){
   currentSpeechId++;
   indicateSpeechActivity(false);
-  try{
-    if(currentAiAudio){
-      currentAiAudio.pause();
-      currentAiAudio.currentTime = 0;
-      currentAiAudio = null;
-    }
-  }catch(e){}
+  stopVoiceSource();
   try{
     if('speechSynthesis' in window){
       window.speechSynthesis.cancel();
@@ -1289,15 +1499,29 @@ function toggleMute(){
 
 // Fallback browser speech (tuned warm & natural if offline)
 let kidVoice = null;
+// Pick the most human-sounding FEMALE English voice the device has.
+// Neural "Natural"/"Online" voices (Edge, Windows, Android) and Apple's Enhanced/Premium voices sound far more human.
+const FEMALE_VOICE_NAMES = /Ava|Emma|Jenny|Aria|Michelle|Ana\b|Sonia|Libby|Maisie|Natasha|Clara|Samantha|Karen|Moira|Tessa|Serena|Kate|Allison|Susan|Zira|Hazel|Victoria|Fiona|Veena|Nicky|Female|Google US English|Google UK English Female/i;
+const MALE_VOICE_NAMES = /\bMale\b|Guy|Davis|Andrew|Brian|Christopher|Eric|Roger|Steffan|Ryan|Thomas|William|David|Mark|George|James|Daniel|Alex\b|Fred|Arthur|Oliver|Aaron|Gordon|Rishi/i;
+function scoreVoice(v){
+  if(!v.lang || !v.lang.toLowerCase().startsWith('en')) return -1;
+  let s = 0;
+  if(FEMALE_VOICE_NAMES.test(v.name)) s += 40;
+  if(MALE_VOICE_NAMES.test(v.name)) s -= 100;
+  if(/Natural|Neural|Online|Enhanced|Premium|Siri/i.test(v.name)) s += 30;
+  if(/^Google/i.test(v.name)) s += 15;
+  if(/Ava|Emma|Jenny|Aria/i.test(v.name)) s += 10;   // especially warm neural voices
+  if(/en[-_](US|GB|AU)/i.test(v.lang)) s += 5;
+  if(v.localService) s += 2;                          // works offline
+  return s;
+}
+let kidVoiceIsNatural = false;
 function pickKidVoice(){
   try{
     if(!('speechSynthesis' in window)) return;
-    const vs = speechSynthesis.getVoices();
-    const pref = vs.find(v => /Jenny|Aria|Emma|Ana|Olivia|Victoria|Samantha|Natural|Google.*UK.*Female/i.test(v.name) && v.lang.startsWith('en'))
-              || vs.find(v => v.lang === 'en-US' && /female|natural/i.test(v.name))
-              || vs.find(v => v.lang.startsWith('en'))
-              || vs[0];
-    kidVoice = pref || null;
+    const ranked = speechSynthesis.getVoices().map(v => [scoreVoice(v), v]).filter(x => x[0] >= 0).sort((a, b) => b[0] - a[0]);
+    kidVoice = ranked.length ? ranked[0][1] : null;
+    kidVoiceIsNatural = !!kidVoice && /Natural|Neural|Online|Enhanced|Premium|Siri|^Google/i.test(kidVoice.name);
   }catch(e){}
 }
 try{ if('speechSynthesis' in window) speechSynthesis.onvoiceschanged = pickKidVoice; }catch(e){}
@@ -1319,115 +1543,99 @@ function fallbackSpeech(phrase){
   try{
     speechSynthesis.cancel();
     const u = new SpeechSynthesisUtterance(phrase);
-    u.rate = 0.88;
-    u.pitch = 1.15;
+    // Natural voices sound best untouched; older robotic voices get a slightly sweeter, slower delivery.
+    u.rate = kidVoiceIsNatural ? 0.92 : 0.85;
+    u.pitch = kidVoiceIsNatural ? 1.08 : 1.2;
     u.volume = 1.0;
-    u.lang = 'en-US';
-    if(kidVoice) u.voice = kidVoice;
+    if(kidVoice){ u.voice = kidVoice; u.lang = kidVoice.lang; } else u.lang = 'en-US';
     speechSynthesis.speak(u);
   }catch(e){
     try{ blip(520, 0.4, 'triangle', 0.5); }catch(e2){}
   }
 }
 
-// Core AI Kid-Voice Player: plays studio-quality Gemini 3.8 Flash Lite TTS
+// Core Kid-Voice Player. Clips play through Web Audio: on iPad, Safari only lets audio start from a tap,
+// but once the splash-screen tap has unlocked Web Audio, voices can play any time (e.g. after a timer).
+function voiceClipUrl(voice, phrase){
+  const pack = voicePacks[voice];
+  const file = pack && pack.phrases[phraseKey(phrase)];
+  if(file) return `voice/${voice}/${file}`;
+  if(aiVoiceStatus && aiVoiceStatus.ok) return `api/tts?text=${encodeURIComponent(phrase)}&voice=${encodeURIComponent(voice)}`;
+  return null;
+}
+
+function getVoiceBuffer(url){
+  if(!voiceBuffers.has(url)){
+    const p = fetch(url)
+      .then(r => { if(!r.ok) throw new Error('voice ' + r.status); return r.arrayBuffer(); })
+      .then(ab => new Promise((res, rej) => getAudioCtx().decodeAudioData(ab, res, rej)));
+    p.catch(() => voiceBuffers.delete(url));
+    voiceBuffers.set(url, p);
+    if(voiceBuffers.size > 300) voiceBuffers.delete(voiceBuffers.keys().next().value);
+  }
+  return voiceBuffers.get(url);
+}
+
+function stopVoiceSource(){
+  try{ if(currentVoiceSource){ currentVoiceSource.onended = null; currentVoiceSource.stop(); } }catch(e){}
+  currentVoiceSource = null;
+}
+
 async function playAiVoice(text, options = {}){
   if(muted || !text) return;
+  const phrase = String(text).replace(/\s+/g, ' ').trim().slice(0, 150);
+  if(!/[A-Za-z0-9]/.test(phrase)) return;             // nothing to say (e.g. only emoji)
   const thisSpeechId = ++currentSpeechId;
-  const rawPhrase = String(text).trim();
-  if(!rawPhrase) return;
-
-  const phrase = rawPhrase.slice(0, 150);
-  const voice = options.voice || currentAiVoice || 'Puck';
-  const cacheKey = `${voice}:${phrase.toLowerCase()}`;
-
+  const voice = options.voice || currentAiVoice || DEFAULT_AI_VOICE;
+  stopVoiceSource();
+  try{ if('speechSynthesis' in window) speechSynthesis.cancel(); }catch(e){}
   indicateSpeechActivity(true);
 
-  // 1. Instant cache playback (<5ms)
-  if(aiAudioCache.has(cacheKey) && !options.forceFetch){
+  if(!(voice in voicePacks)) await loadVoicePack(voice);
+  const url = voiceClipUrl(voice, phrase);
+  if(url){
     try{
-      const audioUrl = aiAudioCache.get(cacheKey);
-      if(currentAiAudio){
-        try{ currentAiAudio.pause(); }catch(e){}
-      }
-      const audio = new Audio(audioUrl);
-      currentAiAudio = audio;
-      audio.onended = () => { if(currentSpeechId === thisSpeechId) indicateSpeechActivity(false); };
-      audio.onerror = () => { if(currentSpeechId === thisSpeechId) fallbackSpeech(phrase); };
-      await audio.play();
+      const buffer = await getVoiceBuffer(url);
+      if(thisSpeechId !== currentSpeechId || muted) return;
+      const ctx = getAudioCtx();
+      const src = ctx.createBufferSource();
+      src.buffer = buffer;
+      src.connect(ctx.destination);
+      src.onended = () => { if(thisSpeechId === currentSpeechId){ currentVoiceSource = null; indicateSpeechActivity(false); } };
+      currentVoiceSource = src;
+      src.start();
       return;
     }catch(err){
-      console.warn('Cache play error:', err);
+      console.warn('Voice clip failed, using the device voice:', err);
     }
   }
-
-  // 2. Fetch from Gemini AI TTS server endpoint
-  try{
-    const res = await fetch(`/api/tts?text=${encodeURIComponent(phrase)}&voice=${encodeURIComponent(voice)}`);
-    if(!res.ok) throw new Error('TTS status ' + res.status);
-    const blob = await res.blob();
-    const blobUrl = URL.createObjectURL(blob);
-    aiAudioCache.set(cacheKey, blobUrl);
-
-    if(currentSpeechId !== thisSpeechId || muted){
-      return;
-    }
-
-    if(currentAiAudio){
-      try{ currentAiAudio.pause(); }catch(e){}
-    }
-    const audio = new Audio(blobUrl);
-    currentAiAudio = audio;
-    audio.onended = () => { if(currentSpeechId === thisSpeechId) indicateSpeechActivity(false); };
-    audio.onerror = () => { if(currentSpeechId === thisSpeechId) fallbackSpeech(phrase); };
-    await audio.play();
-  }catch(err){
-    console.warn('AI voice fetch failed, using natural fallback:', err);
-    if(currentSpeechId === thisSpeechId && !muted){
-      fallbackSpeech(phrase);
-    }
+  if(thisSpeechId === currentSpeechId && !muted){
+    fallbackSpeech(phrase);
+    indicateSpeechActivity(false);
   }
 }
 
-// Background prefetching for common toddler words to achieve 0ms latency
+// Decode common words ahead of time so the very first tap answers instantly.
 const commonToddlerPhrases = [
   'A', 'B', 'C', 'D', 'Apple', 'Ball', 'Cat', 'Dog', 'Elephant',
   'Red', 'Blue', 'Yellow', 'Green', 'Orange', 'Purple',
   'One', 'Two', 'Three', 'Circle', 'Square', 'Star', 'Heart',
-  'Car', 'Train', 'Bus', 'Boat',
-  'Yay!', 'Good job!', 'Great reading!', 'Pop!', 'Match!', 'Super!', 'Peek a boo!'
+  'Yay!', 'Good job!', 'Super!', 'Peek a boo!'
 ];
 let isPrefetching = false;
-function prefetchAiAudio(phrases = commonToddlerPhrases, voice = currentAiVoice){
+async function prefetchAiAudio(phrases = commonToddlerPhrases, voice = currentAiVoice){
   if(isPrefetching) return;
   isPrefetching = true;
-  let idx = 0;
-  function step(){
-    if(idx >= phrases.length){
-      isPrefetching = false;
-      return;
+  try{
+    await loadVoicePack(voice);
+    for(const text of phrases){
+      const url = voiceClipUrl(voice, text);
+      if(url){ try{ await getVoiceBuffer(url); }catch(e){} }
     }
-    const text = phrases[idx++];
-    const key = `${voice}:${text.toLowerCase()}`;
-    if(!aiAudioCache.has(key)){
-      fetch(`/api/tts?text=${encodeURIComponent(text)}&voice=${encodeURIComponent(voice)}`)
-        .then(r => {
-          if(!r.ok) throw new Error('Status ' + r.status);
-          return r.blob();
-        })
-        .then(blob => {
-          aiAudioCache.set(key, URL.createObjectURL(blob));
-          setTimeout(step, 250);
-        })
-        .catch(() => setTimeout(step, 800));
-    } else {
-      setTimeout(step, 40);
-    }
-  }
-  setTimeout(step, 1000);
+  }finally{ isPrefetching = false; }
 }
 
-// Universal speak functions across whole app — redirects to Gemini AI Kid Voice
+// Universal speak functions across whole app — redirects to the natural kid voice
 function speak(text, slowMode){
   if(muted || !text) return;
   playAiVoice(text);
@@ -1829,17 +2037,12 @@ function switchTab(name){
   if(name==='fishing' && document.querySelectorAll('.fish').length===0){ try{ initFishing(); }catch(e){} }
   if(name==='music' && document.querySelectorAll('.key').length===0){ try{ initPiano(); }catch(e){} }
   if(name==='abc'){ try{ setAbcMode(abcMode || 'boxes'); }catch(e){} }
-  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.tab===name));
   document.querySelectorAll('.kid-section').forEach(s=>s.classList.toggle('active',s.id==='sec-'+name));
   if(name==='bubbles') startBubbles(); else stopBubbles();
   if(name==='draw'){ setTimeout(resizeCanvas, 80); setTimeout(resizeCanvas, 300); }
-  try{
-    const sec=document.getElementById('sec-'+name);
-    if(sec){ sec.scrollIntoView({behavior:'smooth',block:'start'}); }
-    else window.scrollTo({top:0,behavior:'smooth'});
-    setTimeout(()=>window.scrollBy(0,-110),50);
-  }catch(e){ window.scrollTo({top:0,behavior:'smooth'}); }
-  try{ document.querySelector('.tab[data-tab="'+name+'"]')?.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'}); }catch(e){}
+  try{ updateGameBar(name); }catch(e){}
+  window.scrollTo(0,0);
+  if(name==='home'){ try{ renderHome(); }catch(e){} }
   const titles={
     home:'Pick a game!',
     peekaboo:'Peek a boo!',
@@ -1859,7 +2062,7 @@ function switchTab(name){
     puzzle:'Puzzle',
     memory:'Memory'
   };
-  speak(titles[name]||name);
+  speak(titles[name]||(homeGames.find(h=>h.id===name)||{}).n||name);
   if(name === 'colors') prefetchAiAudio(['Red','Blue','Yellow','Green','Orange','Purple','Pink']);
   else if(name === 'animals') prefetchAiAudio(['Dog','Cat','Lion','Elephant','Cow','Duck','Sheep','Pig']);
   else if(name === 'shapes') prefetchAiAudio(['Circle','Square','Triangle','Star','Heart']);
@@ -1885,7 +2088,8 @@ const homeGames=[
   {id:'puzzle',e:'🧩',n:'Animal Puzzle',c:'#FCE7F3',s:'Easy 4-piece jigsaw'},
   {id:'memory',e:'🃏',n:'Memory Match',c:'#E0E7FF',s:'Find pairs'}
 ];
-function renderHome(){const g=document.getElementById('homeGrid');if(!g)return;g.innerHTML=homeGames.map(h=>`<div class="home-card" style="background:${h.c}" onclick="switchTab('${h.id}')"><div class="he">${h.e}</div><b>${h.n}</b><small>${h.s}</small></div>`).join('');}
+const ICON_COLORS=[['#C084FC','#9333EA','#7E22CE'],['#FDE047','#FACC15','#CA8A04'],['#FDBA74','#FB923C','#EA580C'],['#F9A8D4','#EC4899','#BE185D'],['#7DD3FC','#38BDF8','#0284C7'],['#67E8F9','#22D3EE','#0891B2'],['#86EFAC','#4ADE80','#16A34A'],['#93C5FD','#3B82F6','#1D4ED8'],['#C4B5FD','#8B5CF6','#6D28D9'],['#FDA4AF','#FB7185','#E11D48'],['#6EE7B7','#34D399','#059669'],['#FDE68A','#FBBF24','#D97706'],['#FDBA74','#F97316','#C2410C'],['#FCA5A5','#F87171','#DC2626'],['#F0ABFC','#D946EF','#A21CAF'],['#A5B4FC','#6366F1','#4338CA']];
+function renderHome(){const g=document.getElementById('homeGrid');if(!g)return;g.innerHTML=homeGames.map((h,i)=>{const c=h.colors||ICON_COLORS[i%ICON_COLORS.length];const isNew=h.isNew&&!store.get('seen',[]).includes(h.id);return `<button class="app-icon" style="--i:${i};--c1:${c[0]};--c2:${c[1]};--c3:${c[2]}" data-game="${h.id}" onclick="launchGame('${h.id}',this)"><span class="app-tile"><span class="app-emoji">${h.e}</span>${isNew?'':playedToday(h.id)?'':'<span class="app-new"></span>'}</span>${isNew?'<span class="app-ribbon">NEW</span>':''}<span class="app-label">${h.n}</span></button>`;}).join('');}
 const colors=[{name:'Red',hex:'#EF4444'},{name:'Blue',hex:'#3B82F6'},{name:'Yellow',hex:'#EAB308'},{name:'Green',hex:'#22C55E'},{name:'Orange',hex:'#F97316'},{name:'Purple',hex:'#A855F7'},{name:'Pink',hex:'#EC4899'},{name:'Brown',hex:'#92400E'},{name:'Black',hex:'#111827'},{name:'White',hex:'#F8FAFC',text:'#334155'},{name:'Cyan',hex:'#06B6D4'},{name:'Lime',hex:'#84CC16'}];
 function renderColors(){const g=document.getElementById('colorGrid');g.innerHTML=colors.map(c=>`<div class="color-tile" style="background:${c.hex};color:${c.text||'#fff'}" onclick="tapColor('${c.name}','${c.hex}',event)"><div class="swatch" style="background:${c.hex}"></div><b style="color:${c.text||'#fff'}">${c.name}</b></div>`).join('');}
 function tapColor(name,hex,e){speak(name);blip(name==='Red'?300:name==='Blue'?400:name==='Yellow'?520:480,0.22,'sine',0.2);const x=e.clientX||window.innerWidth/2,y=e.clientY||window.innerHeight/2;splashAt(x,y,hex);burstConfetti(14,hex);}
@@ -2671,6 +2875,8 @@ function executeSongStep(step){
 function tapSingNext(){
   stopAbcSong(true);
   try{ getAudioCtx(); }catch(e){}
+  try{ if(navigator.audioSession) navigator.audioSession.type = 'playback'; }catch(e){}   // iPad: play even in silent mode
+  try{ const u = new SpeechSynthesisUtterance(' '); u.volume = 0; speechSynthesis.speak(u); }catch(e){}   // iPad: unlock the backup voice
   try{ getAudioCtx()?.resume?.(); }catch(e){}
 
   const step = abcSongSteps[abcTapSingIndex];
@@ -2943,7 +3149,7 @@ let memCards=[],memFlipped=[],memLock=false,memMoves=0,memMatched=0;const memEmo
 function initMemory(){memCards=[];memFlipped=[];memLock=false;memMoves=0;memMatched=0;document.getElementById('memMoves').textContent='0';document.getElementById('memMatched').textContent='0';document.getElementById('memWin').style.display='none';let pairs=[...memEmojis,...memEmojis];for(let i=pairs.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[pairs[i],pairs[j]]=[pairs[j],pairs[i]];}memCards=pairs.map((e,i)=>({id:i,emoji:e,flipped:false,matched:false}));renderMemory();}
 function renderMemory(){const g=document.getElementById('memoryGrid');g.innerHTML=memCards.map(c=>`<div class="mem-card ${c.flipped||c.matched?'flipped':''} ${c.matched?'matched':''}" onclick="flipMem(${c.id})">${c.flipped||c.matched?c.emoji:'<span class="back">❓</span>'}</div>`).join('');}
 function flipMem(id){if(memLock)return;const card=memCards.find(c=>c.id===id);if(!card||card.flipped||card.matched)return;card.flipped=true;blip(700,0.08);renderMemory();memFlipped.push(card);if(memFlipped.length===2){memMoves++;document.getElementById('memMoves').textContent=memMoves;const [a,b]=memFlipped;if(a.emoji===b.emoji){a.matched=b.matched=true;memMatched++;document.getElementById('memMatched').textContent=memMatched;memFlipped=[];renderMemory();popSound();burstConfetti(12,'#FFD93D');speak('Match!');if(memMatched===8){setTimeout(()=>{document.getElementById('memWin').style.display='block';speak('Amazing! You found all pairs!');burstConfetti(40);},350);}}else{memLock=true;setTimeout(()=>{a.flipped=b.flipped=false;memFlipped=[];memLock=false;renderMemory();blip(220,0.16,'sine',0.18);},780);}}}
-renderColors();renderAnimals();renderShapes();renderNumbers();renderAbc();renderHome();initDraw();initMemory();window.addEventListener('resize',resizeCanvas);setTimeout(()=>speak('Welcome! Pick a game!'),900);
+renderColors();renderAnimals();renderShapes();renderNumbers();renderAbc();renderHome();initDraw();initMemory();window.addEventListener('resize',resizeCanvas);
 
 // === DRAG HELPERS (touch + mouse) ===
 let draggedEl=null;
@@ -3702,6 +3908,225 @@ setTimeout(()=>{
   setTimeout(()=>{ try{ if(document.getElementById('sec-bubbles')?.classList.contains('active')) startBubbles(); }catch(e){} }, 1200);
 
 
+
+// ===================== 📱 APP SHELL =====================
+// Turns the page into an app: splash + audio unlock, launcher home, full-screen game screens,
+// hardware back button support, star/sticker rewards, parent-only settings, install & offline.
+
+// --- Splash / start ---
+function startApp(){
+  const sp = document.getElementById('appSplash');
+  if(!sp || sp.classList.contains('hide')) return;
+  try{ getAudioCtx(); }catch(e){}
+  try{ blip(523,0.15,'sine',0.3); setTimeout(()=>blip(659,0.15,'sine',0.3),110); setTimeout(()=>blip(784,0.3,'sine',0.35),220); }catch(e){}
+  const touch = window.matchMedia('(pointer:coarse)').matches;
+  if(touch && !isStandalone()) goFullscreen();
+  keepAwake();
+  sp.classList.add('hide');
+  setTimeout(()=>sp.remove(), 500);
+  renderHome();
+  setTimeout(()=>{ speak('Hi '+kidName+'! What shall we play?'); talkMascot(); }, 350);
+}
+function isStandalone(){ return window.matchMedia('(display-mode: standalone), (display-mode: fullscreen)').matches || navigator.standalone === true; }
+function goFullscreen(){ try{ const el = document.documentElement; (el.requestFullscreen || el.webkitRequestFullscreen)?.call(el, {navigationUI:'hide'})?.catch?.(()=>{}); }catch(e){} }
+function toggleFullscreen(){
+  if(document.fullscreenElement || document.webkitFullscreenElement){ (document.exitFullscreen || document.webkitExitFullscreen)?.call(document); }
+  else goFullscreen();
+}
+let wakeLock = null;
+async function keepAwake(){ try{ if('wakeLock' in navigator && document.visibilityState === 'visible') wakeLock = await navigator.wakeLock.request('screen'); }catch(e){} }
+document.addEventListener('visibilitychange', ()=>{
+  if(document.visibilityState === 'visible') keepAwake();
+  else { try{ stopAllSpeech(); }catch(e){} }
+});
+
+// --- Navigation (with Android/phone back button support) ---
+function updateGameBar(name){
+  currentScreen = name;
+  const inGame = name !== 'home';
+  document.body.classList.toggle('in-game', inGame);
+  if(!inGame) return;
+  const g = homeGames.find(h => h.id === name) || { e:'🎮', n:name };
+  document.getElementById('gbEmoji').textContent = g.e;
+  document.getElementById('gbName').textContent = g.n;
+  document.getElementById('gbTitle').dataset.say = g.n;
+  markPlayed(name);
+}
+function launchGame(id, el){
+  if(el){ el.classList.add('launching'); }
+  try{ blip(440,0.12,'sine',0.3); setTimeout(()=>blip(880,0.18,'sine',0.3),90); }catch(e){}
+  setTimeout(()=>openGame(id), 170);
+}
+function openGame(id){
+  if(history.state && history.state.game) history.replaceState({game:id}, '');
+  else history.pushState({game:id}, '');
+  switchTab(id);
+}
+function goHome(){
+  try{ blip(660,0.12,'triangle',0.3); }catch(e){}
+  if(history.state && history.state.game) history.back();
+  else switchTab('home');
+}
+window.addEventListener('popstate', (e)=>{
+  const st = e.state || {};
+  if(st.game){ switchTab(st.game); return; }
+  // Back pressed on the home screen: stay in the app (little fingers!) instead of leaving it.
+  if(!st.home) history.pushState({home:true}, '');
+  if(currentScreen !== 'home') switchTab('home');
+  closeStickers(); closeParent();
+});
+history.replaceState({root:true}, '');
+history.pushState({home:true}, '');
+
+// --- Mascot & name ---
+function applyKidName(){ document.querySelectorAll('.kidName').forEach(el => el.textContent = kidName); }
+function setKidName(v){ kidName = (v || '').trim() || 'Friend'; store.set('name', kidName); applyKidName(); }
+const MASCOT_LINES = n => ['Hi '+n+'!', 'You are awesome, '+n+'!', 'Let\'s play together!', 'Roar! I am a friendly lion!', 'High five, '+n+'!', 'Pick a game, '+n+'!'];
+function talkMascot(){ const m = document.getElementById('mascot'); if(!m) return; m.classList.remove('talk'); void m.offsetWidth; m.classList.add('talk'); }
+function mascotTap(){
+  const lines = MASCOT_LINES(kidName);
+  speak(lines[Math.floor(Math.random()*lines.length)]);
+  talkMascot();
+  try{ burstConfetti(10); }catch(e){}
+}
+// Every few seconds one launcher icon wiggles to invite a tap.
+setInterval(()=>{
+  if(currentScreen !== 'home') return;
+  const icons = document.querySelectorAll('.app-icon');
+  if(!icons.length) return;
+  const el = icons[Math.floor(Math.random()*icons.length)];
+  el.classList.remove('wiggle'); void el.offsetWidth; el.classList.add('wiggle');
+}, 2600);
+
+// --- Stars & stickers ---
+let lastPointer = { x: innerWidth/2, y: innerHeight/2 };
+document.addEventListener('pointerdown', e => { lastPointer = { x: e.clientX, y: e.clientY }; }, { passive:true });
+let lastStarAt = 0;
+function renderStars(){ document.querySelectorAll('.starCount').forEach(el => el.textContent = stars); }
+function addStar(force){
+  const now = Date.now();
+  if(!force && now - lastStarAt < 5000) return;   // one star per little win, not per tap
+  lastStarAt = now;
+  stars++; store.set('stars', stars);
+  const target = [...document.querySelectorAll('.star-pill')].find(p => p.offsetParent !== null);
+  const s = document.createElement('div');
+  s.className = 'fly-star'; s.textContent = '⭐';
+  s.style.left = (lastPointer.x - 20) + 'px'; s.style.top = (lastPointer.y - 20) + 'px';
+  document.body.appendChild(s);
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+    if(target){ const r = target.getBoundingClientRect(); s.style.transform = `translate(${r.left + r.width/2 - lastPointer.x}px, ${r.top + r.height/2 - lastPointer.y}px) scale(.6)`; }
+    s.style.opacity = '0.2';
+  }));
+  setTimeout(()=>{
+    s.remove(); renderStars();
+    if(target){ target.classList.remove('bump'); void target.offsetWidth; target.classList.add('bump'); }
+    try{ blip(988,0.12,'sine',0.25); setTimeout(()=>blip(1319,0.2,'sine',0.25),80); }catch(e){}
+    if(stars % STARS_PER_STICKER === 0) newSticker();
+  }, 820);
+}
+function stickerCount(){ return Math.floor(stars / STARS_PER_STICKER); }
+function newSticker(){
+  const st = STICKERS[(stickerCount()-1) % STICKERS.length];
+  const t = document.getElementById('stickerToast');
+  t.innerHTML = `<span class="big">${st}</span>New sticker!`;
+  t.classList.add('show');
+  speak('Yay! You got a new sticker!');
+  try{ _origConfetti(30); }catch(e){}
+  setTimeout(()=>t.classList.remove('show'), 2600);
+}
+function openStickers(){
+  const got = stickerCount();
+  const grid = document.getElementById('stickerGrid');
+  const shown = Math.max(12, got + 6);  // what he has, plus a few mystery slots to aim for
+  grid.innerHTML = Array.from({length: shown}, (_, i) => {
+    const e = STICKERS[i % STICKERS.length];
+    return i < got
+      ? `<button class="sticker got${i === got-1 ? ' fresh' : ''}" onclick="tapSticker(this,'${e}')">${e}</button>`
+      : `<div class="sticker locked${i === got ? ' next' : ''}">${i === got ? '🎁' : '🔒'}</div>`;
+  }).join('');
+  const into = stars % STARS_PER_STICKER;
+  document.getElementById('stickerBar').style.width = (into / STARS_PER_STICKER * 100) + '%';
+  document.getElementById('stickerNext').textContent = `⭐ ${into}/${STARS_PER_STICKER}`;
+  document.getElementById('stickerBook').style.display = 'flex';
+  speak(got ? 'Your stickers! You have ' + got + '!' : 'Win stars to get stickers!');
+}
+function tapSticker(el, e){ try{ blip(700 + Math.random()*400, 0.2, 'triangle', 0.3); }catch(_){} el.classList.remove('fresh'); void el.offsetWidth; el.classList.add('fresh'); }
+function closeStickers(){ const b = document.getElementById('stickerBook'); if(b) b.style.display = 'none'; }
+function resetStars(){ if(confirm('Reset all stars and stickers?')){ stars = 0; store.set('stars', 0); renderStars(); } }
+// Every celebration (confetti) in any game earns a star.
+const _origConfetti = burstConfetti;
+burstConfetti = function(n, color){ _origConfetti(n, color); if(n >= 10 || n === undefined) addStar(); };
+
+// --- Parent corner: press & hold the gear for 2 seconds ---
+(function setupParentGear(){
+  const g = document.getElementById('parentGear');
+  if(!g) return;
+  let timer = null;
+  const cancel = () => { clearTimeout(timer); timer = null; g.classList.remove('holding'); };
+  g.addEventListener('pointerdown', e => {
+    e.preventDefault();
+    g.classList.add('holding');
+    timer = setTimeout(() => { cancel(); openParent(); }, 2000);
+  });
+  ['pointerup','pointerleave','pointercancel'].forEach(ev => g.addEventListener(ev, () => {
+    if(timer){
+      cancel();
+      if(!document.querySelector('.gear-tip')){
+        const tip = document.createElement('div'); tip.className = 'gear-tip'; tip.textContent = 'Grown-ups: press & hold';
+        document.body.appendChild(tip); setTimeout(()=>tip.remove(), 1800);
+      }
+    }
+  }));
+})();
+function openParent(){
+  checkAiVoice();
+  document.getElementById('ppName').value = kidName;
+  updateInstallUI();
+  document.getElementById('parentPanel').style.display = 'flex';
+}
+function closeParent(){ const p = document.getElementById('parentPanel'); if(p) p.style.display = 'none'; }
+
+// --- Install as an app ---
+let deferredInstall = null;
+window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferredInstall = e; updateInstallUI(); });
+window.addEventListener('appinstalled', () => { deferredInstall = null; updateInstallUI(); });
+function updateInstallUI(){
+  const btn = document.getElementById('ppInstall'), help = document.getElementById('ppInstallHelp');
+  if(!btn) return;
+  if(isStandalone()){ btn.textContent = '✅ Installed'; btn.disabled = true; help.textContent = ''; return; }
+  btn.disabled = false; btn.textContent = '📲 Install';
+}
+async function installApp(){
+  const help = document.getElementById('ppInstallHelp');
+  if(deferredInstall){
+    deferredInstall.prompt();
+    try{ await deferredInstall.userChoice; }catch(e){}
+    deferredInstall = null; updateInstallUI();
+    return;
+  }
+  const ios = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  help.innerHTML = ios
+    ? 'In Safari tap <b>Share ⬆️</b> then <b>“Add to Home Screen”</b>.'
+    : 'Open the browser menu <b>⋮</b> and choose <b>“Install app”</b> or <b>“Add to Home screen”</b>.';
+}
+
+// --- Toddler-proofing: no long-press menus, no pinch zoom, no drag-select ---
+document.addEventListener('contextmenu', e => { if(!e.target.closest('input,textarea')) e.preventDefault(); });
+document.addEventListener('gesturestart', e => e.preventDefault());
+document.addEventListener('dblclick', e => e.preventDefault(), { passive:false });
+
+// --- Offline support ---
+if('serviceWorker' in navigator && location.protocol.startsWith('http')){
+  window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(()=>{}));
+}
+
+loadVoicePack(currentAiVoice);
+checkAiVoice();
+applyKidName();
+renderStars();
+updateInstallUI();
 </script>
+<script src="js/fun.js"></script>
+<script src="js/phrases.js"></script>
 </body>
 </html>
