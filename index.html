@@ -1528,11 +1528,34 @@ function pickKidVoice(){
 try{ if('speechSynthesis' in window) speechSynthesis.onvoiceschanged = pickKidVoice; }catch(e){}
 setTimeout(pickKidVoice, 600);
 
+// Mixer: every game sound effect goes through one limiter, so when little fingers trigger many sounds
+// at once they don't stack into a loud, distorted mess. The voice has its own channel, and sound
+// effects are turned down a little while she is talking so her words stay clear.
+function setupAudioMixer(ctx){
+  try{
+    const speakers = ctx.destination;
+    const sfxBus = ctx.createGain();
+    const limiter = ctx.createDynamicsCompressor();
+    limiter.threshold.value = -16; limiter.knee.value = 10; limiter.ratio.value = 10;
+    limiter.attack.value = 0.003; limiter.release.value = 0.2;
+    sfxBus.gain.value = 0.85;
+    sfxBus.connect(limiter); limiter.connect(speakers);
+    const voiceBus = ctx.createGain();
+    voiceBus.connect(speakers);
+    // All existing sound code connects to ctx.destination — point that at the limited effects channel.
+    Object.defineProperty(ctx, 'destination', { value: sfxBus, configurable: true });
+    ctx.sfxBus = sfxBus; ctx.voiceBus = voiceBus;
+  }catch(e){}
+}
+
 // Shared loud AudioContext
 let _audioCtx = null;
 function getAudioCtx(){
   try{
-    if(!_audioCtx) _audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    if(!_audioCtx){
+      _audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      setupAudioMixer(_audioCtx);
+    }
     if(_audioCtx.state === 'suspended') _audioCtx.resume();
     return _audioCtx;
   }catch(e){ return null; }
@@ -1577,19 +1600,44 @@ function getVoiceBuffer(url){
   return voiceBuffers.get(url);
 }
 
-function stopVoiceSource(){
-  try{ if(currentVoiceSource){ currentVoiceSource.onended = null; currentVoiceSource.stop(); } }catch(e){}
-  currentVoiceSource = null;
+// What the voice is saying right now, so taps can be handled calmly (see playAiVoice).
+let currentVoiceGain = null, currentPhrase = '', voiceEndsAt = 0;
+
+// Fade the current sentence out quickly instead of chopping it off mid-word.
+function stopVoiceSource(fade = 0.06){
+  const src = currentVoiceSource, gain = currentVoiceGain;
+  currentVoiceSource = null; currentVoiceGain = null; voiceEndsAt = 0;
+  if(!src) return;
+  try{
+    src.onended = null;
+    const ctx = getAudioCtx(), t = ctx.currentTime;
+    if(gain && fade){ gain.gain.setTargetAtTime(0, t, fade / 3); src.stop(t + fade); } else src.stop();
+  }catch(e){}
+  duckEffects(false);
 }
 
+// Turn sound effects down a little while the voice talks, so her words are clear.
+function duckEffects(on){
+  try{ const ctx = getAudioCtx(); if(ctx && ctx.sfxBus) ctx.sfxBus.gain.setTargetAtTime(on ? 0.45 : 0.85, ctx.currentTime, 0.05); }catch(e){}
+}
+
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+// options.queue: wait for the current sentence to finish first (used for game instructions,
+// so "Find little b!" doesn't cut off "Big A, little a!").
 async function playAiVoice(text, options = {}){
   if(muted || !text) return;
   const phrase = String(text).replace(/\s+/g, ' ').trim().slice(0, 150);
   if(!/[A-Za-z0-9]/.test(phrase)) return;             // nothing to say (e.g. only emoji)
+  const now = performance.now();
+  // The same thing tapped again (or by a second finger) while it's still being said: let it finish.
+  if(phrase === currentPhrase && now < voiceEndsAt) return;
   const thisSpeechId = ++currentSpeechId;
+  if(options.queue && now < voiceEndsAt){
+    await sleep(Math.min(voiceEndsAt - now + 120, 5000));
+    if(thisSpeechId !== currentSpeechId || muted) return;
+  }
   const voice = options.voice || currentAiVoice || DEFAULT_AI_VOICE;
-  stopVoiceSource();
-  try{ if('speechSynthesis' in window) speechSynthesis.cancel(); }catch(e){}
   indicateSpeechActivity(true);
 
   if(!(voice in voicePacks)) await loadVoicePack(voice);
@@ -1598,12 +1646,20 @@ async function playAiVoice(text, options = {}){
     try{
       const buffer = await getVoiceBuffer(url);
       if(thisSpeechId !== currentSpeechId || muted) return;
+      stopVoiceSource();
+      try{ if('speechSynthesis' in window) speechSynthesis.cancel(); }catch(e){}
       const ctx = getAudioCtx();
-      const src = ctx.createBufferSource();
+      const src = ctx.createBufferSource(), gain = ctx.createGain();
       src.buffer = buffer;
-      src.connect(ctx.destination);
-      src.onended = () => { if(thisSpeechId === currentSpeechId){ currentVoiceSource = null; indicateSpeechActivity(false); } };
-      currentVoiceSource = src;
+      src.connect(gain); gain.connect(ctx.voiceBus || ctx.destination);
+      src.onended = () => {
+        if(currentVoiceSource !== src) return;
+        currentVoiceSource = null; currentVoiceGain = null; voiceEndsAt = 0;
+        duckEffects(false); indicateSpeechActivity(false);
+      };
+      currentVoiceSource = src; currentVoiceGain = gain; currentPhrase = phrase;
+      voiceEndsAt = performance.now() + buffer.duration * 1000;
+      duckEffects(true);
       src.start();
       return;
     }catch(err){
@@ -1611,6 +1667,9 @@ async function playAiVoice(text, options = {}){
     }
   }
   if(thisSpeechId === currentSpeechId && !muted){
+    stopVoiceSource();
+    currentPhrase = phrase;
+    voiceEndsAt = performance.now() + 400 + phrase.length * 70;   // rough length of device speech
     fallbackSpeech(phrase);
     indicateSpeechActivity(false);
   }
@@ -1642,6 +1701,8 @@ function speak(text, slowMode){
   playAiVoice(text);
 }
 function speakSlow(text){ speak(text, true); }
+// Say this after the current sentence has finished (game instructions, next-question prompts).
+function speakNext(text){ if(muted || !text) return; playAiVoice(text, { queue: true }); }
 function sayLetter(text){ playAiVoice(text); }
 function singSayLetter(text){ playAiVoice(text); }
 
@@ -2816,19 +2877,6 @@ function renderSingLyrics(activeIdx){
       try{ s.scrollIntoView({behavior: 'smooth', block: 'nearest', inline: 'center'}); }catch(e){}
     }
   });
-}
-
-function singSayLetter(text){
-  try{ speechSynthesis.cancel(); }catch(e){}
-  try{
-    const u = new SpeechSynthesisUtterance(text);
-    u.rate = 0.88;
-    u.pitch = 1.35;
-    u.volume = 1.0;
-    u.lang = 'en-US';
-    if(kidVoice) u.voice = kidVoice;
-    speechSynthesis.speak(u);
-  }catch(e){}
 }
 
 function executeSongStep(step){
@@ -4119,6 +4167,33 @@ async function installApp(){
 document.addEventListener('contextmenu', e => { if(!e.target.closest('input,textarea')) e.preventDefault(); });
 document.addEventListener('gesturestart', e => e.preventDefault());
 document.addEventListener('dblclick', e => e.preventDefault(), { passive:false });
+
+// --- One finger at a time: toddlers often touch with several fingers or a whole palm. Only the
+// first finger on the screen counts; extra fingers are ignored until it lifts, so one touch = one action.
+(function oneFingerAtATime(){
+  let finger = null;
+  const blocked = new Set();
+  const swallow = e => { e.stopImmediatePropagation(); if(e.cancelable) e.preventDefault(); };
+  window.addEventListener('pointerdown', e => {
+    if(e.pointerType !== 'touch') return;
+    if(finger === null){ finger = e.pointerId; return; }
+    if(e.pointerId !== finger){ blocked.add(e.pointerId); swallow(e); }
+  }, true);
+  ['pointermove', 'pointerup', 'pointercancel', 'pointerleave', 'pointerout', 'pointerover', 'pointerenter'].forEach(type =>
+    window.addEventListener(type, e => {
+      if(blocked.has(e.pointerId)){
+        swallow(e);
+        const id = e.pointerId;   // remembered a moment longer: the browser's click comes after pointerup
+        if(type === 'pointerup' || type === 'pointercancel') setTimeout(() => blocked.delete(id), 700);
+      } else if(e.pointerId === finger && (type === 'pointerup' || type === 'pointercancel')) finger = null;
+    }, true));
+  // Stop the browser turning a second finger into a tap/click too.
+  // (The drag games listen to touch events directly, so a second finger must not reach them either.)
+  window.addEventListener('touchstart', e => { if(e.touches.length > 1){ e.stopImmediatePropagation(); if(e.cancelable) e.preventDefault(); } }, { capture: true, passive: false });
+  window.addEventListener('touchend', e => { if(e.touches.length === 0) finger = null; }, true);
+  // A click that comes from a blocked finger (Chrome/Android reports its pointerId) is ignored as well.
+  window.addEventListener('click', e => { if(e.pointerId != null && blocked.has(e.pointerId)) swallow(e); }, true);
+})();
 
 // --- Offline support ---
 if('serviceWorker' in navigator && location.protocol.startsWith('http')){

@@ -72,7 +72,7 @@ addGame({
     this.strip.querySelectorAll('.tr-chip').forEach(c => c.addEventListener('click', () => { sfx.pop(); this.go(+c.dataset.k); }));
     this.strip.querySelector('.on')?.scrollIntoView({ inline: 'center', block: 'nearest' });
     this.build(items[i]);
-    speak(SAY.traceStart(this.state.set, items[i]));
+    speakNext(SAY.traceStart(this.state.set, items[i]));
   },
   build(item){
     this.item = item;
@@ -204,7 +204,7 @@ addGame({
     const pool = shuffle(UPPER.filter(l => !word.includes(l))).slice(0, extra);
     this.tiles.innerHTML = shuffle([...word.split(''), ...pool]).map(l => `<button class="ng-btn wb-tile">${l}</button>`).join('');
     this.tiles.querySelectorAll('.wb-tile').forEach(t => t.addEventListener('click', () => this.tap(t)));
-    speak(SAY.wordStart(word));
+    speakNext(SAY.wordStart(word));
   },
   tap(tile){
     if(this.busy || tile.classList.contains('used')) return;
@@ -254,7 +254,7 @@ addGame({
     this.choices.innerHTML = shuffle([L, ...others]).map((x, k) =>
       `<button class="bs-bubble" style="--d:${k * 0.4}s;--h:${(UPPER.indexOf(x) * 37) % 360}">${x.toLowerCase()}</button>`).join('');
     this.choices.querySelectorAll('.bs-bubble').forEach(b => b.addEventListener('click', () => this.tap(b)));
-    speak(SAY.bigSmallFind(L));
+    speakNext(SAY.bigSmallFind(L));
   },
   tap(b){
     if(this.busy) return;
@@ -314,7 +314,7 @@ addGame({
     $('.lr-level b', this.root).textContent = this.i + 1;
     this.pic.textContent = this.c.e; bounce(this.pic);
     this.chips.innerHTML = this.c.parts.map((p, k) => `<span class="cs-chip" style="--h:${k * 70 + 330}">${p}</span>`).join('<i>·</i>');
-    speak(SAY.clapStart(this.c.w));
+    speakNext(SAY.clapStart(this.c.w));
   },
   clap(){
     const btn = $('.cs-clap', this.root); bounce(btn);
@@ -420,7 +420,7 @@ addGame({
     this.spots.innerHTML = covers.map((c, k) =>
       `<button class="hs2-spot" data-v="${hidden[k]}"><span class="hs2-under">${hidden[k]}</span><span class="hs2-cover">${c}</span></button>`).join('');
     this.spots.querySelectorAll('.hs2-spot').forEach(s => s.addEventListener('click', () => this.tap(s)));
-    speak(SAY.seekFind(T));
+    speakNext(SAY.seekFind(T));
   },
   tap(s){
     if(this.busy || s.classList.contains('open')) return;
@@ -479,7 +479,7 @@ addGame({
       return `<button class="cc-thing" style="left:${x}%;top:${y}%">${e}</button>`;
     }).join('');
     this.area.querySelectorAll('.cc-thing').forEach(t => t.addEventListener('click', () => this.count(t)));
-    speak(`Let's count the ${plural}!`);
+    speakNext(`Let's count the ${plural}!`);
   },
   count(t){
     if(t.dataset.n || this.busy) return;
@@ -503,7 +503,7 @@ addGame({
       this.next();
     }));
     this.hint.textContent = '👆 Which number?';
-    speak(SAY.countPick(this.n));
+    speakNext(SAY.countPick(this.n));
   },
   dotsRound(){
     const shape = DOT_SHAPES[Math.floor(this.lv / 2) % DOT_SHAPES.length];
@@ -515,7 +515,7 @@ addGame({
       ${pts.map(([x, y], k) => `<button class="cc-dot ${k === 0 ? 'next' : ''}" style="left:${x}%;top:${y}%">${k + 1}</button>`).join('')}
       <div class="cc-emoji">${shape.e}</div>`;
     this.area.querySelectorAll('.cc-dot').forEach((d, k) => d.addEventListener('click', () => this.dot(k, d)));
-    speak('Join the dots! Start at one!');
+    speakNext('Join the dots! Start at one!');
   },
   dot(k, d){
     if(this.busy) return;

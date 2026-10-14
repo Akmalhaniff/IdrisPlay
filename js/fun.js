@@ -206,7 +206,7 @@ addGame({
       }, 700);
     }, 2600);
   },
-  enter(){ later(() => speak('Tap the egg! What is inside?'), 900); }
+  enter(){ speakNext('Tap the egg! What is inside?'); }
 });
 
 // ===================== 🛁 Bath Time =====================
@@ -303,7 +303,7 @@ addGame({
     }, 1500);
     later(() => this.newPet(), 4600);
   },
-  enter(){ later(() => speak('Bath time! Scrub the mud away!'), 900); }
+  enter(){ speakNext('Bath time! Scrub the mud away!'); }
 });
 
 // ===================== 🤪 Silly Faces =====================
@@ -407,7 +407,7 @@ addGame({
     });
   },
   enter(){
-    later(() => speak('Make a silly face! Tap the buttons!'), 900);
+    speakNext('Make a silly face! Tap the buttons!');
     clearInterval(this.blinker);
     this.blinker = setInterval(() => { const g = this.svg.querySelector('.sf-eyes'); if(g){ g.classList.remove('blink'); this.svg.getBoundingClientRect(); g.classList.add('blink'); later(() => g.classList.remove('blink'), 200); } }, 3500);
   },
@@ -515,7 +515,7 @@ addGame({
     this.hint.textContent = '🔴 Press GO to blast off!';
     this.state = 'ground';
   },
-  enter(){ this.reset(); later(() => speak('Rocket trip! Press the big red button!'), 900); },
+  enter(){ this.reset(); speakNext('Rocket trip! Press the big red button!'); },
   leave(){ this.reset(); }
 });
 
@@ -596,7 +596,7 @@ addGame({
       later(hop, 50 + i * 300);
     });
   },
-  enter(){ later(() => speak('Magic garden! Tap the dirt to plant a seed!'), 900); },
+  enter(){ speakNext('Magic garden! Tap the dirt to plant a seed!'); },
   leave(){ this.root.querySelectorAll('.gd-flyer').forEach(f => f.remove()); }
 });
 
@@ -653,7 +653,7 @@ addGame({
   },
   enter(){
     later(() => { this.size(); this.running = true; this.loop(this.loopId = (this.loopId || 0) + 1); this.fire(this.w / 2, this.h * 0.3); }, 60);
-    later(() => speak('Fireworks! Tap the sky!'), 900);
+    speakNext('Fireworks! Tap the sky!');
   },
   leave(){ this.running = false; this.parts = []; this.rockets = []; }
 });

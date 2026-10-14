@@ -6,7 +6,7 @@
 (function(){
 'use strict';
 
-const SPEECH_CALL = /\b(?:speak|speakSlow|sayLetter|singSayLetter|playAiVoice|pick)\(/g;
+const SPEECH_CALL = /\b(?:speak|speakNext|speakSlow|sayLetter|singSayLetter|playAiVoice|pick)\(/g;
 const LIST_DECL = /\b(?:const|let)\s+(?:praises|titles|words|lines)\s*=\s*[[{]/g;
 
 // From `start` (just after an opening bracket) return the text up to its matching close bracket.
