@@ -12,6 +12,7 @@ const saveProgress = (game, value) => store.set('learn_' + game, value);
 const abcOf = L => abc.find(a => a.l === L.toUpperCase()) || { l: L.toUpperCase(), w: '', ph: L.toLowerCase(), e: '' };
 const wiggle = node => { node.classList.remove('lr-wiggle'); void node.offsetWidth; node.classList.add('lr-wiggle'); };
 const bounce = node => { node.classList.remove('lr-bounce'); void node.offsetWidth; node.classList.add('lr-bounce'); };
+const restart = (node, cls) => { node.classList.remove(cls); void node.offsetWidth; node.classList.add(cls); };
 
 // Everything the learning games say lives here, so the voice pack can pre-record it (see learnPhrases).
 const SAY = {
@@ -49,7 +50,7 @@ addGame({
       <button class="ng-btn tr-tab" data-set="upper">ABC</button><button class="ng-btn tr-tab" data-set="lower">abc</button>
       <button class="ng-btn tr-tab" data-set="digits">123</button><button class="ng-btn tr-tab tr-name" data-set="name">✨</button>
     </div>
-    <div class="tr-board"><svg class="tr-svg"></svg></div>
+    <div class="tr-board"><svg class="tr-svg"></svg><div class="tr-reward"></div></div>
     <div class="tr-nav"><button class="ng-btn tr-arrow" data-d="-1" aria-label="Back">◀</button><div class="tr-strip"></div><button class="ng-btn tr-arrow" data-d="1" aria-label="Next">▶</button></div>`,
   init(root){
     this.svg = $('.tr-svg', root); this.strip = $('.tr-strip', root);
@@ -111,8 +112,10 @@ addGame({
   },
   marker(){
     this.svg.querySelectorAll('.tr-start,.tr-arrowhead').forEach(n => n.remove());
-    const s = this.strokes[this.cur]; if(!s) return;
+    const s = this.strokes[this.cur];
+    if(!s){ this.walker(null); return; }
     const a = s.pts[s.p] || s.pts[0];
+    this.walker(a, s.pts[Math.min(s.pts.length - 1, s.p + 6)]);
     const dot = document.createElementNS(SVGNS, 'circle');
     dot.setAttribute('cx', a.x); dot.setAttribute('cy', a.y); dot.setAttribute('r', 7.5); dot.setAttribute('class', 'tr-start');
     this.svg.appendChild(dot);
@@ -124,6 +127,35 @@ addGame({
       arrow.setAttribute('transform', `translate(${b.x} ${b.y}) rotate(${ang})`);
       this.svg.appendChild(arrow);
     }
+  },
+  // The little dino that walks along the line in front of the finger.
+  walker(a, b){
+    let d = this.svg.querySelector('.tr-dino');
+    if(!a){ if(d) d.classList.add('done'); return; }
+    if(!d){
+      d = document.createElementNS(SVGNS, 'text'); d.setAttribute('class', 'tr-dino'); d.textContent = '🦖';
+      d.setAttribute('text-anchor', 'middle');
+    }
+    this.svg.appendChild(d);   // keep it on top
+    const right = !b || b.x >= a.x - 0.5;
+    d.setAttribute('transform', `translate(${a.x} ${a.y - 22})${right ? ' scale(-1 1)' : ''}`);
+  },
+  sparkle(p, color){
+    const c = document.createElementNS(SVGNS, 'circle');
+    c.setAttribute('cx', p.x + rand(-6, 6)); c.setAttribute('cy', p.y + rand(-6, 6)); c.setAttribute('r', rand(1.5, 3.2));
+    c.setAttribute('class', 'tr-spark'); c.style.fill = color;
+    this.svg.appendChild(c); later(() => c.remove(), 700);
+  },
+  // The finished letter's picture pops out: A → 🍎, 3 → three dinos, the name → a dino party.
+  reward(){
+    const box = $('.tr-reward', this.root), set = this.state.set, it = this.item;
+    let html, say = null;
+    if(set === 'upper' || set === 'lower'){ const a = abcOf(it); html = `<span class="tr-pic">${a.e}</span><b>${a.w}</b>`; say = `${a.l}! ${a.l} is for ${a.w}!`; }
+    else if(set === 'digits') html = `<span class="tr-row">${'🦕'.repeat(+it)}</span>`;
+    else html = `<span class="tr-pic">🦖</span><b>🎉 ${it} 🎉</b>`;
+    box.innerHTML = html; restart(box, 'show');
+    if(say) later(() => speakNext(say), 300);
+    later(() => box.classList.remove('show'), 2400);
   },
   toSvg(e){ const pt = this.svg.createSVGPoint(); pt.x = e.clientX; pt.y = e.clientY; return pt.matrixTransform(this.svg.getScreenCTM().inverse()); },
   down(e){
@@ -147,6 +179,7 @@ addGame({
     if(best > s.p){
       s.p = best;
       s.ink.style.strokeDashoffset = Math.max(0, s.len - s.p * 2);
+      if(s.p % 3 === 0) this.sparkle(s.pts[s.p], s.ink.style.stroke);
       const now = Date.now();
       if(!this.tickAt || now - this.tickAt > 90){ this.tickAt = now; sfx.tone(380 + 500 * s.p / s.pts.length, 0.06, 'sine', 0.08); }
       this.marker();
@@ -166,9 +199,10 @@ addGame({
     const r = this.root.getBoundingClientRect();
     sparkleAt(this.root, r.width / 2, r.height / 2, 10);
     speak(SAY.traceDone(this.state.set, this.item));
+    this.reward();
     const done = Object.keys(this.state.done).filter(k => k.startsWith(this.state.set + ':')).length;
     burstConfetti(done % 5 === 0 ? 30 : 16);
-    later(() => { if(currentScreen === 'trace') this.go(this.state.idx[this.state.set] + 1); }, 2600);
+    later(() => { if(currentScreen === 'trace') this.go(this.state.idx[this.state.set] + 1); }, 3200);
   },
   enter(){ this.go(this.state.idx[this.state.set] || 0); }
 });

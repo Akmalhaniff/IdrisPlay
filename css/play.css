@@ -1,0 +1,128 @@
+/* Idris Play — play pack styles: Rocket Trip extras, Vehicles, Dino Band (music), Toy Sorting. */
+
+/* ---------- 🚀 Rocket Trip: dino pilot, star hunt, planet picker, moon jumps ---------- */
+.rk-pilot{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%) scaleX(-1);font-size:24%;line-height:1;z-index:1;pointer-events:none;filter:drop-shadow(0 0 3px #fff)}
+.rk-rocket.empty .rk-pilot{opacity:0}
+.rk-pilot{transition:opacity .3s}
+.rk-rocket.steer span{transform:rotate(calc(-45deg + var(--tilt,0deg)));transition:transform .15s}
+.rk-rocket.bump span{animation:rkBump .45s ease-in-out}
+@keyframes rkBump{0%,100%{transform:rotate(-45deg)}30%{transform:rotate(-15deg) scale(.9)}65%{transform:rotate(-70deg)}}
+.rk-item{position:absolute;font-size:min(13vmin,72px);line-height:1;transform:translateX(-50%);pointer-events:none;z-index:3;filter:drop-shadow(0 0 10px rgba(255,230,120,.8))}
+.rk-item.star{animation:rkSpin 2s linear infinite}
+@keyframes rkSpin{to{rotate:360deg}}
+.rk-item.rock{filter:none}
+.rk-item.caught{animation:rkCaught .45s ease-out forwards}
+@keyframes rkCaught{to{scale:1.8;opacity:0}}
+.rk-fuel{position:absolute;left:14px;top:14px;z-index:6;display:flex;align-items:center;gap:.5rem;background:rgba(255,255,255,.9);padding:.4rem .8rem .4rem .5rem;border-radius:999px;font-size:1.8rem;line-height:1;transform:translateY(-140%);transition:transform .4s}
+.rk-fuel.show{transform:none}
+.rk-fuel-bar{width:min(40vw,240px);height:22px;border-radius:999px;background:#E0E7FF;border:3px solid #fff;box-shadow:inset 0 0 0 2px #C7D2FE;overflow:hidden}
+.rk-fuel-bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#FDE047,#F59E0B);border-radius:999px;transition:width .3s}
+.rk-picker{position:absolute;left:0;right:0;bottom:6%;z-index:6;display:flex;flex-direction:column;align-items:center;gap:10px;transform:translateY(130%);transition:transform .5s cubic-bezier(.2,.9,.3,1.3);pointer-events:none}
+.rk-picker.show{transform:none;pointer-events:auto}
+.rk-pick-title{font-family:'Fredoka',sans-serif;font-weight:700;font-size:clamp(1.3rem,5vw,2rem);color:#fff;text-shadow:0 3px 0 rgba(0,0,0,.3)}
+.rk-picks{display:flex;gap:clamp(14px,5vw,40px)}
+.rk-pick{width:clamp(88px,22vmin,140px);aspect-ratio:1;border-radius:50%;border:5px solid rgba(255,255,255,.85);cursor:pointer;box-shadow:0 0 0 6px rgba(255,255,255,.15),0 10px 24px rgba(0,0,0,.4);animation:rkFloat 1.6s ease-in-out infinite alternate}
+.rk-pick:nth-child(2){animation-delay:-.5s}.rk-pick:nth-child(3){animation-delay:-1s}
+.rk-pick:active{scale:.92}
+@keyframes rkFloat{from{translate:0 -6px}to{translate:0 6px}}
+.rk-pick.moon{background:radial-gradient(circle at 30% 30%,#6B7280 0 8%,transparent 9%),radial-gradient(circle at 65% 60%,#6B7280 0 12%,transparent 13%),radial-gradient(circle at 30% 20%,#E5E7EB,#9CA3AF 70%)}
+.rk-pick.mars{background:radial-gradient(circle at 30% 20%,#FCA5A5,#DC2626 60%,#7F1D1D)}
+.rk-pick.jupiter{background:repeating-linear-gradient(0deg,#F5D0A9 0 10%,#D97706 10% 18%,#FDE68A 18% 28%,#B45309 28% 33%)}
+.rk-pick.candy{background:repeating-conic-gradient(#F9A8D4 0 20deg,#FFFFFF 20deg 40deg)}
+.rk-pick.ice{background:radial-gradient(circle at 30% 20%,#ECFEFF,#67E8F9 60%,#0891B2)}
+.rk-astro{position:absolute;left:60%;bottom:30%;font-size:min(15vmin,84px);line-height:1;z-index:4;pointer-events:none;transform:scale(0) scaleX(-1);transition:transform .5s cubic-bezier(.2,.9,.3,1.6),left .3s}
+.rk-astro.show{transform:scale(1) scaleX(-1)}
+.rk-astro.jump{animation:rkMoonJump 1.6s cubic-bezier(.3,.6,.4,1)}
+@keyframes rkMoonJump{0%{translate:0 0}45%{translate:0 -42vh;rotate:-20deg}55%{translate:0 -42vh;rotate:20deg}100%{translate:0 0;rotate:0deg}}
+.rk-alien.dance{animation:rkAlienDance .3s ease-in-out 6 alternate}
+@keyframes rkAlienDance{from{transform:scale(1) rotate(-14deg)}to{transform:scale(1.15) rotate(14deg) translateY(-14px)}}
+
+/* ---------- 🚗 Vehicles ---------- */
+.vh-stage{background:linear-gradient(180deg,#8ED6FF 0%,#D6F1FF 50%,#A7E3A0 50%,#7CCB7F 100%);cursor:default}
+.vh-sun{position:absolute;top:5%;right:7%;width:70px;height:70px;border-radius:50%;background:radial-gradient(circle at 40% 40%,#FFF59D,#FFD93D 60%,#FFC300);box-shadow:0 0 0 12px rgba(255,217,61,.25)}
+.vh-cloud{position:absolute;width:120px;height:38px;background:#fff;border-radius:999px;opacity:.9;animation:cloudDrift linear infinite}
+.vh-cloud::before{content:'';position:absolute;width:56px;height:56px;left:22px;top:-26px;background:#fff;border-radius:50%}
+.vh-cloud.c1{top:10%;animation-duration:50s;animation-delay:-20s}
+.vh-cloud.c2{top:24%;animation-duration:70s;animation-delay:-55s;transform:scale(.7)}
+.vh-house{position:absolute;left:3%;bottom:calc(110px + 22% - 4px);font-size:min(22vmin,140px);line-height:1;z-index:1}
+.vh-fire{position:absolute;left:30%;top:-28%;font-size:60%;opacity:0;transform:scale(0);transition:transform .3s,opacity .3s}
+.vh-house.burning .vh-fire{opacity:1;transform:scale(1);animation:vhFlicker .25s ease-in-out infinite alternate}
+@keyframes vhFlicker{to{transform:scale(1.15) rotate(6deg)}}
+.vh-trees{position:absolute;right:4%;bottom:calc(110px + 22% - 4px);font-size:min(12vmin,70px);line-height:1;letter-spacing:-.15em}
+.vh-road{position:absolute;left:0;right:0;bottom:110px;height:22%;background:#4B5563;box-shadow:inset 0 8px 0 #374151,inset 0 -8px 0 #374151}
+.vh-road i{position:absolute;left:0;right:0;top:50%;height:6px;margin-top:-3px;background:repeating-linear-gradient(90deg,#FDE047 0 40px,transparent 40px 80px)}
+.vh-light{position:absolute;left:55%;bottom:calc(110px + 22% - 6px);width:56px;height:118px;padding:8px 0;border:none;border-radius:16px;background:#1F2937;box-shadow:0 0 0 4px #fff,0 10px 18px rgba(0,0,0,.25);display:flex;flex-direction:column;align-items:center;justify-content:space-around;cursor:pointer;z-index:2}
+.vh-light::after{content:'';position:absolute;left:50%;top:100%;width:10px;height:18px;margin-left:-5px;background:#6B7280}
+.vh-light b{width:40px;height:40px;border-radius:50%;background:#374151;transition:background .2s,box-shadow .2s}
+.vh-light.red .r{background:#EF4444;box-shadow:0 0 18px 6px rgba(239,68,68,.7)}
+.vh-light.green .g{background:#22C55E;box-shadow:0 0 18px 6px rgba(34,197,94,.7)}
+.vh-light:active{transform:scale(.95)}
+.vh-car{position:absolute;left:0;line-height:1;z-index:3;cursor:pointer;white-space:nowrap;will-change:transform;filter:drop-shadow(0 6px 4px rgba(0,0,0,.2))}
+.vh-car:not(.waiting):not(.fly){animation:vhRumble .3s ease-in-out infinite alternate}
+@keyframes vhRumble{to{translate:0 -3px}}
+.vh-car.fly{z-index:4;animation:vhBob 1.4s ease-in-out infinite alternate}
+@keyframes vhBob{to{translate:0 -16px}}
+.vh-car.flip{scale:-1 1}
+.vh-car.honk{animation:vhHonk .35s ease-in-out}
+@keyframes vhHonk{40%{scale:1.3;translate:0 -14px}}
+.vh-car.flip.honk{animation:vhHonkFlip .35s ease-in-out}
+@keyframes vhHonkFlip{0%,100%{scale:-1 1}40%{scale:-1.3 1.3;translate:0 -14px}}
+.vh-water{position:absolute;font-size:2rem;z-index:5;pointer-events:none;animation:vhSpray .8s ease-out forwards}
+@keyframes vhSpray{0%{transform:translate(0,0) scale(.6)}50%{transform:translate(calc(var(--dx) * .5),calc(var(--dy) * .5 - 60px)) scale(1)}100%{transform:translate(var(--dx),var(--dy)) scale(.8);opacity:.3}}
+.vh-bar{position:absolute;left:0;right:0;bottom:10px;height:92px;display:flex;justify-content:center;gap:clamp(6px,1.5vw,14px);padding:0 10px;z-index:6}
+.vh-btn{flex:0 1 84px;min-width:0;height:84px;font-size:clamp(2rem,6vw,3rem);background:#fff;padding:0}
+.vh-btn.pulse{background:#FEE2E2;animation:toolPulse .5s ease-in-out infinite alternate;outline:4px solid #EF4444}
+
+/* ---------- 🎵 Dino Band ---------- */
+.mu-stage{background:radial-gradient(ellipse at 50% 0%,#7C3AED 0%,#4C1D95 55%,#2E1065 100%);display:flex;flex-direction:column;padding:10px;gap:10px}
+.mu-lights{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.mu-lights i{position:absolute;top:-10%;width:30%;height:80%;background:linear-gradient(180deg,rgba(255,255,255,.22),transparent);clip-path:polygon(40% 0,60% 0,100% 100%,0 100%);transform-origin:top center;animation:muSweep 4s ease-in-out infinite alternate}
+.mu-lights i:nth-child(1){left:5%;animation-delay:-1s}
+.mu-lights i:nth-child(2){left:35%;background:linear-gradient(180deg,rgba(253,224,71,.25),transparent);animation-delay:-2.5s}
+.mu-lights i:nth-child(3){left:65%;background:linear-gradient(180deg,rgba(244,114,182,.25),transparent)}
+@keyframes muSweep{from{transform:rotate(-18deg)}to{transform:rotate(18deg)}}
+.mu-band{position:relative;flex:1;min-height:0;display:flex;justify-content:center;align-items:flex-end;gap:clamp(10px,6vw,60px);padding-bottom:6px;border-bottom:10px solid #A16207}
+.mu-dino{font-size:min(17vmin,110px);line-height:1;display:inline-block;filter:drop-shadow(0 8px 6px rgba(0,0,0,.35))}
+.mu-dino.d0{transform:scaleX(-1)}
+.mu-dino.bop{animation:muBop .35s ease-out}
+@keyframes muBop{40%{translate:0 -24px;rotate:-10deg;scale:1.1}}
+.mu-dino.party{animation:muParty .35s ease-in-out infinite alternate}
+@keyframes muParty{from{translate:0 0;rotate:-12deg}to{translate:0 -20px;rotate:12deg}}
+.mu-tools{position:relative;display:flex;justify-content:center;gap:12px;flex-wrap:wrap;z-index:2}
+.mu-inst,.mu-song{width:72px;height:72px;font-size:2.4rem;background:#fff;padding:0}
+.mu-inst.on{background:#FDE047;outline:4px solid #fff}
+.mu-song{width:auto;padding:0 16px;font-size:2rem;background:linear-gradient(180deg,#FDE68A,#F59E0B)}
+.mu-keys{position:relative;height:42%;display:flex;align-items:flex-end;gap:clamp(4px,1.2vw,12px);touch-action:none;z-index:2}
+.mu-key{flex:1;height:var(--h);border-radius:20px 20px 14px 14px;background:linear-gradient(180deg,color-mix(in srgb,var(--c) 70%,#fff),var(--c));box-shadow:0 8px 0 color-mix(in srgb,var(--c) 70%,#000),inset 0 6px 0 rgba(255,255,255,.35);display:flex;justify-content:center;padding-top:12px;cursor:pointer;transition:transform .08s}
+.mu-ico{font-size:clamp(1.4rem,4.5vw,2.4rem);line-height:1;color:#fff;text-shadow:0 2px 0 rgba(0,0,0,.2)}
+.mu-key.hit{animation:muHit .25s ease-out}
+@keyframes muHit{30%{transform:translateY(6px) scale(.97);box-shadow:0 2px 0 color-mix(in srgb,var(--c) 70%,#000);filter:brightness(1.25)}}
+.mu-key.next{outline:6px solid #fff;outline-offset:3px;animation:muGlow .6s ease-in-out infinite alternate}
+@keyframes muGlow{to{filter:brightness(1.35);outline-color:#FDE047;transform:translateY(-8px)}}
+.mu-note{position:absolute;font-size:2.6rem;font-weight:900;pointer-events:none;z-index:3;text-shadow:0 0 8px rgba(255,255,255,.8);animation:muNote 1.4s ease-out forwards}
+@keyframes muNote{to{transform:translate(var(--dx),-40vh) rotate(20deg);opacity:0}}
+
+/* ---------- 🎯 Toy Sorting ---------- */
+.so-stage{background:linear-gradient(180deg,#FFF7D6 0%,#FFE9B8 60%,#F5C98B 60%,#E9B26E 100%)}
+.so-count{position:absolute;right:14px;top:12px;z-index:6;background:rgba(255,255,255,.9);border-radius:999px;padding:.3rem .8rem;font-weight:900;font-size:1.1rem;color:#7A4A00}
+.so-spot{position:absolute;left:0;right:0;top:12%;height:36%;display:grid;place-items:center;z-index:5}
+.so-item{font-size:min(26vmin,160px);line-height:1;cursor:grab;touch-action:none;filter:drop-shadow(0 12px 10px rgba(0,0,0,.2));animation:soFloat 1.4s ease-in-out infinite alternate}
+.so-item.pop-in{animation:ngPop .45s cubic-bezier(.2,.9,.3,1.5),soFloat 1.4s ease-in-out .45s infinite alternate}
+.so-item.held{animation:none;cursor:grabbing}
+.so-item.lr-wiggle{animation:lrWiggle .45s ease-in-out}
+@keyframes soFloat{to{translate:0 -12px}}
+.so-stage .ng-hint{top:14px;bottom:auto}
+.so-boxes{position:absolute;left:0;right:0;bottom:4%;display:flex;justify-content:center;gap:clamp(10px,3vw,30px);padding:0 12px}
+.so-box{position:relative;flex:0 1 210px;aspect-ratio:1.05;cursor:pointer}
+.so-dino{position:absolute;left:50%;bottom:52%;font-size:min(15vmin,96px);line-height:1;transform:translateX(-50%) scaleX(-1);transition:bottom .3s cubic-bezier(.2,.9,.3,1.6);filter:drop-shadow(0 4px 4px rgba(0,0,0,.2))}
+.so-front{position:absolute;inset:38% 0 0 0;border-radius:16px 16px 22px 22px;background:linear-gradient(180deg,var(--l),color-mix(in srgb,var(--c) 35%,#fff));border:6px solid var(--c);box-shadow:0 8px 0 color-mix(in srgb,var(--c) 70%,#000),0 14px 22px rgba(0,0,0,.15);display:flex;align-items:flex-end;justify-content:center;padding-bottom:6px;overflow:hidden}
+.so-front::before{content:'';position:absolute;left:-6px;right:-6px;top:-6px;height:18%;background:var(--c);border-radius:10px 10px 0 0}
+.so-pile{display:flex;font-size:min(7vmin,40px);line-height:1;gap:2px}
+.so-box.over .so-front{filter:brightness(1.1);transform:scale(1.05)}
+.so-box.over .so-dino,.so-box.yum .so-dino{bottom:68%}
+.so-box.yum .so-dino{animation:soCheer .5s ease-in-out}
+@keyframes soCheer{50%{rotate:-12deg;scale:1.15}}
+.so-box.nope{animation:lrWiggle .45s ease-in-out}
+.so-box.help{animation:soHelp .5s ease-in-out 3}
+@keyframes soHelp{50%{transform:translateY(-16px) scale(1.06)}}
+.so-box.party .so-dino{bottom:70%;animation:muParty .35s ease-in-out infinite alternate}

@@ -390,18 +390,26 @@ addGame({
 });
 
 // ===================== 🚀 Rocket Trip =====================
-const PLANETS = [['moon', 'the Moon'], ['mars', 'Mars, the red planet'], ['jupiter', 'Jupiter, the biggest planet'], ['candy', 'Candy Planet'], ['ice', 'the Ice Planet']];
+// Count down and blast off with a dino astronaut, steer the rocket to catch 8 stars,
+// pick a planet to visit, then moon-jump around and say hi to the alien.
+const PLANETS = [['moon', 'the Moon', ['🌕', '⭐', '💫']], ['mars', 'Mars, the red planet', ['🔴', '🪨', '✨']], ['jupiter', 'Jupiter, the biggest planet', ['🌀', '🟠', '✨']],
+  ['candy', 'Candy Planet', ['🍭', '🍬', '🧁']], ['ice', 'the Ice Planet', ['❄️', '⛄', '💎']]];
+const RK_GOAL = 8;
 addGame({
   id: 'rocket', e: '🚀', n: 'Rocket Trip', colors: ['#A5B4FC', '#6366F1', '#4338CA'], stageClass: 'rk-stage',
   html: `<div class="rk-stars"></div><div class="rk-tower"></div><div class="rk-pad"></div><div class="rk-planet"></div>
-    <div class="rk-rocket"><span>🚀</span><div class="rk-flame"></div></div>
-    <div class="rk-alien">👽</div><div class="rk-count"></div>
+    <div class="rk-fuel"><span>⭐</span><div class="rk-fuel-bar"><i></i></div></div>
+    <div class="rk-rocket"><span>🚀</span><div class="rk-pilot">🦖</div><div class="rk-flame"></div></div>
+    <div class="rk-astro">🦖</div><div class="rk-alien">👽</div><div class="rk-count"></div>
+    <div class="rk-picker"><div class="rk-pick-title">Where shall we go?</div><div class="rk-picks"></div></div>
     <button class="ng-btn rk-go" aria-label="Launch">GO!</button>
     <button class="ng-btn rk-home" style="display:none">🏠 Fly home</button>
     <div class="ng-hint">🔴 Press GO to blast off!</div>`,
   init(root){
     this.rocket = $('.rk-rocket', root); this.go = $('.rk-go', root); this.homeBtn = $('.rk-home', root);
     this.count = $('.rk-count', root); this.planet = $('.rk-planet', root); this.alien = $('.rk-alien', root); this.hint = $('.ng-hint', root);
+    this.astro = $('.rk-astro', root); this.fuel = $('.rk-fuel', root); this.fuelBar = $('.rk-fuel-bar i', root);
+    this.picker = $('.rk-picker', root); this.picks = $('.rk-picks', root);
     const stars = $('.rk-stars', root);
     for(let i = 0; i < 70; i++){
       const s = el('i'); Object.assign(s.style, { left: rand(0, 100) + '%', top: rand(0, 100) + '%', animationDelay: rand(0, 1.6) + 's', width: rand(2, 5) + 'px' });
@@ -409,13 +417,26 @@ addGame({
     }
     this.go.addEventListener('click', () => this.launch());
     this.homeBtn.addEventListener('click', () => this.flyHome());
-    this.alien.addEventListener('pointerdown', e => { e.stopPropagation(); sfx.giggle(); speak(pick(['Hello ' + kidName + '!', 'Beep boop! Hi!', 'Welcome to my planet!'])); });
+    this.alien.addEventListener('pointerdown', e => {
+      e.stopPropagation(); sfx.giggle();
+      this.alien.classList.remove('dance'); void this.alien.offsetWidth; this.alien.classList.add('dance');
+      speak(pick(['Hello ' + kidName + '!', 'Beep boop! Hi!', 'Welcome to my planet!', 'Let us dance!']));
+    });
+    const steer = e => {
+      if(this.state !== 'stars') return;
+      const p = stagePoint(root, e);
+      this.rx = Math.max(10, Math.min(90, p.x / p.w * 100));
+    };
     root.addEventListener('pointerdown', e => {
-      if(!root.classList.contains('space') || e.target.closest('button')) return;
+      if(e.target.closest('button')) return;
+      if(this.state === 'stars') return steer(e);
+      if(this.state === 'landed') return this.moonJump(e);
+      if(!root.classList.contains('space')) return;
       const p = stagePoint(root, e), s = el('div', 'rk-shoot');
       s.style.left = p.x + 'px'; s.style.top = p.y + 'px'; root.appendChild(s); later(() => s.remove(), 750);
       sfx.plink(Math.floor(rand(0, 7)));
     });
+    root.addEventListener('pointermove', e => { if(e.buttons || e.pointerType === 'touch') steer(e); });
     this.state = 'ground';
   },
   timers: [],
@@ -446,20 +467,91 @@ addGame({
       this.hint.textContent = '🚀 Whoooosh!';
     }, 5600);
     this.t(() => {
-      this.state = 'space';
       this.root.classList.add('space', 'flying');
       this.rocket.style.transition = 'none'; this.rocket.style.bottom = '-30%';
       void this.rocket.offsetWidth;
-      this.rocket.style.transition = 'bottom 1.4s ease-out'; this.rocket.style.bottom = '38%';
+      this.rocket.style.transition = 'bottom 1.4s ease-out'; this.rocket.style.bottom = '10%';
       this.rocket.classList.remove('shake');
-      this.hint.textContent = '✨ Tap the stars!';
-      speak('We are in space! Tap the stars!');
+      this.hint.textContent = '👆 Move the rocket! Catch the stars!';
+      speak('We are in space! Move the rocket and catch the stars!');
     }, 7300);
-    this.t(() => this.rocket.classList.add('hover'), 8800);
-    this.t(() => this.land(), 14500);
+    this.t(() => this.starHunt(), 8700);
   },
-  land(){
-    const [cls, name] = pick(PLANETS);
+  // ---- space: steer left/right, catch falling stars ----
+  starHunt(){
+    this.state = 'stars'; this.got = 0; this.rx = 50; this.items = []; this.spawnIn = 0.3;
+    this.rocket.style.transition = 'none'; this.rocket.style.left = '50%'; this.rocket.classList.add('steer');
+    this.fuel.classList.add('show'); this.fuelBar.style.width = '0%';
+    this.last = 0; this.loop(this.loopId = (this.loopId || 0) + 1, performance.now());
+  },
+  loop(id, t){
+    if(this.state !== 'stars' || id !== this.loopId) return;
+    const dt = Math.min(0.05, (t - (this.last || t)) / 1000); this.last = t;
+    const cur = parseFloat(this.rocket.style.left) || 50;
+    const nx = cur + (this.rx - cur) * Math.min(1, dt * 6);
+    this.rocket.style.left = nx + '%';
+    this.rocket.style.setProperty('--tilt', Math.max(-20, Math.min(20, (this.rx - cur) * 1.5)) + 'deg');
+    const sr = this.root.getBoundingClientRect();
+    this.spawnIn -= dt;
+    if(this.spawnIn <= 0 && this.got < RK_GOAL){
+      this.spawnIn = rand(0.7, 1.1);
+      const roll = Math.random(), kind = roll < 0.72 ? 'star' : roll < 0.9 ? 'rock' : 'ufo';
+      const node = el('div', 'rk-item ' + kind, kind === 'star' ? pick(['⭐', '🌟']) : kind === 'rock' ? '☄️' : '🛸');
+      const it = { kind, node, x: rand(10, 90), y: -12 };
+      node.style.left = it.x + '%'; this.root.appendChild(node); this.items.push(it);
+    }
+    const rr = this.rocket.getBoundingClientRect();
+    for(const it of this.items){
+      if(it.done) continue;
+      it.y += dt * (it.kind === 'ufo' ? 14 : 22);
+      it.node.style.top = it.y + '%';
+      const ir = it.node.getBoundingClientRect();
+      if(ir.right > rr.left + rr.width * .2 && ir.left < rr.right - rr.width * .2 && ir.bottom > rr.top + rr.height * .1 && ir.top < rr.bottom - rr.height * .2) this.catchItem(it, ir, sr);
+    }
+    this.items = this.items.filter(it => { if(it.done) return false; if(it.y > 110){ it.node.remove(); return false; } return true; });
+    requestAnimationFrame(t2 => this.loop(id, t2));
+  },
+  catchItem(it, ir, sr){
+    it.done = true; it.node.classList.add('caught'); later(() => it.node.remove(), 450);
+    const x = ir.left - sr.left + ir.width / 2, y = ir.top - sr.top + ir.height / 2;
+    if(it.kind === 'rock'){
+      sfx.tone(200, 0.25, 'triangle', 0.25, 120);
+      this.rocket.classList.remove('bump'); void this.rocket.offsetWidth; this.rocket.classList.add('bump');
+      if(Math.random() < 0.5) speak(pick(['Bump!', 'Whoa! A space rock!']));
+      return;
+    }
+    if(it.kind === 'ufo'){ sfx.giggle(); sparkleAt(this.root, x, y, 6, ['🛸', '✨']); speak('Beep boop! A friendly UFO!'); return; }
+    if(this.got >= RK_GOAL) return;
+    this.got++; sfx.plink(this.got); later(() => sfx.pop(), 80);
+    sparkleAt(this.root, x, y, 4);
+    this.fuelBar.style.width = (this.got / RK_GOAL * 100) + '%';
+    speak(String(this.got));
+    if(this.got >= RK_GOAL) this.t(() => this.choose(), 900);
+  },
+  // ---- pick a planet ----
+  choose(){
+    this.state = 'choosing'; this.loopId++;
+    this.items.forEach(it => it.node.remove()); this.items = [];
+    this.rocket.classList.remove('steer'); this.rocket.style.left = '';
+    this.rocket.style.transition = 'bottom 1s ease-out'; this.rocket.style.bottom = '50%';
+    this.fuel.classList.remove('show');
+    burstConfetti(20); sfx.tada();
+    speak('Star power! Where shall we go?');
+    this.hint.textContent = '🪐 Pick a planet!';
+    const opts = PLANETS.slice().sort(() => Math.random() - .5).slice(0, 3);
+    this.picks.innerHTML = '';
+    opts.forEach(pl => {
+      const b = el('button', 'rk-pick ' + pl[0]); b.setAttribute('aria-label', pl[1]);
+      b.addEventListener('click', () => { if(this.state === 'choosing') this.land(pl); });
+      this.picks.appendChild(b);
+    });
+    this.picker.classList.add('show');
+    this.t(() => this.rocket.classList.add('hover'), 1000);
+  },
+  land(pl){
+    this.state = 'landing'; this.planetDef = pl;
+    const [cls, name] = pl;
+    this.picker.classList.remove('show'); sfx.whoosh();
     this.planet.className = 'rk-planet ' + cls;
     this.root.classList.remove('flying');
     void this.planet.offsetWidth; this.planet.classList.add('arrive');
@@ -469,26 +561,39 @@ addGame({
     this.t(() => {
       this.rocket.classList.remove('burn'); sfx.boing();
       speak('We landed on ' + name + '!'); burstConfetti(30);
-      this.alien.classList.add('show'); this.state = 'landed';
-      this.homeBtn.style.display = ''; this.hint.textContent = '👽 Say hi to the alien!';
+      this.alien.classList.add('show'); this.astro.classList.add('show'); this.rocket.classList.add('empty'); this.state = 'landed';
+      this.homeBtn.style.display = ''; this.hint.textContent = '👆 Tap to moon jump!';
+      this.t(() => speakNext('Tap anywhere to jump!'), 2500);
     }, 3500);
+  },
+  moonJump(e){
+    const p = stagePoint(this.root, e);
+    this.astro.style.left = Math.max(5, Math.min(85, p.x / p.w * 100 - 5)) + '%';
+    this.astro.classList.remove('jump'); void this.astro.offsetWidth; this.astro.classList.add('jump');
+    sfx.tone(260, 1.2, 'sine', 0.2, 700);
+    sparkleAt(this.root, p.x, p.y, 5, this.planetDef[2]);
+    this.jumps = (this.jumps || 0) + 1;
+    if(this.jumps % 4 === 1) speak(pick(['Boing! Moon jump!', 'So high!', 'Wheee! Floaty!']));
   },
   flyHome(){
     if(this.state !== 'landed') return;
-    this.state = 'returning'; this.homeBtn.style.display = 'none'; this.alien.classList.remove('show');
+    this.state = 'returning'; this.homeBtn.style.display = 'none'; this.alien.classList.remove('show'); this.astro.classList.remove('show', 'jump'); this.rocket.classList.remove('empty');
     speak('Bye bye! Back home!'); sfx.whoosh();
     this.rocket.classList.add('burn'); this.rocket.style.transition = 'bottom 1.4s ease-in'; this.rocket.style.bottom = '130%';
     this.t(() => this.reset(), 1500);
   },
   reset(){
     this.timers.forEach(clearTimeout); this.timers = [];
+    this.loopId = (this.loopId || 0) + 1;
+    (this.items || []).forEach(it => it.node.remove()); this.items = [];
     this.root.classList.remove('space', 'flying');
-    this.planet.className = 'rk-planet'; this.alien.classList.remove('show');
-    this.rocket.className = 'rk-rocket'; this.rocket.style.transition = 'none'; this.rocket.style.bottom = '';
+    this.planet.className = 'rk-planet'; this.alien.classList.remove('show', 'dance'); this.astro.classList.remove('show', 'jump');
+    this.picker.classList.remove('show'); this.fuel.classList.remove('show');
+    this.rocket.className = 'rk-rocket'; this.rocket.style.transition = 'none'; this.rocket.style.bottom = ''; this.rocket.style.left = '';
     void this.rocket.offsetWidth; this.rocket.style.transition = '';
     this.count.innerHTML = ''; this.go.style.display = ''; this.homeBtn.style.display = 'none';
     this.hint.textContent = '🔴 Press GO to blast off!';
-    this.state = 'ground';
+    this.state = 'ground'; this.jumps = 0;
   },
   enter(){ this.reset(); speakNext('Rocket trip! Press the big red button!'); },
   leave(){ this.reset(); }
@@ -640,6 +745,7 @@ window.funPhrases = name => {
   PETS.forEach(([, n]) => p.push('Sparkly clean! Thank you! Happy ' + n + '!'));
   [SF.eyes, SF.noses, SF.mouths, SF.hats].forEach(list => list.forEach(([, say]) => p.push(say)));
   PLANETS.forEach(([, n]) => p.push('Look! It is ' + n + '!', 'We landed on ' + n + '!'));
+  for(let i = 1; i <= RK_GOAL; i++) p.push(String(i));
   FLOWERS.forEach(([, n]) => p.push('A ' + n + '!'));
   for(let i = 1; i <= 30; i++) p.push(String(i));
   for(let i = 5; i <= 50; i += 5) p.push(i + ' flowers! Well done!');

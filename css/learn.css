@@ -117,3 +117,15 @@
 .cc-area.complete .cc-fill{opacity:.85}
 .cc-area.complete .cc-emoji{transform:translate(-50%,-50%) scale(1)}
 .cc-area.complete .cc-dot{opacity:0;transition:opacity .4s}
+
+/* Trace It: walking dino, sparkle trail, picture reward */
+.tr-dino{font-size:22px;dominant-baseline:central;pointer-events:none;transform-box:view-box;transform-origin:0 0;transition:opacity .3s}
+.tr-dino.done{opacity:0}
+.tr-spark{pointer-events:none;transform-box:fill-box;transform-origin:center;animation:trSpark .7s ease-out forwards}
+@keyframes trSpark{0%{transform:scale(.4)}40%{transform:scale(1.6)}100%{transform:scale(0) translateY(-8px);opacity:0}}
+.tr-reward{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;pointer-events:none;opacity:0;transform:scale(.3);z-index:3}
+.tr-reward.show{animation:trReward 2.4s cubic-bezier(.2,.9,.3,1.4) forwards}
+@keyframes trReward{0%{opacity:0;transform:scale(.3) rotate(-20deg)}15%{opacity:1;transform:scale(1.1) rotate(6deg)}25%,85%{opacity:1;transform:scale(1) rotate(0)}100%{opacity:0;transform:scale(1.3)}}
+.tr-pic{font-size:min(36vmin,220px);line-height:1;filter:drop-shadow(0 12px 12px rgba(0,0,0,.25));animation:emojiWiggle 1s ease-in-out .3s}
+.tr-reward b{font-family:'Fredoka',sans-serif;font-size:clamp(2rem,8vw,3.6rem);color:#fff;-webkit-text-stroke:3px #F59E0B;paint-order:stroke fill}
+.tr-row{font-size:min(11vmin,72px);line-height:1.1;max-width:90%;text-align:center;filter:drop-shadow(0 6px 6px rgba(0,0,0,.2))}

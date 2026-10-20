@@ -32,9 +32,15 @@ Notes:
 - **🦖 Dino Run** — the dinosaur runs by itself; tap anywhere to jump over rocks and munch leaves and fruit. Bumping a rock never ends the game. 10 treats fill the tummy and a new dino friend joins (T-Rex, Long Neck, Blue, Purple, Pink, Orange). The big **ROAR** button roars and makes the volcano glow.
 - **🥚 Surprise Eggs** now lives in Dino Land and hatches mostly baby dinosaurs.
 
+## 🎈 Play pack (`js/play.js` + `css/play.css`)
+Full-screen remakes of three older games:
+- **🚗 Vehicles** — tap a vehicle to send it down the road (planes and helicopters fly above), tap a moving one to honk, tap the 🚦 to switch red/green (cars queue and wait), and when the house catches fire send the fire truck to spray it out.
+- **🎵 Dino Band** — 8 big rainbow keys (tap or slide), 4 instruments (piano, xylophone, drums, dino roars), a dancing dino band, and ⭐🎵 play-along songs (Twinkle Twinkle, Mary Had a Little Lamb, Row Row Row Your Boat) where the next key shines.
+- **🎯 Toy Sorting** — drag each toy (or tap a box) into the box of its colour; a dino in the box cheers. Levels go from 2 to 4 colours; after two misses the right box hops to help.
+
 ## 🔤 Learning pack (`js/learn.js` + `js/strokes.js` + `css/learn.css`)
 Seven learning games (our own designs), grouped on the launcher under **Letters & Reading** and **Numbers**:
-- **✏️ Trace It** — trace A–Z, a–z, 1–10 and the child's own name, with a green start dot, direction arrow and stroke order (strokes in `js/strokes.js`). Stars mark finished letters.
+- **✏️ Trace It** — trace A–Z, a–z, 1–10 and the child's own name, with a green start dot, direction arrow and stroke order (strokes in `js/strokes.js`). A little dino walks along the line, the ink sparkles, and a finished letter pops out its picture (A → 🍎 "A is for Apple"; 3 → three dinos). Stars mark finished letters.
 - **🧩 Word Builder** — tap the letters into the boxes (CAT → FROG → APPLE, 48 words), hear each letter sound, then the sounds blend into the word. Extra “wrong” letters appear at higher levels.
 - **🔡 Big & Small** — find the little letter that matches the big one (A → a … Z → z).
 - **👏 Clap & Say** — clap the syllables of a word (ba·na·na).
@@ -48,7 +54,7 @@ Six new games, shown first on the launcher with a **NEW** ribbon until played:
 - **🥚 Surprise Eggs** — tap 4 times to crack an egg; a baby animal pops out and joins the shelf.
 - **🛁 Bath Time** — rub the mud off a muddy pet with the sponge, then tap the shower to rinse.
 - **🤪 Silly Faces** — change colour, eyes, nose, mouth and hat (🎲 = surprise). The googly eyes follow his finger; tap the face to tickle it.
-- **🚀 Rocket Trip** — press GO, count down 5-4-3-2-1, blast off, tap shooting stars, land on a planet and say hi to the alien.
+- **🚀 Rocket Trip** — press GO, count down 5-4-3-2-1 and blast off with a dino pilot, move the rocket to catch 8 stars, pick a planet (Moon, Mars, Jupiter, Candy, Ice), land, moon-jump the dino astronaut and make the alien dance.
 - **🌻 Magic Garden** — plant seeds, water them (tap, ☁️ rain or ☀️ sun), watch flowers bloom, pick them into the basket and count.
 - **🎆 Fireworks** — tap the night sky for fireworks (balls, rings, hearts, stars).
 

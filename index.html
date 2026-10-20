@@ -772,6 +772,7 @@ body.in-game .game-bar{display:flex;animation:barIn .3s ease-out}
 <link rel="stylesheet" href="css/fun.css" />
 <link rel="stylesheet" href="css/learn.css" />
 <link rel="stylesheet" href="css/dino.css" />
+<link rel="stylesheet" href="css/play.css" />
 </head>
 <body>
 <!-- ===== APP SHELL: splash, game bar, parent zone ===== -->
@@ -1077,29 +1078,6 @@ body.in-game .game-bar{display:flex;animation:barIn .3s ease-out}
     </div>
   </section>
   
-  <section id="sec-sorting" class="kid-section">
-    <div style="display:flex;align-items:center;gap:.6rem"><h2 class="section-title">🎯 Drag & Drop Sorting</h2><button class="speak-btn" onclick="speak('Sort by color! Drag each toy to the right box')" title="Speak">🔊</button>
-      <span style="margin-left:auto;background:#fff;border-radius:999px;padding:.35rem .7rem;font-weight:900;border:2px solid #f1f5f9">✅ <b id="sortProgress">0/12</b></span>
-    </div>
-    <div class="hint">👆 Tap a toy, then tap the right color box — or drag!</div>
-    <div class="sort-wrap">
-      <div class="card">
-        <h4 style="text-align:center;font-weight:900;margin-bottom:.5rem">🧺 Drag these!</h4>
-        <div class="sort-pool" id="sortPool"></div>
-        <div style="text-align:center;margin-top:.6rem"><button class="tool-btn" onclick="initSort()">🔄 Shuffle</button></div>
-      </div>
-      <div style="display:grid;gap:.6rem">
-        <div class="drop-zone" data-color="red" style="border-color:#EF4444"><h4>🔴 Red</h4></div>
-        <div class="drop-zone" data-color="blue" style="border-color:#3B82F6"><h4>🔵 Blue</h4></div>
-        <div class="drop-zone" data-color="yellow" style="border-color:#EAB308"><h4>🟡 Yellow</h4></div>
-        <div class="drop-zone" data-color="green" style="border-color:#22C55E"><h4>🟢 Green</h4></div>
-      </div>
-    </div>
-    <div id="sortWin" style="display:none;text-align:center;margin-top:1rem" class="card">
-      <div style="font-size:2.2rem">🎉 Perfect Sort! 🎉</div><button class="btn-pill" style="background:var(--green);color:#fff;margin-top:.6rem" onclick="initSort()">Play Again</button>
-    </div>
-  </section>
-
   <section id="sec-puzzle" class="kid-section">
     <div style="display:flex;align-items:center;gap:.6rem"><h2 class="section-title">🧩 Animal Puzzle</h2><button class="speak-btn" onclick="speak('Drag pieces to complete the lion puzzle')" title="Speak">🔊</button>
       <span style="margin-left:auto;background:#fff;border-radius:999px;padding:.35rem .7rem;font-weight:900;border:2px solid #f1f5f9">🧩 <b id="puzzleProgress">0/4</b></span>
@@ -1136,37 +1114,6 @@ body.in-game .game-bar{display:flex;animation:barIn .3s ease-out}
     <div style="text-align:center;margin-top:.7rem;display:flex;gap:.5rem;justify-content:center">
       <button class="tool-btn" onclick="initFishing()">🌊 New Fish</button>
       <button class="tool-btn" onclick="spawnFish()">➕ Add Fish</button>
-    </div>
-  </section>
-
-  <section id="sec-music" class="kid-section">
-    <div style="display:flex;align-items:center;gap:.6rem"><h2 class="section-title">🎵 Music Garden</h2><button class="speak-btn" onclick="speak('Make music! Tap the keys')" title="Speak">🔊</button></div>
-    <details style="margin-top:.4rem;background:#FFF7ED;border:2px solid #FDE68A;border:2px dashed #E2E8F0;border-radius:12px;padding:.5rem;max-width:520px;margin-left:auto;margin-right:auto">
-        <summary style="cursor:pointer;font-weight:900;color:#64748B;font-size:.85rem;list-style:none;text-align:center">🔒 Parent Instruments — tap to show / hide</summary>
-        <div style="display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;margin-top:.6rem">
-          <button class="tool-btn" onclick="setInstrument('piano')" id="btnPiano" style="background:#FFE4E6">🎹 Piano</button>
-          <button class="tool-btn" onclick="setInstrument('xylophone')" id="btnXylo">🎼 Xylophone</button>
-          <button class="tool-btn" onclick="setInstrument('guitar')" id="btnGuitar">🎸 Guitar</button>
-          <button class="tool-btn" onclick="setInstrument('flute')" id="btnFlute">🪈 Flute</button>
-          <button class="tool-btn" onclick="toggleDrum()">🥁 Drum: <span id="drumMode">Off</span></button>
-        </div>
-        <div style="display:flex;gap:.5rem;justify-content:center;margin-top:.6rem">
-          <button class="tool-btn" onclick="clearGarden()" style="font-size:.8rem">🧹 Clear Garden</button>
-        </div>
-      </details>
-<div class="card" style="text-align:center">
-      <div style="font-size:1rem;font-weight:900;color:#8B5CF6"><span class="dancer" id="dancer">💃🕺</span> <span id="instLabel">🎹 Piano — LOUD!</span></div>
-      <div id="musicFlowers" style="font-size:2rem;min-height:42px;display:flex;gap:.4rem;justify-content:center;flex-wrap:wrap"></div>
-      <div class="piano" id="piano"></div>
-      
-      <div style="margin-top:.6rem;display:flex;gap:.4rem;justify-content:center;flex-wrap:wrap;opacity:.7;font-size:.75rem;color:#94A3B8">Tap keys to make music & flowers bloom</div>
-
-      <div style="margin-top:.8rem;display:flex;gap:.5rem;justify-content:center">
-        <div class="draggable" style="background:#FFE4E6" draggable="false" onclick="blip(261,0.8,'sine',0.85);bloom('🌸')">🌸</div>
-        <div class="draggable" style="background:#E0F2FE" draggable="false" onclick="blip(329,0.8,'sine',0.85);bloom('🌼')">🌼</div>
-        <div class="draggable" style="background:#FEF9C3" draggable="false" onclick="blip(392,0.8,'sine',0.85);bloom('🌷')">🌷</div>
-        <div class="draggable" style="background:#DCFCE7" draggable="false" onclick="blip(493,0.8,'sine',0.85);bloom('🌻')">🌻</div>
-      </div>
     </div>
   </section>
 
@@ -1216,26 +1163,6 @@ body.in-game .game-bar{display:flex;animation:barIn .3s ease-out}
   </section>
 
   <!-- 🚗 VEHICLES -->
-  <section id="sec-vehicles" class="kid-section">
-    <div style="display:flex;align-items:center;gap:.6rem;flex-wrap:wrap">
-      <h2 class="section-title">🚗 Beep-Beep Vehicles!</h2>
-      <button class="speak-btn" onclick="speak('Beep beep! Tap a car to hear it go!')" title="Speak">🔊</button>
-      <div style="margin-left:auto;display:flex;gap:.4rem;align-items:center">
-        <button class="tool-btn" id="btnSpeedSlow" onclick="setVehicleSpeed('slow')" style="background:var(--yellow);font-size:.85rem;padding:.35rem .75rem">🐢 Gentle & Slow</button>
-        <button class="tool-btn" id="btnSpeedFast" onclick="setVehicleSpeed('medium')" style="font-size:.85rem;padding:.35rem .75rem">🚗 Faster</button>
-      </div>
-    </div>
-    <div class="hint">👆 Tap a car — it drives gently across the road! Tap the car while driving to honk! 🎺</div>
-    <div class="card">
-      <div class="vehicle-stage" id="vehicleStage">
-        <div class="stage-sky-clouds">☁️ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ☁️ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ☁️</div>
-        <div class="stage-road-line"></div>
-        <div class="zoom-runner" id="zoomRunner" onclick="honkMovingVehicle()" title="Tap to honk!">🚗</div>
-      </div>
-      <div id="vehicleCaption" style="text-align:center;font-size:1.15rem;font-weight:900;color:#0284C7;margin-top:.6rem;min-height:28px">👆 Tap a vehicle below to drive gently!</div>
-      <div class="vehicle-grid" id="vehicleGrid"></div>
-    </div>
-  </section>
 
   <div class="kids-footer">
     Made with 💛 for tiny hands. No ads, no tracking.<br>
@@ -2083,11 +2010,8 @@ function switchTab(name){
   if(name==='peekaboo' && document.querySelectorAll('.peek-card').length===0){ try{ initPeekaboo(); }catch(e){} }
   if(name==='feeding' && document.querySelectorAll('.buddy-btn').length===0){ try{ initFeeding(); }catch(e){} }
   if(name==='popit' && document.querySelectorAll('.popit-bubble').length===0){ try{ initPopIt(); }catch(e){} }
-  if(name==='vehicles' && document.querySelectorAll('.vehicle-card').length===0){ try{ initVehicles(); }catch(e){} }
   if(name==='puzzle' && document.querySelectorAll('.puzzle-piece').length===0){ try{ initPuzzle(); }catch(e){} }
-  if(name==='sorting' && document.querySelectorAll('#sortPool .draggable').length===0){ try{ initSort(); }catch(e){} }
   if(name==='fishing' && document.querySelectorAll('.fish').length===0){ try{ initFishing(); }catch(e){} }
-  if(name==='music' && document.querySelectorAll('.key').length===0){ try{ initPiano(); }catch(e){} }
   if(name==='abc'){ try{ setAbcMode(abcMode || 'boxes'); }catch(e){} }
   document.querySelectorAll('.kid-section').forEach(s=>s.classList.toggle('active',s.id==='sec-'+name));
   if(name==='bubbles') startBubbles(); else stopBubbles();
@@ -2118,7 +2042,6 @@ function switchTab(name){
   if(name === 'colors') prefetchAiAudio(['Red','Blue','Yellow','Green','Orange','Purple','Pink']);
   else if(name === 'animals') prefetchAiAudio(['Dog','Cat','Lion','Elephant','Cow','Duck','Sheep','Dinosaur']);
   else if(name === 'shapes') prefetchAiAudio(['Circle','Square','Triangle','Star','Heart']);
-  else if(name === 'vehicles') prefetchAiAudio(['Car','Fire Truck','Train','Plane','Boat']);
   else if(name === 'abc') prefetchAiAudio(['A','B','C','D','Apple','Ball','Cat','Dog']);
 }
 
@@ -3251,48 +3174,6 @@ function enableDrag(container, onDropCheck){
   });
 }
 
-// === SORTING GAME ===
-const sortItems=[
-  {emoji:'🍎',color:'red'},{emoji:'🍓',color:'red'},{emoji:'🚗',color:'red'},{emoji:'🎈',color:'red'},
-  {emoji:'🐳',color:'blue'},{emoji:'💧',color:'blue'},{emoji:'🧢',color:'blue'},{emoji:'🦋',color:'blue'},
-  {emoji:'⭐',color:'yellow'},{emoji:'🌻',color:'yellow'},{emoji:'🍋',color:'yellow'},{emoji:'🐥',color:'yellow'},
-  {emoji:'🐸',color:'green'},{emoji:'🥦',color:'green'},{emoji:'🌳',color:'green'},{emoji:'🐢',color:'green'}
-];
-let sortScore=0;
-function setSortProgress(t){ const el=document.getElementById('sortProgress'); if(el) el.textContent=t; }
-function initSort(){
-  try{
-  sortScore=0; setSortProgress('0/12'); const win=document.getElementById('sortWin'); if(win) win.style.display='none';
-  const zones={red:'🔴 Red',blue:'🔵 Blue',yellow:'🟡 Yellow',green:'🟢 Green'};
-  document.querySelectorAll('.drop-zone').forEach(z=>{ const c=z.dataset.color; z.innerHTML=`<h4>${zones[c]}</h4>`; z.classList.remove('drag-over'); });
-  const pool=document.getElementById('sortPool'); if(!pool) return; pool.innerHTML='';
-  const pick=[...sortItems].sort(()=>Math.random()-0.5).slice(0,12);
-  pick.forEach(it=>{
-    const d=document.createElement('div'); d.className='draggable floaty'; d.draggable=true; d.dataset.color=it.color; d.textContent=it.emoji;
-    d.style.background= it.color==='red'?'#FFE4E6':it.color==='blue'?'#DBEAFE':it.color==='yellow'?'#FEF3C7':'#DCFCE7';
-    d.style.animationDelay=(Math.random()*1)+'s';
-    pool.appendChild(d);
-  });
-  }catch(e){ console.error('initSort', e); }
-}
-function handleSortDrop(el, zone){
-  const want=zone.dataset.color, have=el.dataset.color;
-  if(want===have){
-    const clone=el.cloneNode(true); clone.draggable=false; clone.style.cursor='default'; clone.classList.remove('floaty'); clone.style.background='#F0FDF4'; clone.style.borderColor='#22C55E';
-    zone.appendChild(clone); el.remove(); sortScore++; setSortProgress(sortScore+'/12');
-    speak(have); blip(700+sortScore*30,0.4,'sine',0.5); burstConfetti(8, have==='red'?'#EF4444':have==='blue'?'#3B82F6':have==='yellow'?'#EAB308':'#22C55E');
-    zone.classList.add('wobble'); setTimeout(()=>zone.classList.remove('wobble'),500);
-    try{ navigator.vibrate && navigator.vibrate(30); }catch(e){}
-    if(sortScore>=12){ const w=document.getElementById('sortWin'); if(w) w.style.display='block'; speak('Amazing! You sorted them all!'); burstConfetti(30); }
-  } else {
-    zone.classList.add('wobble'); blip(220,0.35,'sine',0.4); setTimeout(()=>zone.classList.remove('wobble'),400);
-    // shake item
-    try{ el.animate([{transform:'translateX(0)'},{transform:'translateX(-6px)'},{transform:'translateX(6px)'},{transform:'translateX(0)'}],{duration:300}); }catch(e){}
-  }
-  // clear tap-selection
-  try{ selectedSort=null; document.querySelectorAll('.sort-pool .draggable.selected').forEach(x=>{x.classList.remove('selected'); x.style.outline='';}); }catch(e){}
-}
-
 // === PUZZLE (Toddler Friendly 4-piece 2x2) ===
 const puzzleSets=[
   {name:'lion', pieces:['🦁','👑','⭐','💛'], slots:['🦁','👑','⭐','💛']},
@@ -3681,114 +3562,7 @@ function resetPopIt(){
   speak('Flip it over! Pop again!');
 }
 
-// 4. VEHICLES
-const vehiclesList = [
-  {e:'🚒', n:'Fire Truck', s:'Wee-woo! Fire truck!', playSound: soundVehicleFireTruck, color:'#EF4444'},
-  {e:'🚓', n:'Police Car', s:'Whoop whoop! Police car!', playSound: soundVehiclePoliceCar, color:'#3B82F6'},
-  {e:'🚜', n:'Tractor', s:'Chugga chugga! Farm tractor!', playSound: soundVehicleTractor, color:'#16A34A'},
-  {e:'🚂', n:'Train', s:'Choo choo! All aboard!', playSound: soundVehicleTrain, color:'#9333EA'},
-  {e:'✈️', n:'Airplane', s:'Whoosh! Flying in the sky!', playSound: soundVehicleAirplane, color:'#0284C7'},
-  {e:'🏎️', n:'Race Car', s:'Vroom vroom! Fast car!', playSound: soundVehicleRaceCar, color:'#F97316'},
-  {e:'🚑', n:'Ambulance', s:'Nee-naw! Help is coming!', playSound: soundVehicleAmbulance, color:'#EC4899'},
-  {e:'🚁', n:'Helicopter', s:'Thump thump! Flying copter!', playSound: soundVehicleHelicopter, color:'#EAB308'}
-];
-function initVehicles(){
-  const g = document.getElementById('vehicleGrid');
-  if(!g) return;
-  g.innerHTML = vehiclesList.map((v, i) => `
-    <div class="vehicle-card" onclick="tapVehicle(${i})">
-      <div class="ve" id="veIcon_${i}">${v.e}</div>
-      <b>${v.n}</b>
-      <small>${v.s}</small>
-    </div>
-  `).join('');
-}
-let vehicleSpeedDuration = 4.5;
-let vehicleDriveTimer = null;
-let currentDrivingVehicle = null;
-
-function setVehicleSpeed(mode){
-  if(mode === 'slow'){
-    vehicleSpeedDuration = 4.5;
-    const bs = document.getElementById('btnSpeedSlow'); if(bs) bs.style.background = 'var(--yellow)';
-    const bf = document.getElementById('btnSpeedFast'); if(bf) bf.style.background = '#fff';
-    speak('Slow and gentle!');
-  } else {
-    vehicleSpeedDuration = 2.6;
-    const bf = document.getElementById('btnSpeedFast'); if(bf) bf.style.background = 'var(--yellow)';
-    const bs = document.getElementById('btnSpeedSlow'); if(bs) bs.style.background = '#fff';
-    speak('Faster!');
-  }
-}
-
-function honkMovingVehicle(){
-  if(!currentDrivingVehicle) return;
-  // Distinct cheerful honk when tapping the moving car on the road
-  soundHonk();
-  speak('Beep beep!');
-  burstConfetti(10, currentDrivingVehicle.color);
-  const runner = document.getElementById('zoomRunner');
-  if(runner){
-    runner.style.transform = 'scale(1.28) translateY(-8px)';
-    setTimeout(() => { runner.style.transform = ''; }, 250);
-  }
-}
-
-function tapVehicle(i){
-  const v = vehiclesList[i];
-  currentDrivingVehicle = v;
-  if(vehicleDriveTimer) clearTimeout(vehicleDriveTimer);
-
-  // Play each vehicle's distinct engine / horn / siren sound effect!
-  if(typeof v.playSound === 'function'){
-    v.playSound();
-  }
-
-  speak(v.s, true);
-  burstConfetti(14, v.color);
-  try{ navigator.vibrate && navigator.vibrate(30); }catch(e){}
-
-  // Highlight card currently driving
-  document.querySelectorAll('.vehicle-card').forEach((c, idx) => c.classList.toggle('driving-now', idx === i));
-
-  const caption = document.getElementById('vehicleCaption');
-  if(caption) caption.textContent = `${v.e} ${v.n} is driving! "${v.s}"`;
-
-  const runner = document.getElementById('zoomRunner');
-  if(runner){
-    runner.textContent = v.e;
-    runner.classList.remove('driving');
-    runner.style.transition = 'none';
-    runner.style.left = '-100px';
-    void runner.offsetWidth;
-    runner.classList.add('driving');
-    // Smooth, gentle toddler speed across the screen (4.5s)
-    runner.style.transition = `left ${vehicleSpeedDuration}s ease-in-out`;
-    runner.style.left = 'calc(100% + 90px)';
-
-    // Play subtle secondary sound pulse of this vehicle mid-drive
-    const midPoint = (vehicleSpeedDuration * 1000) * 0.45;
-    setTimeout(() => {
-      if(currentDrivingVehicle === v && typeof v.playSound === 'function'){
-        v.playSound();
-      }
-    }, midPoint);
-
-    vehicleDriveTimer = setTimeout(() => {
-      runner.classList.remove('driving');
-      document.querySelectorAll('.vehicle-card').forEach(c => c.classList.remove('driving-now'));
-      if(caption) caption.textContent = '👆 Tap another vehicle to drive!';
-    }, vehicleSpeedDuration * 1000 + 100);
-  }
-
-  const icon = document.getElementById('veIcon_' + i);
-  if(icon){
-    icon.style.transform = 'scale(1.3) rotate(8deg)';
-    setTimeout(() => { icon.style.transform = 'scale(1) rotate(0deg)'; }, 400);
-  }
-}
-
-// Click fallbacks for sorting and puzzle
+// Click fallback for the puzzle
 let selectedPiece = null;
 function setupPuzzleClickFallback(){
   document.getElementById('puzzleTray')?.addEventListener('click', e=>{
@@ -3802,113 +3576,18 @@ function setupPuzzleClickFallback(){
     }
   });
 }
-let selectedSort = null;
-function setupSortClickFallback(){
-  document.getElementById('sortPool')?.addEventListener('click', e=>{
-    const item = e.target.closest('.draggable');
-    if(!item) return;
-    const col = item.dataset.color;
-    const zone = document.querySelector(`.drop-zone[data-color="${col}"]`);
-    if(zone){
-      soundBoing();
-      handleSortDrop(item, zone);
-    }
-  });
-}
-
-let drum=false;
-const pianoNotes=[
-  {note:'C',freq:261,emoji:'🌸',color:'#FFE4E6', inst:'piano'},
-  {note:'D',freq:293,emoji:'🌼',color:'#FEF3C7', inst:'piano'},
-  {note:'E',freq:329,emoji:'🌷',color:'#FCE7F3', inst:'piano'},
-  {note:'F',freq:349,emoji:'🌻',color:'#DCFCE7', inst:'piano'},
-  {note:'G',freq:392,emoji:'🍀',color:'#DBEAFE', inst:'piano'},
-  {note:'A',freq:440,emoji:'🌺',color:'#E0E7FF', inst:'piano'},
-  {note:'B',freq:493,emoji:'🌹',color:'#FFE4D6', inst:'piano'},
-  {note:'C2',freq:523,emoji:'💮',color:'#F3E8FF', inst:'piano'}
-];
-const instruments = {
-  piano: {type:'sine', dur:1.0},
-  xylophone: {type:'triangle', dur:1.1},
-  guitar: {type:'sawtooth', dur:1.0},
-  drum: {type:'square', dur:0.7},
-  flute: {type:'sine', dur:1.3}
-};
-// Distinct per-instrument pitch offsets
-const instOffsets = {piano:0, xylophone:12, guitar:-12, flute:7, drum:0};
-const instLabels = {piano:'🎹 Piano — LOUD!', xylophone:'🎼 Xylophone — LOUD!', guitar:'🎸 Guitar — LOUD!', flute:'🪈 Flute — LOUD!', drum:'🥁 Drum — LOUD!'};
-let currentInst='piano';
-function initPiano(){
-  const p=document.getElementById('piano'); if(!p) return; p.innerHTML='';
-  pianoNotes.forEach(n=>{
-    const k=document.createElement('div'); k.className='key'; k.style.background=n.color;
-    k.innerHTML=`<span class="emoji">${n.emoji}</span><b>${n.note}</b><span class="note">${Math.round(n.freq)}Hz</span>`;
-    k.addEventListener('click',(e)=>{ playNote(n, e.currentTarget); });
-    k.addEventListener('touchstart',e=>{ e.preventDefault(); playNote(n, e.currentTarget); }, {passive:false});
-    // drag across
-    k.addEventListener('mouseenter', e=>{ if(e.buttons===1) playNote(n, e.currentTarget); });
-    p.appendChild(k);
-  });
-}
-function playNote(n, keyEl){
-  getAudioCtx();
-  const inst = instruments[currentInst] || instruments.piano;
-  const off = instOffsets[currentInst] || 0;
-  // MUCH LOUDER and distinct
-  if(drum || currentInst==='drum'){ 
-    blip(100+Math.random()*90, inst.dur, 'square', 0.9); 
-    // drum also has low thump
-    setTimeout(()=>blip(65,0.4,'sine',0.8), 40);
-    bloom('🥁'); 
-  }
-  else { 
-    // Shift pitch per instrument for distinct sound
-    const f = n.freq * Math.pow(2, off/12);
-    blip(f, inst.dur, inst.type, 0.85); 
-    // Add harmonic for richness + loudness
-    setTimeout(()=>blip(f*2, inst.dur*0.6, 'sine', 0.5), 30);
-    bloom(n.emoji); 
-  }
-  try{ navigator.vibrate && navigator.vibrate(20); }catch(e){}
-  const d=document.getElementById('dancer'); if(d){ d.classList.remove('show'); void d.offsetWidth; d.classList.add('show'); setTimeout(()=>d.classList.remove('show'),600); }
-  // key flash
-  try{ (keyEl)?.animate?.([{transform:'scale(1)'},{transform:'scale(.96)'},{transform:'scale(1)'}],{duration:150}); }catch(e){}
-  try{ if(window.event?.target?.closest) window.event.target.closest('.key')?.animate([{transform:'scale(1)'},{transform:'scale(.96)'},{transform:'scale(1)'}],{duration:150}); }catch(e){}
-}
-function bloom(emoji){
-  const g=document.getElementById('musicFlowers'); const s=document.createElement('span');
-  s.textContent=emoji; s.style.fontSize='2rem'; s.style.display='inline-block'; s.style.animation='popIn .4s ease, floaty 2s ease infinite';
-  g.appendChild(s); if(g.children.length>18) g.removeChild(g.firstChild);
-  setTimeout(()=>{ s.style.transition='all .5s'; s.style.opacity='0'; s.style.transform='translateY(-30px) scale(1.3)'; setTimeout(()=>s.remove(),500); }, 1800);
-}
-function playSong(){
-  const twinkle=[0,0,4,4,5,5,4, 3,3,2,2,1,1,0, 4,4,3,3,2,2,1, 4,4,3,3,2,2,1, 0,0,4,4,5,5,4, 3,3,2,2,1,1,0];
-  let i=0; const id=setInterval(()=>{
-    if(i>=twinkle.length){ clearInterval(id); return; }
-    playNote(pianoNotes[twinkle[i]%pianoNotes.length]); i++;
-  }, 300);
-}
-function clearGarden(){ document.getElementById('musicFlowers').innerHTML=''; }
-function setInstrument(inst){ currentInst=inst; if(drum && inst!=='drum'){ drum=false; const dm=document.getElementById('drumMode'); if(dm) dm.textContent='Off'; } document.querySelectorAll('[id^=btn]').forEach(b=>b.style.background='#fff'); const map={piano:'btnPiano', xylophone:'btnXylo', guitar:'btnGuitar', flute:'btnFlute'}; const id=map[inst]; if(id){ const el=document.getElementById(id); if(el) el.style.background='#FFE4E6'; } const lb=document.getElementById('instLabel'); if(lb) lb.textContent=instLabels[inst]||inst; speak(inst); blip(440,0.6,'sine',0.8); }
-function toggleDrum(){ drum=!drum; document.getElementById('drumMode').textContent=drum?'On':'Off'; speak(drum?'Drum mode on':'Music mode'); if(drum){ currentInst='drum'; const lb=document.getElementById('instLabel'); if(lb) lb.textContent=instLabels.drum; } else { currentInst='piano'; const lb=document.getElementById('instLabel'); if(lb) lb.textContent=instLabels.piano; } }
-
 // Init new games
 setTimeout(()=>{ 
   try{ initPeekaboo(); }catch(e){}
   try{ initFeeding(); }catch(e){}
   try{ initPopIt(); }catch(e){}
-  try{ initVehicles(); }catch(e){}
-  try{ initSort(); }catch(e){ console.error('initSort',e); }
   try{ initPuzzle(); }catch(e){ console.error('initPuzzle',e); }
   try{ initFishing(); }catch(e){ console.error('initFishing',e); }
-  try{ initPiano(); }catch(e){ console.error('initPiano',e); }
   try{
     // Robust drag setup - attach to each section
-    const sSort = document.getElementById('sec-sorting');
     const sPuzzle = document.getElementById('sec-puzzle');
     const sFish = document.getElementById('sec-fishing');
     const sFeed = document.getElementById('sec-feeding');
-    if(sSort) enableDrag(sSort, handleSortDrop);
     if(sPuzzle) enableDrag(sPuzzle, handlePuzzleDrop);
     if(sFish) enableDrag(sFish, handleFishDrop);
     if(sFeed) enableDrag(sFeed, (el, zone) => {
@@ -3917,7 +3596,6 @@ setTimeout(()=>{
     });
     // Also ensure puzzle click fallback works after drag setup
     setupPuzzleClickFallback();
-    setupSortClickFallback();
   }catch(e){ console.error('drag setup',e); }
   // also enable drop zones directly
   document.querySelectorAll('.drop-zone,.puzzle-slot,.pond-bucket,.buddy-mouth-zone').forEach(z=>{
@@ -3932,11 +3610,8 @@ setTimeout(()=>{
   try{ initPeekaboo(); }catch(e){}
   try{ initFeeding(); }catch(e){}
   try{ initPopIt(); }catch(e){}
-  try{ initVehicles(); }catch(e){}
-  try{ initSort(); }catch(e){}
   try{ initPuzzle(); }catch(e){}
   try{ initFishing(); }catch(e){}
-  try{ if(!document.querySelectorAll('.key').length) initPiano(); }catch(e){}
   try{ renderPhonics(); }catch(e){}
   try{ renderSingLyrics(-1); }catch(e){}
   try{ drawTraceGuide(); }catch(e){}
@@ -3944,8 +3619,6 @@ setTimeout(()=>{
   setTimeout(()=>{ try{ if(document.querySelectorAll('.peek-card').length===0) initPeekaboo(); }catch(e){} }, 700);
   setTimeout(()=>{ try{ if(document.querySelectorAll('.food-btn').length===0) initFeeding(); }catch(e){} }, 750);
   setTimeout(()=>{ try{ if(document.querySelectorAll('.popit-bubble').length===0) initPopIt(); }catch(e){} }, 800);
-  setTimeout(()=>{ try{ if(document.querySelectorAll('.vehicle-card').length===0) initVehicles(); }catch(e){} }, 850);
-  setTimeout(()=>{ try{ if(document.querySelectorAll('#sortPool .draggable').length===0) initSort(); }catch(e){} }, 900);
   setTimeout(()=>{ try{ if(document.querySelectorAll('.puzzle-piece').length===0) initPuzzle(); }catch(e){} }, 950);
   setTimeout(()=>{ try{ if(document.querySelectorAll('.fish').length===0) initFishing(); }catch(e){} }, 1000);
   setTimeout(()=>{ try{ if(document.getElementById('sec-bubbles')?.classList.contains('active')) startBubbles(); }catch(e){} }, 1200);
@@ -4144,6 +3817,7 @@ updateInstallUI();
 <script src="js/strokes.js"></script>
 <script src="js/learn.js"></script>
 <script src="js/dino.js"></script>
+<script src="js/play.js"></script>
 <script src="js/phrases.js"></script>
 </body>
 </html>
