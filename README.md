@@ -30,6 +30,9 @@ Notes:
 
 ## 🦖 Dino pack (`js/dino.js` + `css/dino.css`)
 - **🦖 Dino Run** — the dinosaur runs by itself; tap anywhere to jump over rocks and munch leaves and fruit. Bumping a rock never ends the game. 10 treats fill the tummy and a new dino friend joins (T-Rex, Long Neck, Blue, Purple, Pink, Orange). The big **ROAR** button roars and makes the volcano glow.
+- **🦴 Dino Dig** (`js/dino-more.js`) — rub the sand away to find 3 bones; then the dinosaur comes alive and roars.
+- **🍽️ Dino Lunch** — the dino asks for a food in a thought bubble ("I want an apple, please!"); give it the right one, 5 foods fill its tummy, then it naps.
+- **🌿 Dino Peekaboo** — dinos (and sometimes an egg) pop out of bushes; tap them to count to 10.
 - **🥚 Surprise Eggs** now lives in Dino Land and hatches mostly baby dinosaurs.
 
 ## 🎈 Play pack (`js/play.js` + `css/play.css`)

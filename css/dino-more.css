@@ -1,0 +1,57 @@
+/* Idris Play — more dino games: Dino Dig, Dino Lunch, Dino Peekaboo (js/dino-more.js) */
+
+/* ---------- ⛏️ Dino Dig ---------- */
+.dg-stage{background:linear-gradient(180deg,#9EDCFF 0%,#D6F1FF 22%,#B9874A 22%,#8B5A2B 100%);display:flex;flex-direction:column;padding:10px;gap:10px}
+.dg-tray{display:flex;justify-content:center;gap:12px}
+.dg-tray span{width:72px;height:72px;border-radius:50%;background:rgba(255,255,255,.75);border:4px dashed #fff;display:grid;place-items:center;font-size:2.6rem;line-height:1}
+.dg-pit{position:relative;flex:1;min-height:0;border-radius:24px;overflow:hidden;background:radial-gradient(circle at 50% 40%,#F7E2B5,#E2C08A);box-shadow:inset 0 10px 20px rgba(0,0,0,.25)}
+.dg-under{position:absolute;inset:0}
+.dg-bone{position:absolute;font-size:min(14vmin,84px);line-height:1;transform:translate(-50%,-50%);filter:drop-shadow(0 4px 3px rgba(0,0,0,.25));transition:left .7s ease-in,top .7s ease-in,opacity .7s}
+.dg-bone.got{animation:dgGot .6s cubic-bezier(.2,.9,.3,1.6)}
+@keyframes dgGot{40%{scale:1.5}}
+.dg-bone.gather{left:50% !important;top:50% !important;opacity:0}
+.dg-sand{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:pointer;transition:opacity .6s}
+.dg-dust{position:absolute;width:14px;height:14px;margin:-7px;border-radius:50%;background:#E8B86A;pointer-events:none;animation:dgDust .6s ease-out forwards}
+@keyframes dgDust{to{transform:translate(20px,-30px) scale(2);opacity:0}}
+.dg-dino{position:absolute;left:50%;top:50%;font-size:min(40vmin,240px);line-height:1;transform:translate(-50%,-50%) scale(0);pointer-events:none}
+.dg-dino.show{animation:dgAlive 4.4s cubic-bezier(.2,.9,.3,1.4) forwards}
+@keyframes dgAlive{0%{transform:translate(-50%,-50%) scale(0) rotate(-30deg)}15%{transform:translate(-50%,-50%) scale(1.15) rotate(6deg)}25%,35%{transform:translate(-50%,-55%) scale(1)}30%{transform:translate(-50%,-50%) scale(1.08)}90%{transform:translate(-50%,-50%) scale(1);opacity:1}100%{transform:translate(-50%,-50%) scale(1);opacity:0}}
+
+/* ---------- 🍽️ Dino Lunch ---------- */
+.lu-stage{background:linear-gradient(180deg,#B9F0FF 0%,#E3FAFF 55%,#9BE29B 55%,#6BCB77 100%)}
+.lu-tummy{position:absolute;left:14px;top:14px;z-index:6;display:flex;align-items:center;gap:.5rem;background:rgba(255,255,255,.9);padding:.4rem .8rem .4rem .5rem;border-radius:999px;font-size:2rem;line-height:1}
+.lu-bar{width:min(36vw,220px);height:22px;border-radius:999px;background:#DCFCE7;border:3px solid #fff;box-shadow:inset 0 0 0 2px #BBF7D0;overflow:hidden}
+.lu-bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#86EFAC,#22C55E);border-radius:999px;transition:width .4s}
+.lu-dino{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%)}
+.lu-face{display:inline-block;font-size:min(42vmin,250px);line-height:1;filter:drop-shadow(0 12px 10px rgba(0,0,0,.18))}
+.lu-dino.pop-in .lu-face{animation:ngPop .5s cubic-bezier(.2,.9,.3,1.5)}
+.lu-dino.chomp .lu-face{animation:luChomp .18s ease-in-out 4 alternate}
+@keyframes luChomp{to{transform:scale(1.08,.9)}}
+.lu-dino.no .lu-face{animation:luNo .5s ease-in-out}
+@keyframes luNo{25%{transform:rotate(-10deg)}75%{transform:rotate(10deg)}}
+.lu-dino.happy .lu-face{animation:muParty .35s ease-in-out 6 alternate}
+.lu-dino.sleep .lu-face{transform:rotate(-8deg) scaleY(.92);filter:brightness(.9) drop-shadow(0 12px 10px rgba(0,0,0,.18))}
+.lu-zzz{position:absolute;right:-10%;top:-5%;font-size:3rem;opacity:0}
+.lu-dino.sleep .lu-zzz{opacity:1;animation:luZzz 1.6s ease-in-out infinite}
+@keyframes luZzz{from{transform:translateY(0)}to{transform:translateY(-24px);opacity:.3}}
+.lu-bubble{position:absolute;left:-28%;top:-18%;width:min(22vmin,130px);aspect-ratio:1;border-radius:50%;background:#fff;box-shadow:0 8px 18px rgba(0,0,0,.15);display:grid;place-items:center;transform:scale(0);transition:transform .35s cubic-bezier(.2,.9,.3,1.6)}
+.lu-bubble::after{content:'';position:absolute;right:4%;bottom:2%;width:22%;height:22%;border-radius:50%;background:#fff}
+.lu-bubble span{font-size:min(12vmin,72px);line-height:1}
+.lu-bubble.show{transform:scale(1);animation:luBob 1.2s ease-in-out .4s infinite alternate}
+@keyframes luBob{to{translate:0 -8px}}
+.lu-tray{position:absolute;left:0;right:0;bottom:16px;display:flex;justify-content:center;gap:clamp(10px,3vw,24px);z-index:5}
+.lu-food{width:clamp(84px,18vmin,120px);height:clamp(84px,18vmin,120px);font-size:clamp(3rem,10vmin,4.6rem);background:#fff;padding:0}
+
+/* ---------- 🌿 Dino Peekaboo ---------- */
+.pk-stage{background:linear-gradient(180deg,#A6E3FF 0%,#D4F2FF 40%,#8FD68A 40%,#5DBB63 100%)}
+.pk-count{position:absolute;left:14px;top:14px;z-index:6;background:rgba(255,255,255,.9);border-radius:999px;padding:.35rem 1rem;font-weight:900;font-size:1.8rem;color:#166534}
+.pk-volcano{position:absolute;right:8%;top:14%;width:min(34%,240px);aspect-ratio:1.6;background:linear-gradient(180deg,#A16207,#78350F);clip-path:polygon(0 100%,36% 8%,64% 8%,100% 100%)}
+.pk-field{position:absolute;left:4%;right:4%;top:42%;bottom:4%;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,1fr);gap:4% 6%}
+.pk-hole{position:relative;overflow:hidden;border-radius:0 0 40% 40%}
+.pk-dino{position:absolute;left:50%;bottom:-100%;transform:translateX(-50%) scaleX(-1);font-size:min(16vmin,100px);line-height:1;cursor:pointer;transition:bottom .25s cubic-bezier(.2,.9,.3,1.5)}
+.pk-hole.up .pk-dino{bottom:30%}
+.pk-hole.tapped .pk-dino{animation:pkRoar .5s ease-in-out}
+@keyframes pkRoar{40%{scale:1.3;rotate:-10deg}}
+.pk-bush{position:absolute;left:4%;right:4%;bottom:0;height:42%;pointer-events:none;border-radius:50% 50% 18% 18%/80% 80% 20% 20%;
+  background:radial-gradient(circle at 25% 35%,#6EE07A 0 20%,transparent 21%),radial-gradient(circle at 70% 30%,#6EE07A 0 18%,transparent 19%),linear-gradient(180deg,#34A853,#1E7B3A);
+  box-shadow:inset 0 -8px 0 rgba(0,0,0,.15),0 6px 8px rgba(0,0,0,.15)}
