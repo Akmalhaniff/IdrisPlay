@@ -34,24 +34,8 @@ body.in-game .wrap{max-width:none}
   #sec-numbers .num-word{font-size:clamp(2rem,5vmin,3.4rem)}
   #sec-numbers .count-dots{font-size:clamp(2.4rem,6vmin,4rem)}
 
-  /* 🙈 Peek-a-boo: four big doors fill the screen */
-  #sec-peekaboo .peek-grid{flex:1;min-height:0;max-width:none;width:100%;grid-template-columns:repeat(4,1fr);grid-auto-rows:1fr}
-  #sec-peekaboo .peek-card{min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:1.3em}
-
-  /* 🫧 Bubbles, 🎣 Fishing: the play area takes all the height */
-  #sec-bubbles .bubble-area{flex:1;height:auto;max-height:none;min-height:0}
-  #sec-bubbles .card{padding:.5rem}
-  #sec-fishing .fish-pond{flex:1;height:auto !important;min-height:0}
-  #sec-fishing .card{padding:.5rem}
-
-  /* 🫧 Pop-it: big board */
-  #sec-popit .popit-stage{align-items:center}
-  #sec-popit .popit-board{width:min(100%,calc((var(--avail) - 9rem) * 1.25));max-width:none;gap:clamp(.7rem,2vmin,1.3rem);margin:0 auto}
-
-  /* 🧩 Puzzle, 🃏 Memory, 🥕 Feed Buddy: bigger pieces */
-  #sec-puzzle .puzzle-board{max-width:min(60vmin,560px)}
+  /* 🃏 Memory: bigger cards */
   #sec-memory .memory-grid{max-width:min(calc(var(--avail) - 5rem),760px);margin:0 auto;width:100%}
-  #sec-feeding .feed-wrap{justify-content:space-around}
 
   /* ✏️ Doodle pad: the canvas fills the space under the tools */
   #sec-draw > .card{justify-content:flex-start}
@@ -61,5 +45,4 @@ body.in-game .wrap{max-width:none}
 @media (min-width:700px) and (min-height:600px) and (orientation:portrait){
   #sec-colors .color-grid{grid-template-columns:repeat(3,1fr)}
   #sec-shapes .grid-animals{grid-template-columns:repeat(3,1fr)}
-  #sec-peekaboo .peek-grid{grid-template-columns:repeat(2,1fr)}
 }

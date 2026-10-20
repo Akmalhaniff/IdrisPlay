@@ -41,6 +41,18 @@ Full-screen remakes of three older games:
 - **🎵 Dino Band** — 8 big rainbow keys (tap or slide), 4 instruments (piano, xylophone, drums, dino roars), a dancing dino band, and ⭐🎵 play-along songs (Twinkle Twinkle, Mary Had a Little Lamb, Row Row Row Your Boat) where the next key shines.
 - **🎯 Toy Sorting** — drag each toy (or tap a box) into the box of its colour; a dino in the box cheers. Levels go from 2 to 4 colours; after two misses the right box hops to help.
 
+## 👶 Made for 2-year-olds (`js/toddler.js`, `js/classic.js`)
+- Every touch sparkles under the finger; after ~9 quiet seconds a dino peeks in and points 👆 at what to tap (the right answer where the game knows it).
+- Colours, Shapes and Animals pop the tapped thing out big; Numbers counts the items out loud one by one. Memory starts with 2 pairs and grows to 8. Shapes keeps the 8 a toddler meets.
+- Full-screen remakes: **🙈 Peek-a-Boo** (four big hiding places), **🥕 Feed Buddy** (drag or tap food into a big hungry friend), **🫧 Pop-It** (pop them all, it flips to a new board), **🫧 Bubble Pop** (each bubble hides a toy), **🎣 Fishing** (tap a fish, it flies into the bucket), **🧩 Picture Puzzle** (a big picture in 2, then 4, then 6 pieces).
+
+## 👨‍👩‍👦 Parent tools (`js/parent.js`, Parent Corner — hold ⚙️ for 2 s)
+Everything stays on the iPad; nothing is sent anywhere.
+- **⏰ Play timer** per day (10 min – 1 hour). When time is up a sleepy dino says goodbye and the games rest; a grown-up holds the 🌙 for 3 seconds for 15 more minutes.
+- **📊 Play time this week** and his most played games.
+- **🌙 Quiet mode** for bedtime: softer sounds and voice, no big celebrations.
+- **🗣️ Language: English + Melayu** — colours, numbers, animals, shapes and praise are spoken in Malay ("Merah!", "Satu, dua, tiga!", "Pandai!") by the iPad's own Malay voice; everything else stays in the natural English voice. Needs the Malay voice on the iPad: *Settings → Accessibility → Spoken Content → Voices → Malay*.
+
 ## 🔤 Learning pack (`js/learn.js` + `js/strokes.js` + `css/learn.css`)
 Seven learning games (our own designs), grouped on the launcher under **Letters & Reading** and **Numbers**:
 - **✏️ Trace It** — trace A–Z, a–z, 1–10 and the child's own name, with a green start dot, direction arrow and stroke order (strokes in `js/strokes.js`). A little dino walks along the line, the ink sparkles, and a finished letter pops out its picture (A → 🍎 "A is for Apple"; 3 → three dinos). Stars mark finished letters.

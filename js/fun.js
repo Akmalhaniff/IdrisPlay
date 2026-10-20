@@ -55,6 +55,7 @@ const cel = el('div', 'cel', '<div class="cel-rays"></div><div class="cel-box"><
 document.body.appendChild(cel);
 let celAt = 0, celTimer = null;
 function celebrate(text){
+  if(window.quietMode) return;   // bedtime: no big pop-ups
   const now = Date.now();
   if(now - celAt < 4000) return;
   celAt = now;

@@ -112,14 +112,11 @@ a{text-decoration:none;color:inherit}
 .tool-btn.active{background:#0f172a;color:#fff;border-color:#0f172a}
 canvas#doodle{width:100%;height:420px;background:#fff;border-radius:18px;border:3px solid #f1f5f9;touch-action:none;display:block;box-shadow:inset 0 2px 8px rgba(0,0,0,.06);cursor:crosshair;display:block}
 @media(max-width:640px){canvas#doodle{height:360px}}
-.bubble-area{position:relative;height:400px;background:linear-gradient(180deg,#E0F2FE 0%, #BAE6FD 45%, #F0FDFA 100%);border-radius:22px;overflow:hidden;border:3px solid #fff;box-shadow:inset 0 4px 18px rgba(0,0,0,.06)}
 /* iPad / small-landscape: keep gameplay visible without scrolling */
 @media(max-width:1024px){
   .wrap{padding:.5rem .6rem 1.5rem}
   .card{padding:.7rem;border-radius:18px}
   .hint{margin:.1rem 0 .5rem;font-size:.82rem}
-  .bubble-area{height:52vh;min-height:300px;max-height:440px}
-  .fish-pond{height:52vh !important;min-height:300px;max-height:440px}
   canvas#doodle{height:320px !important}
   .abc-letter{font-size:4.5rem !important}
   .big-number{font-size:4.5rem !important}
@@ -517,8 +514,6 @@ canvas#doodle{width:100%;height:420px;background:#fff;border-radius:18px;border:
 .bubble{position:absolute;bottom:-80px;border-radius:50%;display:grid;place-items:center;cursor:pointer;user-select:none;box-shadow:inset -8px -10px 18px rgba(255,255,255,.7), 0 6px 12px rgba(0,0,0,.12);border:2px solid rgba(255,255,255,.8);animation:floatUp linear forwards; ;touch-action:manipulation;min-width:60px;min-height:60px;}
 @keyframes floatUp{to{transform:translateY(-520px) translateX(var(--drift,0px))}}
 .bubble:active{transform:scale(.9)!important}
-.bubble-score{position:absolute;top:.7rem;left:.8rem;background:#fff;border-radius:999px;padding:.45rem .85rem;font-weight:900;box-shadow:0 4px 12px rgba(0,0,0,.12);display:flex;gap:.4rem;align-items:center}
-.bubble-controls{position:absolute;top:.7rem;right:.8rem;display:flex;gap:.4rem}
 .mini-btn{border:none;background:#fff;border-radius:999px;padding:.45rem .75rem;font-weight:900;cursor:pointer;box-shadow:0 4px 10px rgba(0,0,0,.12)}
 .memory-stats{display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:.8rem;font-weight:900;color:#334155}
 .memory-stats span{background:#fff;border-radius:999px;padding:.45rem .8rem;box-shadow:0 3px 8px rgba(0,0,0,.07);border:2px solid #f1f5f9}
@@ -539,35 +534,18 @@ canvas#doodle{width:100%;height:420px;background:#fff;border-radius:18px;border:
 .pill-note{background:#FFF7ED;border:2px dashed #FDBA74;border-radius:14px;padding:.7rem .9rem;font-weight:800;color:#9a3412;margin-bottom:.9rem}
 
 /* Sorting drag-drop */
-.sort-wrap{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
 @media(max-width:700px){.sort-wrap{grid-template-columns:1fr}}
-.drop-zone{min-height:140px;border:3px dashed #e2e8f0;border-radius:18px;padding:.6rem;display:flex;flex-wrap:wrap;gap:.5rem;align-content:flex-start;background:#fff;transition:all .15s}
-.drop-zone.drag-over{border-color:var(--green);background:#F0FDF4;transform:scale(1.02)}
-.drop-zone h4{width:100%;font-weight:900;text-align:center;margin-bottom:.2rem}
 .draggable{touch-action:none;width:96px;height:96px;border-radius:14px;display:grid;place-items:center;font-size:3.0rem;cursor:grab;user-select:none;box-shadow:0 4px 10px rgba(0,0,0,.12);border:3px solid #fff;transition:transform .15s}
 .draggable:active{cursor:grabbing;transform:scale(1.08) rotate(2deg)}
 .draggable.dragging{opacity:.5;transform:rotate(6deg) scale(.95)}
-.sort-pool{display:flex;flex-wrap:wrap;gap:.8rem;justify-content:center;min-height:130px;padding:.8rem;padding:.6rem;background:#fff;border-radius:18px;border:3px solid #fff;box-shadow:0 6px 14px rgba(0,0,0,.06)}
 /* Puzzle jigsaw (2x2 toddler friendly) */
-.puzzle-board{display:grid;grid-template-columns:repeat(2,1fr);gap:.8rem;max-width:360px;margin:0 auto}
-.puzzle-slot{aspect-ratio:1;background:#fff;border:3px dashed #e2e8f0;border-radius:16px;display:grid;place-items:center;font-size:2.6rem;position:relative;overflow:hidden;transition:all .15s}
-.puzzle-slot.filled{border-style:solid;border-color:#22C55E;background:#F0FDF4}
-.puzzle-slot.drag-over{border-color:var(--blue);background:#EFF6FF;transform:scale(1.03)}
-.puzzle-tray{display:flex;flex-wrap:wrap;gap:.6rem;justify-content:center;margin-top:1rem;min-height:90px;padding:.6rem;background:#fff;border-radius:18px;border:3px solid #fff}
-.puzzle-piece{touch-action:none;width:84px;height:84px;border-radius:14px;display:grid;place-items:center;font-size:2.2rem;cursor:grab;background:#fff;border:3px solid #f1f5f9;box-shadow:0 6px 14px rgba(0,0,0,.08)}
-.puzzle-piece.placed{opacity:.25;pointer-events:none}
 /* Fishing */
-.fish-pond{position:relative;height:420px;width:100%;touch-action:pan-y;;max-width:100%;background:linear-gradient(180deg,#38BDF8 0%, #0EA5E9 55%, #1E40AF 100%);border-radius:22px;overflow:hidden;border:3px solid #fff;box-shadow:inset 0 6px 18px rgba(0,0,0,.15)}
 .fish{position:absolute;font-size:2.6rem;cursor:grab;user-select:none;filter:drop-shadow(0 4px 6px rgba(0,0,0,.2));animation:swim linear infinite; touch-action:none}
 @keyframes swim{0%{transform:translateX(-90px) scaleX(1)}45%{transform:translateX(calc(100vw - 40px)) scaleX(1)}50%{transform:translateX(calc(100vw - 40px)) scaleX(-1)}95%{transform:translateX(-90px) scaleX(-1)}100%{transform:translateX(-90px) scaleX(1)}}
-.fish-pond .fish:nth-child(odd){animation-direction:normal}
 .fish.slow{animation-duration:28s !important}
 .fish.medium{animation-duration:32s !important}
 .fish.slowest{animation-duration:38s !important}
 .fish.dragging{animation:none;z-index:10;transform:scale(1.2)}
-.pond-bucket{position:absolute;bottom:12px;right:50%;transform:translateX(50%);width:160px;height:90px;background:#FFD93D;border-radius:12px 12px 18px 18px;border:3px solid #fff;display:grid;place-items:center;font-weight:900;box-shadow:0 6px 14px rgba(0,0,0,.2)}
-.pond-bucket.drag-over{background:#6BCB77;transform:translateX(50%) scale(1.05) !important}
-.bubble-float{position:absolute;bottom:0;background:rgba(255,255,255,.6);border-radius:50%;animation:bubbleRise linear infinite}
 @keyframes bubbleRise{to{transform:translateY(-460px) translateX(20px);opacity:0}}
 /* Music */
 .piano{display:flex;gap:4px;justify-content:center;flex-wrap:wrap;margin-top:.8rem}
@@ -575,8 +553,6 @@ canvas#doodle{width:100%;height:420px;background:#fff;border-radius:18px;border:
 .key:active{transform:translateY(4px) scale(.98)}
 .key span.note{font-size:.75rem;color:#64748b}
 .key .emoji{font-size:1.6rem}
-.dancer{font-size:2.8rem;display:inline-block;animation:dance 0.6s ease infinite;opacity:0}
-.dancer.show{opacity:1}
 @keyframes dance{0%,100%{transform:translateY(0) rotate(-6deg)}50%{transform:translateY(-10px) rotate(6deg) scale(1.1)}}
 .floaty{animation:floaty 3s ease-in-out infinite}
 @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
@@ -594,68 +570,28 @@ canvas#doodle{width:100%;height:420px;background:#fff;border-radius:18px;border:
 .tab[data-tab="vehicles"].active{background:#E0F2FE;border-color:#0284C7}
 
 /* Peek-a-boo */
-.peek-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;max-width:650px;margin:0 auto}
 @media(max-width:550px){.peek-grid{gap:.65rem}}
 .peek-card{background:#fff;border-radius:24px;border:4px solid #f1f5f9;box-shadow:0 8px 20px rgba(0,0,0,.08);padding:1.2rem .8rem;text-align:center;cursor:pointer;position:relative;overflow:hidden;min-height:190px;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:transform .15s,box-shadow .15s;touch-action:manipulation}
 .peek-card:active{transform:scale(.95)}
-.peek-cover{font-size:4.2rem;line-height:1;transition:transform .3s cubic-bezier(.34,1.56,.64,1);filter:drop-shadow(0 4px 6px rgba(0,0,0,.1))}
-.peek-card.open .peek-cover{transform:scale(0);height:0;margin:0;opacity:0;display:none}
-.peek-creature{display:none;flex-direction:column;align-items:center;animation:creaturePop .4s cubic-bezier(.34,1.56,.64,1) forwards}
-.peek-card.open .peek-creature{display:flex}
 @keyframes creaturePop{0%{transform:scale(0) translateY(20px);opacity:0}70%{transform:scale(1.2) translateY(-8px)}100%{transform:scale(1) translateY(0);opacity:1}}
-.peek-creature .creature-emoji{font-size:4.4rem;line-height:1;filter:drop-shadow(0 6px 12px rgba(0,0,0,.15))}
-.peek-creature b{font-size:1.2rem;font-weight:900;margin-top:.4rem;color:#1e293b}
-.peek-creature small{font-size:.85rem;font-weight:800;color:#64748b}
-.peek-hint{font-size:.9rem;font-weight:900;margin-top:.4rem;color:#64748b}
 
 /* Feeding */
-.feed-wrap{max-width:640px;margin:0 auto;text-align:center}
-.buddy-picker{display:flex;gap:.6rem;justify-content:center;margin-bottom:.8rem;flex-wrap:wrap}
-.buddy-btn{border:3px solid #e2e8f0;background:#fff;border-radius:20px;padding:.5rem .9rem;font-size:1.8rem;cursor:pointer;transition:transform .12s,border-color .12s;box-shadow:0 4px 10px rgba(0,0,0,.06)}
-.buddy-btn.active{border-color:#F59E0B;background:#FEF3C7;transform:scale(1.1)}
-.buddy-stage{position:relative;background:linear-gradient(180deg,#FEF3C7 0%,#FFFBEB 100%);border-radius:28px;border:4px solid #FDE68A;padding:1.5rem 1rem 1rem;min-height:260px;box-shadow:0 8px 24px rgba(245,158,11,.15);display:flex;flex-direction:column;align-items:center;justify-content:center}
-.buddy-face{font-size:6.2rem;line-height:1;filter:drop-shadow(0 8px 16px rgba(0,0,0,.12));transition:transform .15s}
-.buddy-face.chewing{animation:buddyChew .45s ease-in-out infinite}
 @keyframes buddyChew{0%,100%{transform:scale(1) translateY(0)}50%{transform:scale(1.15,0.9) translateY(6px)}}
-.buddy-mouth-zone{margin-top:.5rem;background:#fff;border:3px dashed #F59E0B;border-radius:999px;padding:.5rem 1.4rem;font-weight:900;color:#B45309;font-size:1.05rem;display:inline-flex;align-items:center;gap:.4rem;box-shadow:0 4px 12px rgba(245,158,11,.15);transition:all .15s}
-.buddy-mouth-zone.drag-over{transform:scale(1.12);background:#FEF3C7;border-color:#D97706}
-.food-tray{display:grid;grid-template-columns:repeat(4,1fr);gap:.6rem;margin-top:1rem}
 @media(max-width:550px){.food-tray{grid-template-columns:repeat(3,1fr)}}
-.food-btn{background:#fff;border:3px solid #f1f5f9;border-radius:20px;padding:.8rem .4rem;text-align:center;font-size:2.6rem;cursor:pointer;box-shadow:0 6px 14px rgba(0,0,0,.08);transition:transform .12s,box-shadow .12s;touch-action:manipulation;position:relative}
-.food-btn:active{transform:scale(.92)}
-.food-btn span.food-name{display:block;font-size:.78rem;font-weight:900;color:#475569;margin-top:.2rem}
 
 /* Pop-It */
-.popit-stage{max-width:520px;margin:0 auto;text-align:center}
-.popit-board{background:linear-gradient(135deg,#FDE047 0%,#F472B6 50%,#60A5FA 100%);border-radius:32px;padding:1.2rem;box-shadow:0 12px 30px rgba(0,0,0,.15),inset 0 4px 10px rgba(255,255,255,.6);border:6px solid #fff;display:grid;grid-template-columns:repeat(5,1fr);gap:.7rem;margin:1rem auto;transition:transform .5s cubic-bezier(.34,1.56,.64,1);touch-action:manipulation}
 @media(max-width:480px){.popit-board{gap:.45rem;padding:.8rem;border-radius:24px}}
 .popit-bubble{aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 35% 35%, #fff 0%, currentColor 50%, rgba(0,0,0,.25) 100%);box-shadow:0 8px 14px rgba(0,0,0,.22),inset 0 -4px 8px rgba(0,0,0,.2),inset 0 4px 8px rgba(255,255,255,.8);cursor:pointer;display:grid;place-items:center;font-size:1.6rem;border:3px solid rgba(255,255,255,.7);transition:transform .12s,box-shadow .12s,background .12s;user-select:none;-webkit-user-select:none;touch-action:manipulation}
 .popit-bubble:active{transform:scale(.92)}
 .popit-bubble.popped{transform:scale(.88);background:radial-gradient(circle at 60% 60%, rgba(0,0,0,.25) 0%, currentColor 60%, #fff 100%) !important;box-shadow:inset 0 6px 12px rgba(0,0,0,.35),0 2px 4px rgba(0,0,0,.1) !important;opacity:.88}
 
 /* Vehicles */
-.vehicle-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:.8rem;margin-top:.8rem}
-.vehicle-card{background:#fff;border-radius:22px;border:3px solid #f1f5f9;box-shadow:0 8px 18px rgba(0,0,0,.08);padding:1rem .6rem;text-align:center;cursor:pointer;transition:transform .12s,border-color .12s;touch-action:manipulation;position:relative;overflow:hidden}
-.vehicle-card:active{transform:scale(.94)}
-.vehicle-card .ve{font-size:3.5rem;line-height:1;transition:transform .2s}
-.vehicle-card b{display:block;font-size:1.05rem;font-weight:900;margin-top:.4rem;color:#1e293b}
-.vehicle-card small{display:block;font-size:.78rem;font-weight:800;color:#F97316;margin-top:.15rem}
-.vehicle-stage{margin-top:1rem;height:140px;background:linear-gradient(180deg,#93C5FD 0%,#BAE6FD 55%,#475569 55%,#334155 100%);border-radius:24px;border:4px solid #fff;box-shadow:inset 0 4px 14px rgba(0,0,0,.15);position:relative;overflow:hidden}
-.stage-sky-clouds{position:absolute;top:10px;left:10px;font-size:1.4rem;opacity:.65;pointer-events:none}
-.stage-road-line{position:absolute;top:76%;left:0;right:0;height:4px;border-top:3px dashed #FDE047}
-.zoom-runner{position:absolute;bottom:8px;font-size:4.0rem;left:-100px;line-height:1;transition:none;filter:drop-shadow(0 6px 12px rgba(0,0,0,.35));cursor:pointer;touch-action:manipulation;z-index:5}
-.zoom-runner.driving{animation:vehicleBouncing .4s ease-in-out infinite}
 @keyframes vehicleBouncing{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-6px) rotate(2deg)}}
-.vehicle-card.driving-now{border-color:#F59E0B;background:#FEF3C7;transform:scale(1.04)}
 
 /* Touch sparkles */
 .touch-sparkle{position:fixed;pointer-events:none;font-size:1.8rem;transform:translate(-50%,-50%) scale(1);animation:sparkleFly .7s ease-out forwards;z-index:99999}
 @keyframes sparkleFly{0%{opacity:1;transform:translate(-50%,-50%) scale(0.6) rotate(0deg)}50%{transform:translate(-50%,-70%) scale(1.3) rotate(180deg)}100%{opacity:0;transform:translate(-50%,-100%) scale(0.4) rotate(360deg)}}
 
-.puzzle-piece.selected{outline:3px solid #EC4899; transform:scale(1.08); box-shadow:0 8px 18px rgba(236,72,153,.3)}
-.sort-pool .draggable.selected{outline:3px solid #22C55E; transform:scale(1.08)}
-.puzzle-slot{cursor:pointer}
-.drop-zone{cursor:pointer}
 
 /* ===================== APP SHELL ===================== */
 html,body{overscroll-behavior:none;touch-action:manipulation;-webkit-touch-callout:none;-webkit-user-select:none}
@@ -773,6 +709,7 @@ body.in-game .game-bar{display:flex;animation:barIn .3s ease-out}
 <link rel="stylesheet" href="css/dino.css" />
 <link rel="stylesheet" href="css/dino-more.css" />
 <link rel="stylesheet" href="css/play.css" />
+<link rel="stylesheet" href="css/classic.css" />
 <link rel="stylesheet" href="css/ipad.css" />
 </head>
 <body>
@@ -1050,18 +987,6 @@ body.in-game .game-bar{display:flex;animation:barIn .3s ease-out}
       <canvas id="doodle" width="1000" height="420"></canvas>
     </div>
   </section>
-  <section id="sec-bubbles" class="kid-section">
-    <div style="display:flex;align-items:center;gap:.6rem"><h2 class="section-title">🫧 Bubble Pop!</h2><button class="speak-btn" onclick="speak('Pop the bubbles!')" title="Speak">🔊</button></div>
-    <div class="card" style="padding:0;overflow:hidden">
-      <div class="bubble-area" id="bubbleArea">
-        <div class="bubble-score">⭐ Popped: <b id="bubbleScore">0</b></div>
-        <div class="bubble-controls">
-          <button class="mini-btn" onclick="startBubbles()">▶️ Start</button>
-          <button class="mini-btn" onclick="stopBubbles()">⏸️ Pause</button>
-        </div>
-      </div>
-    </div>
-  </section>
   <section id="sec-memory" class="kid-section">
     <div style="display:flex;align-items:center;gap:.6rem"><h2 class="section-title">🧩 Memory Match</h2><button class="speak-btn" onclick="speak('Memory game! Find pairs')" title="Speak">🔊</button></div>
     <div class="card">
@@ -1079,89 +1004,13 @@ body.in-game .game-bar{display:flex;animation:barIn .3s ease-out}
     </div>
   </section>
   
-  <section id="sec-puzzle" class="kid-section">
-    <div style="display:flex;align-items:center;gap:.6rem"><h2 class="section-title">🧩 Animal Puzzle</h2><button class="speak-btn" onclick="speak('Drag pieces to complete the lion puzzle')" title="Speak">🔊</button>
-      <span style="margin-left:auto;background:#fff;border-radius:999px;padding:.35rem .7rem;font-weight:900;border:2px solid #f1f5f9">🧩 <b id="puzzleProgress">0/4</b></span>
-    </div>
-    <div class="hint">👆 Tap a piece to auto-fit, or drag to the slot!</div>
-    <div class="card">
-      <div class="puzzle-board" id="puzzleBoard">
-        <div class="puzzle-slot" data-pos="0"></div>
-        <div class="puzzle-slot" data-pos="1"></div>
-        <div class="puzzle-slot" data-pos="2"></div>
-        <div class="puzzle-slot" data-pos="3"></div>
-      </div>
-      <div class="puzzle-tray" id="puzzleTray"></div>
-      <div style="text-align:center;margin-top:.8rem;display:flex;gap:.5rem;justify-content:center">
-        <button class="tool-btn" onclick="initPuzzle()">🔄 New Puzzle</button>
-        <button class="tool-btn" onclick="speak('You can do it!')">💡 Hint</button>
-      </div>
-      <div id="puzzleWin" style="display:none;text-align:center;margin-top:1rem">
-        <div style="font-size:2.2rem">🌟 You did it! 🌟</div><div style="font-weight:900;color:#16a34a">The lion is complete!</div><button class="btn-pill" style="background:var(--pink);color:#fff;margin-top:.6rem" onclick="initPuzzle()">Again!</button>
-      </div>
-    </div>
-  </section>
 
-  <section id="sec-fishing" class="kid-section">
-    <div style="display:flex;align-items:center;gap:.6rem"><h2 class="section-title">🎣 Fishing Pond</h2><button class="speak-btn" onclick="speak('Drag fish to the bucket!')" title="Speak">🔊</button>
-      <span style="margin-left:auto;background:#fff;border-radius:999px;padding:.35rem .7rem;font-weight:900;border:2px solid #f1f5f9">🐟 <b id="fishScore">Caught: 0/6</b></span>
-    </div>
-    <div class="hint">👆 Drag the fish to the yellow bucket!</div>
-    <div class="card" style="padding:0;overflow:hidden">
-      <div class="fish-pond" id="fishPond">
-        <div class="pond-bucket" id="pondBucket">🧺 Bucket</div>
-      </div>
-    </div>
-    <div style="text-align:center;margin-top:.7rem;display:flex;gap:.5rem;justify-content:center">
-      <button class="tool-btn" onclick="initFishing()">🌊 New Fish</button>
-      <button class="tool-btn" onclick="spawnFish()">➕ Add Fish</button>
-    </div>
-  </section>
 
   <!-- 🙈 PEEK-A-BOO -->
-  <section id="sec-peekaboo" class="kid-section">
-    <div style="display:flex;align-items:center;gap:.6rem;flex-wrap:wrap">
-      <h2 class="section-title">🙈 Peek-a-Boo Surprise!</h2>
-      <button class="speak-btn" onclick="speak('Peek a boo! Tap to see who is hiding!')" title="Speak">🔊</button>
-      <button class="tool-btn" style="margin-left:auto;background:var(--yellow)" onclick="hideAllPeek()">🙈 Hide All</button>
-    </div>
-    <div class="hint">👆 Tap a door, bush, box, or cloud to see who is hiding!</div>
-    <div class="peek-grid" id="peekGrid"></div>
-  </section>
 
   <!-- 🥕 FEED THE ANIMAL -->
-  <section id="sec-feeding" class="kid-section">
-    <div style="display:flex;align-items:center;gap:.6rem;flex-wrap:wrap">
-      <h2 class="section-title">🥕 Feed Your Buddy!</h2>
-      <button class="speak-btn" onclick="speak('Feed the hungry animal! Tap the yummy food!')" title="Speak">🔊</button>
-      <span style="margin-left:auto;background:#fff;border-radius:999px;padding:.35rem .8rem;font-weight:900;border:2px solid #FDE68A;color:#B45309">😋 Treats: <b id="treatsCount">0</b></span>
-    </div>
-    <div class="hint">👆 Tap any food to feed your hungry friend! Nom nom nom!</div>
-    <div class="card feed-wrap">
-      <div class="buddy-picker" id="buddyPicker"></div>
-      <div class="buddy-stage" id="buddyStage">
-        <div class="buddy-face" id="buddyFace">🐰</div>
-        <div id="buddyMouthZone" class="buddy-mouth-zone">👄 Open Wide! Tap Food Below 👇</div>
-        <div id="buddySpeech" style="font-size:1.15rem;font-weight:900;color:#B45309;margin-top:.4rem;min-height:28px">"I am hungry! Please feed me!"</div>
-      </div>
-      <div class="food-tray" id="foodTray"></div>
-    </div>
-  </section>
 
   <!-- 🫧 POP-IT FIDGET -->
-  <section id="sec-popit" class="kid-section">
-    <div style="display:flex;align-items:center;gap:.6rem;flex-wrap:wrap">
-      <h2 class="section-title">🫧 Rainbow Pop-It Fidget!</h2>
-      <button class="speak-btn" onclick="speak('Pop the rainbow bubbles!')" title="Speak">🔊</button>
-      <span style="margin-left:auto;background:#fff;border-radius:999px;padding:.35rem .8rem;font-weight:900;border:2px solid #FCE7F3;color:#DB2777">⭐ Popped: <b id="popitCount">0/20</b></span>
-      <button class="tool-btn" style="background:var(--pink);color:#fff" onclick="resetPopIt()">🔄 Flip Over</button>
-    </div>
-    <div class="hint">👆 Tap or slide your finger across bubbles to pop them down!</div>
-    <div class="card popit-stage">
-      <div class="popit-board" id="popitBoard"></div>
-      <div style="margin-top:.8rem;font-size:1.1rem;font-weight:900;color:#9333EA" id="popitCheer">Pop all 20 to flip the board! ✨</div>
-    </div>
-  </section>
 
   <!-- 🚗 VEHICLES -->
 
@@ -2008,14 +1857,8 @@ document.addEventListener('pointerdown', (e) => {
 
 function switchTab(name){
   try{ if(typeof stopAbcSong==='function') stopAbcSong(true); }catch(e){}
-  if(name==='peekaboo' && document.querySelectorAll('.peek-card').length===0){ try{ initPeekaboo(); }catch(e){} }
-  if(name==='feeding' && document.querySelectorAll('.buddy-btn').length===0){ try{ initFeeding(); }catch(e){} }
-  if(name==='popit' && document.querySelectorAll('.popit-bubble').length===0){ try{ initPopIt(); }catch(e){} }
-  if(name==='puzzle' && document.querySelectorAll('.puzzle-piece').length===0){ try{ initPuzzle(); }catch(e){} }
-  if(name==='fishing' && document.querySelectorAll('.fish').length===0){ try{ initFishing(); }catch(e){} }
   if(name==='abc'){ try{ setAbcMode(abcMode || 'boxes'); }catch(e){} }
   document.querySelectorAll('.kid-section').forEach(s=>s.classList.toggle('active',s.id==='sec-'+name));
-  if(name==='bubbles') startBubbles(); else stopBubbles();
   if(name==='draw'){ setTimeout(resizeCanvas, 80); setTimeout(resizeCanvas, 300); }
   try{ updateGameBar(name); }catch(e){}
   window.scrollTo(0,0);
@@ -2061,7 +1904,7 @@ const homeGames=[
   {id:'shapes',e:'⭐',n:'Shapes',c:'#FEF9C3',s:'Stars & hearts'},
   {id:'draw',e:'✏️',n:'Doodle Pad',c:'#FFE4D6',s:'Magic paint'},
   {id:'sorting',e:'🎯',n:'Toy Sorting',c:'#FEF3C7',s:'Sort by color'},
-  {id:'puzzle',e:'🧩',n:'Animal Puzzle',c:'#FCE7F3',s:'Easy 4-piece jigsaw'},
+  {id:'puzzle',e:'🧩',n:'Picture Puzzle',c:'#FCE7F3',s:'Easy 4-piece jigsaw'},
   {id:'memory',e:'🃏',n:'Memory Match',c:'#E0E7FF',s:'Find pairs'}
 ];
 const ICON_COLORS=[['#C084FC','#9333EA','#7E22CE'],['#FDE047','#FACC15','#CA8A04'],['#FDBA74','#FB923C','#EA580C'],['#F9A8D4','#EC4899','#BE185D'],['#7DD3FC','#38BDF8','#0284C7'],['#67E8F9','#22D3EE','#0891B2'],['#86EFAC','#4ADE80','#16A34A'],['#93C5FD','#3B82F6','#1D4ED8'],['#C4B5FD','#8B5CF6','#6D28D9'],['#FDA4AF','#FB7185','#E11D48'],['#6EE7B7','#34D399','#059669'],['#FDE68A','#FBBF24','#D97706'],['#FDBA74','#F97316','#C2410C'],['#FCA5A5','#F87171','#DC2626'],['#F0ABFC','#D946EF','#A21CAF'],['#A5B4FC','#6366F1','#4338CA']];
@@ -2090,8 +1933,7 @@ function tapAnimal(name,sound){
   try{ navigator.vibrate && navigator.vibrate(20); }catch(e){}
 }
 const shapes=[
-  {n:'Circle',e:'●',c:'#4D96FF'},{n:'Square',e:'■',c:'#FF6B9D'},{n:'Triangle',e:'▲',c:'#22C55E'},{n:'Star',e:'★',c:'#EAB308'},{n:'Heart',e:'♥',c:'#EF4444'},{n:'Diamond',e:'◆',c:'#06B6D4'},{n:'Oval',e:'⬭',c:'#A855F7'},{n:'Rectangle',e:'▬',c:'#F97316'},
-  {n:'Pentagon',e:'⬠',c:'#8B5CF6'},{n:'Hexagon',e:'⬡',c:'#EC4899'},{n:'Octagon',e:'⯃',c:'#F97316'},{n:'Crescent',e:'☽',c:'#06B6D4'}
+  {n:'Circle',e:'●',c:'#4D96FF'},{n:'Square',e:'■',c:'#FF6B9D'},{n:'Triangle',e:'▲',c:'#22C55E'},{n:'Star',e:'★',c:'#EAB308'},{n:'Heart',e:'♥',c:'#EF4444'},{n:'Diamond',e:'◆',c:'#06B6D4'},{n:'Oval',e:'⬭',c:'#A855F7'},{n:'Rectangle',e:'▬',c:'#F97316'}
 ];
 function renderShapes(){const g=document.getElementById('shapeGrid');g.innerHTML=shapes.map(s=>`<div class="shape-card" onclick="tapShape('${s.n}')"><div class="shape-preview" style="color:${s.c}">${s.e}</div><b>${s.n}</b></div>`).join('');}
 function tapShape(name){speak(name);blip(650,0.18,'sine',0.2);burstConfetti(8);}
@@ -3053,272 +2895,19 @@ function moveDraw(e){if(!drawing)return;e.preventDefault();const p=pos(e);const 
 function endDraw(){drawing=false;ctx.beginPath();ctx.globalCompositeOperation='source-over';}
 function clearCanvas(){const canvas=document.getElementById('doodle');ctx.clearRect(0,0,canvas.width,canvas.height);blip(400,0.12);burstConfetti(8,'#4D96FF');}
 function saveDrawing(){const canvas=document.getElementById('doodle');const a=document.createElement('a');a.download='my-drawing.png';a.href=canvas.toDataURL('image/png');a.click();speak('Saved your drawing!');burstConfetti(16);}
-let bubbleTimer=null,bubbleScore=0;
 const surpriseToys=[
   {e:'🧸',n:'Teddy'},{e:'🎈',n:'Balloon'},{e:'🚗',n:'Car'},{e:'🐶',n:'Puppy'},
   {e:'🐱',n:'Kitty'},{e:'🍓',n:'Strawberry'},{e:'🍦',n:'Ice cream'},{e:'🐥',n:'Duckling'},
   {e:'🍭',n:'Lollipop'},{e:'⭐',n:'Star'},{e:'💖',n:'Heart'},{e:'🦋',n:'Butterfly'}
 ];
-function startBubbles(){stopBubbles();bubbleTimer=setInterval(spawnBubble,420);spawnBubble();spawnBubble();spawnBubble();}
-function stopBubbles(){if(bubbleTimer)clearInterval(bubbleTimer);bubbleTimer=null;}
-function spawnBubble(){
-  const area=document.getElementById('bubbleArea');
-  if(!area||document.getElementById('sec-bubbles').classList.contains('active')===false)return;
-  const b=document.createElement('div');
-  b.className='bubble';
-  const size=72+Math.random()*40;
-  b.style.width=size+'px';
-  b.style.height=size+'px';
-  b.style.left=(Math.random()*Math.max(40,(area.clientWidth-size)))+'px';
-  b.style.background=`radial-gradient(circle at 30% 30%, rgba(255,255,255,.98), ${`hsl(${180+Math.random()*60} 90% 75%)`})`;
-  b.style.setProperty('--drift',(Math.random()*80-40)+'px');
-  b.style.animationDuration=(4.0+Math.random()*2.2)+'s';
-  const toy=surpriseToys[Math.floor(Math.random()*surpriseToys.length)];
-  b.dataset.toyName=toy.n;
-  b.dataset.toyEmoji=toy.e;
-  b.innerHTML=`<span style="font-size:${size*0.48}px;pointer-events:none;filter:drop-shadow(0 2px 4px rgba(0,0,0,.15))">${toy.e}</span>`;
-  b.addEventListener('pointerup', (e)=>{ e.preventDefault(); popBubble(b); });
-  b.addEventListener('click',()=>popBubble(b));
-  b.addEventListener('touchstart',()=>popBubble(b),{passive:true});
-  area.appendChild(b);
-  setTimeout(()=>{if(b.parentNode)b.remove();},7500);
-}
-function popBubble(el){
-  if(!el || !el.parentNode) return;
-  if(el.dataset.popped==='1') return; el.dataset.popped='1';
-  el.style.animation='none';
-  el.style.pointerEvents='none';
-  bubbleScore++; const sc=document.getElementById('bubbleScore'); if(sc) sc.textContent=bubbleScore;
-  soundPop();
-  const toyName = el.dataset.toyName || 'Bubble';
-  const toyEmoji = el.dataset.toyEmoji || '⭐';
-  speak('Pop! ' + toyName + '!');
-  burstConfetti(14,'#06B6D4');
-  try{ const r=el.getBoundingClientRect(); splashAt(r.left+r.width/2,r.top+r.height/2,'#7DD3FC'); }catch(e){}
-  
-  // Toy pops out and floats up
-  try{
-    const toyBurst = document.createElement('div');
-    toyBurst.textContent = toyEmoji;
-    toyBurst.style.position = 'fixed';
-    const r = el.getBoundingClientRect();
-    toyBurst.style.left = (r.left + r.width/2) + 'px';
-    toyBurst.style.top = (r.top + r.height/2) + 'px';
-    toyBurst.style.fontSize = '3.5rem';
-    toyBurst.style.pointerEvents = 'none';
-    toyBurst.style.zIndex = '99999';
-    toyBurst.style.transition = 'all 0.6s cubic-bezier(.34,1.56,.64,1)';
-    toyBurst.style.transform = 'translate(-50%, -50%) scale(1.6) rotate(15deg)';
-    document.body.appendChild(toyBurst);
-    setTimeout(() => {
-      toyBurst.style.opacity = '0';
-      toyBurst.style.transform = 'translate(-50%, -100%) scale(2.2) rotate(30deg)';
-      setTimeout(() => toyBurst.remove(), 600);
-    }, 250);
-  }catch(e){}
-
-  el.style.transform='scale(1.6)'; el.style.opacity='0'; el.style.transition='all .28s cubic-bezier(.34,1.56,.64,1)';
-  try{ navigator.vibrate && navigator.vibrate(40); }catch(e){}
-  setTimeout(()=>{ try{ el.remove(); }catch(e){} },300);
-}
-let memCards=[],memFlipped=[],memLock=false,memMoves=0,memMatched=0;const memEmojis=['🦖','🦕','🦁','🐘','🐢','🐸','🥚','🐻'];
-function initMemory(){memCards=[];memFlipped=[];memLock=false;memMoves=0;memMatched=0;document.getElementById('memMoves').textContent='0';document.getElementById('memMatched').textContent='0';document.getElementById('memWin').style.display='none';let pairs=[...memEmojis,...memEmojis];for(let i=pairs.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[pairs[i],pairs[j]]=[pairs[j],pairs[i]];}memCards=pairs.map((e,i)=>({id:i,emoji:e,flipped:false,matched:false}));renderMemory();}
+let memCards=[],memFlipped=[],memLock=false,memMoves=0,memMatched=0;const MEM_STEPS=[2,3,4,6,8];let memLevel=store.get('memLevel',0);const memEmojis=['🦖','🦕','🦁','🐘','🐢','🐸','🥚','🐻'];
+function initMemory(){memCards=[];memFlipped=[];memLock=false;memMoves=0;memMatched=0;document.getElementById('memMoves').textContent='0';document.getElementById('memMatched').textContent='0';document.getElementById('memWin').style.display='none';const n=MEM_STEPS[Math.min(memLevel,MEM_STEPS.length-1)];const pick=[...memEmojis].sort(()=>Math.random()-.5).slice(0,n);let pairs=[...pick,...pick];const mg=document.getElementById('memoryGrid');if(mg){mg.style.gridTemplateColumns=`repeat(${n<=2?2:n<=3?3:4},1fr)`;mg.dataset.pairs=n;}for(let i=pairs.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[pairs[i],pairs[j]]=[pairs[j],pairs[i]];}memCards=pairs.map((e,i)=>({id:i,emoji:e,flipped:false,matched:false}));renderMemory();}
 function renderMemory(){const g=document.getElementById('memoryGrid');g.innerHTML=memCards.map(c=>`<div class="mem-card ${c.flipped||c.matched?'flipped':''} ${c.matched?'matched':''}" onclick="flipMem(${c.id})">${c.flipped||c.matched?c.emoji:'<span class="back">❓</span>'}</div>`).join('');}
-function flipMem(id){if(memLock)return;const card=memCards.find(c=>c.id===id);if(!card||card.flipped||card.matched)return;card.flipped=true;blip(700,0.08);renderMemory();memFlipped.push(card);if(memFlipped.length===2){memMoves++;document.getElementById('memMoves').textContent=memMoves;const [a,b]=memFlipped;if(a.emoji===b.emoji){a.matched=b.matched=true;memMatched++;document.getElementById('memMatched').textContent=memMatched;memFlipped=[];renderMemory();popSound();burstConfetti(12,'#FFD93D');speak('Match!');if(memMatched===8){setTimeout(()=>{document.getElementById('memWin').style.display='block';speak('Amazing! You found all pairs!');burstConfetti(40);},350);}}else{memLock=true;setTimeout(()=>{a.flipped=b.flipped=false;memFlipped=[];memLock=false;renderMemory();blip(220,0.16,'sine',0.18);},780);}}}
+function flipMem(id){if(memLock)return;const card=memCards.find(c=>c.id===id);if(!card||card.flipped||card.matched)return;card.flipped=true;blip(700,0.08);renderMemory();memFlipped.push(card);if(memFlipped.length===2){memMoves++;document.getElementById('memMoves').textContent=memMoves;const [a,b]=memFlipped;if(a.emoji===b.emoji){a.matched=b.matched=true;memMatched++;document.getElementById('memMatched').textContent=memMatched;memFlipped=[];renderMemory();popSound();burstConfetti(12,'#FFD93D');speak('Match!');if(memMatched===memCards.length/2){memLevel++;store.set('memLevel',memLevel);setTimeout(()=>{speak('Amazing! You found all pairs!');burstConfetti(40);},350);setTimeout(()=>{if(currentScreen==='memory')initMemory();},3200);}}else{memLock=true;setTimeout(()=>{a.flipped=b.flipped=false;memFlipped=[];memLock=false;renderMemory();blip(220,0.16,'sine',0.18);},780);}}}
 renderColors();renderAnimals();renderShapes();renderNumbers();renderAbc();renderHome();initDraw();initMemory();window.addEventListener('resize',resizeCanvas);
 
-// === DRAG HELPERS (touch + mouse) ===
-let draggedEl=null;
-function enableDrag(container, onDropCheck){
-  // mouse
-  container.addEventListener('dragstart', e=>{
-    if(e.target.classList.contains('draggable')||e.target.classList.contains('puzzle-piece')||e.target.classList.contains('fish')){
-      draggedEl=e.target; e.target.classList.add('dragging'); e.dataTransfer.effectAllowed='move';
-    }
-  });
-  container.addEventListener('dragend', e=>{ if(e.target.classList.contains('dragging')) e.target.classList.remove('dragging'); draggedEl=null; });
-  container.addEventListener('dragover', e=>{ e.preventDefault(); const z=e.target.closest('.drop-zone,.puzzle-slot,.pond-bucket'); if(z) z.classList.add('drag-over'); });
-  container.addEventListener('dragleave', e=>{ const z=e.target.closest('.drop-zone,.puzzle-slot,.pond-bucket'); if(z) z.classList.remove('drag-over'); });
-  container.addEventListener('drop', e=>{
-    e.preventDefault(); const zone=e.target.closest('.drop-zone,.puzzle-slot,.pond-bucket'); if(zone) zone.classList.remove('drag-over');
-    if(draggedEl && zone && onDropCheck) onDropCheck(draggedEl, zone, e);
-    draggedEl=null;
-  });
-  // touch
-  let touchEl=null, clone=null, offsetX=0, offsetY=0;
-  container.addEventListener('touchstart', e=>{
-    const t=e.target.closest('.draggable,.puzzle-piece,.fish'); if(!t) return;
-    touchEl=t; const rect=t.getBoundingClientRect(); const touch=e.touches[0];
-    offsetX=touch.clientX-rect.left-rect.width/2; offsetY=touch.clientY-rect.top-rect.height/2;
-    clone=t.cloneNode(true); clone.style.position='fixed'; clone.style.left=(touch.clientX-offsetX-rect.width/2)+'px'; clone.style.top=(touch.clientY-offsetY)+'px';
-    clone.style.width=rect.width+'px'; clone.style.height=rect.height+'px'; clone.style.pointerEvents='none'; clone.style.opacity='.85'; clone.style.zIndex='9999'; clone.style.transform='rotate(4deg) scale(1.08)';
-    document.body.appendChild(clone); t.style.opacity='.3'; e.preventDefault();
-  }, {passive:false});
-  let startX=0,startY=0, isDragging=false;
-  container.addEventListener('touchstart', e=>{
-    const t=e.target.closest('.draggable,.puzzle-piece,.fish'); if(!t) return;
-    const touch=e.touches[0]; startX=touch.clientX; startY=touch.clientY; isDragging=false;
-  }, {passive:true});
-  container.addEventListener('touchmove', e=>{
-    if(!touchEl||!clone) return;
-    const touch=e.touches[0];
-    const dx=touch.clientX-startX, dy=touch.clientY-startY;
-    // Only start dragging if moved more than 10px and more horizontal than vertical (for puzzle/sort) or any for fish
-    if(!isDragging && Math.hypot(dx,dy) < 10) return;
-    isDragging=true;
-    clone.style.left=(touch.clientX-clone.offsetWidth/2)+'px'; clone.style.top=(touch.clientY-clone.offsetHeight/2)+'px';
-    const el=document.elementFromPoint(touch.clientX,touch.clientY);
-    const zone=el?el.closest('.drop-zone,.puzzle-slot,.pond-bucket'):null;
-    document.querySelectorAll('.drag-over').forEach(x=>x.classList.remove('drag-over'));
-    if(zone) zone.classList.add('drag-over');
-    // Only block scroll when dragging horizontally or when over a zone
-    if(Math.abs(dx) > Math.abs(dy) || zone) e.preventDefault();
-  }, {passive:false});
-  container.addEventListener('touchend', e=>{
-    if(!touchEl) return; const touch=e.changedTouches[0]; const el=document.elementFromPoint(touch.clientX,touch.clientY);
-    const zone=el?el.closest('.drop-zone,.puzzle-slot,.pond-bucket'):null;
-    document.querySelectorAll('.drag-over').forEach(x=>x.classList.remove('drag-over'));
-    if(clone) clone.remove(); touchEl.style.opacity='';
-    if(zone && touchEl && onDropCheck) onDropCheck(touchEl, zone, e);
-    clone=null; touchEl=null;
-  });
-}
 
-// === PUZZLE (Toddler Friendly 4-piece 2x2) ===
-const puzzleSets=[
-  {name:'lion', pieces:['🦁','👑','⭐','💛'], slots:['🦁','👑','⭐','💛']},
-  {name:'puppy', pieces:['🐶','🎾','🦴','💖'], slots:['🐶','🎾','🦴','💖']},
-  {name:'frog', pieces:['🐸','🌿','🍄','🌈'], slots:['🐸','🌿','🍄','🌈']},
-  {name:'ocean', pieces:['🐳','🌊','🐠','⭐'], slots:['🐳','🌊','🐠','⭐']},
-  {name:'farm', pieces:['🐮','🌻','🚜','🍎'], slots:['🐮','🌻','🚜','🍎']}
-];
-let curPuzzle=null, puzzleDone=0;
-function setPuzzleProgress(t){ const el=document.getElementById('puzzleProgress'); if(el) el.textContent=t; }
-function initPuzzle(){
-  try{
-    const set=puzzleSets[Math.floor(Math.random()*puzzleSets.length)]; curPuzzle=set; puzzleDone=0;
-    setPuzzleProgress('0/4'); const win=document.getElementById('puzzleWin'); if(win) win.style.display='none';
-    document.querySelectorAll('.puzzle-slot').forEach((s,i)=>{ 
-      s.dataset.pos=i; s.dataset.want=set.slots[i]; s.classList.remove('filled','drag-over'); 
-      s.innerHTML=`<span style="opacity:0.38;font-size:2.8rem;filter:grayscale(0.2)">${set.slots[i]}</span>`;
-      s.style.background='#FFFDF0';
-      s.style.borderColor='#FDE68A';
-    });
-    const tray=document.getElementById('puzzleTray'); if(!tray) return; tray.innerHTML='';
-    [...set.pieces].sort(()=>Math.random()-0.5).forEach((emoji,i)=>{
-      const d=document.createElement('div'); d.className='puzzle-piece'; d.draggable=true; d.textContent=emoji; d.dataset.emoji=emoji; d.dataset.correctPos=set.slots.indexOf(emoji);
-      d.style.animationDelay=(i*0.08)+'s'; 
-      // Tap piece automatically places into matching slot for toddlers!
-      d.addEventListener('click', (e)=>{
-        e.stopPropagation();
-        if(d.classList.contains('placed')) return;
-        const want = d.dataset.emoji;
-        const slot = document.querySelector(`.puzzle-slot[data-want="${want}"]`);
-        if(slot && !slot.classList.contains('filled')){
-          soundBoing();
-          handlePuzzleDrop(d, slot);
-        }
-      });
-      tray.appendChild(d);
-    });
-  }catch(e){ console.error('initPuzzle', e); }
-}
-function handlePuzzleDrop(el, slot){
-  if(!el||!slot) return;
-  if(slot.classList.contains('filled')) return;
-  const want=slot.dataset.want, have=el.dataset.emoji;
-  if(want===have){
-    slot.innerHTML=`<span style="font-size:2.8rem">${have}</span>`; slot.classList.add('filled'); slot.style.background='#F0FDF4'; slot.style.borderColor='#22C55E'; el.classList.add('placed'); el.style.outline=''; el.classList.remove('selected');
-    puzzleDone++;
-    setPuzzleProgress(puzzleDone+'/4');
-    blip(600+puzzleDone*90,0.4,'sine',0.55); burstConfetti(10,'#EC4899'); try{ slot.animate([{transform:'scale(0.8)'},{transform:'scale(1.12)'},{transform:'scale(1)'}],{duration:300}); }catch(e){}
-    speak(have);
-    try{ navigator.vibrate && navigator.vibrate(25); }catch(e){}
-    if(puzzleDone>=4){
-      const w=document.getElementById('puzzleWin'); if(w) w.style.display='block';
-      speak('Puzzle complete! Wonderful job!'); soundCheer(); burstConfetti(35);
-    }
-  } else {
-    blip(200,0.35,'sine',0.4); slot.classList.add('wobble'); setTimeout(()=>slot.classList.remove('wobble'),400);
-  }
-}
-
-// === FISHING (Tap to catch for 2yo + Drag supported) ===
-let fishCaught=0;
-function initFishing(){
-  const pond=document.getElementById('fishPond'); if(!pond) return;
-  fishCaught=0; const sc=document.getElementById('fishScore'); if(sc) sc.textContent='Caught: 0/6';
-  pond.querySelectorAll('.fish,.bubble-float').forEach(e=>e.remove());
-  for(let i=0;i<6;i++) setTimeout(spawnFish, i*400);
-  setTimeout(spawnBubbles, 200);
-}
-function catchFishDirect(fishEl){
-  if(!fishEl || fishEl.dataset.caught==='1') return;
-  fishEl.dataset.caught='1';
-  fishEl.style.animation='none';
-  fishEl.style.pointerEvents='none';
-  soundBoing();
-  const bucket=document.getElementById('pondBucket');
-  const r=fishEl.getBoundingClientRect();
-  splashAt(r.left+r.width/2, r.top+r.height/2, '#38BDF8');
-  fishEl.style.transition='all .55s cubic-bezier(.34,1.56,.64,1)';
-  fishEl.style.transform='translateY(-60px) rotate(360deg) scale(1.3)';
-  setTimeout(()=>{
-    if(bucket){
-      const bRect=bucket.getBoundingClientRect();
-      const pRect=fishEl.parentElement.getBoundingClientRect();
-      fishEl.style.left=(bRect.left - pRect.left + bRect.width/2 - 20)+'px';
-      fishEl.style.top=(bRect.top - pRect.top)+'px';
-      fishEl.style.transform='scale(0.3)';
-      fishEl.style.opacity='0';
-    }
-    setTimeout(()=>{
-      handleFishDrop(fishEl, bucket);
-    }, 250);
-  }, 280);
-}
-function spawnFish(){
-  const pond=document.getElementById('fishPond'); if(!pond) return;
-  const fishEmojis=['🐟','🐠','🐡','🐬','🐙','🐢','⭐','🦐'];
-  const speeds=['slow','medium','slowest'];
-  const e=fishEmojis[Math.floor(Math.random()*fishEmojis.length)];
-  const f=document.createElement('div'); f.className='fish '+speeds[Math.floor(Math.random()*speeds.length)]; f.draggable=true; f.textContent=e;
-  f.style.top=(20+Math.random()*260)+'px'; f.style.left='-90px';
-  const dur = 34 + Math.random()*12;
-  f.style.animationDuration=dur+'s'; f.style.animationDelay=(Math.random()*0.8)+'s';
-  f.style.fontSize=(3.0 + Math.random()*0.6)+'rem';
-  f.style.pointerEvents='auto';
-  // Tap or touch directly catches the fish!
-  f.addEventListener('pointerdown', (ev)=>{
-    ev.stopPropagation();
-    catchFishDirect(f);
-  });
-  f.addEventListener('click', (ev)=>{
-    ev.stopPropagation();
-    catchFishDirect(f);
-  });
-  pond.appendChild(f);
-}
-function spawnBubbles(){
-  const pond=document.getElementById('fishPond');
-  for(let i=0;i<8;i++){
-    const b=document.createElement('div'); b.className='bubble-float';
-    b.style.left=(Math.random()*90+5)+'%'; b.style.width=b.style.height=(10+Math.random()*16)+'px';
-    b.style.animationDuration=(3+Math.random()*3)+'s'; b.style.animationDelay=(Math.random()*2)+'s';
-    pond.appendChild(b);
-  }
-}
-function handleFishDrop(el, bucket){
-  if(!el || !el.classList || !el.classList.contains('fish')) return;
-  el.remove(); fishCaught++; const fs=document.getElementById('fishScore'); if(fs) fs.textContent='Caught: '+fishCaught+'/6';
-  soundPop(); burstConfetti(12,'#38BDF8'); speak('Caught a fish!'); if(bucket){ bucket.classList.add('wobble'); setTimeout(()=>bucket.classList.remove('wobble'),400); }
-  if(fishCaught>=6){ soundCheer(); speak('All fish caught! Splash! Great job!'); burstConfetti(30); setTimeout(initFishing,1800); }
-  setTimeout(spawnFish, 700);
-}
-
-// === NEW TODDLER GAMES ===
-
-// 1. PEEK-A-BOO
+// Data the newer games (js/classic.js) and the voice pack still use
 const peekSpots = [
   {id:'barn', name:'Barn', cover:'🏡', creatures:[
     {e:'🐶', n:'Puppy', s:'Woof woof! Happy doggy!'},
@@ -3341,66 +2930,14 @@ const peekSpots = [
     {e:'🦄', n:'Unicorn', s:'Sparkle neigh! Magic unicorn!'}
   ], bg:'#E0F2FE', hint:'Tickle the Fluffy Cloud!'}
 ];
-let peekCreatureIdx = [0, 0, 0, 0];
-function initPeekaboo(){
-  const g = document.getElementById('peekGrid');
-  if(!g) return;
-  g.innerHTML = peekSpots.map((spot, i) => {
-    const c = spot.creatures[peekCreatureIdx[i] % spot.creatures.length];
-    return `
-      <div class="peek-card" id="peekCard_${i}" style="background:${spot.bg}" onclick="tapPeek(${i})">
-        <div class="peek-cover" id="peekCover_${i}">${spot.cover}</div>
-        <div class="peek-creature" id="peekCreature_${i}">
-          <div class="creature-emoji">${c.e}</div>
-          <b>${c.n}</b>
-          <small>${c.s}</small>
-        </div>
-        <div class="peek-hint" id="peekHint_${i}">${spot.hint}</div>
-      </div>
-    `;
-  }).join('');
-}
-function tapPeek(i){
-  const card = document.getElementById('peekCard_' + i);
-  if(!card) return;
-  const spot = peekSpots[i];
-  const isOpen = card.classList.contains('open');
-  if(!isOpen){
-    card.classList.add('open');
-    soundBoing();
-    const c = spot.creatures[peekCreatureIdx[i] % spot.creatures.length];
-    speak('Peek a boo! ' + c.n + '! ' + c.s);
-    burstConfetti(14);
-    try{ navigator.vibrate && navigator.vibrate(30); }catch(e){}
-    peekCreatureIdx[i]++;
-  } else {
-    card.classList.remove('open');
-    blip(400, 0.2, 'sine', 0.4);
-    speak('Bye bye!');
-    setTimeout(() => {
-      const creatureEl = document.getElementById('peekCreature_' + i);
-      const nextC = spot.creatures[peekCreatureIdx[i] % spot.creatures.length];
-      if(creatureEl){
-        creatureEl.innerHTML = `<div class="creature-emoji">${nextC.e}</div><b>${nextC.n}</b><small>${nextC.s}</small>`;
-      }
-    }, 300);
-  }
-}
-function hideAllPeek(){
-  document.querySelectorAll('.peek-card.open').forEach(card => card.classList.remove('open'));
-  speak('All hiding!');
-  blip(350, 0.2);
-}
 
-// 2. FEEDING GAME
 const buddies = [
   {id:'bunny', name:'Bunny', face:'🐰', hungryFace:'🐰', chewingFace:'😋', love:'🥕', cheer:'Mmm crunchy carrot!'},
   {id:'monkey', name:'Monkey', face:'🐵', hungryFace:'🐵', chewingFace:'😋', love:'🍌', cheer:'Ooh ooh banana!'},
   {id:'panda', name:'Panda', face:'🐼', hungryFace:'🐼', chewingFace:'😍', love:'🍎', cheer:'Yummy juicy apple!'},
   {id:'kitty', name:'Kitty', face:'🐱', hungryFace:'🐱', chewingFace:'😻', love:'🐟', cheer:'Meow! Delicious fish!'}
 ];
-let currentBuddy = buddies[0];
-let treatsEaten = 0;
+
 const buddyFoods = [
   {e:'🥕', n:'Carrot', sound:'Crunch!'},
   {e:'🍌', n:'Banana', sound:'Yum yum!'},
@@ -3411,227 +2948,16 @@ const buddyFoods = [
   {e:'🍉', n:'Melon', sound:'Watermelon!'},
   {e:'🧀', n:'Cheese', sound:'Yummy cheese!'}
 ];
-function initFeeding(){
-  const bp = document.getElementById('buddyPicker');
-  if(bp){
-    bp.innerHTML = buddies.map((b, idx) => `
-      <button class="buddy-btn ${b.id===currentBuddy.id?'active':''}" onclick="selectBuddy(${idx})">${b.face} <span style="font-size:1rem;font-weight:900">${b.name}</span></button>
-    `).join('');
-  }
-  const ft = document.getElementById('foodTray');
-  if(ft){
-    ft.innerHTML = buddyFoods.map((f, idx) => `
-      <div class="food-btn draggable" draggable="true" onclick="feedBuddy(${idx}, event)">
-        ${f.e}
-        <span class="food-name">${f.n}</span>
-      </div>
-    `).join('');
-  }
-  updateBuddyDisplay();
-}
-function selectBuddy(idx){
-  currentBuddy = buddies[idx];
-  document.querySelectorAll('.buddy-btn').forEach((btn, i) => btn.classList.toggle('active', i === idx));
-  updateBuddyDisplay();
-  speak(currentBuddy.name + ' is hungry!');
-  soundBoing();
-}
-function updateBuddyDisplay(){
-  const faceEl = document.getElementById('buddyFace');
-  if(faceEl) faceEl.textContent = currentBuddy.face;
-  const sp = document.getElementById('buddySpeech');
-  if(sp) sp.textContent = `"${currentBuddy.name} wants ${currentBuddy.love}!"`;
-}
-function feedBuddy(foodIdx, event){
-  const food = buddyFoods[foodIdx];
-  const faceEl = document.getElementById('buddyFace');
-  const speechEl = document.getElementById('buddySpeech');
-  const mouthZone = document.getElementById('buddyMouthZone');
-  if(!faceEl || !speechEl) return;
 
-  soundChomp();
-  treatsEaten++;
-  const tc = document.getElementById('treatsCount');
-  if(tc) tc.textContent = treatsEaten;
-
-  faceEl.classList.add('chewing');
-  faceEl.textContent = currentBuddy.chewingFace;
-  if(mouthZone){
-    mouthZone.classList.add('drag-over');
-    mouthZone.textContent = '😋 Nom Nom Nom!';
-  }
-
-  if(event && (event.clientX || event.touches)){
-    const x = event.clientX || (event.touches && event.touches[0].clientX) || window.innerWidth/2;
-    const y = event.clientY || (event.touches && event.touches[0].clientY) || window.innerHeight/2;
-    splashAt(x, y, '#F59E0B');
-  }
-
-  burstConfetti(12, '#F59E0B');
-  try{ navigator.vibrate && navigator.vibrate(35); }catch(e){}
-
-  const praises = ['Yum yum!', 'Delicious!', 'Thank you!', 'Nom nom nom!', 'So yummy!'];
-  const praise = (food.e === currentBuddy.love) ? ('Super! ' + currentBuddy.cheer) : praises[treatsEaten % praises.length];
-  speechEl.textContent = `"${praise}"`;
-  speak(praise);
-
-  setTimeout(() => {
-    faceEl.classList.remove('chewing');
-    faceEl.textContent = currentBuddy.face;
-    if(mouthZone){
-      mouthZone.classList.remove('drag-over');
-      mouthZone.textContent = '👄 Open Wide! Tap Food Below 👇';
-    }
-    if(treatsEaten % 4 === 0){
-      soundBoing();
-      speechEl.textContent = '"Burp! Hehe, excuse me! 🤭"';
-      setTimeout(() => speak('Excuse me! Hehe!'), 400);
-      burstConfetti(20, '#F59E0B');
-    }
-  }, 1200);
-}
-
-// 3. POP-IT FIDGET TOY
-const popitRows = [
-  {color:'#F43F5E', bg:'#FFE4E6', items:['❤️','⭐','🍓','🎀','🌸']},
-  {color:'#EAB308', bg:'#FEF9C3', items:['☀️','🌟','🐥','🍌','🍋']},
-  {color:'#22C55E', bg:'#DCFCE7', items:['🍀','🍏','🐸','🐢','🍃']},
-  {color:'#06B6D4', bg:'#CFFAFE', items:['💎','🌊','🐳','🐬','💧']}
-];
-let popitState = Array(20).fill(false);
-function initPopIt(){
-  const board = document.getElementById('popitBoard');
-  if(!board) return;
-  board.innerHTML = '';
-  let idx = 0;
-  popitRows.forEach((row) => {
-    row.items.forEach((item) => {
-      const bubble = document.createElement('div');
-      bubble.className = 'popit-bubble' + (popitState[idx] ? ' popped' : '');
-      bubble.style.color = row.color;
-      bubble.textContent = item;
-      bubble.dataset.idx = idx;
-      const thisIdx = idx;
-      bubble.addEventListener('pointerdown', (e) => {
-        e.preventDefault();
-        tapPopItBubble(thisIdx);
-      });
-      board.appendChild(bubble);
-      idx++;
-    });
-  });
-  updatePopitCount();
-}
-function tapPopItBubble(idx){
-  soundPop();
-  popitState[idx] = !popitState[idx];
-  const board = document.getElementById('popitBoard');
-  if(!board) return;
-  const bubble = board.children[idx];
-  if(bubble){
-    bubble.classList.toggle('popped', popitState[idx]);
-    bubble.style.transform = popitState[idx] ? 'scale(0.86)' : 'scale(1.08)';
-    setTimeout(() => {
-      if(bubble) bubble.style.transform = popitState[idx] ? 'scale(0.88)' : 'scale(1)';
-    }, 120);
-    burstConfetti(6, bubble.style.color);
-  }
-  try{ navigator.vibrate && navigator.vibrate(25); }catch(e){}
-  updatePopitCount();
-}
-function updatePopitCount(){
-  const count = popitState.filter(Boolean).length;
-  const countEl = document.getElementById('popitCount');
-  if(countEl) countEl.textContent = `${count}/20`;
-  const cheerEl = document.getElementById('popitCheer');
-  if(count === 20){
-    if(cheerEl) cheerEl.textContent = '🎉 All popped! Flipped over! ✨';
-    soundCheer();
-    speak('All popped! Great job!');
-    burstConfetti(35);
-    const board = document.getElementById('popitBoard');
-    if(board){
-      board.style.transform = 'rotateY(180deg) scale(0.95)';
-      setTimeout(() => {
-        resetPopIt();
-        board.style.transform = 'rotateY(0deg) scale(1)';
-      }, 700);
-    }
-  } else if(count > 0 && cheerEl){
-    cheerEl.textContent = `✨ ${20 - count} more bubbles to pop!`;
-  }
-}
-function resetPopIt(){
-  popitState = Array(20).fill(false);
-  const board = document.getElementById('popitBoard');
-  if(board){
-    [...board.children].forEach(b => b.classList.remove('popped'));
-  }
-  updatePopitCount();
-  soundBoing();
-  speak('Flip it over! Pop again!');
-}
-
-// Click fallback for the puzzle
-let selectedPiece = null;
-function setupPuzzleClickFallback(){
-  document.getElementById('puzzleTray')?.addEventListener('click', e=>{
-    const piece = e.target.closest('.puzzle-piece');
-    if(!piece || piece.classList.contains('placed')) return;
-    const want = piece.dataset.emoji;
-    const slot = document.querySelector(`.puzzle-slot[data-want="${want}"]`);
-    if(slot && !slot.classList.contains('filled')){
-      soundBoing();
-      handlePuzzleDrop(piece, slot);
-    }
-  });
-}
-// Init new games
-setTimeout(()=>{ 
-  try{ initPeekaboo(); }catch(e){}
-  try{ initFeeding(); }catch(e){}
-  try{ initPopIt(); }catch(e){}
-  try{ initPuzzle(); }catch(e){ console.error('initPuzzle',e); }
-  try{ initFishing(); }catch(e){ console.error('initFishing',e); }
-  try{
-    // Robust drag setup - attach to each section
-    const sPuzzle = document.getElementById('sec-puzzle');
-    const sFish = document.getElementById('sec-fishing');
-    const sFeed = document.getElementById('sec-feeding');
-    if(sPuzzle) enableDrag(sPuzzle, handlePuzzleDrop);
-    if(sFish) enableDrag(sFish, handleFishDrop);
-    if(sFeed) enableDrag(sFeed, (el, zone) => {
-      const idx = [...document.querySelectorAll('#foodTray .food-btn')].indexOf(el);
-      if(idx >= 0) feedBuddy(idx, null);
-    });
-    // Also ensure puzzle click fallback works after drag setup
-    setupPuzzleClickFallback();
-  }catch(e){ console.error('drag setup',e); }
-  // also enable drop zones directly
-  document.querySelectorAll('.drop-zone,.puzzle-slot,.pond-bucket,.buddy-mouth-zone').forEach(z=>{
-    z.addEventListener('dragover', e=>e.preventDefault());
-  });
-}, 500);
   // Direct immediate init for toddler - ensure visible even if timeout delayed
   try{ initLettersInBoxes(); }catch(e){}
   try{ updateVoiceButtonUI(); }catch(e){}
   try{ prefetchAiAudio(); }catch(e){}
   try{ renderLiveLetterHero(); }catch(e){}
-  try{ initPeekaboo(); }catch(e){}
-  try{ initFeeding(); }catch(e){}
-  try{ initPopIt(); }catch(e){}
-  try{ initPuzzle(); }catch(e){}
-  try{ initFishing(); }catch(e){}
   try{ renderPhonics(); }catch(e){}
   try{ renderSingLyrics(-1); }catch(e){}
   try{ drawTraceGuide(); }catch(e){}
   // Immediate fallback for toddler - ensure games visible even if timeout missed
-  setTimeout(()=>{ try{ if(document.querySelectorAll('.peek-card').length===0) initPeekaboo(); }catch(e){} }, 700);
-  setTimeout(()=>{ try{ if(document.querySelectorAll('.food-btn').length===0) initFeeding(); }catch(e){} }, 750);
-  setTimeout(()=>{ try{ if(document.querySelectorAll('.popit-bubble').length===0) initPopIt(); }catch(e){} }, 800);
-  setTimeout(()=>{ try{ if(document.querySelectorAll('.puzzle-piece').length===0) initPuzzle(); }catch(e){} }, 950);
-  setTimeout(()=>{ try{ if(document.querySelectorAll('.fish').length===0) initFishing(); }catch(e){} }, 1000);
-  setTimeout(()=>{ try{ if(document.getElementById('sec-bubbles')?.classList.contains('active')) startBubbles(); }catch(e){} }, 1200);
 
 
 
@@ -3829,7 +3155,11 @@ updateInstallUI();
 <script src="js/dino.js"></script>
 <script src="js/dino-more.js"></script>
 <script src="js/play.js"></script>
+<script src="js/classic.js"></script>
 <script src="js/letter-drag.js"></script>
+<script src="js/toddler.js"></script>
+<script src="js/parent.js"></script>
+<script src="js/malay.js"></script>
 <script src="js/phrases.js"></script>
 </body>
 </html>
