@@ -79,7 +79,7 @@ addGame({
     this.item = item;
     const glyphs = item.split('').filter(ch => window.STROKES[ch]);
     const gap = 8, w = glyphs.length * 100 + (glyphs.length - 1) * gap;
-    this.svg.setAttribute('viewBox', `-8 -2 ${w + 16} 128`);
+    this.svg.setAttribute('viewBox', `-8 -26 ${w + 16} 152`);
     this.svg.innerHTML = `<line class="tr-line" x1="-8" x2="${w + 8}" y1="100" y2="100"/><line class="tr-line dash" x1="-8" x2="${w + 8}" y1="45" y2="45"/><line class="tr-line" x1="-8" x2="${w + 8}" y1="10" y2="10"/>`;
     this.strokes = [];
     glyphs.forEach((ch, gi) => {

@@ -513,8 +513,7 @@ canvas#doodle{width:100%;height:420px;background:#fff;border-radius:18px;border:
 .phonic-grid button{border:3px solid #f1f5f9;background:#fff;border-radius:16px;padding:.6rem 0;font-weight:900;cursor:pointer;font-size:1.1rem;box-shadow:0 4px 10px rgba(0,0,0,0.06);transition:all .15s}
 .phonic-grid button:active{transform:scale(0.92)}
 .phonic-grid button small{display:block;font-size:.7rem;color:#A855F7}
-#traceCanvas{width:100%;height:300px;background:#FFFDF5;border:3px dashed #FDE68A;border-radius:20px;touch-action:none;display:block}
-@media(max-width:1024px){#traceCanvas{height:260px}}
+#traceCanvas{width:100%;height:max(300px,calc(100dvh - 340px - env(safe-area-inset-top) - env(safe-area-inset-bottom)));background:#FFFDF5;border:3px dashed #FDE68A;border-radius:20px;touch-action:none;display:block}
 .bubble{position:absolute;bottom:-80px;border-radius:50%;display:grid;place-items:center;cursor:pointer;user-select:none;box-shadow:inset -8px -10px 18px rgba(255,255,255,.7), 0 6px 12px rgba(0,0,0,.12);border:2px solid rgba(255,255,255,.8);animation:floatUp linear forwards; ;touch-action:manipulation;min-width:60px;min-height:60px;}
 @keyframes floatUp{to{transform:translateY(-520px) translateX(var(--drift,0px))}}
 .bubble:active{transform:scale(.9)!important}
@@ -774,6 +773,7 @@ body.in-game .game-bar{display:flex;animation:barIn .3s ease-out}
 <link rel="stylesheet" href="css/dino.css" />
 <link rel="stylesheet" href="css/dino-more.css" />
 <link rel="stylesheet" href="css/play.css" />
+<link rel="stylesheet" href="css/ipad.css" />
 </head>
 <body>
 <!-- ===== APP SHELL: splash, game bar, parent zone ===== -->
@@ -2929,26 +2929,33 @@ function stopAbcSong(silent){
 let traceDrawn=0;
 function drawTraceGuide(){
   const cv=document.getElementById('traceCanvas'); if(!cv) return;
-  const r=cv.getBoundingClientRect(); const W=cv.width=600, H=cv.height=300;
-  const c=cv.getContext('2d'); c.clearRect(0,0,W,H);
+  // Draw at the canvas's real on-screen size (sharp on iPad, never stretched).
+  const r=cv.getBoundingClientRect(), dpr=Math.min(2, window.devicePixelRatio||1);
+  const W=Math.max(200, r.width), H=Math.max(200, r.height);
+  cv.width=Math.round(W*dpr); cv.height=Math.round(H*dpr);
+  const c=cv.getContext('2d'); c.setTransform(dpr,0,0,dpr,0,0); c.clearRect(0,0,W,H);
+  const F=Math.min(H*0.82, W*0.6);
   traceDrawn=0; const ms=document.getElementById('traceStar'); if(ms) ms.textContent='';
   const L=abc[abcIdx].l;
   c.save();
-  c.font='900 200px Fredoka, Nunito, sans-serif'; c.textAlign='center'; c.textBaseline='middle';
-  c.lineWidth=3; c.setLineDash([14,12]); c.strokeStyle='#C4B5FD';
-  c.strokeText(L, W/2, H/2+10);
+  c.font=`900 ${F}px Fredoka, Nunito, sans-serif`; c.textAlign='center'; c.textBaseline='middle';
+  c.lineWidth=Math.max(3, F/60); c.setLineDash([F/14,F/17]); c.strokeStyle='#C4B5FD';
+  c.strokeText(L, W/2, H/2+F*0.05);
   c.setLineDash([]); c.fillStyle='rgba(168,85,247,0.10)';
-  c.fillText(L, W/2, H/2+10);
+  c.fillText(L, W/2, H/2+F*0.05);
+  // start dot at the top-left of the letter
+  const m=c.measureText(L), dx=W/2-m.actualBoundingBoxLeft+F*0.08, dy=H/2+F*0.05-m.actualBoundingBoxAscent+F*0.08, R=Math.max(14, F/14);
   c.restore();
-  // start dot
-  c.fillStyle='#22C55E'; c.beginPath(); c.arc(W/2-60,H/2-70,14,0,7); c.fill();
-  c.fillStyle='#fff'; c.font='900 18px sans-serif'; c.textAlign='center'; c.fillText('▶',W/2-60,H/2-64);
+  c.fillStyle='#22C55E'; c.beginPath(); c.arc(dx,dy,R,0,7); c.fill();
+  c.fillStyle='#fff'; c.font=`900 ${R*1.2}px sans-serif`; c.textAlign='center'; c.textBaseline='middle'; c.fillText('▶',dx+R*0.08,dy);
+  cv._ink = Math.max(14, F/12);
   if(!cv.dataset.bound){
     cv.dataset.bound='1';
     let drawing=false, last=null;
-    const getP=e=>{ const rect=cv.getBoundingClientRect(); const p=e.touches?e.touches[0]:e; return {x:(p.clientX-rect.left)*(cv.width/rect.width), y:(p.clientY-rect.top)*(cv.height/rect.height)}; };
+    const getP=e=>{ const rect=cv.getBoundingClientRect(); const p=e.touches?e.touches[0]:e; return {x:p.clientX-rect.left, y:p.clientY-rect.top}; };
+    window.addEventListener('resize', ()=>{ if(abcMode==='trace' && currentScreen==='abc') drawTraceGuide(); });
     cv.addEventListener('pointerdown',e=>{ drawing=true; last=getP(e); getAudioCtx(); e.preventDefault(); try{cv.setPointerCapture(e.pointerId)}catch(_){} },{passive:false});
-    cv.addEventListener('pointermove',e=>{ if(!drawing) return; e.preventDefault(); const p=getP(e); const c2=cv.getContext('2d'); c2.strokeStyle='#EC4899'; c2.lineWidth=16; c2.lineCap='round'; c2.beginPath(); c2.moveTo(last.x,last.y); c2.lineTo(p.x,p.y); c2.stroke(); last=p; traceDrawn++; if(traceDrawn%35===0) blip(500+traceDrawn,0.25,'sine',0.4); if(traceDrawn===220){ const m=document.getElementById('traceStar'); if(m) m.innerHTML='🌟 <b>Super!</b> Live Letter came alive! 🎉'; burstConfetti(28,'#EC4899'); soundSqueak(); speakSlow(`Great job! Live Letter ${L} is alive!`); try{navigator.vibrate&&navigator.vibrate(30)}catch(_){} } },{passive:false});
+    cv.addEventListener('pointermove',e=>{ if(!drawing) return; e.preventDefault(); const p=getP(e); const c2=cv.getContext('2d'); c2.strokeStyle='#EC4899'; c2.lineWidth=cv._ink||16; c2.lineCap='round'; c2.beginPath(); c2.moveTo(last.x,last.y); c2.lineTo(p.x,p.y); c2.stroke(); last=p; traceDrawn++; if(traceDrawn%35===0) blip(500+traceDrawn,0.25,'sine',0.4); if(traceDrawn===220){ const m=document.getElementById('traceStar'); if(m) m.innerHTML='🌟 <b>Super!</b> Live Letter came alive! 🎉'; burstConfetti(28,'#EC4899'); soundSqueak(); speakSlow(`Great job! Live Letter ${L} is alive!`); try{navigator.vibrate&&navigator.vibrate(30)}catch(_){} } },{passive:false});
     ['pointerup','pointercancel','pointerleave'].forEach(ev=>cv.addEventListener(ev,()=>{ drawing=false; }));
   }
 }
@@ -3017,6 +3024,7 @@ let drawColor='#111827',tool='brush',drawing=false,ctx;
 function initDraw(){const pal=document.getElementById('palette');pal.innerHTML=paletteColors.map(c=>`<button style="background:${c};border-color:${c==='#FFFFFF'?'#e2e8f0':'#fff'}" onclick="pickColor('${c}',this)" class="${c===drawColor?'active':''}"></button>`).join('');const canvas=document.getElementById('doodle');ctx=canvas.getContext('2d');ctx.lineCap='round';ctx.lineJoin='round';resizeCanvas();['mousedown','touchstart'].forEach(ev=>canvas.addEventListener(ev,startDraw,{passive:false}));['mousemove','touchmove'].forEach(ev=>canvas.addEventListener(ev,moveDraw,{passive:false}));['mouseup','touchend','mouseleave','touchcancel'].forEach(ev=>canvas.addEventListener(ev,endDraw));document.getElementById('brushSize').addEventListener('input',e=>document.getElementById('brushSizeVal').textContent=e.target.value);}
 function resizeCanvas(){
   const canvas=document.getElementById('doodle'); if(!canvas) return;
+  canvas.style.width='100%';   // let it fit the screen again (e.g. after the iPad is rotated)
   const rect=canvas.getBoundingClientRect();
   // If hidden, rect is 0 - defer until visible
   if(rect.width < 50){ setTimeout(resizeCanvas, 200); return; }
@@ -3027,8 +3035,9 @@ function resizeCanvas(){
   const tmp=document.createElement('canvas'); 
   try{ tmp.width=canvas.width; tmp.height=canvas.height; tmp.getContext('2d').drawImage(canvas,0,0); }catch(e){}
   const dpr=window.devicePixelRatio||1;
-  canvas.width=Math.floor(rect.width*dpr); canvas.height=Math.floor(420*dpr);
-  canvas.style.width=rect.width+'px'; canvas.style.height='420px';
+  const H=Math.max(320, Math.min(900, Math.floor(window.innerHeight - rect.top - 24)));
+  canvas.width=Math.floor(rect.width*dpr); canvas.height=Math.floor(H*dpr);
+  canvas.style.width=rect.width+'px'; canvas.style.height=H+'px';
   ctx=canvas.getContext('2d'); ctx.scale(dpr,dpr); ctx.lineCap='round'; ctx.lineJoin='round'; ctx.lineWidth=12;
   ctx.strokeStyle=drawColor||'#111827';
   // Restore

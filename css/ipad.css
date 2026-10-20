@@ -1,0 +1,65 @@
+/* Idris Play — tablet layout: every game fills the whole screen (e.g. iPad 10th gen, 1180×820 points
+   landscape / 820×1180 portrait). Older card-style pages grow to fill the height; no side margins. */
+
+/* Use the full width on every screen, not a 1100px column */
+body.in-game .wrap{max-width:none}
+
+@media (min-width:700px) and (min-height:600px){
+  body.in-game{--avail:calc(100dvh - 84px - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 1.4rem)}
+  body.in-game .wrap{padding-bottom:calc(.6rem + env(safe-area-inset-bottom))}
+
+  /* Each older page becomes a full-height column; its main card grows into the free space */
+  body.in-game .kid-section.active:not(.ng-section):not(#sec-abc){display:flex;flex-direction:column;gap:.6rem;height:var(--avail)}
+  body.in-game .kid-section.active:not(.ng-section) > .hint{margin:0}
+  body.in-game .kid-section.active:not(.ng-section) > .card{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center}
+
+  /* 🎨 Colours: 12 big tiles, 6 × 2 (4 × 3 in portrait) */
+  #sec-colors .color-grid{flex:1;min-height:0;grid-template-columns:repeat(6,1fr);grid-auto-rows:1fr}
+  #sec-colors .color-tile{min-height:0;border-radius:28px}
+  #sec-colors .color-tile .swatch{width:min(13vmin,120px);height:min(13vmin,120px)}
+  #sec-colors .color-tile b{font-size:clamp(1.1rem,2.6vmin,1.8rem)}
+
+  /* ⭐ Shapes and 🦁 Animals: big cards */
+  #sec-shapes .grid-animals{flex:1;min-height:0;grid-template-columns:repeat(6,1fr);grid-auto-rows:1fr}
+  #sec-shapes .shape-card{display:flex;flex-direction:column;align-items:center;justify-content:center}
+  #sec-shapes .shape-preview{width:min(16vmin,140px);height:min(16vmin,140px);font-size:min(12vmin,6rem)}
+  #sec-shapes .shape-preview svg{width:100%;height:100%}
+  #sec-shapes .shape-card b{font-size:clamp(1.1rem,2.6vmin,1.7rem)}
+  #sec-animals .grid-animals{flex:1;min-height:0;overflow-y:auto;grid-template-columns:repeat(auto-fill,minmax(170px,1fr))}
+  #sec-animals .animal-card .emoji{font-size:clamp(3.6rem,8vmin,5.5rem)}
+  #sec-animals .animal-card b{font-size:1.3rem}
+
+  /* 🔢 Numbers: giant number */
+  #sec-numbers .big-number{font-size:min(34vmin,16rem);line-height:1}
+  #sec-numbers .num-word{font-size:clamp(2rem,5vmin,3.4rem)}
+  #sec-numbers .count-dots{font-size:clamp(2.4rem,6vmin,4rem)}
+
+  /* 🙈 Peek-a-boo: four big doors fill the screen */
+  #sec-peekaboo .peek-grid{flex:1;min-height:0;max-width:none;width:100%;grid-template-columns:repeat(4,1fr);grid-auto-rows:1fr}
+  #sec-peekaboo .peek-card{min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:1.3em}
+
+  /* 🫧 Bubbles, 🎣 Fishing: the play area takes all the height */
+  #sec-bubbles .bubble-area{flex:1;height:auto;max-height:none;min-height:0}
+  #sec-bubbles .card{padding:.5rem}
+  #sec-fishing .fish-pond{flex:1;height:auto !important;min-height:0}
+  #sec-fishing .card{padding:.5rem}
+
+  /* 🫧 Pop-it: big board */
+  #sec-popit .popit-stage{align-items:center}
+  #sec-popit .popit-board{width:min(100%,calc((var(--avail) - 9rem) * 1.25));max-width:none;gap:clamp(.7rem,2vmin,1.3rem);margin:0 auto}
+
+  /* 🧩 Puzzle, 🃏 Memory, 🥕 Feed Buddy: bigger pieces */
+  #sec-puzzle .puzzle-board{max-width:min(60vmin,560px)}
+  #sec-memory .memory-grid{max-width:min(calc(var(--avail) - 5rem),760px);margin:0 auto;width:100%}
+  #sec-feeding .feed-wrap{justify-content:space-around}
+
+  /* ✏️ Doodle pad: the canvas fills the space under the tools */
+  #sec-draw > .card{justify-content:flex-start}
+}
+
+/* Portrait iPad: fewer columns, more rows */
+@media (min-width:700px) and (min-height:600px) and (orientation:portrait){
+  #sec-colors .color-grid{grid-template-columns:repeat(3,1fr)}
+  #sec-shapes .grid-animals{grid-template-columns:repeat(3,1fr)}
+  #sec-peekaboo .peek-grid{grid-template-columns:repeat(2,1fr)}
+}
