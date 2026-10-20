@@ -1,7 +1,7 @@
 {
   "name": "Idris Play",
   "short_name": "Idris Play",
-  "description": "Play & learn games for little ones — colors, animals, ABC, puzzles, music and more.",
+  "description": "Dino-themed play & learn games for little ones — dinosaurs, colors, animals, ABC, puzzles, music and more.",
   "id": "./",
   "start_url": "./?app=1",
   "scope": "./",
@@ -12,7 +12,7 @@
   ],
   "orientation": "any",
   "background_color": "#FFF8E7",
-  "theme_color": "#FF8C42",
+  "theme_color": "#3FA34D",
   "categories": [
     "education",
     "games",

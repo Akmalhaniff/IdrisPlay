@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
 <title>Idris Play</title>
-<meta name="theme-color" content="#FF8C42" />
+<meta name="theme-color" content="#3FA34D" />
 <meta name="mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -661,7 +661,7 @@ canvas#doodle{width:100%;height:420px;background:#fff;border-radius:18px;border:
 /* ===================== APP SHELL ===================== */
 html,body{overscroll-behavior:none;touch-action:manipulation;-webkit-touch-callout:none;-webkit-user-select:none}
 html{background:var(--bg)}
-body{min-height:100dvh;background:radial-gradient(circle at 15% 0%,#FFE9C7 0,transparent 40%),radial-gradient(circle at 100% 30%,#FFE1EC 0,transparent 35%),var(--bg);background-attachment:fixed}
+body{min-height:100dvh;background:radial-gradient(circle at 15% 0%,#E3F8D2 0,transparent 40%),radial-gradient(circle at 100% 30%,#FFF1C7 0,transparent 35%),var(--bg);background-attachment:fixed}
 img{-webkit-user-drag:none}
 .kids-footer{display:none}
 .wrap{min-height:100dvh;padding-top:calc(.6rem + env(safe-area-inset-top));padding-left:max(.7rem,env(safe-area-inset-left));padding-right:max(.7rem,env(safe-area-inset-right));padding-bottom:calc(2rem + env(safe-area-inset-bottom))}
@@ -673,12 +673,12 @@ body.in-game .wrap{padding-top:calc(84px + env(safe-area-inset-top))}
 @keyframes homeIn{from{opacity:0;transform:scale(1.04)}to{opacity:1;transform:none}}
 
 /* Splash */
-.app-splash{position:fixed;inset:0;z-index:20000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;background:linear-gradient(160deg,#FFB84D 0%,#FF6B9D 55%,#9D65C9 100%);color:#fff;cursor:pointer;overflow:hidden;transition:opacity .45s,transform .45s}
+.app-splash{position:fixed;inset:0;z-index:20000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;background:linear-gradient(160deg,#FFC94D 0%,#5FC46B 50%,#1F8A5B 100%);color:#fff;cursor:pointer;overflow:hidden;transition:opacity .45s,transform .45s}
 .app-splash.hide{opacity:0;transform:scale(1.15);pointer-events:none}
 .splash-logo{width:min(42vw,200px);height:auto;border-radius:24%;box-shadow:0 18px 40px rgba(0,0,0,.25);animation:logoBob 1.6s ease-in-out infinite alternate}
 @keyframes logoBob{from{transform:translateY(-6px) rotate(-3deg)}to{transform:translateY(6px) rotate(3deg)}}
 .splash-title{font-family:'Fredoka',sans-serif;font-weight:700;font-size:clamp(2.4rem,9vw,4rem);letter-spacing:-.02em;text-shadow:0 4px 0 rgba(0,0,0,.15)}
-.splash-play{width:120px;height:120px;border-radius:50%;border:none;background:#fff;color:#FF6B9D;font-size:3.2rem;padding-left:10px;box-shadow:0 10px 0 #E2E8F0,0 18px 40px rgba(0,0,0,.25);animation:playPulse 1s ease-in-out infinite alternate;cursor:pointer}
+.splash-play{width:120px;height:120px;border-radius:50%;border:none;background:#fff;color:#2E9A4F;font-size:3.2rem;padding-left:10px;box-shadow:0 10px 0 #E2E8F0,0 18px 40px rgba(0,0,0,.25);animation:playPulse 1s ease-in-out infinite alternate;cursor:pointer}
 @keyframes playPulse{from{transform:scale(1)}to{transform:scale(1.1)}}
 .splash-tip{font-weight:900;font-size:1.2rem;opacity:.95}
 .splash-floaters span{position:absolute;font-size:2.4rem;opacity:.55;animation:floatUp 7s linear infinite}
@@ -702,12 +702,12 @@ body.in-game .game-bar{display:flex;animation:barIn .3s ease-out}
 
 /* Home */
 .home-hero{display:flex;align-items:center;gap:.8rem;margin:.2rem 0 1.1rem}
-.mascot{width:84px;height:84px;flex-shrink:0;border-radius:50%;border:5px solid #fff;background:linear-gradient(180deg,#FFE9A8,#FFD93D);font-size:3rem;line-height:1;box-shadow:0 8px 20px rgba(0,0,0,.12);cursor:pointer;animation:mascotIdle 2.4s ease-in-out infinite}
+.mascot{width:84px;height:84px;flex-shrink:0;border-radius:50%;border:5px solid #fff;background:linear-gradient(180deg,#C8F5B0,#6BCB77);font-size:3rem;line-height:1;box-shadow:0 8px 20px rgba(0,0,0,.12);cursor:pointer;animation:mascotIdle 2.4s ease-in-out infinite}
 .mascot.talk{animation:mascotTalk .25s ease-in-out 6 alternate}
 @keyframes mascotIdle{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg) translateY(-3px)}}
 @keyframes mascotTalk{from{transform:scale(1)}to{transform:scale(1.12) rotate(6deg)}}
 .hello{flex:1;min-width:0}
-.hello-hi{font-family:'Fredoka',sans-serif;font-weight:700;font-size:clamp(1.8rem,7vw,2.6rem);line-height:1.05;color:#FF6B9D;text-shadow:0 3px 0 #FFE1EC}
+.hello-hi{font-family:'Fredoka',sans-serif;font-weight:700;font-size:clamp(1.8rem,7vw,2.6rem);line-height:1.05;color:#2E9A4F;text-shadow:0 3px 0 #D9F7D0}
 .hello-sub{font-weight:900;color:#64748b;font-size:clamp(.95rem,3.5vw,1.15rem)}
 .launcher{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:1rem .6rem;padding-bottom:5rem}
 @media(min-width:700px){.launcher{grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:1.4rem 1rem}}
@@ -771,21 +771,21 @@ body.in-game .game-bar{display:flex;animation:barIn .3s ease-out}
 </style>
 <link rel="stylesheet" href="css/fun.css" />
 <link rel="stylesheet" href="css/learn.css" />
+<link rel="stylesheet" href="css/dino.css" />
 </head>
 <body>
 <!-- ===== APP SHELL: splash, game bar, parent zone ===== -->
 <div id="appSplash" class="app-splash" onclick="startApp()">
-  <div class="splash-floaters" aria-hidden="true"><span>⭐</span><span>🎈</span><span>🦁</span><span>🎵</span><span>🌈</span><span>🐟</span><span>🚗</span><span>🫧</span></div>
+  <div class="splash-floaters" aria-hidden="true"><span>🦕</span><span>🥚</span><span>🦖</span><span>🌴</span><span>🦴</span><span>🌋</span><span>🦖</span><span>🍃</span></div>
   <img class="splash-logo" src="icons/icon.svg" alt="" />
   <div class="splash-title">Idris Play</div>
   <button class="splash-play" aria-label="Play">▶</button>
-  <div class="splash-tip">Tap to play!</div>
+  <div class="splash-tip">🦖 Roar! Tap to play!</div>
 </div>
 
 <div class="game-bar" id="gameBar">
   <button class="gb-home" onclick="goHome()" aria-label="Home">🏠</button>
   <button class="gb-title" id="gbTitle" onclick="speak(this.dataset.say||'')"><span id="gbEmoji">🎮</span> <span id="gbName">Game</span></button>
-  <button class="star-pill" onclick="openStickers()" aria-label="My stickers">⭐ <b class="starCount">0</b></button>
 </div>
 
 <div id="parentPanel" class="pp-backdrop" style="display:none" onclick="if(event.target===this) closeParent()">
@@ -800,30 +800,18 @@ body.in-game .game-bar{display:flex;animation:barIn .3s ease-out}
     <div class="pp-row"><span>Full screen</span><button class="btn-pill btn-mute" onclick="toggleFullscreen()">⛶ Toggle</button></div>
     <div class="pp-row" id="ppInstallRow"><span>Install on this device</span><button class="btn-pill pp-install" id="ppInstall" onclick="installApp()">📲 Install</button></div>
     <div class="pp-help" id="ppInstallHelp"></div>
-    <div class="pp-row"><span>Stars: <b class="starCount">0</b></span><button class="btn-pill btn-mute" onclick="resetStars()">↺ Reset stars</button></div>
     <p class="pp-note">Tip: On Android/iPad, use <b>Screen pinning</b> / <b>Guided Access</b> so little hands can't leave the app. No ads, no tracking.</p>
   </div>
 </div>
 
-<div id="stickerBook" class="pp-backdrop" style="display:none" onclick="if(event.target===this) closeStickers()">
-  <div class="sticker-card">
-    <div class="pp-head"><h3>⭐ My Stickers</h3><button class="pp-x big" onclick="closeStickers()">✕</button></div>
-    <div class="sticker-progress"><div class="sticker-bar"><i id="stickerBar"></i></div><span id="stickerNext"></span></div>
-    <div class="sticker-grid" id="stickerGrid"></div>
-  </div>
-</div>
-
-<div id="stickerToast" class="sticker-toast" aria-live="polite"></div>
-
 <div class="wrap">
   <section id="sec-home" class="kid-section active">
     <div class="home-hero">
-      <button class="mascot" id="mascot" onclick="mascotTap()" aria-label="Say hello">🦁</button>
+      <button class="mascot" id="mascot" onclick="mascotTap()" aria-label="Say hello">🦖</button>
       <div class="hello">
         <div class="hello-hi">Hi <span class="kidName">Idris</span>!</div>
-        <div class="hello-sub">What shall we play?</div>
+        <div class="hello-sub">Welcome to Dino Land! 🦕</div>
       </div>
-      <button class="star-pill big" onclick="openStickers()" aria-label="My stickers">⭐ <b class="starCount">0</b></button>
     </div>
     <div class="launcher" id="homeGrid"></div>
     <button class="parent-gear" id="parentGear" aria-label="Parent corner (hold)"><svg viewBox="0 0 40 40"><circle class="ring" cx="20" cy="20" r="17"/></svg><span>⚙️</span></button>
@@ -1286,10 +1274,7 @@ const store = {
   set(k, v){ try{ localStorage.setItem('idp_'+k, JSON.stringify(v)); }catch(e){} }
 };
 let kidName = store.get('name', 'Idris');
-let stars = store.get('stars', 0);
 let currentScreen = 'home';
-const STICKERS = ['🦁','🐶','🐱','🦄','🐸','🐼','🐧','🦋','🐝','🐞','🐢','🐙','🦕','🦖','🐳','🦊','🐰','🐻','🐨','🐯','🚀','🚒','🚂','🚁','🎈','🌈','🍦','🍩','🍓','🍉','🌻','🎁','⚽','🎸','👑','🏰'];
-const STARS_PER_STICKER = 5;
 
 function todayKey(){ const d = new Date(); return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate(); }
 function playedToday(id){ const p = store.get('played', {}); return p.day === todayKey() && (p.ids||[]).includes(id); }
@@ -1530,7 +1515,8 @@ setTimeout(pickKidVoice, 600);
 
 // Mixer: every game sound effect goes through one limiter, so when little fingers trigger many sounds
 // at once they don't stack into a loud, distorted mess. The voice has its own channel, and sound
-// effects are turned down a little while she is talking so her words stay clear.
+// effects are turned down while she is talking so her words stay clear. The voice is boosted and
+// then limited, so it is loud on an iPad speaker without crackling.
 function setupAudioMixer(ctx){
   try{
     const speakers = ctx.destination;
@@ -1541,7 +1527,11 @@ function setupAudioMixer(ctx){
     sfxBus.gain.value = 0.85;
     sfxBus.connect(limiter); limiter.connect(speakers);
     const voiceBus = ctx.createGain();
-    voiceBus.connect(speakers);
+    const voiceLimiter = ctx.createDynamicsCompressor();
+    voiceLimiter.threshold.value = -10; voiceLimiter.knee.value = 4; voiceLimiter.ratio.value = 14;
+    voiceLimiter.attack.value = 0.002; voiceLimiter.release.value = 0.12;
+    voiceBus.gain.value = 2.6;
+    voiceBus.connect(voiceLimiter); voiceLimiter.connect(speakers);
     // All existing sound code connects to ctx.destination — point that at the limited effects channel.
     Object.defineProperty(ctx, 'destination', { value: sfxBus, configurable: true });
     ctx.sfxBus = sfxBus; ctx.voiceBus = voiceBus;
@@ -1618,7 +1608,7 @@ function stopVoiceSource(fade = 0.06){
 
 // Turn sound effects down a little while the voice talks, so her words are clear.
 function duckEffects(on){
-  try{ const ctx = getAudioCtx(); if(ctx && ctx.sfxBus) ctx.sfxBus.gain.setTargetAtTime(on ? 0.45 : 0.85, ctx.currentTime, 0.05); }catch(e){}
+  try{ const ctx = getAudioCtx(); if(ctx && ctx.sfxBus) ctx.sfxBus.gain.setTargetAtTime(on ? 0.3 : 0.85, ctx.currentTime, 0.05); }catch(e){}
 }
 
 const sleep = ms => new Promise(r => setTimeout(r, ms));
@@ -2126,7 +2116,7 @@ function switchTab(name){
   };
   speak(titles[name]||(homeGames.find(h=>h.id===name)||{}).n||name);
   if(name === 'colors') prefetchAiAudio(['Red','Blue','Yellow','Green','Orange','Purple','Pink']);
-  else if(name === 'animals') prefetchAiAudio(['Dog','Cat','Lion','Elephant','Cow','Duck','Sheep','Pig']);
+  else if(name === 'animals') prefetchAiAudio(['Dog','Cat','Lion','Elephant','Cow','Duck','Sheep','Dinosaur']);
   else if(name === 'shapes') prefetchAiAudio(['Circle','Square','Triangle','Star','Heart']);
   else if(name === 'vehicles') prefetchAiAudio(['Car','Fire Truck','Train','Plane','Boat']);
   else if(name === 'abc') prefetchAiAudio(['A','B','C','D','Apple','Ball','Cat','Dog']);
@@ -2152,8 +2142,8 @@ const homeGames=[
 ];
 const ICON_COLORS=[['#C084FC','#9333EA','#7E22CE'],['#FDE047','#FACC15','#CA8A04'],['#FDBA74','#FB923C','#EA580C'],['#F9A8D4','#EC4899','#BE185D'],['#7DD3FC','#38BDF8','#0284C7'],['#67E8F9','#22D3EE','#0891B2'],['#86EFAC','#4ADE80','#16A34A'],['#93C5FD','#3B82F6','#1D4ED8'],['#C4B5FD','#8B5CF6','#6D28D9'],['#FDA4AF','#FB7185','#E11D48'],['#6EE7B7','#34D399','#059669'],['#FDE68A','#FBBF24','#D97706'],['#FDBA74','#F97316','#C2410C'],['#FCA5A5','#F87171','#DC2626'],['#F0ABFC','#D946EF','#A21CAF'],['#A5B4FC','#6366F1','#4338CA']];
 // Launcher sections: letters first (his favourite), then play, then numbers/colours/shapes.
-const HOME_CATS=[['abc','🔤 Letters & Reading'],['play','🎈 Play & Make'],['123','🔢 Numbers, Colours & Shapes']];
-const HOME_CAT_OF={abc:'abc',numbers:'123',shapes:'123',colors:'123',sorting:'123',memory:'123',puzzle:'123'};
+const HOME_CATS=[['dino','🦖 Dino Land'],['abc','🔤 Letters & Reading'],['play','🎈 Play & Make'],['123','🔢 Numbers, Colours & Shapes']];
+const HOME_CAT_OF={eggs:'dino',abc:'abc',numbers:'123',shapes:'123',colors:'123',sorting:'123',memory:'123',puzzle:'123'};
 const homeCat=h=>h.cat||HOME_CAT_OF[h.id]||'play';
 function renderHome(){const g=document.getElementById('homeGrid');if(!g)return;let n=0;g.innerHTML=HOME_CATS.map(([cat,title])=>{const list=homeGames.filter(h=>homeCat(h)===cat);if(!list.length)return '';return `<div class="launch-head" style="--i:${n}">${title}</div>`+list.map(h=>{const i=n++;const c=h.colors||ICON_COLORS[i%ICON_COLORS.length];const isNew=h.isNew&&!store.get('seen',[]).includes(h.id);return `<button class="app-icon" style="--i:${i};--c1:${c[0]};--c2:${c[1]};--c3:${c[2]}" data-game="${h.id}" onclick="launchGame('${h.id}',this)"><span class="app-tile"><span class="app-emoji">${h.e}</span>${isNew?'':playedToday(h.id)?'':'<span class="app-new"></span>'}</span>${isNew?'<span class="app-ribbon">NEW</span>':''}<span class="app-label">${h.n}</span></button>`;}).join('');}).join('');}
 const colors=[{name:'Red',hex:'#EF4444'},{name:'Blue',hex:'#3B82F6'},{name:'Yellow',hex:'#EAB308'},{name:'Green',hex:'#22C55E'},{name:'Orange',hex:'#F97316'},{name:'Purple',hex:'#A855F7'},{name:'Pink',hex:'#EC4899'},{name:'Brown',hex:'#92400E'},{name:'Black',hex:'#111827'},{name:'White',hex:'#F8FAFC',text:'#334155'},{name:'Cyan',hex:'#06B6D4'},{name:'Lime',hex:'#84CC16'}];
@@ -2161,7 +2151,7 @@ function renderColors(){const g=document.getElementById('colorGrid');g.innerHTML
 function tapColor(name,hex,e){speak(name);blip(name==='Red'?300:name==='Blue'?400:name==='Yellow'?520:480,0.22,'sine',0.2);const x=e.clientX||window.innerWidth/2,y=e.clientY||window.innerHeight/2;splashAt(x,y,hex);burstConfetti(14,hex);}
 function burstConfetti(n=12,color){const c=document.getElementById('confetti');for(let i=0;i<n;i++){const el=document.createElement('i');el.style.left=(Math.random()*100)+'vw';el.style.background=color||`hsl(${Math.random()*360} 90% 60%)`;el.style.animationDuration=(0.9+Math.random()*0.7)+'s';el.style.transform=`translateY(0) rotate(${Math.random()*360}deg)`;el.style.opacity='0.9';c.appendChild(el);setTimeout(()=>el.remove(),1600);}}
 const animals=[
-  {e:'🐶',n:'Dog',s:'Woof woof!'},{e:'🐱',n:'Cat',s:'Meow!'},{e:'🦁',n:'Lion',s:'Roar!'},{e:'🐘',n:'Elephant',s:'Trumpet!'},{e:'🐒',n:'Monkey',s:'Ooh ooh!'},{e:'🐄',n:'Cow',s:'Moo!'},{e:'🦆',n:'Duck',s:'Quack!'},{e:'🐸',n:'Frog',s:'Ribbit!'},{e:'🐦',n:'Bird',s:'Tweet tweet!'},{e:'🐟',n:'Fish',s:'Blub blub!'},{e:'🐻',n:'Bear',s:'Grrr!'},{e:'🐰',n:'Rabbit',s:'Hop hop!'},
+  {e:'🦖',n:'T-Rex',s:'Roar!'},{e:'🦕',n:'Dinosaur',s:'Stomp stomp!'},{e:'🐶',n:'Dog',s:'Woof woof!'},{e:'🐱',n:'Cat',s:'Meow!'},{e:'🦁',n:'Lion',s:'Roar!'},{e:'🐘',n:'Elephant',s:'Trumpet!'},{e:'🐒',n:'Monkey',s:'Ooh ooh!'},{e:'🐄',n:'Cow',s:'Moo!'},{e:'🦆',n:'Duck',s:'Quack!'},{e:'🐸',n:'Frog',s:'Ribbit!'},{e:'🐦',n:'Bird',s:'Tweet tweet!'},{e:'🐟',n:'Fish',s:'Blub blub!'},{e:'🐻',n:'Bear',s:'Grrr!'},{e:'🐰',n:'Rabbit',s:'Hop hop!'},
   {e:'🐯',n:'Tiger',s:'Grrr!'},{e:'🐵',n:'Monkey',s:'Ooh aah!'},{e:'🦊',n:'Fox',s:'Yelp!'},{e:'🐺',n:'Wolf',s:'Awoo!'},{e:'🐴',n:'Horse',s:'Neigh!'},{e:'🦓',n:'Zebra',s:'Hee haw!'},{e:'🦒',n:'Giraffe',s:'Hum!'},{e:'🦘',n:'Kangaroo',s:'Boing!'},{e:'🐨',n:'Koala',s:'Snore!'},{e:'🐼',n:'Panda',s:'Munch!'},{e:'🐧',n:'Penguin',s:'Honk!'},{e:'🦉',n:'Owl',s:'Hoot!'},{e:'🐢',n:'Turtle',s:'Snap!'},{e:'🐊',n:'Crocodile',s:'Snap snap!'},{e:'🦈',n:'Shark',s:'Chomp!'},{e:'🐙',n:'Octopus',s:'Blub!'},{e:'🦋',n:'Butterfly',s:'Flutter!'},{e:'🐝',n:'Bee',s:'Buzz!'},{e:'🐞',n:'Ladybug',s:'Tick!'},{e:'🦄',n:'Unicorn',s:'Neigh ✨!'}
 ];
 function renderAnimals(){const g=document.getElementById('animalGrid');g.innerHTML=animals.map(a=>`<div class="animal-card" onclick="tapAnimal('${a.n}','${a.s}')"><div class="emoji">${a.e}</div><b>${a.n}</b><small>${a.s}</small></div>`).join('');}
@@ -2602,7 +2592,7 @@ let abcSinging = false, abcSingTimers = [];
 let abcSongTempo = 'toddler'; // 'toddler' (gentle slow) or 'dance' (upbeat)
 let abcSongInst = 'musicbox';  // 'musicbox', 'piano', 'marimba'
 let abcTapSingIndex = 0;
-let abcMascots = ['⭐','🐻','🐥','🐰','🐶','🐱','🦁','🦄'];
+let abcMascots = ['🦖','🦕','⭐','🐻','🐥','🐰','🐶','🐱','🦁','🦄'];
 let abcMascotIdx = 0;
 
 function cycleAbcMascot(){
@@ -3059,7 +3049,7 @@ function playPhonic(i){
   try{ navigator.vibrate && navigator.vibrate(15); }catch(e){}
 }
 // --- SPELL / READ (Bini-style blend C-A-T) ---
-const spellWords=[{w:'CAT',e:'🐱'},{w:'DOG',e:'🐶'},{w:'SUN',e:'☀️'},{w:'PIG',e:'🐷'},{w:'BUS',e:'🚌'},{w:'EGG',e:'🥚'},{w:'ANT',e:'🐜'},{w:'BEE',e:'🐝'},{w:'COW',e:'🐄'},{w:'HEN',e:'🐔'}];
+const spellWords=[{w:'CAT',e:'🐱'},{w:'DOG',e:'🐶'},{w:'SUN',e:'☀️'},{w:'BUG',e:'🐛'},{w:'BUS',e:'🚌'},{w:'EGG',e:'🥚'},{w:'ANT',e:'🐜'},{w:'BEE',e:'🐝'},{w:'COW',e:'🐄'},{w:'HEN',e:'🐔'}];
 let spellWord=null, spellFound=[];
 function newSpell(){
   spellWord=spellWords[Math.floor(Math.random()*spellWords.length)];
@@ -3198,7 +3188,7 @@ function popBubble(el){
   try{ navigator.vibrate && navigator.vibrate(40); }catch(e){}
   setTimeout(()=>{ try{ el.remove(); }catch(e){} },300);
 }
-let memCards=[],memFlipped=[],memLock=false,memMoves=0,memMatched=0;const memEmojis=['🐶','🐱','🦁','🐘','🐒','🐸','🦆','🐻'];
+let memCards=[],memFlipped=[],memLock=false,memMoves=0,memMatched=0;const memEmojis=['🦖','🦕','🦁','🐘','🐢','🐸','🥚','🐻'];
 function initMemory(){memCards=[];memFlipped=[];memLock=false;memMoves=0;memMatched=0;document.getElementById('memMoves').textContent='0';document.getElementById('memMatched').textContent='0';document.getElementById('memWin').style.display='none';let pairs=[...memEmojis,...memEmojis];for(let i=pairs.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[pairs[i],pairs[j]]=[pairs[j],pairs[i]];}memCards=pairs.map((e,i)=>({id:i,emoji:e,flipped:false,matched:false}));renderMemory();}
 function renderMemory(){const g=document.getElementById('memoryGrid');g.innerHTML=memCards.map(c=>`<div class="mem-card ${c.flipped||c.matched?'flipped':''} ${c.matched?'matched':''}" onclick="flipMem(${c.id})">${c.flipped||c.matched?c.emoji:'<span class="back">❓</span>'}</div>`).join('');}
 function flipMem(id){if(memLock)return;const card=memCards.find(c=>c.id===id);if(!card||card.flipped||card.matched)return;card.flipped=true;blip(700,0.08);renderMemory();memFlipped.push(card);if(memFlipped.length===2){memMoves++;document.getElementById('memMoves').textContent=memMoves;const [a,b]=memFlipped;if(a.emoji===b.emoji){a.matched=b.matched=true;memMatched++;document.getElementById('memMatched').textContent=memMatched;memFlipped=[];renderMemory();popSound();burstConfetti(12,'#FFD93D');speak('Match!');if(memMatched===8){setTimeout(()=>{document.getElementById('memWin').style.display='block';speak('Amazing! You found all pairs!');burstConfetti(40);},350);}}else{memLock=true;setTimeout(()=>{a.flipped=b.flipped=false;memFlipped=[];memLock=false;renderMemory();blip(220,0.16,'sine',0.18);},780);}}}
@@ -3964,7 +3954,7 @@ setTimeout(()=>{
 
 // ===================== 📱 APP SHELL =====================
 // Turns the page into an app: splash + audio unlock, launcher home, full-screen game screens,
-// hardware back button support, star/sticker rewards, parent-only settings, install & offline.
+// hardware back button support, parent-only settings, install & offline.
 
 // --- Splash / start ---
 function startApp(){
@@ -4026,7 +4016,7 @@ window.addEventListener('popstate', (e)=>{
   // Back pressed on the home screen: stay in the app (little fingers!) instead of leaving it.
   if(!st.home) history.pushState({home:true}, '');
   if(currentScreen !== 'home') switchTab('home');
-  closeStickers(); closeParent();
+  closeParent();
 });
 history.replaceState({root:true}, '');
 history.pushState({home:true}, '');
@@ -4034,7 +4024,7 @@ history.pushState({home:true}, '');
 // --- Mascot & name ---
 function applyKidName(){ document.querySelectorAll('.kidName').forEach(el => el.textContent = kidName); }
 function setKidName(v){ kidName = (v || '').trim() || 'Friend'; store.set('name', kidName); applyKidName(); }
-const MASCOT_LINES = n => ['Hi '+n+'!', 'You are awesome, '+n+'!', 'Let\'s play together!', 'Roar! I am a friendly lion!', 'High five, '+n+'!', 'Pick a game, '+n+'!'];
+const MASCOT_LINES = n => ['Hi '+n+'!', 'You are awesome, '+n+'!', 'Let\'s play together!', 'Roar! I am a friendly dinosaur!', 'Stomp stomp! Dino time!', 'High five, '+n+'!', 'Pick a game, '+n+'!'];
 function talkMascot(){ const m = document.getElementById('mascot'); if(!m) return; m.classList.remove('talk'); void m.offsetWidth; m.classList.add('talk'); }
 function mascotTap(){
   const lines = MASCOT_LINES(kidName);
@@ -4051,64 +4041,9 @@ setInterval(()=>{
   el.classList.remove('wiggle'); void el.offsetWidth; el.classList.add('wiggle');
 }, 2600);
 
-// --- Stars & stickers ---
-let lastPointer = { x: innerWidth/2, y: innerHeight/2 };
-document.addEventListener('pointerdown', e => { lastPointer = { x: e.clientX, y: e.clientY }; }, { passive:true });
-let lastStarAt = 0;
-function renderStars(){ document.querySelectorAll('.starCount').forEach(el => el.textContent = stars); }
-function addStar(force){
-  const now = Date.now();
-  if(!force && now - lastStarAt < 5000) return;   // one star per little win, not per tap
-  lastStarAt = now;
-  stars++; store.set('stars', stars);
-  const target = [...document.querySelectorAll('.star-pill')].find(p => p.offsetParent !== null);
-  const s = document.createElement('div');
-  s.className = 'fly-star'; s.textContent = '⭐';
-  s.style.left = (lastPointer.x - 20) + 'px'; s.style.top = (lastPointer.y - 20) + 'px';
-  document.body.appendChild(s);
-  requestAnimationFrame(()=>requestAnimationFrame(()=>{
-    if(target){ const r = target.getBoundingClientRect(); s.style.transform = `translate(${r.left + r.width/2 - lastPointer.x}px, ${r.top + r.height/2 - lastPointer.y}px) scale(.6)`; }
-    s.style.opacity = '0.2';
-  }));
-  setTimeout(()=>{
-    s.remove(); renderStars();
-    if(target){ target.classList.remove('bump'); void target.offsetWidth; target.classList.add('bump'); }
-    try{ blip(988,0.12,'sine',0.25); setTimeout(()=>blip(1319,0.2,'sine',0.25),80); }catch(e){}
-    if(stars % STARS_PER_STICKER === 0) newSticker();
-  }, 820);
-}
-function stickerCount(){ return Math.floor(stars / STARS_PER_STICKER); }
-function newSticker(){
-  const st = STICKERS[(stickerCount()-1) % STICKERS.length];
-  const t = document.getElementById('stickerToast');
-  t.innerHTML = `<span class="big">${st}</span>New sticker!`;
-  t.classList.add('show');
-  speak('Yay! You got a new sticker!');
-  try{ _origConfetti(30); }catch(e){}
-  setTimeout(()=>t.classList.remove('show'), 2600);
-}
-function openStickers(){
-  const got = stickerCount();
-  const grid = document.getElementById('stickerGrid');
-  const shown = Math.max(12, got + 6);  // what he has, plus a few mystery slots to aim for
-  grid.innerHTML = Array.from({length: shown}, (_, i) => {
-    const e = STICKERS[i % STICKERS.length];
-    return i < got
-      ? `<button class="sticker got${i === got-1 ? ' fresh' : ''}" onclick="tapSticker(this,'${e}')">${e}</button>`
-      : `<div class="sticker locked${i === got ? ' next' : ''}">${i === got ? '🎁' : '🔒'}</div>`;
-  }).join('');
-  const into = stars % STARS_PER_STICKER;
-  document.getElementById('stickerBar').style.width = (into / STARS_PER_STICKER * 100) + '%';
-  document.getElementById('stickerNext').textContent = `⭐ ${into}/${STARS_PER_STICKER}`;
-  document.getElementById('stickerBook').style.display = 'flex';
-  speak(got ? 'Your stickers! You have ' + got + '!' : 'Win stars to get stickers!');
-}
-function tapSticker(el, e){ try{ blip(700 + Math.random()*400, 0.2, 'triangle', 0.3); }catch(_){} el.classList.remove('fresh'); void el.offsetWidth; el.classList.add('fresh'); }
-function closeStickers(){ const b = document.getElementById('stickerBook'); if(b) b.style.display = 'none'; }
-function resetStars(){ if(confirm('Reset all stars and stickers?')){ stars = 0; store.set('stars', 0); renderStars(); } }
-// Every celebration (confetti) in any game earns a star.
-const _origConfetti = burstConfetti;
-burstConfetti = function(n, color){ _origConfetti(n, color); if(n >= 10 || n === undefined) addStar(); };
+// --- Rewards ---
+// No stars or sticker pop-ups: they interrupted play. addStar stays as a no-op for older callers.
+function addStar(){}
 
 // --- Parent corner: press & hold the gear for 2 seconds ---
 (function setupParentGear(){
@@ -4203,12 +4138,12 @@ if('serviceWorker' in navigator && location.protocol.startsWith('http')){
 loadVoicePack(currentAiVoice);
 checkAiVoice();
 applyKidName();
-renderStars();
 updateInstallUI();
 </script>
 <script src="js/fun.js"></script>
 <script src="js/strokes.js"></script>
 <script src="js/learn.js"></script>
+<script src="js/dino.js"></script>
 <script src="js/phrases.js"></script>
 </body>
 </html>

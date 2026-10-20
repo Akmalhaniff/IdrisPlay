@@ -10,12 +10,12 @@ Live at **https://akmalhaniff.github.io/IdrisPlay/** (GitHub Pages, from the `ma
 ## 📱 It's an app
 - Opens **full screen** from its own home-screen icon, with a splash screen, a big-icon launcher, and slide-in game screens with a big 🏠 button.
 - The phone's **back button** returns to the launcher and never exits the app by accident.
-- **Stars & stickers**: every little win earns a ⭐; every 5 stars unlocks a sticker in the sticker book. Saved on the device.
-- **Parent Corner** (press & hold ⚙️ for 2 s): child's name, voice, sound, full screen, install, reset stars.
+- **Dino Land theme**: dino mascot, volcano and walking dinosaurs on the home screen, dino app icon. No pop-up rewards (stars/stickers were removed — they interrupted play).
+- **Parent Corner** (press & hold ⚙️ for 2 s): child's name, voice, sound, full screen, install.
 - **Works offline** after the first visit (`sw.js`).
 
 ## 🎙️ Natural female voice (free, no API key)
-The voice is **Kokoro**, an open-source (Apache-2.0) neural voice. Every sentence the app says is **pre-recorded** into `voice/<voice>/` (MP3 + `index.json`) and published with the app, so the iPad plays it with no PC and no internet. Four female voices (Parent Corner → Voice, ▶ Listen): **Heart** (default — warm, most natural), **Bella** (lively), **Nicole** (soft), **Emma** (gentle British).
+The voice is **Kokoro**, an open-source (Apache-2.0) neural voice. Every sentence the app says is **pre-recorded** into `voice/<voice>/` (MP3 + `index.json`) and published with the app, so the iPad plays it with no PC and no internet. The voice is boosted and limited so it is loud and clear on an iPad speaker; game sounds dip while she talks. Four female voices (Parent Corner → Voice, ▶ Listen): **Heart** (default — warm, most natural), **Bella** (lively), **Nicole** (soft), **Emma** (gentle British).
 
 **Updating the recordings** (after adding games or speech):
 1. `npm install` once, then `npm start` on the PC (first start downloads the voice model, ~330 MB).
@@ -27,6 +27,10 @@ Notes:
 - Sentences with the child's name are recorded for the current name. Change the name → re-record on the PC.
 - Mispronounced words can be respelled in `RESPELL` in `voice.js` (e.g. `Idris → Eedris`).
 - Anything not recorded uses the device's most natural **female** voice.
+
+## 🦖 Dino pack (`js/dino.js` + `css/dino.css`)
+- **🦖 Dino Run** — the dinosaur runs by itself; tap anywhere to jump over rocks and munch leaves and fruit. Bumping a rock never ends the game. 10 treats fill the tummy and a new dino friend joins (T-Rex, Long Neck, Blue, Purple, Pink, Orange). The big **ROAR** button roars and makes the volcano glow.
+- **🥚 Surprise Eggs** now lives in Dino Land and hatches mostly baby dinosaurs.
 
 ## 🔤 Learning pack (`js/learn.js` + `js/strokes.js` + `css/learn.css`)
 Seven learning games (our own designs), grouped on the launcher under **Letters & Reading** and **Numbers**:
@@ -48,7 +52,7 @@ Six new games, shown first on the launcher with a **NEW** ribbon until played:
 - **🌻 Magic Garden** — plant seeds, water them (tap, ☁️ rain or ☀️ sun), watch flowers bloom, pick them into the basket and count.
 - **🎆 Fireworks** — tap the night sky for fireworks (balls, rings, hearts, stars).
 
-Plus: animated sky home screen, a **Hooray!** celebration on big wins in every game, a daily 🎁 surprise (3 stars), a colour theme for each game, and real sound effects (pops, boings, cracks, splashes, booms).
+Plus: animated home screen, a **Hooray!** celebration on big wins in every game, a colour theme for each game, and real sound effects (pops, boings, cracks, splashes, booms).
 
 > Installing and offline mode need the app served over **https** or **localhost** (e.g. `npm start`), not opened as a file.
 

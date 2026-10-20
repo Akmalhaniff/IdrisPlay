@@ -1,6 +1,6 @@
 // Idris Play service worker — makes the app installable and playable offline.
 // All paths are relative to where the app is hosted (e.g. https://akmalhaniff.github.io/IdrisPlay/).
-const CACHE = 'idrisplay-v7';
+const CACHE = 'idrisplay-v8';
 const SHELL = [
   './',
   'index.html',
@@ -14,7 +14,9 @@ const SHELL = [
   'js/phrases.js',
   'js/strokes.js',
   'js/learn.js',
-  'css/learn.css'
+  'css/learn.css',
+  'js/dino.js',
+  'css/dino.css'
 ];
 const scopePath = new URL(self.registration.scope).pathname;
 const appUrl = (p) => new URL(p, self.registration.scope).href;

@@ -63,17 +63,17 @@ function dynamicPhrases(name){
   ['piano', 'xylophone', 'guitar', 'flute', 'drum'].forEach(i => p.push(i));
   homeGames.forEach(g => p.push(g.n));
   Object.values(AI_VOICES).forEach(v => p.push(v.sample));
-  for(let n = 1; n <= 40; n++) p.push(`Your stickers! You have ${n}!`);
   p.push(`Hi ${name}! What shall we play?`, ...MASCOT_LINES(name));
   if(window.funPhrases) p.push(...window.funPhrases(name));
   if(window.learnPhrases) p.push(...window.learnPhrases(name));
+  if(window.dinoPhrases) p.push(...window.dinoPhrases(name));
   return p;
 }
 
 window.allSpeechPhrases = async function(name = kidName){
   const set = new Set();
   const add = t => { t = String(t || '').replace(/\s+/g, ' ').trim(); if(/[A-Za-z0-9]/.test(t)) set.add(t); };
-  for(const f of ['index.html', 'js/fun.js', 'js/learn.js']){
+  for(const f of ['index.html', 'js/fun.js', 'js/learn.js', 'js/dino.js']){
     try{ staticPhrases(await (await fetch(f, { cache: 'no-store' })).text()).forEach(add); }catch(e){ console.warn('phrases: could not read', f, e); }
   }
   dynamicPhrases(name).forEach(add);

@@ -177,7 +177,7 @@ addGame({
 // 🧩 WORD BUILDER — tap letters into boxes, then hear the sounds blend
 // ======================================================================
 const WORDS = [
-  ['CAT', '🐱'], ['DOG', '🐶'], ['SUN', '☀️'], ['PIG', '🐷'], ['BUS', '🚌'], ['HAT', '🎩'], ['BED', '🛏️'], ['CUP', '🥤'],
+  ['CAT', '🐱'], ['DOG', '🐶'], ['SUN', '☀️'], ['BUG', '🐛'], ['BUS', '🚌'], ['HAT', '🎩'], ['BED', '🛏️'], ['CUP', '🥤'],
   ['FOX', '🦊'], ['HEN', '🐔'], ['BEE', '🐝'], ['COW', '🐄'], ['EGG', '🥚'], ['ANT', '🐜'], ['BOX', '📦'], ['CAR', '🚗'],
   ['OWL', '🦉'], ['BAT', '🦇'], ['MAP', '🗺️'], ['VAN', '🚐'],
   ['FISH', '🐟'], ['FROG', '🐸'], ['DUCK', '🦆'], ['STAR', '⭐'], ['MOON', '🌙'], ['CAKE', '🎂'], ['BOAT', '⛵'], ['BEAR', '🐻'],

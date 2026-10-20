@@ -1,4 +1,4 @@
-/* Idris Play — fun pack: home scene, celebrations, daily gift and the new games. */
+/* Idris Play — fun pack: home scene, celebrations and the new games. */
 
 .confetti{z-index:14000}
 
@@ -43,12 +43,6 @@ body.in-game .game-bar{background:color-mix(in srgb,var(--theme,#FFD93D) 18%,rgb
 .cel-mascot{font-size:min(34vmin,180px);line-height:1;animation:celDance .5s ease-in-out infinite alternate;filter:drop-shadow(0 10px 14px rgba(0,0,0,.2))}
 @keyframes celDance{from{transform:rotate(-10deg) translateY(0)}to{transform:rotate(10deg) translateY(-14px)}}
 .cel-text{font-family:'Fredoka',sans-serif;font-weight:700;font-size:min(13vmin,4.5rem);color:#fff;-webkit-text-stroke:3px #FF6B9D;paint-order:stroke fill;text-shadow:0 6px 0 #FF6B9D}
-
-/* ---------- Daily gift ---------- */
-.gift-btn{border:none;background:none;font-size:3rem;line-height:1;cursor:pointer;flex-shrink:0;animation:giftHop 1.4s ease-in-out infinite;filter:drop-shadow(0 6px 6px rgba(0,0,0,.18))}
-@keyframes giftHop{0%,60%,100%{transform:translateY(0) rotate(0)}70%{transform:translateY(-14px) rotate(-10deg)}80%{transform:translateY(0) rotate(8deg)}90%{transform:translateY(-6px)}}
-.gift-btn.opening{animation:giftShake .12s linear 6}
-@keyframes giftShake{0%,100%{transform:rotate(0)}25%{transform:rotate(-15deg) scale(1.1)}75%{transform:rotate(15deg) scale(1.1)}}
 
 /* ---------- Shared stage for new games ---------- */
 body.ng-game .wrap{padding-bottom:calc(.6rem + env(safe-area-inset-bottom))}

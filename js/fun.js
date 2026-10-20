@@ -1,6 +1,6 @@
-// Idris Play — fun pack: sound effects, celebrations, animated home, daily gift and six new games.
+// Idris Play — fun pack: sound effects, celebrations, animated home and six new games.
 // Loaded after the main inline script, so it can use its globals (speak, blip, getAudioCtx, muted,
-// burstConfetti, homeGames, renderHome, switchTab, store, addStar, currentScreen, kidName).
+// burstConfetti, homeGames, renderHome, switchTab, store, currentScreen, kidName).
 (function(){
 'use strict';
 const $ = (s, r = document) => r.querySelector(s);
@@ -51,7 +51,7 @@ const sfx = {
 window.sfx = sfx;
 
 // ===================== 🎉 Celebration overlay =====================
-const cel = el('div', 'cel', '<div class="cel-rays"></div><div class="cel-box"><div class="cel-mascot">🦁</div><div class="cel-text">Hooray!</div></div>');
+const cel = el('div', 'cel', '<div class="cel-rays"></div><div class="cel-box"><div class="cel-mascot">🦖</div><div class="cel-text">Hooray!</div></div>');
 document.body.appendChild(cel);
 let celAt = 0, celTimer = null;
 function celebrate(text){
@@ -59,7 +59,7 @@ function celebrate(text){
   if(now - celAt < 4000) return;
   celAt = now;
   $('.cel-text', cel).textContent = text || pick(['Hooray!', 'Yay!', 'Great job!', 'Super!', 'Wow!', 'Amazing!']);
-  $('.cel-mascot', cel).textContent = pick(['🦁', '🐻', '🐰', '🐶', '🐼', '🦄']);
+  $('.cel-mascot', cel).textContent = pick(['🦖', '🦕', '🦖', '🦕', '🐲', '🐢']);
   cel.classList.add('show');
   sfx.tada();
   clearTimeout(celTimer);
@@ -73,34 +73,10 @@ burstConfetti = function(n, color){ _bc(n, color); if(n >= 28) celebrate(); };
 // ===================== 🌤️ Animated home scene =====================
 document.body.insertBefore(el('div', 'home-scene',
   '<div class="hs-sun"></div><div class="hs-cloud c1"></div><div class="hs-cloud c2"></div><div class="hs-cloud c3"></div>' +
-  '<div class="hs-bird">🐦</div><div class="hs-hills"><i></i><i></i><i></i></div>'), document.body.firstChild);
+  '<div class="hs-bird">🐦</div><div class="hs-volcano"><b></b></div><div class="hs-hills"><i></i><i></i><i></i></div>' +
+  '<div class="hs-palm p1">🌴</div><div class="hs-palm p2">🌴</div><div class="hs-dino d1">🦕</div><div class="hs-dino d2">🦖</div>'), document.body.firstChild);
 const scene = $('.home-scene'); scene.setAttribute('aria-hidden', 'true');
 
-// ===================== 🎁 Daily surprise gift =====================
-function renderGift(){
-  const hero = $('.home-hero'); if(!hero) return;
-  let g = $('.gift-btn', hero);
-  const claimed = store.get('gift', '') === todayKey();
-  if(claimed){ if(g) g.remove(); return; }
-  if(!g){
-    g = el('button', 'gift-btn', '🎁'); g.setAttribute('aria-label', 'Surprise present');
-    g.onclick = openGift;
-    hero.insertBefore(g, $('.star-pill', hero));
-  }
-}
-function openGift(){
-  const g = $('.gift-btn'); if(!g || g.classList.contains('opening')) return;
-  g.classList.add('opening'); sfx.rise();
-  later(() => {
-    store.set('gift', todayKey());
-    g.textContent = '✨'; sfx.tada(); _bc(40);
-    speak('A present for you, ' + kidName + '! Three stars!');
-    const from = gPos(g);
-    [0, 1, 2].forEach(i => later(() => { lastPointer = from; addStar(true); }, 300 + i * 950));
-    later(() => g.remove(), 1200);
-  }, 750);
-}
-function gPos(node){ const r = node.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2 }; }
 
 // ===================== 🎮 New games registry =====================
 const GAMES = {};
@@ -129,7 +105,6 @@ switchTab = function(name){
   document.body.style.setProperty('--theme', themeFor(name));
   document.body.classList.toggle('ng-game', !!GAMES[name]);
   if(GAMES[name]){ try{ GAMES[name].enter && GAMES[name].enter(); }catch(e){ console.error(e); } }
-  if(name === 'home') renderGift();
 };
 
 // Shared helpers for games
@@ -144,7 +119,7 @@ function sparkleAt(root, x, y, n = 6, chars = ['✨', '⭐', '💫']){
 }
 
 // ===================== 🥚 Surprise Eggs =====================
-const BABIES = [['🐥','chick'],['🦖','dinosaur'],['🦕','long neck dinosaur'],['🐢','turtle'],['🐊','crocodile'],['🐧','penguin'],['🦜','parrot'],['🦉','owl'],['🦆','duckling'],['🐲','dragon'],['🦄','unicorn'],['🐍','snake'],['🦩','flamingo'],['🐸','frog'],['🦎','lizard'],['🐙','octopus'],['🐳','whale'],['🦔','hedgehog']];
+const BABIES = [['🦖','dinosaur'],['🦕','long neck dinosaur'],['🦖','T-Rex'],['🦕','dino'],['🐥','chick'],['🐢','turtle'],['🐊','crocodile'],['🐧','penguin'],['🦜','parrot'],['🦉','owl'],['🦆','duckling'],['🐲','dragon'],['🦄','unicorn'],['🐍','snake'],['🦩','flamingo'],['🐸','frog'],['🦎','lizard'],['🐙','octopus'],['🐳','whale'],['🦔','hedgehog']];
 const EGG_LOOKS = [
   ['#FFE4F1', 'radial-gradient(circle at 30% 30%,#FF8FC7 0 9%,transparent 10%),radial-gradient(circle at 70% 55%,#FF8FC7 0 11%,transparent 12%),radial-gradient(circle at 40% 78%,#FF8FC7 0 8%,transparent 9%)'],
   ['#DDF4FF', 'repeating-linear-gradient(160deg,transparent 0 18px,#7CC8FF 18px 30px)'],
@@ -210,7 +185,7 @@ addGame({
 });
 
 // ===================== 🛁 Bath Time =====================
-const PETS = [['🐶','puppy'],['🐷','piggy'],['🐱','kitty'],['🐻','bear'],['🐼','panda'],['🐵','monkey'],['🐰','bunny'],['🐯','tiger'],['🐮','cow'],['🐨','koala'],['🦁','lion'],['🐸','froggy']];
+const PETS = [['🐶','puppy'],['🦕','dino'],['🐱','kitty'],['🐻','bear'],['🐼','panda'],['🐵','monkey'],['🐰','bunny'],['🐯','tiger'],['🐮','cow'],['🐨','koala'],['🦁','lion'],['🐸','froggy']];
 addGame({
   id: 'bath', e: '🛁', n: 'Bath Time', colors: ['#A5F3FC', '#22D3EE', '#0891B2'], stageClass: 'bath-stage',
   html: `<div class="bath-meter"><i></i></div>
@@ -310,7 +285,7 @@ addGame({
 const SF = {
   colors: ['#FFD93D', '#FFB3C7', '#8BE38B', '#7EC8FF', '#C9A0FF', '#FFA94D', '#9AF0E0'],
   eyes: [['googly', 'Googly eyes!'], ['big', 'Big eyes!'], ['sleepy', 'Sleepy eyes!'], ['hearts', 'Love eyes!'], ['stars', 'Star eyes!'], ['cyclops', 'One big eye!'], ['shades', 'Cool glasses!']],
-  noses: [['clown', 'Clown nose!'], ['pig', 'Piggy nose!'], ['carrot', 'Carrot nose!'], ['dot', 'Tiny nose!'], ['button', 'Button nose!']],
+  noses: [['clown', 'Clown nose!'], ['heart', 'Heart nose!'], ['carrot', 'Carrot nose!'], ['dot', 'Tiny nose!'], ['button', 'Button nose!']],
   mouths: [['smile', 'Happy!'], ['laugh', 'Ha ha ha!'], ['o', 'Oooh!'], ['tongue', 'Bleh!'], ['teeth', 'Big teeth!'], ['mustache', 'Mustache!']],
   hats: [['', 'No hat!'], ['👑', 'A crown!'], ['🎩', 'Top hat!'], ['🧢', 'A cap!'], ['🎀', 'A bow!'], ['🌸', 'A flower!'], ['🎓', 'Smart hat!'], ['🍓', 'Strawberry!']]
 };
@@ -330,7 +305,7 @@ function sfEyes(kind, skin){
 }
 function sfNose(kind){
   switch(kind){
-    case 'pig': return `<ellipse cx="100" cy="118" rx="18" ry="13" fill="#FF9EB5" stroke="#E5739A" stroke-width="3"/><ellipse cx="93" cy="118" rx="3.5" ry="5" fill="#B4466A"/><ellipse cx="107" cy="118" rx="3.5" ry="5" fill="#B4466A"/>`;
+    case 'heart': return heart(100, 122, 15);
     case 'carrot': return `<path d="M98 110 L142 120 L98 128Z" fill="#FF8C42" stroke="#C2410C" stroke-width="2"/>`;
     case 'dot': return `<circle cx="100" cy="118" r="5" fill="#2d2d2d"/>`;
     case 'button': return `<ellipse cx="100" cy="118" rx="9" ry="7" fill="#A0522D"/><circle cx="97" cy="116" r="2" fill="#fff" opacity=".6"/>`;
@@ -668,7 +643,7 @@ window.funPhrases = name => {
   FLOWERS.forEach(([, n]) => p.push('A ' + n + '!'));
   for(let i = 1; i <= 30; i++) p.push(String(i));
   for(let i = 5; i <= 50; i += 5) p.push(i + ' flowers! Well done!');
-  p.push('Silly ' + name + '!', 'Hello ' + name + '!', 'A present for you, ' + name + '! Three stars!');
+  p.push('Silly ' + name + '!', 'Hello ' + name + '!');
   return p;
 };
 
@@ -677,8 +652,7 @@ window.IdrisPlay = { addGame, sfx, celebrate, sparkleAt, stagePoint, el, pick, r
 
 // ===================== Launcher: new games go first with a NEW ribbon =====================
 const NEW_ORDER = ['eggs', 'bath', 'faces', 'rocket', 'garden', 'fireworks'];
-const meta = { eggs: 'Tap to hatch!', bath: 'Scrub-a-dub!', faces: 'Make me silly', rocket: 'Blast off!', garden: 'Grow flowers', fireworks: 'Boom! Sparkle!' };
+const meta = { eggs: 'Hatch a dino!', bath: 'Scrub-a-dub!', faces: 'Make me silly', rocket: 'Blast off!', garden: 'Grow flowers', fireworks: 'Boom! Sparkle!' };
 homeGames.unshift(...NEW_ORDER.map(id => ({ id, e: GAMES[id].e, n: GAMES[id].n, s: meta[id], c: '#fff', colors: GAMES[id].colors, isNew: true })));
 renderHome();
-renderGift();
 })();
