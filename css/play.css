@@ -126,3 +126,10 @@
 .so-box.help{animation:soHelp .5s ease-in-out 3}
 @keyframes soHelp{50%{transform:translateY(-16px) scale(1.06)}}
 .so-box.party .so-dino{bottom:70%;animation:muParty .35s ease-in-out infinite alternate}
+
+/* Draggable letters (js/letter-drag.js) */
+.wb-tile,.bs-bubble,.running-letter-wrap,.mp-letter,.bini-bubble-letter{touch-action:none}
+.ld-ghost{position:fixed;z-index:17000;pointer-events:none;transition:transform .05s linear;box-shadow:0 18px 30px rgba(0,0,0,.25);border-radius:18px;filter:drop-shadow(0 10px 10px rgba(0,0,0,.2))}
+.ld-ghost.ld-back{transition:transform .4s cubic-bezier(.2,.9,.3,1.4)}
+.ld-away{opacity:.25}
+.ld-over{outline:5px dashed #22C55E;outline-offset:4px;transform:scale(1.05)}
