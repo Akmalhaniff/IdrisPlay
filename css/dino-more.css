@@ -17,30 +17,49 @@
 .dg-dino.show{animation:dgAlive 4.4s cubic-bezier(.2,.9,.3,1.4) forwards}
 @keyframes dgAlive{0%{transform:translate(-50%,-50%) scale(0) rotate(-30deg)}15%{transform:translate(-50%,-50%) scale(1.15) rotate(6deg)}25%,35%{transform:translate(-50%,-55%) scale(1)}30%{transform:translate(-50%,-50%) scale(1.08)}90%{transform:translate(-50%,-50%) scale(1);opacity:1}100%{transform:translate(-50%,-50%) scale(1);opacity:0}}
 
-/* ---------- 🍽️ Dino Lunch ---------- */
-.lu-stage{background:linear-gradient(180deg,#B9F0FF 0%,#E3FAFF 55%,#9BE29B 55%,#6BCB77 100%)}
-.lu-tummy{position:absolute;left:14px;top:14px;z-index:6;display:flex;align-items:center;gap:.5rem;background:rgba(255,255,255,.9);padding:.4rem .8rem .4rem .5rem;border-radius:999px;font-size:2rem;line-height:1}
+/* ---------- 🍽️ Dino Lunch: a picnic, all drawn ---------- */
+.lu-stage{background:linear-gradient(180deg,#A6E3FF 0%,#E3F8FF 55%)}
+.lu-hills{position:absolute;left:-10%;right:-10%;top:44%;bottom:0;background:radial-gradient(ellipse 45% 30% at 25% 8%,#9BE29B 98%,transparent 100%),radial-gradient(ellipse 50% 32% at 78% 10%,#86D98A 98%,transparent 100%),linear-gradient(180deg,transparent 14%,#7CCB7F 14%)}
+.lu-blanket{position:absolute;left:6%;right:6%;bottom:0;height:30%;clip-path:polygon(12% 0,88% 0,100% 100%,0 100%);background:repeating-conic-gradient(#FCA5A5 0 25%,#fff 0 50%) 0 0/56px 56px;box-shadow:inset 0 6px 0 rgba(0,0,0,.05)}
+.lu-tummy{position:absolute;left:14px;top:14px;z-index:6;display:flex;align-items:center;gap:.5rem;background:rgba(255,255,255,.92);padding:.35rem .9rem .35rem .4rem;border-radius:999px;box-shadow:0 4px 10px rgba(0,0,0,.08)}
+.lu-tummy-ico .food-art{width:44px;height:44px;display:block}
 .lu-bar{width:min(36vw,220px);height:22px;border-radius:999px;background:#DCFCE7;border:3px solid #fff;box-shadow:inset 0 0 0 2px #BBF7D0;overflow:hidden}
 .lu-bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#86EFAC,#22C55E);border-radius:999px;transition:width .4s}
-.lu-dino{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%)}
-.lu-face{display:inline-block;font-size:min(42vmin,250px);line-height:1;filter:drop-shadow(0 12px 10px rgba(0,0,0,.18))}
+.lu-dino{position:absolute;left:50%;top:6%;width:min(52vmin,380px);aspect-ratio:1;transform:translateX(-50%)}
+.lu-face{width:100%;height:100%}
+.lu-face svg{width:100%;height:100%;overflow:visible;filter:drop-shadow(0 14px 10px rgba(0,0,0,.15))}
+.lu-face .bd-open{opacity:0;transition:opacity .1s}
+.lu-dino.open .bd-open,.lu-dino.chomp .bd-open{opacity:1}
+.lu-dino.open .bd-mouth,.lu-dino.chomp .bd-mouth{opacity:0}
+.lu-dino.open .bd-head{animation:none;transform:rotate(-8deg)}
+.lu-dino.chomp .bd-open{animation:luChew .16s steps(1) 6}
+@keyframes luChew{50%{opacity:0}}
+.lu-dino.chomp .lu-face svg{animation:luChomp .16s ease-in-out 6 alternate}
+@keyframes luChomp{to{transform:scale(1.04,.95)}}
 .lu-dino.pop-in .lu-face{animation:ngPop .5s cubic-bezier(.2,.9,.3,1.5)}
-.lu-dino.chomp .lu-face{animation:luChomp .18s ease-in-out 4 alternate}
-@keyframes luChomp{to{transform:scale(1.08,.9)}}
 .lu-dino.no .lu-face{animation:luNo .5s ease-in-out}
-@keyframes luNo{25%{transform:rotate(-10deg)}75%{transform:rotate(10deg)}}
+@keyframes luNo{25%{transform:rotate(-8deg)}75%{transform:rotate(8deg)}}
 .lu-dino.happy .lu-face{animation:muParty .35s ease-in-out 6 alternate}
-.lu-dino.sleep .lu-face{transform:rotate(-8deg) scaleY(.92);filter:brightness(.9) drop-shadow(0 12px 10px rgba(0,0,0,.18))}
-.lu-zzz{position:absolute;right:-10%;top:-5%;font-size:3rem;opacity:0}
+.lu-dino.sleep .bd-lid{transform:scaleY(1)}
+.lu-dino.sleep .lu-face svg{transform:rotate(-6deg) scaleY(.96);transform-origin:50% 100%}
+.lu-zzz{position:absolute;right:4%;top:8%;font:900 2.4rem 'Fredoka',sans-serif;color:#6366F1;opacity:0}
+.lu-zzz b{font-size:1.4em;margin-left:.1em}
 .lu-dino.sleep .lu-zzz{opacity:1;animation:luZzz 1.6s ease-in-out infinite}
 @keyframes luZzz{from{transform:translateY(0)}to{transform:translateY(-24px);opacity:.3}}
-.lu-bubble{position:absolute;left:-28%;top:-18%;width:min(22vmin,130px);aspect-ratio:1;border-radius:50%;background:#fff;box-shadow:0 8px 18px rgba(0,0,0,.15);display:grid;place-items:center;transform:scale(0);transition:transform .35s cubic-bezier(.2,.9,.3,1.6)}
-.lu-bubble::after{content:'';position:absolute;right:4%;bottom:2%;width:22%;height:22%;border-radius:50%;background:#fff}
-.lu-bubble span{font-size:min(12vmin,72px);line-height:1}
+.lu-bubble{position:absolute;left:-30%;top:4%;width:44%;aspect-ratio:1;border-radius:50%;background:#fff;box-shadow:0 10px 22px rgba(0,0,0,.12);display:grid;place-items:center;transform:scale(0);transition:transform .35s cubic-bezier(.2,.9,.3,1.6)}
+.lu-bubble::before,.lu-bubble::after{content:'';position:absolute;border-radius:50%;background:#fff;box-shadow:0 6px 12px rgba(0,0,0,.08)}
+.lu-bubble::before{right:-6%;bottom:-2%;width:20%;height:20%}
+.lu-bubble::after{right:-18%;bottom:-16%;width:10%;height:10%}
+.lu-bubble span{width:70%;height:70%}
+.lu-bubble .food-art{width:100%;height:100%}
 .lu-bubble.show{transform:scale(1);animation:luBob 1.2s ease-in-out .4s infinite alternate}
 @keyframes luBob{to{translate:0 -8px}}
-.lu-tray{position:absolute;left:0;right:0;bottom:16px;display:flex;justify-content:center;gap:clamp(10px,3vw,24px);z-index:5}
-.lu-food{width:clamp(84px,18vmin,120px);height:clamp(84px,18vmin,120px);font-size:clamp(3rem,10vmin,4.6rem);background:#fff;padding:0}
+.lu-tray{position:absolute;left:8%;right:8%;bottom:3%;height:24%;display:flex;justify-content:space-evenly;align-items:center;z-index:5}
+.lu-food{width:min(18vmin,130px);height:min(18vmin,130px);padding:0;border:none;background:none;cursor:pointer;animation:luIdle 1.6s ease-in-out infinite alternate}
+.lu-food.pop-in{animation:ngPop .45s cubic-bezier(.2,.9,.3,1.5) backwards,luIdle 1.6s ease-in-out .45s infinite alternate}
+.lu-food .food-art{width:100%;height:100%;filter:drop-shadow(0 8px 6px rgba(0,0,0,.15))}
+.lu-food:active{scale:.9}
+@keyframes luIdle{to{translate:0 -6px}}
 
 /* ---------- 🌿 Dino Peekaboo ---------- */
 .pk-stage{background:linear-gradient(180deg,#A6E3FF 0%,#D4F2FF 40%,#8FD68A 40%,#5DBB63 100%)}

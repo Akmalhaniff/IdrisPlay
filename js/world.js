@@ -25,6 +25,7 @@ const BUDDY_SVG = `<svg class="bd" viewBox="0 0 160 160" aria-hidden="true">
       <circle cx="136" cy="64" r="2.2" fill="#2F7A3A"/><circle cx="131" cy="62" r="2.2" fill="#2F7A3A"/>
       <circle cx="92" cy="73" r="7" fill="#FF7AA8" opacity=".8"/>
       <path class="bd-mouth" d="M108 79 Q120 90 134 78" stroke="#1F2937" stroke-width="4" fill="none" stroke-linecap="round"/>
+      <g class="bd-open"><path d="M106 74 Q121 100 138 72 Q122 80 106 74Z" fill="#7F1D1D"/><path d="M112 84 Q121 92 130 82 Q121 86 112 84Z" fill="#FB7185"/><path d="M110 76 l3 5 3 -4 M128 75 l3 4 3 -5" fill="#fff"/></g>
       <g class="bd-eye"><circle cx="96" cy="52" r="11" fill="#fff"/><g class="bd-pupil"><circle cx="97" cy="53" r="6" fill="#1F2937"/><circle cx="99" cy="50" r="2" fill="#fff"/></g><ellipse class="bd-lid" cx="96" cy="52" rx="12" ry="12" fill="#6BCB77"/></g>
       <g class="bd-eye"><circle cx="118" cy="49" r="10" fill="#fff"/><g class="bd-pupil"><circle cx="119" cy="50" r="5.5" fill="#1F2937"/><circle cx="121" cy="47" r="1.8" fill="#fff"/></g><ellipse class="bd-lid" cx="118" cy="49" rx="11" ry="11" fill="#6BCB77"/></g>
       <g class="bd-cap"><path d="M74 38 Q100 0 128 30 Q104 26 74 38Z" fill="#6366F1"/><circle cx="128" cy="30" r="6" fill="#FDE047"/></g>
@@ -32,6 +33,7 @@ const BUDDY_SVG = `<svg class="bd" viewBox="0 0 160 160" aria-hidden="true">
   </g>
   <text class="bd-zzz" x="132" y="22">z</text><text class="bd-zzz z2" x="144" y="10">Z</text>
 </svg>`;
+window.idrisBuddySVG = BUDDY_SVG;
 const mascot = document.getElementById('mascot');
 mascot.innerHTML = BUDDY_SVG;
 mascot.classList.add('buddy');

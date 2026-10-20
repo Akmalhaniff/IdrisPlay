@@ -21,7 +21,7 @@ const HINTS = {
   words: () => { const g = GAMES.words; return g?.word && [...g.tiles.querySelectorAll('.wb-tile:not(.used)')].find(t => t.textContent === g.word[g.filled]); },
   bigsmall: () => { const g = GAMES.bigsmall; return g?.L && [...g.choices.children].find(b => b.textContent === g.L.toLowerCase()); },
   sorting: () => { const g = GAMES.sorting; return g?.item && g.boxes.querySelector(`.so-box[data-color="${g.item.dataset.color}"]`); },
-  lunch: () => { const g = GAMES.lunch; return g?.want && [...g.tray.children].find(b => b.textContent === g.want[0]); },
+  lunch: () => { const g = GAMES.lunch; return g?.want && g.tray.querySelector(`[data-food="${g.want}"]`); },
   music: () => document.querySelector('#sec-music .mu-key.next') || document.querySelector('#sec-music .mu-key'),
   rocket: () => document.querySelector('#sec-rocket .rk-go:not([style*="none"])') || document.querySelector('#sec-rocket .rk-pick') || document.querySelector('#sec-rocket .rk-home:not([style*="none"])'),
   eggs: () => document.querySelector('#sec-eggs .egg'),

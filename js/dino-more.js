@@ -94,9 +94,9 @@ addGame({
 });
 
 // ======================================================================
-// 🍽️ DINO LUNCH — the dino asks for a food; give it the right one
+// 🍽️ DINO LUNCH — a picnic: the dino thinks of a food; give it the right one. All drawn, no emoji.
 // ======================================================================
-const FOODS = [['🍎', 'apple'], ['🍉', 'watermelon'], ['🍌', 'banana'], ['🥦', 'broccoli'], ['🍃', 'leaves'], ['🍓', 'strawberry'], ['🥕', 'carrot'], ['🍇', 'grapes']];
+const FOODS = ['apple', 'watermelon', 'banana', 'broccoli', 'leaves', 'strawberry', 'carrot', 'grapes'];
 const LUNCH_GOAL = 5;
 const LU_SAY = {
   start: 'Dino lunch! The dino is hungry!',
@@ -106,18 +106,21 @@ const LU_SAY = {
 };
 addGame({
   id: 'lunch', e: '🍽️', n: 'Dino Lunch', colors: ['#BBF7D0', '#22C55E', '#15803D'], stageClass: 'lu-stage', cat: 'dino',
-  html: `<div class="lu-tummy"><span>😋</span><div class="lu-bar"><i></i></div></div>
-    <div class="lu-dino"><span class="lu-face">🦕</span><div class="lu-bubble"><span></span></div><div class="lu-zzz">💤</div></div>
+  html: `<div class="lu-hills"></div><div class="lu-blanket"></div>
+    <div class="lu-tummy"><span class="lu-tummy-ico"></span><div class="lu-bar"><i></i></div></div>
+    <div class="lu-dino"><div class="lu-face"></div><div class="lu-bubble"><span></span></div><div class="lu-zzz">z<b>Z</b></div></div>
     <div class="lu-tray"></div>`,
   init(root){
     this.dino = $('.lu-dino', root); this.face = $('.lu-face', root); this.bubble = $('.lu-bubble span', root);
     this.tray = $('.lu-tray', root); this.bar = $('.lu-bar i', root); this.idx = 0;
+    $('.lu-tummy-ico', root).innerHTML = window.idrisFood('apple');
   },
   // One dino animation at a time (pop-in, no, chomp, happy).
   act(cls){ this.dino.classList.remove('pop-in', 'no', 'chomp', 'happy'); void this.dino.offsetWidth; this.dino.classList.add(cls); },
   newDino(){
-    const [e, hue] = DINOS[this.idx++ % DINOS.length];
-    this.face.textContent = e; this.face.style.filter = hueOf(hue);
+    if(!this.face.firstChild) this.face.innerHTML = window.idrisBuddySVG || '';
+    const [, hue] = DINOS[this.idx++ % DINOS.length];
+    this.face.style.filter = hueOf(hue);
     this.dino.classList.remove('sleep'); this.act('pop-in');
     this.fed = 0; this.bar.style.width = '0%';
     this.ask();
@@ -125,15 +128,16 @@ addGame({
   ask(){
     const choices = FOODS.slice().sort(() => Math.random() - .5).slice(0, 4);
     this.want = pick(choices);
-    this.bubble.textContent = this.want[0]; restart(this.bubble.parentNode, 'show');
+    this.bubble.innerHTML = window.idrisFood(this.want); restart(this.bubble.parentNode, 'show');
     this.tray.innerHTML = '';
-    choices.forEach(f => {
-      const b = el('button', 'ng-btn lu-food pop-in', f[0]); b.setAttribute('aria-label', f[1]);
+    choices.forEach((f, i) => {
+      const b = el('button', 'lu-food pop-in', window.idrisFood(f)); b.setAttribute('aria-label', f); b.dataset.food = f;
+      b.style.animationDelay = (i * 80) + 'ms';
       b.addEventListener('click', () => this.give(f, b));
       this.tray.appendChild(b);
     });
     this.busy = false;
-    later(() => speak(LU_SAY.want(this.want[1])), 300);
+    later(() => speak(LU_SAY.want(this.want)), 300);
   },
   give(f, btn){
     if(this.busy) return;
@@ -144,18 +148,22 @@ addGame({
       return;
     }
     this.busy = true;
+    this.dino.classList.add('open'); sfx.rise();
+    // fly into the open mouth (right side of the head)
     const br = btn.getBoundingClientRect(), fr = this.face.getBoundingClientRect();
-    btn.style.transition = 'transform .5s cubic-bezier(.5,-0.3,.6,1)';
-    btn.style.transform = `translate(${fr.left + fr.width * 0.3 - br.left - br.width / 2}px, ${fr.top + fr.height * 0.35 - br.top - br.height / 2}px) scale(.5)`;
+    const mx = fr.left + fr.width * 0.76, my = fr.top + fr.height * 0.52;
+    btn.style.transition = 'transform .55s cubic-bezier(.5,-0.3,.6,1)';
+    btn.style.transform = `translate(${mx - br.left - br.width / 2}px, ${my - br.top - br.height / 2}px) scale(.35)`;
     later(() => {
       btn.style.opacity = '0';
-      this.act('chomp'); sfx.crack(); later(() => sfx.pop(), 150); later(() => sfx.squeak(), 300);
+      this.dino.classList.remove('open'); this.act('chomp');
+      sfx.crack(); later(() => sfx.pop(), 150); later(() => sfx.squeak(), 300);
       this.fed++; this.bar.style.width = (this.fed / LUNCH_GOAL * 100) + '%';
       this.bubble.parentNode.classList.remove('show');
-      speak(LU_SAY.yum(f[1]));
+      speak(LU_SAY.yum(f));
       if(this.fed >= LUNCH_GOAL) later(() => this.full(), 1200);
       else later(() => this.ask(), 1700);
-    }, 500);
+    }, 560);
   },
   full(){
     this.tray.innerHTML = '';
@@ -226,7 +234,7 @@ window.dinoMorePhrases = () => {
   const p = [DIG_SAY.start, LU_SAY.start, LU_SAY.full, PK_SAY.start, PK_SAY.done, 'A dino egg!'];
   [1, 2, 3].forEach(n => p.push(DIG_SAY.bone(n)));
   DINOS.forEach(([, , n]) => p.push(DIG_SAY.alive(n)));
-  FOODS.forEach(([, f]) => p.push(LU_SAY.want(f), LU_SAY.yum(f)));
+  FOODS.forEach(f => p.push(LU_SAY.want(f), LU_SAY.yum(f)));
   for(let i = 1; i <= PEEK_GOAL; i++) p.push(String(i));
   return p;
 };
