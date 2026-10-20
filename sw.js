@@ -1,6 +1,6 @@
 // Idris Play service worker — makes the app installable and playable offline.
 // All paths are relative to where the app is hosted (e.g. https://akmalhaniff.github.io/IdrisPlay/).
-const CACHE = 'idrisplay-v16';
+const CACHE = 'idrisplay-v19';
 const SHELL = [
   './',
   'index.html',
@@ -26,6 +26,10 @@ const SHELL = [
   'js/toddler.js',
   'js/parent.js',
   'js/malay.js',
+  'js/world.js',
+  'js/art.js',
+  'js/animoji.js',
+  'css/world.css',
   'js/classic.js',
   'css/classic.css'
 ];
@@ -39,8 +43,8 @@ self.addEventListener('install', (e) => {
 self.addEventListener('activate', (e) => {
   e.waitUntil(
     caches.keys()
-      // keep the current app cache and the saved voice packs (idrisplay-voice-*)
-      .then((keys) => Promise.all(keys.filter((k) => k !== CACHE && !k.startsWith('idrisplay-voice-')).map((k) => caches.delete(k))))
+      // keep the current app cache, the saved voice packs (idrisplay-voice-*) and the animated pictures
+      .then((keys) => Promise.all(keys.filter((k) => k !== CACHE && !k.startsWith('idrisplay-voice-') && k !== 'idrisplay-anim').map((k) => caches.delete(k))))
       .then(() => self.clients.claim())
   );
 });
@@ -70,6 +74,12 @@ self.addEventListener('fetch', (e) => {
     } else {
       e.respondWith(caches.match(req).then((hit) => hit || fetch(req).then((res) => saveCopy(req, res))));
     }
+    return;
+  }
+
+  // Animated pictures never change: keep each one the first time it is shown, across app updates.
+  if (rel !== null && rel.startsWith('anim/')) {
+    e.respondWith(caches.match(req).then((hit) => hit || fetch(req).then((res) => saveCopy(req, res, 'idrisplay-anim'))));
     return;
   }
 

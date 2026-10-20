@@ -53,6 +53,12 @@ Everything stays on the iPad; nothing is sent anywhere.
 - **🌙 Quiet mode** for bedtime: softer sounds and voice, no big celebrations.
 - **🗣️ Language: English + Melayu** — colours, numbers, animals, shapes and praise are spoken in Malay ("Merah!", "Satu, dua, tiga!", "Pandai!") by the iPad's own Malay voice; everything else stays in the natural English voice. Needs the Malay voice on the iPad: *Settings → Accessibility → Spoken Content → Voices → Malay*.
 
+## ✨ Living home & animated pictures (`js/world.js`, `js/art.js`, `js/animoji.js`)
+- His own **dino buddy** on the home screen: breathes, blinks, eyes follow his finger, giggles when tickled, sleeps when left alone, wears a nightcap at night, and grows (baby → little → big) as he plays on more days.
+- The **home world answers taps**: sun/moon, rain clouds, coconuts, roaring dinos, a puffing volcano, flowers in the grass. Day and night follow the clock. A dino runs across the screen when a game opens.
+- **Animated pictures** where an emoji is just for show (home icons, animals, dinos, peek-a-boo friends, babies, fish…): the lion turns its head, the rocket shakes. 67 animations in `anim/` (128 px WebP), each downloaded the first time it shows and kept offline. Answer buttons stay plain emoji. Credit: [Noto Animated Emoji](https://googlefonts.github.io/noto-emoji-animation/) by Google, CC BY 4.0.
+- Celebrations and picture pop-outs appear as a small badge in the top-right corner, never over the middle of a game.
+
 ## 🔤 Learning pack (`js/learn.js` + `js/strokes.js` + `css/learn.css`)
 Seven learning games (our own designs), grouped on the launcher under **Letters & Reading** and **Numbers**:
 - **✏️ Trace It** — trace A–Z, a–z, 1–10 and the child's own name, with a green start dot, direction arrow and stroke order (strokes in `js/strokes.js`). A little dino walks along the line, the ink sparkles, and a finished letter pops out its picture (A → 🍎 "A is for Apple"; 3 → three dinos). Stars mark finished letters.

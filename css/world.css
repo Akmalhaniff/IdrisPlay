@@ -1,0 +1,121 @@
+/* Idris Play — living home world: dino buddy, tappable scene, day/night, run transition (js/world.js) */
+
+/* ---------- 🦖 dino buddy ---------- */
+.mascot.buddy{width:clamp(130px,22vmin,200px);height:clamp(130px,22vmin,200px);padding:0;border:none;background:none;box-shadow:none;animation:none;overflow:visible;touch-action:manipulation}
+.mascot.buddy svg{width:100%;height:100%;overflow:visible;filter:drop-shadow(0 10px 8px rgba(0,0,0,.18))}
+.bd-body{transform-origin:80px 148px;animation:bdBreathe 2.6s ease-in-out infinite}
+@keyframes bdBreathe{50%{transform:scale(1.03,.97)}}
+.bd-tail{transform-origin:52px 104px;animation:bdWag 1.4s ease-in-out infinite alternate}
+@keyframes bdWag{from{transform:rotate(-6deg)}to{transform:rotate(8deg)}}
+.bd-head{transform-origin:100px 90px;animation:bdNod 4s ease-in-out infinite}
+@keyframes bdNod{50%{transform:rotate(-4deg)}}
+.bd-lid{transform-box:fill-box;transform-origin:center top;transform:scaleY(0)}
+.buddy.blink .bd-lid{animation:bdBlink .22s ease-in-out}
+@keyframes bdBlink{50%{transform:scaleY(1)}}
+.buddy.asleep .bd-lid{transform:scaleY(1)}
+.buddy.asleep .bd-body{animation-duration:4s}
+.buddy.asleep .bd-mouth{d:path("M112 82 Q120 84 128 82")}
+.bd-zzz{font:900 18px 'Fredoka',sans-serif;fill:#6366F1;opacity:0}
+.buddy.asleep .bd-zzz{animation:bdZzz 2s ease-in-out infinite}
+.buddy.asleep .bd-zzz.z2{animation-delay:1s}
+@keyframes bdZzz{0%{opacity:0;transform:translateY(8px)}40%{opacity:1}100%{opacity:0;transform:translateY(-14px)}}
+.buddy.tickle svg{animation:bdTickle .7s cubic-bezier(.2,.9,.3,1.4)}
+@keyframes bdTickle{0%{transform:none}25%{transform:translateY(-26%) rotate(-8deg) scale(1.05)}45%{transform:translateY(0) scale(1.12,.88)}65%{transform:rotate(6deg)}100%{transform:none}}
+.buddy.tickle .bd-mouth{d:path("M106 76 Q120 98 136 76")}
+.buddy.talk svg{animation:bdTalk .25s ease-in-out 6 alternate}
+@keyframes bdTalk{to{transform:scale(1.05) rotate(-3deg)}}
+.buddy.grow svg{animation:bdGrow 1.2s cubic-bezier(.2,.9,.3,1.5)}
+@keyframes bdGrow{0%{transform:scale(.6)}60%{transform:scale(1.3)}100%{transform:scale(1)}}
+/* he grows as Idris plays on more days */
+.buddy[data-size="baby"] svg{transform:scale(.78);transform-origin:50% 100%}
+.buddy[data-size="little"] svg{transform:scale(.9);transform-origin:50% 100%}
+.buddy[data-size="big"] svg{transform:scale(1.05);transform-origin:50% 100%}
+.bd-cap{opacity:0;transition:opacity .4s}
+body.night .bd-cap{opacity:1}
+
+/* ---------- 🌤️ tappable scene ---------- */
+.hs-sun{transition:background .6s,box-shadow .6s}
+.hs-sun.w-spin{animation:wSpin .9s cubic-bezier(.2,.9,.3,1.4),sunPulse 3s ease-in-out infinite alternate}
+@keyframes wSpin{40%{transform:scale(1.25) rotate(20deg)}70%{transform:scale(.95) rotate(-10deg)}}
+.w-drop{position:fixed;width:8px;height:14px;border-radius:50% 50% 50% 50%/60% 60% 40% 40%;background:#38BDF8;pointer-events:none;animation:wDrop 1.1s ease-in forwards}
+@keyframes wDrop{to{transform:translateY(55vh);opacity:.2}}
+.hs-palm.w-shake{animation:wShake .5s ease-in-out}
+@keyframes wShake{25%{transform:rotate(-10deg)}75%{transform:rotate(10deg)}}
+.w-coco{position:fixed;font-size:2.4rem;pointer-events:none;animation:wFall 2.2s cubic-bezier(.5,0,.9,.6) forwards}
+@keyframes wFall{30%{transform:translateY(var(--fall)) rotate(200deg)}40%{transform:translateY(calc(var(--fall) - 40px)) rotate(260deg)}50%{transform:translateY(var(--fall)) rotate(300deg)}85%{transform:translateY(var(--fall)) rotate(320deg);opacity:1}100%{transform:translateY(var(--fall)) rotate(320deg);opacity:0}}
+.hs-dino.w-jump{animation:dinoWalk 38s linear infinite,wJump .6s cubic-bezier(.3,.6,.4,1)}
+.hs-dino.d2.w-jump{animation:dinoWalk 52s linear infinite -24s,wJump .6s cubic-bezier(.3,.6,.4,1)}
+@keyframes wJump{50%{translate:0 -60px;scale:1.15}}
+.hs-volcano.w-puff b{animation:lavaGlow .8s ease-in-out 2}
+.w-spark{position:fixed;font-size:1.8rem;pointer-events:none;animation:wSpark 1.2s ease-out forwards}
+@keyframes wSpark{40%{transform:translate(calc(var(--dx) * .5),-120px)}100%{transform:translate(var(--dx),40px);opacity:0}}
+.hs-bird.w-flap{animation:birdFly 26s linear infinite,wFlap .5s ease-in-out}
+@keyframes wFlap{50%{scale:1.4;translate:0 -30px}}
+.hs-flowers{position:absolute;inset:0;pointer-events:none}
+.w-flower{position:fixed;font-size:2.6rem;line-height:1;transform:translate(-50%,-80%);animation:wGrow .6s cubic-bezier(.2,.9,.3,1.6)}
+@keyframes wGrow{from{transform:translate(-50%,-30%) scale(0)}}
+.w-twinkle{position:fixed;font-size:2.2rem;transform:translate(-50%,-50%);pointer-events:none;animation:sparkleTw 1.2s ease-out forwards}
+
+/* ---------- 🌙 night ---------- */
+.hs-stars{position:absolute;inset:0;opacity:0;transition:opacity 1s;pointer-events:none}
+.hs-stars i{position:absolute;width:4px;height:4px;border-radius:50%;background:#fff;animation:twinkle 1.6s ease-in-out infinite alternate}
+body.night .hs-stars{opacity:1}
+body.night .home-scene{background:linear-gradient(180deg,#1E1B4B 0%,#3730A3 45%,#6D5BB5 80%)}
+body.night .hs-sun{background:radial-gradient(circle at 35% 35%,#FFFBEB,#FDE68A 70%);box-shadow:0 0 0 14px rgba(253,230,138,.15),0 0 40px 10px rgba(253,230,138,.3)}
+body.night .hs-sun::after{content:'';position:absolute;inset:-4% -4% 20% 30%;border-radius:50%;background:#2E2A7A;opacity:.0}
+body.night .hs-cloud{opacity:.35}
+body.night .hs-hills i:nth-child(1){background:#3F6F4A}
+body.night .hs-hills i:nth-child(2){background:#2F5A3A}
+body.night .hs-hills i:nth-child(3){background:#264D31}
+body.night .hello-hi{color:#C7D2FE;text-shadow:0 3px 0 #312E81}
+body.night .hello-sub,body.night .launch-head{color:#E0E7FF;text-shadow:0 2px 0 rgba(0,0,0,.3)}
+body.night .app-label{color:#fff;text-shadow:0 2px 3px rgba(0,0,0,.5)}
+
+/* ---------- 🦖 run-across transition ---------- */
+.w-runner{position:fixed;inset:0;z-index:19000;pointer-events:none;overflow:hidden}
+.w-runner span{position:absolute;bottom:12%;font-size:min(30vmin,200px);line-height:1;left:110%;filter:drop-shadow(0 10px 8px rgba(0,0,0,.25))}
+.w-runner.go.ltr span{transform:scaleX(-1);animation:wRunL .75s cubic-bezier(.4,0,.6,1) forwards}
+.w-runner.go.rtl span{animation:wRunR .75s cubic-bezier(.4,0,.6,1) forwards}
+@keyframes wRunL{from{left:-30%}to{left:115%}}
+@keyframes wRunR{from{left:115%}to{left:-30%}}
+.w-runner.go span::after{content:'💨';position:absolute;font-size:40%;bottom:0;right:100%}
+
+/* ---------- squishy, breathing game buttons ---------- */
+.app-tile{animation:wBreathe 3.2s ease-in-out infinite;animation-delay:calc(var(--i) * -.37s)}
+@keyframes wBreathe{50%{transform:scale(1.03)}}
+.app-icon:active .app-tile{animation:none;transform:scale(.88,.82) translateY(6px)}
+.app-icon:active .app-emoji{transform:scale(1.25) translateY(-8px)}
+.app-emoji{transition:transform .15s}
+
+/* ---------- hand-drawn world pieces (js/art.js) ---------- */
+.hs-dino.drawn{width:clamp(80px,12vw,140px);height:clamp(80px,12vw,140px)}
+.hs-dino.d2.drawn{width:clamp(64px,9vw,110px);height:clamp(64px,9vw,110px)}
+.hs-dino.drawn .art{width:100%;height:100%;transform:scaleX(-1);overflow:visible}
+.hs-palm.drawn{width:clamp(90px,14vw,170px);height:clamp(110px,17vw,210px);bottom:8vh}
+.hs-palm.p2.drawn{width:clamp(70px,10vw,120px);height:clamp(86px,12vw,150px)}
+.hs-palm.drawn .art{width:100%;height:100%;overflow:visible}
+
+/* animated pictures (js/animoji.js) */
+img.ae{width:1em;height:1em;display:inline-block;vertical-align:-.12em;pointer-events:none;-webkit-user-drag:none;user-select:none}
+
+/* ---------- pop-ups stay out of the way: a small badge in the top-right corner ---------- */
+/* Hooray / Yay celebration */
+.cel{place-items:start end;padding:calc(92px + env(safe-area-inset-top)) max(14px,env(safe-area-inset-right)) 0 0}
+.cel-rays{display:none}
+.cel-box{flex-direction:row;gap:10px;background:#fff;border-radius:999px;padding:6px 20px 6px 10px;box-shadow:0 10px 24px rgba(0,0,0,.18);transform:translateX(140%);transition:transform .45s cubic-bezier(.2,.9,.3,1.3)}
+.cel.show .cel-box{transform:none}
+.cel-mascot{font-size:56px;filter:none}
+.cel-text{font-size:1.9rem;color:#F59E0B;-webkit-text-stroke:0;text-shadow:none}
+/* Colours / Shapes / Animals pop-out and Numbers counting */
+.td-spot{place-items:start end;padding:calc(92px + env(safe-area-inset-top)) max(14px,env(safe-area-inset-right)) 0 0}
+.td-spot-card{flex-direction:row;gap:12px;background:#fff;border-radius:28px;padding:10px 20px 10px 12px;box-shadow:0 10px 24px rgba(0,0,0,.18)}
+.td-spot.show .td-spot-card{animation:tdSlide 1.9s cubic-bezier(.2,.9,.3,1.2) forwards}
+.td-spot.show.stay .td-spot-card{animation:tdSlideIn .45s cubic-bezier(.2,.9,.3,1.2) forwards}
+@keyframes tdSlide{0%{transform:translateX(140%);opacity:1}18%,82%{transform:none;opacity:1}100%{transform:translateX(140%);opacity:1}}
+@keyframes tdSlideIn{from{transform:translateX(140%);opacity:1}to{transform:none;opacity:1}}
+.td-spot-card b{font-size:2rem;-webkit-text-stroke:0;color:#334155}
+.td-big{font-size:72px;filter:none}
+.td-blob{width:80px;box-shadow:0 4px 10px rgba(0,0,0,.15),inset -6px -8px 0 rgba(0,0,0,.12)}
+.td-blob span{font-size:40px}
+.td-count{flex-direction:column;align-items:flex-end}
+.td-items{font-size:40px;max-width:min(46vw,360px);justify-content:flex-end}
