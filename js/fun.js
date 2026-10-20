@@ -120,7 +120,8 @@ function sparkleAt(root, x, y, n = 6, chars = ['✨', '⭐', '💫']){
 }
 
 // ===================== 🥚 Surprise Eggs =====================
-const BABIES = [['🦖','dinosaur'],['🦕','long neck dinosaur'],['🦖','T-Rex'],['🦕','dino'],['🐥','chick'],['🐢','turtle'],['🐊','crocodile'],['🐧','penguin'],['🦜','parrot'],['🦉','owl'],['🦆','duckling'],['🐲','dragon'],['🦄','unicorn'],['🐍','snake'],['🦩','flamingo'],['🐸','frog'],['🦎','lizard'],['🐙','octopus'],['🐳','whale'],['🦔','hedgehog']];
+// Baby buddy dinos: [hue shift, name]
+const BABIES = window.idrisDrawn.COLOURS.map(([hue, c]) => [hue, c + ' dino']);
 const EGG_LOOKS = [
   ['#FFE4F1', 'radial-gradient(circle at 30% 30%,#FF8FC7 0 9%,transparent 10%),radial-gradient(circle at 70% 55%,#FF8FC7 0 11%,transparent 12%),radial-gradient(circle at 40% 78%,#FF8FC7 0 8%,transparent 9%)'],
   ['#DDF4FF', 'repeating-linear-gradient(160deg,transparent 0 18px,#7CC8FF 18px 30px)'],
@@ -135,7 +136,7 @@ addGame({
     <div class="egg-center"><div class="egg"><svg viewBox="0 0 100 128" preserveAspectRatio="none">
       <polyline points="30,40 38,48 33,56 42,62"/><polyline points="62,36 56,46 64,54 58,64 66,70"/>
       <polyline points="8,66 22,60 30,70 44,62 56,72 70,62 82,70 94,64"/></svg></div><div class="egg-nest"></div></div>
-    <div class="egg-baby"></div><div class="ng-hint">👆 Tap tap tap the egg!</div>`,
+    <div class="egg-baby"></div><div class="ng-hint">Tap tap tap the egg!</div>`,
   init(root){
     this.egg = $('.egg', root); this.baby = $('.egg-baby', root); this.shelf = $('.egg-shelf', root);
     this.hatched = 0;
@@ -163,12 +164,13 @@ addGame({
   },
   hatch(){
     this.busy = true;
-    const [emoji, name] = pick(BABIES);
+    const [hue, name] = pick(BABIES);
+    const look = hue ? `hue-rotate(${hue}deg) saturate(1.2)` : '';
     ['top', 'bot'].forEach(c => this.egg.appendChild(el('div', 'egg-half ' + c)));
     this.egg.classList.add('cracked');
     this.egg.querySelectorAll('.egg-half').forEach(h => { h.style.background = this.egg.style.background; });
     sfx.crack(); later(() => sfx.pop(), 120); later(() => sfx.boing(), 250);
-    this.baby.textContent = emoji;
+    this.baby.innerHTML = window.idrisBuddySVG; this.baby.style.filter = look;
     this.baby.className = 'egg-baby'; void this.baby.offsetWidth; this.baby.classList.add('show');
     this.hatched++;
     burstConfetti(this.hatched % 5 === 0 ? 30 : 16);
@@ -176,7 +178,7 @@ addGame({
     later(() => {
       this.baby.classList.add('fly');
       later(() => {
-        const s = el('span', null, emoji); this.shelf.appendChild(s);
+        const s = el('span', null, window.idrisBuddySVG); s.style.filter = look; this.shelf.appendChild(s);
         while(this.shelf.children.length > 12) this.shelf.firstChild.remove();
         this.baby.className = 'egg-baby'; this.newEgg(true);
       }, 700);
@@ -186,14 +188,15 @@ addGame({
 });
 
 // ===================== 🛁 Bath Time =====================
-const PETS = [['🐶','puppy'],['🦕','dino'],['🐱','kitty'],['🐻','bear'],['🐼','panda'],['🐵','monkey'],['🐰','bunny'],['🐯','tiger'],['🐮','cow'],['🐨','koala'],['🦁','lion'],['🐸','froggy']];
+// Muddy buddy dinos to wash: [hue shift, name]
+const PETS = window.idrisDrawn.COLOURS.map(([hue, c]) => [hue, c + ' dino']);
 addGame({
   id: 'bath', e: '🛁', n: 'Bath Time', colors: ['#A5F3FC', '#22D3EE', '#0891B2'], stageClass: 'bath-stage',
   html: `<div class="bath-meter"><i></i></div>
-    <div class="bath-pet dirty"><span class="pet-emoji">🐶</span></div>
+    <div class="bath-pet dirty"><span class="pet-emoji"></span></div>
     <div class="bath-tub"></div>
-    <div class="bath-tools"><button class="ng-btn bath-tool active" data-tool="sponge" aria-label="Sponge">🧽</button><button class="ng-btn bath-tool" data-tool="shower" aria-label="Shower">🚿</button></div>
-    <div class="ng-hint">🧽 Rub rub rub the mud!</div>`,
+    <div class="bath-tools"><button class="ng-btn bath-tool active" data-tool="sponge" aria-label="Sponge">${window.idrisDrawn.piece('sponge')}</button><button class="ng-btn bath-tool" data-tool="shower" aria-label="Shower">${window.idrisDrawn.piece('shower')}</button></div>
+    <div class="ng-hint">Rub rub rub the mud!</div>`,
   init(root){
     this.pet = $('.bath-pet', root); this.meter = $('.bath-meter i', root); this.hint = $('.ng-hint', root);
     this.tool = 'sponge';
@@ -210,10 +213,10 @@ addGame({
     if(t === 'shower'){ this.root.querySelector('[data-tool=shower]').classList.remove('pulse'); if(this.phase === 'rinse') this.shower(); else speak('Shower!'); }
   },
   newPet(){
-    const [emoji, name] = pick(PETS);
+    const [hue, name] = pick(PETS);
     this.name = name; this.phase = 'scrub'; this.lastSqueak = 0;
     this.pet.className = 'bath-pet dirty';
-    this.pet.innerHTML = `<span class="pet-emoji pop-in">${emoji}</span>`;
+    this.pet.innerHTML = `<span class="pet-emoji pop-in" style="${hue ? `filter:hue-rotate(${hue}deg) saturate(1.2)` : ''}">${window.idrisBuddySVG}</span>`;
     this.spots = [];
     for(let i = 0; i < 9; i++){
       const m = el('div', 'mud'), size = rand(11, 18);
@@ -223,7 +226,7 @@ addGame({
       this.pet.appendChild(m); this.spots.push(m);
     }
     this.setTool('sponge');
-    this.hint.textContent = '🧽 Rub rub rub the mud!';
+    this.hint.textContent = 'Rub rub rub the mud!';
     this.updateMeter();
   },
   rub(e){
@@ -247,7 +250,7 @@ addGame({
     if(this.spots.every(m => m.dirt <= 0)){
       this.phase = 'rinse';
       this.pet.classList.remove('dirty');
-      this.hint.textContent = '🚿 Now tap the shower!';
+      this.hint.textContent = 'Now tap the shower!';
       this.root.querySelector('[data-tool=shower]').classList.add('pulse');
       speak('All soapy! Now tap the shower!');
     }
@@ -273,7 +276,7 @@ addGame({
       this.meter.style.width = '100%';
       this.pet.classList.add('happy');
       sparkleAt(this.root, r.left - sr.left + r.width / 2, r.top - sr.top + r.height / 2, 10);
-      this.hint.textContent = '✨ Sparkly clean!';
+      this.hint.textContent = 'Sparkly clean!';
       speak('Sparkly clean! Thank you! Happy ' + this.name + '!');
       burstConfetti(30);
     }, 1500);

@@ -198,3 +198,10 @@ body.ng-game .wrap{padding-bottom:calc(.6rem + env(safe-area-inset-bottom))}
   linear-gradient(#0A0B24,#0A0B24) 81% 100%/8% 80% no-repeat,
   linear-gradient(#0A0B24,#0A0B24) 91% 100%/10% 58% no-repeat}
 .fw-hint{background:rgba(255,255,255,.18);color:#fff}
+
+/* drawn buddy and pieces (js/drawn.js) */
+.egg-baby svg,.egg-shelf span svg,.pet-emoji svg,.bath-tool svg{width:100%;height:100%;overflow:visible;display:block}
+.egg-baby{width:1em;height:1em}
+.egg-shelf span{display:inline-block;width:1em;height:1em}
+.pet-emoji{display:block;width:1em;height:1em}
+.bath-tool svg{width:78%;height:78%;margin:auto}

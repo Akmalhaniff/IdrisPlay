@@ -6,9 +6,10 @@
 const { addGame, sfx, celebrate, sparkleAt, el, pick, rand, later, $ } = window.IdrisPlay;
 
 // [emoji, hue shift, name] — the hue shift recolours the emoji so each friend looks different.
-const FRIENDS = [['🦖', 0, 'T-Rex'], ['🦕', 0, 'Long Neck'], ['🦖', 170, 'Blue T-Rex'], ['🦕', 250, 'Purple Long Neck'], ['🦖', 290, 'Pink T-Rex'], ['🦕', -60, 'Orange Long Neck']];
-const TREATS = ['🍃', '🍉', '🍎', '🍌', '🍓', '🥦', '🌿', '🍇'];
-const ROCKS = ['🪨', '🪨', '🪵', '🌵'];
+// [hue shift, name] — the drawn buddy in a new colour each time
+const FRIENDS = window.idrisDrawn.COLOURS.map(([hue, c]) => [hue, c[0].toUpperCase() + c.slice(1) + ' Dino']);
+const TREATS = ['leaves', 'watermelon', 'apple', 'banana', 'strawberry', 'broccoli', 'carrot', 'grapes'];
+const ROCKS = ['rock', 'rock', 'log', 'cactus'];
 const GOAL = 10;
 
 // Everything Dino Run says, so the voice pack can pre-record it (see dinoPhrases).
@@ -23,10 +24,10 @@ addGame({
   id: 'dinorun', e: '🦖', n: 'Dino Run', colors: ['#BBF7D0', '#4ADE80', '#15803D'], stageClass: 'dr-stage', cat: 'dino',
   html: `<div class="dr-sun"></div><div class="dr-volcano"><b></b><i></i></div>
     <div class="dr-far"></div><div class="dr-near"></div><div class="dr-ground"></div>
-    <div class="dr-tummy"><span class="dr-tummy-e">🍃</span><div class="dr-bar"><i></i></div><b>0</b></div>
-    <div class="dr-dino running"><span>🦖</span></div>
-    <button class="ng-btn dr-roar" aria-label="Roar">🦖<small>ROAR</small></button>
-    <div class="ng-hint">👆 Tap to jump!</div>`,
+    <div class="dr-tummy"><span class="dr-tummy-e"></span><div class="dr-bar"><i></i></div><b>0</b></div>
+    <div class="dr-dino running"><span></span></div>
+    <button class="ng-btn dr-roar" aria-label="Roar"><span class="dr-roar-dino"></span><small>ROAR</small></button>
+    <div class="ng-hint">Tap to jump!</div>`,
   init(root){
     this.dino = $('.dr-dino', root); this.face = $('.dr-dino span', root);
     this.bar = $('.dr-bar i', root); this.countEl = $('.dr-tummy b', root); this.hint = $('.ng-hint', root);
@@ -56,8 +57,8 @@ addGame({
   },
   setFriend(i, announce = true){
     this.friend = i % FRIENDS.length;
-    const [e, hue, name] = FRIENDS[this.friend];
-    this.face.textContent = e;
+    const [hue, name] = FRIENDS[this.friend];
+    if(!this.face.firstChild){ this.face.innerHTML = window.idrisBuddySVG; $('.dr-roar-dino', this.root).innerHTML = window.idrisBuddySVG; $('.dr-tummy-e', this.root).innerHTML = window.idrisFood('leaves'); }
     this.face.style.filter = hue ? `hue-rotate(${hue}deg) saturate(1.2)` : '';
     this.act('pop-in');
     if(announce){ sfx.boing(); speak(SAY.friend(name)); }
@@ -88,7 +89,7 @@ addGame({
     const high = kind === 'treat' && Math.random() < 0.5;    // some treats need a jump to reach
     const S = this.D * (kind === 'rock' ? 0.5 : 0.42);
     const o = { kind, x: this.w + S, y: high ? this.peak * rand(0.55, 0.8) : 0, S, e: kind === 'rock' ? pick(ROCKS) : pick(TREATS) };
-    o.node = el('div', 'dr-obj ' + kind, o.e);
+    o.node = el('div', 'dr-obj ' + kind, kind === 'rock' ? window.idrisDrawn.piece(o.e) : window.idrisFood(o.e));
     o.node.style.fontSize = S + 'px';
     this.root.appendChild(o.node);
     this.objs.push(o);
@@ -100,7 +101,7 @@ addGame({
     this.eaten++; this.total++;
     this.countEl.textContent = this.eaten;
     this.bar.style.width = Math.min(100, this.eaten / GOAL * 100) + '%';
-    $('.dr-tummy-e', this.root).textContent = o.e;
+    $('.dr-tummy-e', this.root).innerHTML = window.idrisFood(o.e);
     this.act('munch');
     sparkleAt(this.root, this.dinoX + this.D / 2, this.h - this.ground - this.jy - this.D / 2, 3, ['✨', '💚', '⭐']);
     if(this.eaten >= GOAL) return this.full();
@@ -108,7 +109,7 @@ addGame({
     else speak(SAY.count(this.eaten));
   },
   full(){
-    const name = FRIENDS[this.friend][2];
+    const name = FRIENDS[this.friend][1];
     speak(SAY.full(name));
     celebrate('Yum yum!');
     burstConfetti(30);
@@ -181,7 +182,7 @@ addGame({
 // ---------- every sentence above, for pre-recording the voice pack (js/phrases.js) ----------
 window.dinoPhrases = () => {
   const p = [SAY.start];
-  FRIENDS.forEach(([, , n]) => p.push(SAY.friend(n), SAY.full(n)));
+  FRIENDS.forEach(([, n]) => p.push(SAY.friend(n), SAY.full(n)));
   for(let i = 1; i <= GOAL; i++) p.push(SAY.count(i));
   return p;
 };

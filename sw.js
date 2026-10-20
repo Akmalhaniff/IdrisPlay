@@ -1,6 +1,6 @@
 // Idris Play service worker — makes the app installable and playable offline.
 // All paths are relative to where the app is hosted (e.g. https://akmalhaniff.github.io/IdrisPlay/).
-const CACHE = 'idrisplay-v20';
+const CACHE = 'idrisplay-v22';
 const SHELL = [
   './',
   'index.html',
@@ -17,8 +17,12 @@ const SHELL = [
   'css/learn.css',
   'js/dino.js',
   'css/dino.css',
+  'js/drawn.js',
   'js/food-art.js',
   'js/dino-more.js',
+  'js/species.js',
+  'js/dinoworld.js',
+  'css/dinoworld.css',
   'css/dino-more.css',
   'js/play.js',
   'css/play.css',

@@ -5,8 +5,8 @@
 'use strict';
 const { addGame, sfx, celebrate, sparkleAt, stagePoint, el, pick, rand, later, $ } = window.IdrisPlay;
 const restart = (node, cls) => { node.classList.remove(cls); void node.offsetWidth; node.classList.add(cls); };
-// [emoji, hue shift, name]
-const DINOS = [['🦖', 0, 'T-Rex'], ['🦕', 0, 'Long Neck'], ['🦖', 170, 'Blue T-Rex'], ['🦕', 250, 'Purple Long Neck'], ['🦖', 290, 'Pink T-Rex'], ['🦕', -60, 'Orange Long Neck']];
+// [hue shift, name] — the drawn buddy in different colours
+const DINOS = window.idrisDrawn.COLOURS.map(([hue, c]) => [hue, c + ' dino']);
 const hueOf = h => h ? `hue-rotate(${h}deg) saturate(1.2)` : '';
 
 // ======================================================================
@@ -21,7 +21,7 @@ addGame({
   id: 'dig', e: '🦴', n: 'Dino Dig', colors: ['#FDE68A', '#D97706', '#92400E'], stageClass: 'dg-stage', cat: 'dino',
   html: `<div class="dg-tray"><span></span><span></span><span></span></div>
     <div class="dg-pit"><div class="dg-under"></div><canvas class="dg-sand"></canvas><div class="dg-dino"></div></div>
-    <div class="ng-hint">👆 Rub rub rub the sand!</div>`,
+    <div class="ng-hint">Rub rub rub the sand!</div>`,
   init(root){
     this.pit = $('.dg-pit', root); this.under = $('.dg-under', root); this.cv = $('.dg-sand', root);
     this.ctx = this.cv.getContext('2d'); this.dino = $('.dg-dino', root); this.tray = [...root.querySelectorAll('.dg-tray span')];
@@ -46,11 +46,11 @@ addGame({
     this.under.innerHTML = ''; this.bones = [];
     [0, 1, 2].forEach(i => {
       const x = this.w * (0.18 + i * 0.32) + rand(-this.w * 0.06, this.w * 0.06), y = this.h * rand(0.25, 0.75);
-      const b = el('div', 'dg-bone', '🦴'); b.style.left = x + 'px'; b.style.top = y + 'px'; b.style.rotate = rand(-40, 40) + 'deg';
+      const b = el('div', 'dg-bone', window.idrisDrawn.piece('bone')); b.style.left = x + 'px'; b.style.top = y + 'px'; b.style.rotate = rand(-40, 40) + 'deg';
       this.under.appendChild(b); this.bones.push({ x, y, node: b, found: false });
     });
     this.found = 0; this.dino.className = 'dg-dino'; this.cv.style.opacity = '';
-    this.tray.forEach(s => { s.textContent = ''; s.className = ''; });
+    this.tray.forEach(s => { s.innerHTML = ''; s.className = ''; });
     this.def = DINOS[this.round % DINOS.length];
   },
   rub(e){
@@ -74,16 +74,16 @@ addGame({
     b.found = true; this.found++;
     restart(b.node, 'got'); sfx.pop(); later(() => sfx.boing(), 120);
     sparkleAt(this.pit, b.x, b.y, 6);
-    const slot = this.tray[this.found - 1]; slot.textContent = '🦴'; slot.className = 'pop-in';
+    const slot = this.tray[this.found - 1]; slot.innerHTML = window.idrisDrawn.piece('bone'); slot.className = 'pop-in';
     speak(DIG_SAY.bone(this.found));
     if(this.found >= 3) later(() => this.alive(), 1200);
   },
   alive(){
-    const [e, hue, name] = this.def;
+    const [hue, name] = this.def;
     this.cv.style.opacity = '0';
     this.bones.forEach(b => b.node.classList.add('gather'));
     later(() => {
-      this.dino.textContent = e; this.dino.style.filter = hueOf(hue);
+      this.dino.innerHTML = window.idrisBuddySVG; this.dino.style.filter = hueOf(hue);
       restart(this.dino, 'show');
       sfx.rumble(0.8); sfx.tone(140, 0.6, 'sawtooth', 0.18, 70);
       speak(DIG_SAY.alive(name)); burstConfetti(30);
@@ -119,7 +119,7 @@ addGame({
   act(cls){ this.dino.classList.remove('pop-in', 'no', 'chomp', 'happy'); void this.dino.offsetWidth; this.dino.classList.add(cls); },
   newDino(){
     if(!this.face.firstChild) this.face.innerHTML = window.idrisBuddySVG || '';
-    const [, hue] = DINOS[this.idx++ % DINOS.length];
+    const [hue] = DINOS[this.idx++ % DINOS.length];
     this.face.style.filter = hueOf(hue);
     this.dino.classList.remove('sleep'); this.act('pop-in');
     this.fed = 0; this.bar.style.width = '0%';
@@ -185,7 +185,7 @@ const PK_SAY = {
 };
 addGame({
   id: 'peekdino', e: '🌿', n: 'Dino Peekaboo', colors: ['#A7F3D0', '#10B981', '#047857'], stageClass: 'pk-stage', cat: 'dino',
-  html: `<div class="pk-count">🦖 <b>0</b></div><div class="pk-volcano"></div><div class="pk-field"></div>`,
+  html: `<div class="pk-count"><span class="pk-count-dino"></span><b>0</b></div><div class="pk-volcano"></div><div class="pk-field"></div>`,
   init(root){
     this.field = $('.pk-field', root); this.countEl = $('.pk-count b', root);
     this.holes = [];
@@ -200,8 +200,8 @@ addGame({
     if(!this.running) return;
     const free = this.holes.filter(o => !o.up);
     if(free.length > 3){
-      const o = pick(free), egg = Math.random() < 0.15, [e, hue] = egg ? ['🥚', 0] : pick(DINOS);
-      o.d.textContent = e; o.d.style.filter = hueOf(hue); o.egg = egg;
+      const o = pick(free), egg = Math.random() < 0.15, [hue] = egg ? [0] : pick(DINOS);
+      o.d.innerHTML = egg ? window.idrisDrawn.piece('egg') : window.idrisBuddySVG; o.d.style.filter = hueOf(hue); o.egg = egg;
       o.up = true; o.h.classList.remove('tapped'); restart(o.h, 'up'); sfx.tone(500, 0.12, 'sine', 0.15, 800);
       o.timer = later(() => { o.up = false; o.h.classList.remove('up'); }, rand(1800, 2600));
     }
@@ -224,7 +224,8 @@ addGame({
       later(() => { if(currentScreen === 'peekdino') this.start(); }, 4500);
     }
   },
-  start(){ this.count = 0; this.countEl.textContent = 0; this.running = true; clearTimeout(this.popTimer); this.pop(); },
+  start(){ const cd = $('.pk-count-dino', this.root); if(!cd.firstChild) cd.innerHTML = window.idrisBuddySVG;
+    this.count = 0; this.countEl.textContent = 0; this.running = true; clearTimeout(this.popTimer); this.pop(); },
   enter(){ speakNext(PK_SAY.start); this.start(); },
   leave(){ this.running = false; clearTimeout(this.popTimer); this.holes.forEach(o => { clearTimeout(o.timer); o.up = false; o.h.classList.remove('up', 'tapped'); }); }
 });
@@ -233,7 +234,7 @@ addGame({
 window.dinoMorePhrases = () => {
   const p = [DIG_SAY.start, LU_SAY.start, LU_SAY.full, PK_SAY.start, PK_SAY.done, 'A dino egg!'];
   [1, 2, 3].forEach(n => p.push(DIG_SAY.bone(n)));
-  DINOS.forEach(([, , n]) => p.push(DIG_SAY.alive(n)));
+  DINOS.forEach(([, n]) => p.push(DIG_SAY.alive(n)));
   FOODS.forEach(f => p.push(LU_SAY.want(f), LU_SAY.yum(f)));
   for(let i = 1; i <= PEEK_GOAL; i++) p.push(String(i));
   return p;

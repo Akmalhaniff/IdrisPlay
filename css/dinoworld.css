@@ -1,0 +1,61 @@
+/* Idris Play — Dino World (js/dinoworld.js, drawings in js/species.js) */
+.dw-stage{background:linear-gradient(180deg,#8FD8FF 0%,#CFF0FF 55%,#EAF9D8 100%);touch-action:pan-x}
+.dw-scroll{position:absolute;inset:0;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-webkit-overflow-scrolling:touch;touch-action:pan-x;overscroll-behavior-x:contain}
+.dw-scroll::-webkit-scrollbar{display:none}
+.dw-world{position:relative;height:100%}
+.dw-mountains{position:absolute;left:0;right:0;bottom:26%;height:34%;background:radial-gradient(ellipse 300px 100% at 150px 100%,#A7D9C4 98%,transparent 100%) 0 0/560px 100% repeat-x;opacity:.7}
+.dw-volcano{position:absolute;bottom:28%;width:300px;aspect-ratio:1.6;background:linear-gradient(180deg,#A16207,#78350F);clip-path:polygon(0 100%,36% 8%,64% 8%,100% 100%);opacity:.85}
+.dw-volcano b{position:absolute;left:36%;right:36%;top:8%;height:16%;background:linear-gradient(180deg,#FF6B2C,#F59E0B)}
+.dw-ground{position:absolute;left:0;right:0;bottom:0;height:32%;background:linear-gradient(180deg,#7CCB7F,#5DBB63);box-shadow:inset 0 10px 0 #8FD68A}
+.dw-lake{position:absolute;bottom:0;width:480px;height:30%;border-radius:50% 50% 0 0/40% 40% 0 0;background:linear-gradient(180deg,#38BDF8,#1D4ED8);box-shadow:inset 0 10px 0 rgba(255,255,255,.35)}
+.dw-bush{position:absolute;bottom:29%;z-index:0;width:110px;height:56px;border-radius:50% 50% 14% 14%/80% 80% 20% 20%;background:radial-gradient(circle at 25% 35%,#6EE07A 0 22%,transparent 23%),radial-gradient(circle at 70% 30%,#6EE07A 0 20%,transparent 21%),linear-gradient(180deg,#34A853,#1E7B3A);opacity:.9}
+
+.dw-dino{position:absolute;z-index:2;border:none;background:none;padding:0;cursor:pointer;width:min(36vmin,280px);aspect-ratio:4/3;transform-origin:50% 100%;animation:dwIdle 2.6s ease-in-out infinite;-webkit-tap-highlight-color:transparent}
+.dw-dino.high{bottom:15%;z-index:2}
+.dw-dino.low{bottom:3%;z-index:3}
+.dw-dino.tall{width:min(42vmin,330px)}
+.dw-dino.sky{top:6%;width:min(32vmin,240px);animation:dwGlide 6s ease-in-out infinite}
+.dw-dino.sea{bottom:6%;width:min(36vmin,280px);animation:dwBob 2.4s ease-in-out infinite}
+.dw-dino:nth-of-type(odd){animation-delay:-1.3s}
+.sp-art{width:100%;height:100%;overflow:visible;display:block;filter:drop-shadow(0 10px 8px rgba(0,0,0,.12))}
+@keyframes dwIdle{50%{transform:scale(1.02,.98)}}
+@keyframes dwGlide{0%,100%{transform:translate(0,0)}50%{transform:translate(120px,24px)}}
+@keyframes dwBob{50%{transform:translateY(-10px) rotate(-2deg)}}
+/* wings always flap a little */
+.sp-wing{transform-box:fill-box}
+.sp-wing.l{transform-origin:right center;animation:dwFlapL 1.2s ease-in-out infinite}
+.sp-wing.r{transform-origin:left center;animation:dwFlapR 1.2s ease-in-out infinite}
+@keyframes dwFlapL{50%{transform:rotate(14deg) scaleY(.8)}}
+@keyframes dwFlapR{50%{transform:rotate(-14deg) scaleY(.8)}}
+
+/* name tag */
+.dw-tag{position:absolute;left:50%;top:-14%;transform:translate(-50%,10px) scale(.6);opacity:0;background:#fff;color:#334155;font:700 clamp(1rem,2.6vmin,1.5rem) 'Fredoka','Nunito',sans-serif;padding:.3rem .9rem;border-radius:999px;box-shadow:0 6px 14px rgba(0,0,0,.15);white-space:nowrap;transition:transform .3s cubic-bezier(.2,.9,.3,1.5),opacity .2s;pointer-events:none}
+.dw-dino.show-tag .dw-tag{opacity:1;transform:translate(-50%,0) scale(1)}
+
+/* what each one does when tapped */
+.dw-dino.act-roar .sp-art{animation:dwRoar .7s ease-in-out}
+@keyframes dwRoar{30%,60%{transform:scale(1.15,1.12) rotate(-6deg)}}
+.dw-dino.act-stomp .sp-art{animation:dwStomp .55s ease-in-out 2}
+@keyframes dwStomp{40%{transform:translateY(-14%) rotate(-4deg)}70%{transform:translateY(0) scale(1.05,.94)}}
+.dw-dino.act-wag .sp-tail{transform-box:fill-box;transform-origin:right center;animation:dwWag .25s ease-in-out 6 alternate}
+@keyframes dwWag{to{transform:rotate(-25deg)}}
+.dw-dino.act-thump .sp-tail{transform-box:fill-box;transform-origin:right center;animation:dwThump .35s ease-in 3 alternate}
+@keyframes dwThump{to{transform:rotate(35deg)}}
+.dw-dino.act-stretch .sp-neck{transform-box:view-box;transform-origin:86px 70px;animation:dwStretch 1.4s ease-in-out}
+@keyframes dwStretch{50%{transform:rotate(-10deg) scale(1.08)}}
+.dw-dino.act-sway .sp-neck{transform-box:view-box;transform-origin:98px 74px;animation:dwSway .6s ease-in-out 3 alternate}
+@keyframes dwSway{to{transform:rotate(-12deg)}}
+.dw-dino.act-honk .sp-art{animation:dwHonk .3s ease-in-out 4 alternate}
+@keyframes dwHonk{to{transform:rotate(-8deg) scale(1.06)}}
+.dw-dino.act-bonk .sp-art{animation:dwBonk .7s cubic-bezier(.3,.6,.4,1)}
+@keyframes dwBonk{30%{transform:translateX(-8%) rotate(8deg)}55%{transform:translateX(10%) rotate(-12deg)}100%{transform:none}}
+.dw-dino.act-zoom .sp-art{animation:dwZoom 1s cubic-bezier(.4,0,.6,1)}
+@keyframes dwZoom{40%{transform:translateX(60%)}41%{transform:translateX(-60%);opacity:0}60%{opacity:1}100%{transform:none}}
+.dw-dino.act-flap .sp-art{animation:dwLoop 1.2s ease-in-out}
+@keyframes dwLoop{50%{transform:translateY(-30%) rotate(-15deg) scale(1.1)}}
+.dw-dino.act-flap .sp-wing{animation-duration:.3s}
+.dw-dino.act-swim .sp-art{animation:dwDive 1.2s ease-in-out}
+@keyframes dwDive{30%{transform:translateY(20%) rotate(10deg)}60%{transform:translateY(-30%) rotate(-12deg)}100%{transform:none}}
+
+.dw-arrow{position:absolute;top:50%;width:76px;height:76px;margin-top:-38px;font-size:2rem;background:rgba(255,255,255,.85);color:#047857;padding:0;z-index:5}
+.dw-arrow.l{left:12px}.dw-arrow.r{right:12px}

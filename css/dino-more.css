@@ -67,10 +67,19 @@
 .pk-volcano{position:absolute;right:8%;top:14%;width:min(34%,240px);aspect-ratio:1.6;background:linear-gradient(180deg,#A16207,#78350F);clip-path:polygon(0 100%,36% 8%,64% 8%,100% 100%)}
 .pk-field{position:absolute;left:4%;right:4%;top:42%;bottom:4%;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,1fr);gap:4% 6%}
 .pk-hole{position:relative;overflow:hidden;border-radius:0 0 40% 40%}
-.pk-dino{position:absolute;left:50%;bottom:-100%;transform:translateX(-50%) scaleX(-1);font-size:min(16vmin,100px);line-height:1;cursor:pointer;transition:bottom .25s cubic-bezier(.2,.9,.3,1.5)}
+.pk-dino{position:absolute;left:50%;bottom:-100%;transform:translateX(-50%);width:1em;height:1em;font-size:min(16vmin,100px);line-height:1;cursor:pointer;transition:bottom .25s cubic-bezier(.2,.9,.3,1.5)}
 .pk-hole.up .pk-dino{bottom:30%}
 .pk-hole.tapped .pk-dino{animation:pkRoar .5s ease-in-out}
 @keyframes pkRoar{40%{scale:1.3;rotate:-10deg}}
 .pk-bush{position:absolute;left:4%;right:4%;bottom:0;height:42%;pointer-events:none;border-radius:50% 50% 18% 18%/80% 80% 20% 20%;
   background:radial-gradient(circle at 25% 35%,#6EE07A 0 20%,transparent 21%),radial-gradient(circle at 70% 30%,#6EE07A 0 18%,transparent 19%),linear-gradient(180deg,#34A853,#1E7B3A);
   box-shadow:inset 0 -8px 0 rgba(0,0,0,.15),0 6px 8px rgba(0,0,0,.15)}
+
+/* drawn pieces (js/drawn.js) */
+.dg-bone{width:1em;height:1em}
+.dg-bone svg,.dg-tray svg,.dg-dino svg,.pk-dino svg{width:100%;height:100%;overflow:visible;display:block}
+.dg-tray span svg{width:80%;height:80%}
+.dg-dino{width:1em;height:1em}
+.pk-count{display:flex;align-items:center;gap:.4rem}
+.pk-count-dino{display:block;width:44px;height:44px}
+.pk-count-dino svg{width:100%;height:100%;overflow:visible}

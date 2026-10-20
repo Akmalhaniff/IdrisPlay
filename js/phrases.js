@@ -69,6 +69,7 @@ function dynamicPhrases(name){
   if(window.parentPhrases) p.push(...window.parentPhrases(name));
   if(window.classicPhrases) p.push(...window.classicPhrases(name));
   if(window.worldPhrases) p.push(...window.worldPhrases(name));
+  if(window.dinoWorldPhrases) p.push(...window.dinoWorldPhrases(name));
   if(window.playPhrases) p.push(...window.playPhrases(name));
   return p;
 }
@@ -76,7 +77,7 @@ function dynamicPhrases(name){
 window.allSpeechPhrases = async function(name = kidName){
   const set = new Set();
   const add = t => { t = String(t || '').replace(/\s+/g, ' ').trim(); if(/[A-Za-z0-9]/.test(t)) set.add(t); };
-  for(const f of ['index.html', 'js/fun.js', 'js/learn.js', 'js/dino.js', 'js/dino-more.js', 'js/play.js', 'js/toddler.js', 'js/parent.js', 'js/classic.js', 'js/world.js']){
+  for(const f of ['index.html', 'js/fun.js', 'js/learn.js', 'js/dino.js', 'js/dino-more.js', 'js/dinoworld.js', 'js/play.js', 'js/toddler.js', 'js/parent.js', 'js/classic.js', 'js/world.js']){
     try{ staticPhrases(await (await fetch(f, { cache: 'no-store' })).text()).forEach(add); }catch(e){ console.warn('phrases: could not read', f, e); }
   }
   dynamicPhrases(name).forEach(add);
