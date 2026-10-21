@@ -59,6 +59,10 @@ Everything stays on the iPad; nothing is sent anywhere.
 - **Animated pictures** where an emoji is just for show (home icons, animals, dinos, peek-a-boo friends, babies, fish…): the lion turns its head, the rocket shakes. 67 animations in `anim/` (128 px WebP), each downloaded the first time it shows and kept offline. Answer buttons stay plain emoji. Credit: [Noto Animated Emoji](https://googlefonts.github.io/noto-emoji-animation/) by Google, CC BY 4.0.
 - Celebrations and picture pop-outs appear as a small badge in the top-right corner, never over the middle of a game.
 
+## 🏝️ Dino Island & dino eggs (`js/island.js`, `js/eggs.js`)
+- **Home is an island map**: Volcano, Jungle, Picnic, Beach, School, Music Stage, Space Pad, Art Corner, Number Hill. Tap a place; his buddy walks there along the path and the place's games slide up in a tray at the bottom. Parent Corner → *Home screen* switches back to the plain game list.
+- **Dino eggs**: finishing a round of any game (a big win) earns an egg (at most one a minute, three waiting). It wobbles in the top bar during games, or next to the greeting at home; tap it and a baby dinosaur hatches right there and walks off to **Dino World**. Dino World starts with T-Rex, Triceratops and Stegosaurus; the others wait there as eggs until he hatches them.
+
 ## 🔤 Learning pack (`js/learn.js` + `js/strokes.js` + `css/learn.css`)
 Seven learning games (our own designs), grouped on the launcher under **Letters & Reading** and **Numbers**:
 - **✏️ Trace It** — trace A–Z, a–z, 1–10 and the child's own name, with a green start dot, direction arrow and stroke order (strokes in `js/strokes.js`). A little dino walks along the line, the ink sparkles, and a finished letter pops out its picture (A → 🍎 "A is for Apple"; 3 → three dinos). Stars mark finished letters.

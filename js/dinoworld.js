@@ -7,6 +7,7 @@ const { addGame, sfx, sparkleAt, el, pick, later, $ } = window.IdrisPlay;
 const restart = (node, cls) => { node.classList.remove(cls); void node.offsetWidth; node.classList.add(cls); };
 const SPECIES = window.idrisSpecies;
 const START = 'Dino world! Tap a dinosaur to say hello!';
+const EGG_SAY = 'Play games to hatch me!';
 const SOUNDS = {
   roar: () => { sfx.rumble(0.7); sfx.tone(150, 0.7, 'sawtooth', 0.18, 70); },
   stomp: () => { sfx.boom(); later(() => sfx.boom(), 260); },
@@ -45,12 +46,14 @@ addGame({
     root.querySelector('.dw-arrow.r').addEventListener('click', () => this.go(1));
   },
   place(s, x, where){
-    const d = el('button', 'dw-dino ' + where + (s.tall ? ' tall' : ''), `${window.idrisSpeciesSVG(s)}<span class="dw-tag">${s.name}</span>`);
-    d.style.left = x + 'px'; d.dataset.act = s.act; d.setAttribute('aria-label', s.name);
+    // each spot holds the dinosaur and the egg it hatches from; dinos he hasn't hatched yet wait as eggs
+    const d = el('button', 'dw-dino ' + where + (s.tall ? ' tall' : ''), `${window.idrisSpeciesSVG(s)}<span class="dw-egg">${window.idrisDrawn.piece('egg')}</span><span class="dw-tag">${s.name}</span>`);
+    d.style.left = x + 'px'; d.dataset.act = s.act; d.dataset.id = s.id; d.setAttribute('aria-label', s.name);
     d.addEventListener('click', () => this.tap(s, d));
     this.world.appendChild(d);
   },
   tap(s, d){
+    if(d.classList.contains('locked')){ restart(d, 'egg-wobble'); sfx.tone(500, 0.12, 'sine', 0.15, 700); speak(EGG_SAY); return; }
     restart(d, 'act-' + s.act); restart(d, 'show-tag');
     clearTimeout(d._t); d._t = later(() => d.classList.remove('act-' + s.act, 'show-tag'), 2600);
     (SOUNDS[s.act] || SOUNDS.roar)();
@@ -59,10 +62,14 @@ addGame({
     sparkleAt(this.root, r.left - sr.left + r.width / 2, r.top - sr.top + r.height * 0.3, 5, s.act === 'swim' ? ['💧', '✨'] : undefined);
   },
   go(dir){ sfx.pop(); this.scroll.scrollBy({ left: dir * this.scroll.clientWidth * 0.7, behavior: 'smooth' }); },
-  enter(){ this.scroll.scrollLeft = 0; speakNext(START); }
+  refresh(){
+    const have = window.idrisOwnedDinos ? window.idrisOwnedDinos() : SPECIES.map(s => s.id);
+    this.world.querySelectorAll('.dw-dino').forEach(d => d.classList.toggle('locked', !have.includes(d.dataset.id)));
+  },
+  enter(){ this.refresh(); this.scroll.scrollLeft = 0; speakNext(START); }
 });
 
-window.dinoWorldPhrases = () => [START, ...SPECIES.map(s => s.say)];
+window.dinoWorldPhrases = () => [START, EGG_SAY, ...SPECIES.map(s => s.say)];
 const G = window.IdrisPlay.GAMES;
 const at = homeGames.findIndex(h => h.id === 'dinorun') + 1;
 homeGames.splice(at, 0, { id: 'dinoworld', e: G.dinoworld.e, n: G.dinoworld.n, s: 'Meet the dinosaurs', colors: G.dinoworld.colors, cat: 'dino', isNew: true });
