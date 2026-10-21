@@ -119,3 +119,19 @@ img.ae{width:1em;height:1em;display:inline-block;vertical-align:-.12em;pointer-e
 .td-blob span{font-size:40px}
 .td-count{flex-direction:column;align-items:flex-end}
 .td-items{font-size:40px;max-width:min(46vw,360px);justify-content:flex-end}
+
+/* ---------- 🍮 jelly squish, bigger targets, buddy in the top bar (js/juice.js) ---------- */
+.jelly{animation:jelly .5s cubic-bezier(.2,.9,.3,1.4)}
+@keyframes jelly{0%{scale:1}25%{scale:.86 1.1}50%{scale:1.1 .9}75%{scale:.97 1.03}100%{scale:1}}
+.tr-chip{min-width:56px;height:56px;font-size:1.5rem}
+.tr-arrow{width:72px;height:72px}
+.gb-buddy{margin-left:auto;width:72px;height:72px;flex-shrink:0;border:none;background:none;padding:0;cursor:pointer;transform-origin:50% 100%}
+.gb-buddy svg{width:100%;height:100%;overflow:visible;filter:drop-shadow(0 4px 4px rgba(0,0,0,.15))}
+.gb-buddy.hop{animation:gbHop .55s cubic-bezier(.3,.6,.4,1)}
+@keyframes gbHop{40%{transform:translateY(-14px) scale(1.08)}}
+.gb-buddy.dance{animation:gbDance .3s ease-in-out 8 alternate}
+@keyframes gbDance{from{transform:rotate(-12deg) translateY(0)}to{transform:rotate(12deg) translateY(-10px)}}
+.gb-buddy.giggle{animation:gbGiggle .5s ease-in-out}
+@keyframes gbGiggle{25%{transform:rotate(-10deg) scale(1.1,.9)}50%{transform:rotate(8deg) scale(.95,1.08)}75%{transform:rotate(-4deg)}}
+.gb-buddy.blink .bd-lid{animation:bdBlink .22s ease-in-out}
+.gb-buddy.giggle .bd-mouth,.gb-buddy.dance .bd-mouth{d:path("M106 76 Q120 98 136 76")}

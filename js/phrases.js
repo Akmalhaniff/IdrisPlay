@@ -76,7 +76,12 @@ function dynamicPhrases(name){
 
 window.allSpeechPhrases = async function(name = kidName){
   const set = new Set();
-  const add = t => { t = String(t || '').replace(/\s+/g, ' ').trim(); if(/[A-Za-z0-9]/.test(t)) set.add(t); };
+  const add = t => {
+    t = String(t || '').replace(/\s+/g, ' ').trim(); if(!/[A-Za-z0-9]/.test(t)) return;
+    set.add(t);
+    const s = window.shortenSpeech ? window.shortenSpeech(t) : t;   // the shorter words actually spoken (js/juice.js)
+    if(s !== t) set.add(s);
+  };
   for(const f of ['index.html', 'js/fun.js', 'js/learn.js', 'js/dino.js', 'js/dino-more.js', 'js/dinoworld.js', 'js/play.js', 'js/toddler.js', 'js/parent.js', 'js/classic.js', 'js/world.js']){
     try{ staticPhrases(await (await fetch(f, { cache: 'no-store' })).text()).forEach(add); }catch(e){ console.warn('phrases: could not read', f, e); }
   }
