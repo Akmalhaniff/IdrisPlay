@@ -83,6 +83,16 @@
 .vh-band{position:absolute;left:30%;top:20%;font-size:55%;opacity:0;transform:scale(0);transition:transform .3s cubic-bezier(.2,.9,.3,1.6),opacity .2s}
 .vh-ouch.fixed .vh-band{opacity:1;transform:scale(1)}
 .vh-ouch.fixed .vh-kid{display:inline-block;animation:vhJoy .35s ease-in-out infinite alternate}
+.vh-tears{position:absolute;left:12%;top:40%;font-size:30%;display:none}
+.vh-tears i{font-style:normal;position:absolute;animation:vhTear .8s ease-in infinite}
+.vh-tears i+i{left:220%;animation-delay:.4s}
+@keyframes vhTear{from{transform:translateY(0);opacity:1}to{transform:translateY(40px);opacity:0}}
+.vh-ouch.hurt .vh-tears{display:block}
+.vh-medic{position:absolute;left:105%;bottom:0;font-size:100%;opacity:0;transform:translateX(60px) scale(.6);transition:transform .45s cubic-bezier(.2,.9,.3,1.3),opacity .3s}
+.vh-ouch.medic .vh-medic{opacity:1;transform:none;animation:vhMedic .4s ease-in-out .45s 3 alternate}
+@keyframes vhMedic{to{transform:translateY(-6px) rotate(-6deg)}}
+.vh-car.lights span{animation:vhLights .35s steps(1) infinite}
+@keyframes vhLights{0%{filter:drop-shadow(0 -10px 14px #EF4444) drop-shadow(0 0 6px #EF4444)}50%{filter:drop-shadow(0 -10px 14px #3B82F6) drop-shadow(0 0 6px #3B82F6)}}
 @keyframes vhJoy{to{transform:translateY(-16px) rotate(8deg)}}
 .vh-stop{position:absolute;left:76%;bottom:calc(170px + 22% - 6px);font-size:min(10vmin,64px);line-height:1;z-index:2;display:flex;align-items:flex-end}
 .vh-riders{display:flex;font-size:80%}

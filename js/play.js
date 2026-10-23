@@ -68,7 +68,7 @@ addGame({
   id: 'vehicles', e: '🚗', n: 'Vehicles', colors: ['#7DD3FC', '#38BDF8', '#0284C7'], stageClass: 'vh-stage',
   html: `<div class="vh-sun"></div><div class="vh-cloud c1"></div><div class="vh-cloud c2"></div>
     <div class="vh-house"><span class="vh-home">🏠</span><span class="vh-flame f1">🔥</span><span class="vh-flame f2">🔥</span><span class="vh-flame f3">🔥</span></div>
-    <div class="vh-ouch"><span class="vh-kid">🧒</span><span class="vh-band">🩹</span></div>
+    <div class="vh-ouch"><span class="vh-kid">🤕</span><span class="vh-tears"><i>💧</i><i>💧</i></span><span class="vh-band">🩹</span><span class="vh-medic">🧑‍⚕️</span></div>
     <div class="vh-stop"><span class="vh-sign">🚏</span><span class="vh-riders"></span></div>
     <div class="vh-trees">🌳🌲🌳</div>
     <div class="vh-road"><i></i></div>
@@ -172,13 +172,20 @@ addGame({
   startOuch(){
     if(this.hurt || currentScreen !== 'vehicles') return;
     this.hurt = true; this.ouch.className = 'vh-ouch hurt';
+    $('.vh-kid', this.ouch).textContent = '🤕';
     speak(VH_SAY.ouch); this.pulse('ouch', true);
   },
+  // the ambulance parks with its lights flashing, a paramedic hops out, puts on a plaster, hops back in
   arrivedAtOuch(c){
-    c.parked = true; vhSound('ambulance', 0.5);
-    later(() => { this.ouch.className = 'vh-ouch fixed'; sfx.tada(); speak(VH_SAY.better); burstConfetti(16); this.pulse('ouch', false); }, 900);
-    later(() => { c.parked = false; c.done = true; this.hurt = false; }, 2200);
-    later(() => { if(!this.hurt) this.ouch.className = 'vh-ouch'; }, 4200);
+    c.parked = true; c.node.classList.add('lights'); vhSound('ambulance', 0.5);
+    later(() => { this.ouch.classList.add('medic'); sfx.boing(); }, 300);
+    later(() => {
+      this.ouch.className = 'vh-ouch fixed medic'; $('.vh-kid', this.ouch).textContent = '😊';
+      sfx.tada(); speak(VH_SAY.better); burstConfetti(16); this.pulse('ouch', false);
+    }, 1400);
+    later(() => { this.ouch.classList.remove('medic'); sfx.pop(); }, 2700);
+    later(() => { c.node.classList.remove('lights'); c.parked = false; c.done = true; this.hurt = false; }, 3200);
+    later(() => { if(!this.hurt) this.ouch.className = 'vh-ouch'; }, 5200);
   },
   // ---- 🚌 bus stop: the bus stops and the kids hop on ----
   fillStop(){ this.riders.innerHTML = ['🧒', '👧', '👦'].slice(0, 2 + Math.floor(Math.random() * 2)).map(k => `<i>${k}</i>`).join(''); },
