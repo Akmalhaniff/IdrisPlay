@@ -51,6 +51,9 @@ addGame({
     this.world.appendChild(d);
   },
   tap(s, d){
+    // each tap shows the next pose, so the dinosaur looks like it moves
+    d._pose = (d._pose || 0) + 1;
+    d.querySelector('.pack-dino').src = window.idrisPack.url(s.poses[d._pose % s.poses.length]);
     restart(d, 'act-' + s.act); restart(d, 'show-tag');
     clearTimeout(d._t); d._t = later(() => d.classList.remove('act-' + s.act, 'show-tag'), 2600);
     (SOUNDS[s.act] || SOUNDS.roar)();

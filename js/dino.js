@@ -58,7 +58,7 @@ addGame({
   setFriend(i, announce = true){
     this.friend = i % FRIENDS.length;
     const [hue, name] = FRIENDS[this.friend];
-    if(!this.face.firstChild){ this.face.innerHTML = window.idrisBuddySVG; $('.dr-roar-dino', this.root).innerHTML = window.idrisBuddySVG; $('.dr-tummy-e', this.root).innerHTML = window.idrisFood('leaves'); }
+    if(!this.face.firstChild){ this.face.innerHTML = window.idrisPack.img('trex-1'); $('.dr-roar-dino', this.root).innerHTML = window.idrisPack.img('trex-2'); $('.dr-tummy-e', this.root).innerHTML = window.idrisFood('leaves'); }
     this.face.style.filter = hue ? `hue-rotate(${hue}deg) saturate(1.2)` : '';
     this.act('pop-in');
     if(announce){ sfx.boing(); speak(SAY.friend(name)); }

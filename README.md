@@ -59,6 +59,9 @@ Everything stays on the iPad; nothing is sent anywhere.
 - **Animated pictures** where an emoji is just for show (home icons, animals, dinos, peek-a-boo friends, babies, fish…): the lion turns its head, the rocket shakes. 67 animations in `anim/` (128 px WebP), each downloaded the first time it shows and kept offline. Answer buttons stay plain emoji. Credit: [Noto Animated Emoji](https://googlefonts.github.io/noto-emoji-animation/) by Google, CC BY 4.0.
 - Celebrations and picture pop-outs appear as a small badge in the top-right corner, never over the middle of a game.
 
+### Cartoon dinosaurs (`art/dinos/`)
+"[Cute Dinosaurs Color Clip Art SVG/PNGs](https://www.creativefabrica.com/product/cute-dinosaurs-color-clip-art-svg-pngs/)" by HalieKStudio on Creative Fabrica, used under Creative Fabrica's commercial licence. Only app-sized PNGs are in this repository; the original files are **not** included and must not be shared. Used in Dino World (tap = next pose), Surprise Eggs, Dino Peekaboo, Dino Dig, Dino Run and Bath Time.
+
 ### Vehicle sounds (`sounds/`, real recordings from Wikimedia Commons, trimmed to ~3 s)
 | Sound | Recording | Author | Licence |
 |---|---|---|---|

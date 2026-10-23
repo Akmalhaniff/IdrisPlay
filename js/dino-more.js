@@ -6,7 +6,7 @@
 const { addGame, sfx, celebrate, sparkleAt, stagePoint, el, pick, rand, later, $ } = window.IdrisPlay;
 const restart = (node, cls) => { node.classList.remove(cls); void node.offsetWidth; node.classList.add(cls); };
 // [hue shift, name] — the drawn buddy in different colours
-const DINOS = window.idrisDrawn.COLOURS.map(([hue, c]) => [hue, c + ' dino']);
+const DINOS = window.idrisPack.LAND.map(([, name, poses]) => [poses[0], name]);   // [picture, name]
 const hueOf = h => h ? `hue-rotate(${h}deg) saturate(1.2)` : '';
 
 // ======================================================================
@@ -79,11 +79,11 @@ addGame({
     if(this.found >= 3) later(() => this.alive(), 1200);
   },
   alive(){
-    const [hue, name] = this.def;
+    const [pose, name] = this.def;
     this.cv.style.opacity = '0';
     this.bones.forEach(b => b.node.classList.add('gather'));
     later(() => {
-      this.dino.innerHTML = window.idrisBuddySVG; this.dino.style.filter = hueOf(hue);
+      this.dino.innerHTML = window.idrisPack.img(pose);
       restart(this.dino, 'show');
       sfx.rumble(0.8); sfx.tone(140, 0.6, 'sawtooth', 0.18, 70);
       speak(DIG_SAY.alive(name)); burstConfetti(30);
@@ -119,7 +119,7 @@ addGame({
   act(cls){ this.dino.classList.remove('pop-in', 'no', 'chomp', 'happy'); void this.dino.offsetWidth; this.dino.classList.add(cls); },
   newDino(){
     if(!this.face.firstChild) this.face.innerHTML = window.idrisBuddySVG || '';
-    const [hue] = DINOS[this.idx++ % DINOS.length];
+    const C = window.idrisDrawn.COLOURS, [hue] = C[this.idx++ % C.length];
     this.face.style.filter = hueOf(hue);
     this.dino.classList.remove('sleep'); this.act('pop-in');
     this.fed = 0; this.bar.style.width = '0%';
@@ -200,8 +200,8 @@ addGame({
     if(!this.running) return;
     const free = this.holes.filter(o => !o.up);
     if(free.length > 3){
-      const o = pick(free), egg = Math.random() < 0.15, [hue] = egg ? [0] : pick(DINOS);
-      o.d.innerHTML = egg ? window.idrisDrawn.piece('egg') : window.idrisBuddySVG; o.d.style.filter = hueOf(hue); o.egg = egg;
+      const o = pick(free), egg = Math.random() < 0.15, [pose] = egg ? [null] : pick(DINOS);
+      o.d.innerHTML = egg ? window.idrisPack.egg(1 + Math.floor(Math.random() * 4)) : window.idrisPack.img(pose); o.egg = egg;
       o.up = true; o.h.classList.remove('tapped'); restart(o.h, 'up'); sfx.tone(500, 0.12, 'sine', 0.15, 800);
       o.timer = later(() => { o.up = false; o.h.classList.remove('up'); }, rand(1800, 2600));
     }
@@ -224,7 +224,7 @@ addGame({
       later(() => { if(currentScreen === 'peekdino') this.start(); }, 4500);
     }
   },
-  start(){ const cd = $('.pk-count-dino', this.root); if(!cd.firstChild) cd.innerHTML = window.idrisBuddySVG;
+  start(){ const cd = $('.pk-count-dino', this.root); if(!cd.firstChild) cd.innerHTML = window.idrisPack.img('trex-1');
     this.count = 0; this.countEl.textContent = 0; this.running = true; clearTimeout(this.popTimer); this.pop(); },
   enter(){ speakNext(PK_SAY.start); this.start(); },
   leave(){ this.running = false; clearTimeout(this.popTimer); this.holes.forEach(o => { clearTimeout(o.timer); o.up = false; o.h.classList.remove('up', 'tapped'); }); }

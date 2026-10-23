@@ -121,7 +121,7 @@ function sparkleAt(root, x, y, n = 6, chars = ['✨', '⭐', '💫']){
 
 // ===================== 🥚 Surprise Eggs =====================
 // Baby buddy dinos: [hue shift, name]
-const BABIES = window.idrisDrawn.COLOURS.map(([hue, c]) => [hue, c + ' dino']);
+const BABIES = window.idrisPack.DINOS.map(([, name, poses]) => [poses[0], name]);   // [picture, name]
 const EGG_LOOKS = [
   ['#FFE4F1', 'radial-gradient(circle at 30% 30%,#FF8FC7 0 9%,transparent 10%),radial-gradient(circle at 70% 55%,#FF8FC7 0 11%,transparent 12%),radial-gradient(circle at 40% 78%,#FF8FC7 0 8%,transparent 9%)'],
   ['#DDF4FF', 'repeating-linear-gradient(160deg,transparent 0 18px,#7CC8FF 18px 30px)'],
@@ -164,13 +164,12 @@ addGame({
   },
   hatch(){
     this.busy = true;
-    const [hue, name] = pick(BABIES);
-    const look = hue ? `hue-rotate(${hue}deg) saturate(1.2)` : '';
+    const [pose, name] = pick(BABIES);
     ['top', 'bot'].forEach(c => this.egg.appendChild(el('div', 'egg-half ' + c)));
     this.egg.classList.add('cracked');
     this.egg.querySelectorAll('.egg-half').forEach(h => { h.style.background = this.egg.style.background; });
     sfx.crack(); later(() => sfx.pop(), 120); later(() => sfx.boing(), 250);
-    this.baby.innerHTML = window.idrisBuddySVG; this.baby.style.filter = look;
+    this.baby.innerHTML = window.idrisPack.img(pose);
     this.baby.className = 'egg-baby'; void this.baby.offsetWidth; this.baby.classList.add('show');
     this.hatched++;
     burstConfetti(this.hatched % 5 === 0 ? 30 : 16);
@@ -178,7 +177,7 @@ addGame({
     later(() => {
       this.baby.classList.add('fly');
       later(() => {
-        const s = el('span', null, window.idrisBuddySVG); s.style.filter = look; this.shelf.appendChild(s);
+        const s = el('span', null, window.idrisPack.img(pose)); this.shelf.appendChild(s);
         while(this.shelf.children.length > 12) this.shelf.firstChild.remove();
         this.baby.className = 'egg-baby'; this.newEgg(true);
       }, 700);
@@ -189,7 +188,7 @@ addGame({
 
 // ===================== 🛁 Bath Time =====================
 // Muddy buddy dinos to wash: [hue shift, name]
-const PETS = window.idrisDrawn.COLOURS.map(([hue, c]) => [hue, c + ' dino']);
+const PETS = window.idrisPack.LAND.map(([, name, poses]) => [poses[0], name]);   // [picture, name]
 addGame({
   id: 'bath', e: '🛁', n: 'Bath Time', colors: ['#A5F3FC', '#22D3EE', '#0891B2'], stageClass: 'bath-stage',
   html: `<div class="bath-meter"><i></i></div>
@@ -213,10 +212,10 @@ addGame({
     if(t === 'shower'){ this.root.querySelector('[data-tool=shower]').classList.remove('pulse'); if(this.phase === 'rinse') this.shower(); else speak('Shower!'); }
   },
   newPet(){
-    const [hue, name] = pick(PETS);
+    const [pose, name] = pick(PETS);
     this.name = name; this.phase = 'scrub'; this.lastSqueak = 0;
     this.pet.className = 'bath-pet dirty';
-    this.pet.innerHTML = `<span class="pet-emoji pop-in" style="${hue ? `filter:hue-rotate(${hue}deg) saturate(1.2)` : ''}">${window.idrisBuddySVG}</span>`;
+    this.pet.innerHTML = `<span class="pet-emoji pop-in">${window.idrisPack.img(pose)}</span>`;
     this.spots = [];
     for(let i = 0; i < 9; i++){
       const m = el('div', 'mud'), size = rand(11, 18);
