@@ -10,111 +10,184 @@ const restart = (node, cls) => { node.classList.remove(cls); void node.offsetWid
 const callSound = name => { try{ if(typeof window[name] === 'function') window[name](); }catch(e){} };
 
 // ======================================================================
-// 🚗 VEHICLES — tap a vehicle to send it down the road, work the traffic light, put out fires
+// 🚗 VEHICLES — tap a vehicle to send it down the road (with its real recorded sound), work the
+// traffic light, put out the fire by tapping the flames, help the ouchie with the ambulance, and
+// pick the kids up at the bus stop. Sounds: sounds/*.mp3 (real recordings, see README for credits).
 // ======================================================================
+// Two rows of 7 buttons, in this order
 const VEHICLES = [
-  { e: '🚒', n: 'Fire Truck', s: 'Wee-woo! Fire truck!', snd: 'soundVehicleFireTruck', fire: true },
-  { e: '🚓', n: 'Police Car', s: 'Whoop whoop! Police car!', snd: 'soundVehiclePoliceCar' },
-  { e: '🚜', n: 'Tractor', s: 'Chugga chugga! Farm tractor!', snd: 'soundVehicleTractor', speed: 0.7 },
-  { e: '🚂', n: 'Train', s: 'Choo choo! All aboard!', snd: 'soundVehicleTrain', train: true },
-  { e: '✈️', n: 'Airplane', s: 'Whoosh! Flying in the sky!', snd: 'soundVehicleAirplane', fly: true, flip: true, speed: 1.3 },
-  { e: '🏎️', n: 'Race Car', s: 'Vroom vroom! Fast car!', snd: 'soundVehicleRaceCar', speed: 1.8 },
-  { e: '🚑', n: 'Ambulance', s: 'Nee-naw! Help is coming!', snd: 'soundVehicleAmbulance' },
-  { e: '🚁', n: 'Helicopter', s: 'Thump thump! Flying copter!', snd: 'soundVehicleHelicopter', fly: true, speed: 0.8 }
+  { e: '🚒', n: 'Fire Truck', s: 'Wee-woo! Fire truck!', snd: 'firetruck', job: 'fire' },
+  { e: '🚑', n: 'Ambulance', s: 'Nee-naw! Ambulance!', snd: 'ambulance', job: 'ouch' },
+  { e: '🚓', n: 'Police Car', s: 'Whoop whoop! Police car!', snd: 'police' },
+  { e: '🚌', n: 'Bus', s: 'Beep beep! Bus!', snd: 'bus', job: 'bus', speed: 0.8 },
+  { e: '🚜', n: 'Tractor', s: 'Chugga chugga! Tractor!', snd: 'tractor', speed: 0.6 },
+  { e: '🚛', n: 'Big Truck', s: 'Big truck! Honk!', snd: 'truck', speed: 0.8 },
+  { e: '🚂', n: 'Train', s: 'Choo choo! Train!', snd: 'train', train: true },
+  { e: '🚕', n: 'Taxi', s: 'Taxi! Honk honk!', snd: 'horn' },
+  { e: '🏎️', n: 'Race Car', s: 'Vroom vroom! Race car!', snd: 'racecar', speed: 1.8 },
+  { e: '🏍️', n: 'Motorbike', s: 'Vroom! Motorbike!', snd: 'motorbike', speed: 1.4 },
+  { e: '🚲', n: 'Bicycle', s: 'Ring ring! Bicycle!', snd: 'bicycle', speed: 0.6 },
+  { e: '🛻', n: 'Pickup', s: 'Pickup truck!', snd: 'pickup' },
+  { e: '✈️', n: 'Airplane', s: 'Whoosh! Airplane!', snd: 'airplane', fly: true, flip: true, speed: 1.3 },
+  { e: '🚁', n: 'Helicopter', s: 'Helicopter! Whirr!', snd: 'helicopter', fly: true, speed: 0.8 }
 ];
 const VH_SAY = {
-  start: 'Beep beep! Tap a vehicle to drive!',
+  start: 'Beep beep! Tap a vehicle!',
   red: 'Red light! Stop!',
   green: 'Green light! Go!',
-  fire: 'Oh no! Fire! Call the fire truck!',
-  out: 'Hooray! The fire is out! Thank you, fire truck!'
+  fire: 'Oh no! Fire! Fire truck!',
+  hose: 'Tap the fire!',
+  out: 'Fire out! Hooray!',
+  ouch: 'Ouchie! Ambulance!',
+  better: 'All better!',
+  board: 'All aboard!'
 };
+// Real recorded vehicle sounds, decoded once and played through the effects mixer.
+const VH_SOUND = { buffers: {}, loading: {} };
+// if a recording is missing, a made-up sound plays instead
+const VH_FALLBACK = {
+  bicycle: () => [0, 180].forEach(d => setTimeout(() => { sfx.tone(2100, 0.35, 'sine', 0.25); sfx.tone(2600, 0.25, 'sine', 0.12); }, d)),
+  horn: () => { try{ soundHonk(); }catch(e){} },
+  truck: () => { try{ soundVehicleTractor(); }catch(e){} },
+  pickup: () => { try{ soundHonk(); }catch(e){} }
+};
+function vhLoad(id){
+  const ctx = getAudioCtx(); if(!ctx) return Promise.resolve(null);
+  if(!VH_SOUND.loading[id]) VH_SOUND.loading[id] = fetch(`sounds/${id}.mp3`).then(r => r.ok ? r.arrayBuffer() : Promise.reject())
+    .then(a => ctx.decodeAudioData(a)).then(b => { VH_SOUND.buffers[id] = b; return b; }).catch(() => null);
+  return VH_SOUND.loading[id];
+}
+function vhSound(id, vol = 0.9){
+  if(muted || !id) return;
+  const ctx = getAudioCtx(); if(!ctx) return;
+  const play = buf => { const s = ctx.createBufferSource(), g = ctx.createGain(); s.buffer = buf; g.gain.value = vol; s.connect(g); g.connect(ctx.destination); s.start(); };
+  if(VH_SOUND.buffers[id]) return play(VH_SOUND.buffers[id]);
+  vhLoad(id).then(b => { if(b) play(b); else (VH_FALLBACK[id] || VH_FALLBACK.horn)(); });
+}
 addGame({
   id: 'vehicles', e: '🚗', n: 'Vehicles', colors: ['#7DD3FC', '#38BDF8', '#0284C7'], stageClass: 'vh-stage',
   html: `<div class="vh-sun"></div><div class="vh-cloud c1"></div><div class="vh-cloud c2"></div>
-    <div class="vh-house"><span class="vh-home">🏠</span><span class="vh-fire">🔥</span></div>
+    <div class="vh-house"><span class="vh-home">🏠</span><span class="vh-flame f1">🔥</span><span class="vh-flame f2">🔥</span><span class="vh-flame f3">🔥</span></div>
+    <div class="vh-ouch"><span class="vh-kid">🧒</span><span class="vh-band">🩹</span></div>
+    <div class="vh-stop"><span class="vh-sign">🚏</span><span class="vh-riders"></span></div>
     <div class="vh-trees">🌳🌲🌳</div>
     <div class="vh-road"><i></i></div>
     <button class="vh-light green" aria-label="Traffic light"><b class="r"></b><b class="g"></b></button>
     <div class="vh-bar"></div>
-    <div class="ng-hint">👆 Tap a vehicle!</div>`,
+    <div class="ng-hint">Tap a vehicle!</div>`,
   init(root){
     this.bar = $('.vh-bar', root); this.light = $('.vh-light', root); this.house = $('.vh-house', root); this.hint = $('.ng-hint', root);
-    this.cars = []; this.red = false; this.fire = false; this.sent = 0;
+    this.ouch = $('.vh-ouch', root); this.stop = $('.vh-stop', root); this.riders = $('.vh-riders', root);
+    this.cars = []; this.red = false; this.fire = false; this.hurt = false; this.sent = 0;
+    // two clearly separate rows of 7
+    const rows = { road: el('div', 'vh-row road'), sky: el('div', 'vh-row sky') };
     VEHICLES.forEach((v, i) => {
-      const b = el('button', 'ng-btn vh-btn' + (v.fire ? ' fire' : ''), v.e);
-      b.setAttribute('aria-label', v.n);
+      const b = el('button', 'ng-btn vh-btn', v.e);
+      b.dataset.job = v.job || ''; b.setAttribute('aria-label', v.n);
       b.addEventListener('click', () => this.send(i));
-      this.bar.appendChild(b);
+      rows[i < 7 ? 'road' : 'sky'].appendChild(b);
     });
+    this.bar.append(rows.road, rows.sky);
     this.light.addEventListener('click', () => this.toggleLight());
+    this.house.querySelectorAll('.vh-flame').forEach(f => f.addEventListener('pointerdown', e => { e.stopPropagation(); this.hose(f); }));
+    this.fillStop();
   },
   size(){
     const r = this.root.getBoundingClientRect(), road = $('.vh-road', this.root).getBoundingClientRect();
     this.w = r.width; this.h = r.height;
     this.roadBottom = r.bottom - road.bottom; this.roadH = road.height;
-    this.S = Math.max(60, Math.min(this.h * 0.15, 120));
+    this.S = Math.max(60, Math.min(this.h * 0.14, 110));
     this.lightX = this.w * 0.55;
-    const hr = this.house.getBoundingClientRect();
-    this.houseRight = hr.right - r.left;
-    this.speed = Math.max(140, this.w * 0.17);
+    const at = n => { const b = n.getBoundingClientRect(); return { left: b.left - r.left, right: b.right - r.left }; };
+    this.houseRight = at(this.house).right;
+    this.ouchX = at(this.ouch).left;
+    this.stopX = at(this.stop).left;
+    this.speed = Math.max(140, this.w * 0.16);
   },
   send(i){
     if(this.cars.length >= 9){ sfx.boing(); return; }
     const v = VEHICLES[i];
-    callSound(v.snd); speak(v.s);
+    vhSound(v.snd); speak(v.s);
     if(this.hint){ this.hint.remove(); this.hint = null; }
-    const node = el('div', 'vh-car' + (v.fly ? ' fly' : '') + (v.flip ? ' flip' : ''), v.train ? '🚂🚃🚃' : v.e);
+    // the picture sits in a span so flipping it never moves the vehicle itself
+    const node = el('div', 'vh-car' + (v.fly ? ' fly' : '') + (v.flip ? ' flip' : ''), `<span>${v.train ? '🚂🚃🚃' : v.e}</span>`);
     node.style.fontSize = (v.fly ? this.S * 0.85 : this.S) + 'px';
-    if(v.fly) node.style.top = rand(8, 26) + '%';
+    if(v.fly) node.style.top = rand(6, 22) + '%';
     else node.style.bottom = (this.roadBottom + this.roadH * 0.28) + 'px';
     this.root.appendChild(node);
-    const c = { v, node, x: this.w + 10, w: 0, stopped: false };
+    const c = { v, node, x: this.w + 10, w: 0 };
     c.w = node.getBoundingClientRect().width;
     node.addEventListener('pointerdown', e => { e.stopPropagation(); this.honk(c); });
     this.cars.push(c);
     this.sent++;
-    if(!this.fire && !v.fire && this.sent >= 4 && Math.random() < 0.5) later(() => this.startFire(), 1500);
+    // now and then something happens that a vehicle can help with
+    if(this.sent % 4 === 0) later(() => { if(!this.fire && Math.random() < .5) this.startFire(); else if(!this.hurt) this.startOuch(); }, 1500);
   },
-  honk(c){
-    callSound('soundHonk');
-    restart(c.node, 'honk');
-    speak(pick(['Beep beep!', 'Honk honk!', 'Toot toot!']));
-  },
+  honk(c){ vhSound(c.v.snd, 0.8); restart(c.node, 'honk'); },
   toggleLight(){
     this.red = !this.red;
     this.light.classList.toggle('red', this.red); this.light.classList.toggle('green', !this.red);
     sfx.pop(); speak(this.red ? VH_SAY.red : VH_SAY.green);
   },
+  pulse(job, on){ this.bar.querySelector(`.vh-btn[data-job="${job}"]`)?.classList.toggle('pulse', on); },
+  // ---- 🔥 fire: the fire truck parks, then he taps each flame to spray it ----
   startFire(){
     if(this.fire || currentScreen !== 'vehicles') return;
-    this.fire = true; this.sent = 0;
+    this.fire = true;
     this.house.classList.add('burning');
-    speak(VH_SAY.fire);
-    this.bar.querySelector('.vh-btn.fire').classList.add('pulse');
+    this.house.querySelectorAll('.vh-flame').forEach(f => f.classList.add('on'));
+    speak(VH_SAY.fire); this.pulse('fire', true);
   },
-  spray(c){
-    c.spraying = true;
-    const sr = this.root.getBoundingClientRect(), hr = this.house.getBoundingClientRect();
-    let n = 0;
-    const tick = () => {
-      if(currentScreen !== 'vehicles') return;
+  arrivedAtFire(c){
+    c.parked = true; this.hosing = c;
+    this.house.classList.add('ready');
+    speak(VH_SAY.hose);
+    clearTimeout(this.autoHose);
+    this.autoHose = later(() => this.house.querySelectorAll('.vh-flame.on').forEach((f, i) => later(() => this.hose(f), i * 600)), 7000);
+  },
+  hose(f){
+    if(!this.hosing || !f.classList.contains('on')) return;
+    const sr = this.root.getBoundingClientRect(), fr = f.getBoundingClientRect(), c = this.hosing;
+    const sx = c.x + 10, sy = sr.height - (this.roadBottom + this.roadH * 0.28 + this.S * 0.7);
+    for(let i = 0; i < 6; i++) later(() => {
       const d = el('div', 'vh-water', '💧');
-      d.style.left = (c.x + 10) + 'px'; d.style.bottom = (this.roadBottom + this.roadH * 0.28 + this.S * 0.6) + 'px';
-      d.style.setProperty('--dx', (hr.left - sr.left + hr.width / 2 - c.x - 10) + 'px');
-      d.style.setProperty('--dy', (-(sr.bottom - hr.top - hr.height * 0.3) + this.roadBottom + this.roadH * 0.28 + this.S * 0.6) + 'px');
+      d.style.left = sx + 'px'; d.style.top = sy + 'px';
+      d.style.setProperty('--dx', (fr.left - sr.left + fr.width / 2 - sx) + 'px');
+      d.style.setProperty('--dy', (fr.top - sr.top + fr.height / 2 - sy) + 'px');
       this.root.appendChild(d); later(() => d.remove(), 800);
-      if(n % 3 === 0) sfx.splash();
-      if(++n < 14) later(tick, 110);
-      else {
-        this.fire = false; this.house.classList.remove('burning');
-        sparkleAt(this.root, hr.left - sr.left + hr.width / 2, hr.top - sr.top + hr.height / 2, 8);
-        speak(VH_SAY.out); burstConfetti(30);
-        this.bar.querySelector('.vh-btn.fire').classList.remove('pulse');
-        later(() => { c.spraying = false; c.done = true; }, 700);
-      }
-    };
-    tick();
+    }, i * 60);
+    sfx.splash();
+    later(() => { f.classList.remove('on'); f.classList.add('out'); sparkleAt(this.root, fr.left - sr.left + fr.width / 2, fr.top - sr.top, 4, ['💧', '✨']); this.checkFire(); }, 450);
+  },
+  checkFire(){
+    if(this.house.querySelector('.vh-flame.on') || !this.fire) return;
+    clearTimeout(this.autoHose);
+    this.fire = false; this.house.classList.remove('burning', 'ready');
+    this.house.querySelectorAll('.vh-flame').forEach(f => f.classList.remove('out'));
+    speak(VH_SAY.out); burstConfetti(30); this.pulse('fire', false);
+    const c = this.hosing; this.hosing = null;
+    later(() => { if(c){ c.parked = false; c.done = true; } }, 900);
+  },
+  // ---- 🚑 ouchie: the ambulance stops, puts on a plaster, all better ----
+  startOuch(){
+    if(this.hurt || currentScreen !== 'vehicles') return;
+    this.hurt = true; this.ouch.className = 'vh-ouch hurt';
+    speak(VH_SAY.ouch); this.pulse('ouch', true);
+  },
+  arrivedAtOuch(c){
+    c.parked = true; vhSound('ambulance', 0.5);
+    later(() => { this.ouch.className = 'vh-ouch fixed'; sfx.tada(); speak(VH_SAY.better); burstConfetti(16); this.pulse('ouch', false); }, 900);
+    later(() => { c.parked = false; c.done = true; this.hurt = false; }, 2200);
+    later(() => { if(!this.hurt) this.ouch.className = 'vh-ouch'; }, 4200);
+  },
+  // ---- 🚌 bus stop: the bus stops and the kids hop on ----
+  fillStop(){ this.riders.innerHTML = ['🧒', '👧', '👦'].slice(0, 2 + Math.floor(Math.random() * 2)).map(k => `<i>${k}</i>`).join(''); },
+  arrivedAtStop(c){
+    c.parked = true;
+    [...this.riders.children].forEach((k, i) => later(() => { k.classList.add('hop'); sfx.boing(); }, 300 + i * 350));
+    later(() => speak(VH_SAY.board), 300);
+    later(() => { c.parked = false; c.done = true; vhSound('bus', 0.6); }, 1800);
+    later(() => { if(currentScreen === 'vehicles') this.fillStop(); }, 6000);
   },
   step(dt){
     const road = this.cars.filter(c => !c.v.fly).sort((a, b) => a.x - b.x);
@@ -125,10 +198,17 @@ addGame({
         if(this.red && c.x >= this.lightX + 8) limit = this.lightX + 8;
         const ahead = road.filter(a => a !== c && a.x < c.x).pop();
         if(ahead) limit = Math.max(limit, ahead.x + ahead.w + 14);
-        if(c.v.fire && this.fire && !c.done && c.x >= this.houseRight + 6) limit = Math.max(limit, this.houseRight + 6);
-        if(c.spraying) limit = c.x;
+        // places where a vehicle with a job stops
+        const job = c.v.job, free = !c.done && !c.parked;
+        const stopAt = job === 'fire' && this.fire && free ? this.houseRight + 6
+          : job === 'ouch' && this.hurt && free ? this.ouchX
+          : job === 'bus' && free && this.riders.children.length ? this.stopX : null;
+        if(stopAt !== null && c.x >= stopAt) limit = Math.max(limit, stopAt);
+        if(c.parked) limit = c.x;
         nx = Math.max(nx, Math.min(limit, c.x));
-        if(c.v.fire && this.fire && !c.spraying && !c.done && nx <= this.houseRight + 7) this.spray(c);
+        if(stopAt !== null && nx <= stopAt + 1 && !c.parked){
+          if(job === 'fire') this.arrivedAtFire(c); else if(job === 'ouch') this.arrivedAtOuch(c); else this.arrivedAtStop(c);
+        }
       }
       c.node.classList.toggle('waiting', nx === c.x);
       c.x = nx;
@@ -145,13 +225,16 @@ addGame({
   enter(){
     later(() => { this.size(); this.running = true; this.last = 0; requestAnimationFrame(t => this.loop(this.loopId = (this.loopId || 0) + 1, t)); }, 60);
     speakNext(VH_SAY.start);
+    VEHICLES.forEach(v => vhLoad(v.snd));   // get the sounds ready so the first tap is instant
   },
   leave(){
-    this.running = false;
-    this.cars.forEach(c => c.node.remove()); this.cars = [];
-    this.fire = false; this.house.classList.remove('burning');
+    this.running = false; clearTimeout(this.autoHose);
+    this.cars.forEach(c => c.node.remove()); this.cars = []; this.hosing = null;
+    this.fire = false; this.hurt = false;
+    this.house.classList.remove('burning', 'ready'); this.house.querySelectorAll('.vh-flame').forEach(f => f.classList.remove('on', 'out'));
+    this.ouch.className = 'vh-ouch'; this.fillStop();
     this.root.querySelectorAll('.vh-water').forEach(n => n.remove());
-    this.bar.querySelector('.vh-btn.fire').classList.remove('pulse');
+    this.bar.querySelectorAll('.vh-btn').forEach(b => b.classList.remove('pulse'));
   }
 });
 

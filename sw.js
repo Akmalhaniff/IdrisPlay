@@ -1,6 +1,6 @@
 // Idris Play service worker — makes the app installable and playable offline.
 // All paths are relative to where the app is hosted (e.g. https://akmalhaniff.github.io/IdrisPlay/).
-const CACHE = 'idrisplay-v23';
+const CACHE = 'idrisplay-v24';
 const SHELL = [
   './',
   'index.html',
@@ -32,6 +32,16 @@ const SHELL = [
   'js/parent.js',
   'js/malay.js',
   'js/juice.js',
+  'sounds/firetruck.mp3',
+  'sounds/police.mp3',
+  'sounds/ambulance.mp3',
+  'sounds/train.mp3',
+  'sounds/airplane.mp3',
+  'sounds/helicopter.mp3',
+  'sounds/racecar.mp3',
+  'sounds/tractor.mp3',
+  'sounds/bus.mp3',
+  'sounds/motorbike.mp3',
   'js/world.js',
   'js/art.js',
   'js/animoji.js',

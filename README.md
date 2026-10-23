@@ -37,7 +37,7 @@ Notes:
 
 ## 🎈 Play pack (`js/play.js` + `css/play.css`)
 Full-screen remakes of three older games:
-- **🚗 Vehicles** — tap a vehicle to send it down the road (planes and helicopters fly above), tap a moving one to honk, tap the 🚦 to switch red/green (cars queue and wait), and when the house catches fire send the fire truck to spray it out.
+- **🚗 Vehicles** — 14 vehicles with real recorded sounds (fire truck, ambulance, bus, police car, taxi, race car, motorbike, bicycle, tractor, big truck, pickup, train, airplane, helicopter). Tap a moving one to hear it again, tap the 🚦 to switch red/green. Things to do: when the house catches fire, the fire truck parks and he taps the flames to spray them out; when someone gets an ouchie, the ambulance stops and puts on a plaster; the bus stops for the kids at the bus stop.
 - **🎵 Dino Band** — 8 big rainbow keys (tap or slide), 4 instruments (piano, xylophone, drums, dino roars), a dancing dino band, and ⭐🎵 play-along songs (Twinkle Twinkle, Mary Had a Little Lamb, Row Row Row Your Boat) where the next key shines.
 - **🎯 Toy Sorting** — drag each toy (or tap a box) into the box of its colour; a dino in the box cheers. Levels go from 2 to 4 colours; after two misses the right box hops to help.
 
@@ -58,6 +58,26 @@ Everything stays on the iPad; nothing is sent anywhere.
 - The **home world answers taps**: sun/moon, rain clouds, coconuts, roaring dinos, a puffing volcano, flowers in the grass. Day and night follow the clock. A dino runs across the screen when a game opens.
 - **Animated pictures** where an emoji is just for show (home icons, animals, dinos, peek-a-boo friends, babies, fish…): the lion turns its head, the rocket shakes. 67 animations in `anim/` (128 px WebP), each downloaded the first time it shows and kept offline. Answer buttons stay plain emoji. Credit: [Noto Animated Emoji](https://googlefonts.github.io/noto-emoji-animation/) by Google, CC BY 4.0.
 - Celebrations and picture pop-outs appear as a small badge in the top-right corner, never over the middle of a game.
+
+### Vehicle sounds (`sounds/`, real recordings from Wikimedia Commons, trimmed to ~3 s)
+| Sound | Recording | Author | Licence |
+|---|---|---|---|
+| Fire truck | [WWS Fireenginesiren.ogg](https://commons.wikimedia.org/wiki/File:WWS_Fireenginesiren.ogg) | Work With Sounds / Konrad Gutkowski | CC BY 4.0 |
+| Police car | [American police siren i.ogg](https://commons.wikimedia.org/wiki/File:American_police_siren_i.ogg) | lezer | Public domain |
+| Ambulance | [Ambulance Sounds2.wav](https://commons.wikimedia.org/wiki/File:Ambulance_Sounds2.wav) | Demircimehmed | CC BY-SA 4.0 |
+| Train | [WWS SteamWhistle.ogg](https://commons.wikimedia.org/wiki/File:WWS_SteamWhistle.ogg) | Work With Sounds / Konrad Gutkowski | CC BY 4.0 |
+| Airplane | [Jet airliner overhead.ogg](https://commons.wikimedia.org/wiki/File:Jet_airliner_overhead.ogg) | Jud McCranie | CC BY-SA 4.0 |
+| Helicopter | [Chinook helicopter flying over Greenwich in London.ogg](https://commons.wikimedia.org/wiki/File:Chinook_helicopter_flying_over_Greenwich_in_London.ogg) | JoBrodie | CC0 |
+| Race car | [Ferrari F40 - engine and exhaust sound](https://commons.wikimedia.org/wiki/File:Ferrari_F40_-_engine_and_exhaust_sound_(YouTube_yfF5gtwxBzY).opus) | Car Trends (YouTube) | CC BY 3.0 |
+| Tractor | [WWS TractorUrsusC328driving.ogg](https://commons.wikimedia.org/wiki/File:WWS_TractorUrsusC328driving.ogg) | Work With Sounds / Museum of Municipal Engineering | CC BY 4.0 |
+| Bus | [WWS CityBusMANSG220horn.ogg](https://commons.wikimedia.org/wiki/File:WWS_CityBusMANSG220horn.ogg) | Work With Sounds / Technical Museum of Slovenia | CC BY 4.0 |
+| Motorbike | [Motorbike 2.ogg](https://commons.wikimedia.org/wiki/File:Motorbike_2.ogg) | ezwa | Public domain |
+| Bicycle | [Bicycle-bell-1.wav](https://commons.wikimedia.org/wiki/File:Bicycle-bell-1.wav) | Soundscape_Leuphana | CC0 |
+| Taxi (car horn) | [Car Horn.wav](https://commons.wikimedia.org/wiki/File:Car_Horn.wav) | 15HPanska_Ruttner_Jan | CC0 |
+| Big truck | [Trophy Truck and American V8s.ogg](https://commons.wikimedia.org/wiki/File:Trophy_Truck_and_American_V8s.ogg) | Edvvc | CC BY-SA 3.0 |
+| Pickup | [Kia Ceed - engine and exhaust sound](https://commons.wikimedia.org/wiki/File:Kia_Ceed_-_engine_and_exhaust_sound_(YouTube_g1jq9DLf0l8).opus) | Digital Car Promotion (YouTube) | CC BY 3.0 |
+
+The trimmed clips in `sounds/` are shared under the same licences as their originals.
 
 ## 🔤 Learning pack (`js/learn.js` + `js/strokes.js` + `css/learn.css`)
 Seven learning games (our own designs), grouped on the launcher under **Letters & Reading** and **Numbers**:

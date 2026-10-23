@@ -44,14 +44,12 @@
 .vh-cloud::before{content:'';position:absolute;width:56px;height:56px;left:22px;top:-26px;background:#fff;border-radius:50%}
 .vh-cloud.c1{top:10%;animation-duration:50s;animation-delay:-20s}
 .vh-cloud.c2{top:24%;animation-duration:70s;animation-delay:-55s;transform:scale(.7)}
-.vh-house{position:absolute;left:3%;bottom:calc(110px + 22% - 4px);font-size:min(22vmin,140px);line-height:1;z-index:1}
-.vh-fire{position:absolute;left:30%;top:-28%;font-size:60%;opacity:0;transform:scale(0);transition:transform .3s,opacity .3s}
-.vh-house.burning .vh-fire{opacity:1;transform:scale(1);animation:vhFlicker .25s ease-in-out infinite alternate}
-@keyframes vhFlicker{to{transform:scale(1.15) rotate(6deg)}}
-.vh-trees{position:absolute;right:4%;bottom:calc(110px + 22% - 4px);font-size:min(12vmin,70px);line-height:1;letter-spacing:-.15em}
-.vh-road{position:absolute;left:0;right:0;bottom:110px;height:22%;background:#4B5563;box-shadow:inset 0 8px 0 #374151,inset 0 -8px 0 #374151}
+.vh-house{position:absolute;left:3%;bottom:calc(170px + 22% - 4px);font-size:min(22vmin,140px);line-height:1;z-index:1}
+.vh-house.burning @keyframes vhFlicker{to{transform:scale(1.15) rotate(6deg)}}
+.vh-trees{position:absolute;right:4%;bottom:calc(170px + 22% - 4px);font-size:min(12vmin,70px);line-height:1;letter-spacing:-.15em}
+.vh-road{position:absolute;left:0;right:0;bottom:170px;height:22%;background:#4B5563;box-shadow:inset 0 8px 0 #374151,inset 0 -8px 0 #374151}
 .vh-road i{position:absolute;left:0;right:0;top:50%;height:6px;margin-top:-3px;background:repeating-linear-gradient(90deg,#FDE047 0 40px,transparent 40px 80px)}
-.vh-light{position:absolute;left:55%;bottom:calc(110px + 22% - 6px);width:56px;height:118px;padding:8px 0;border:none;border-radius:16px;background:#1F2937;box-shadow:0 0 0 4px #fff,0 10px 18px rgba(0,0,0,.25);display:flex;flex-direction:column;align-items:center;justify-content:space-around;cursor:pointer;z-index:2}
+.vh-light{position:absolute;left:55%;bottom:calc(170px + 22% - 6px);width:56px;height:118px;padding:8px 0;border:none;border-radius:16px;background:#1F2937;box-shadow:0 0 0 4px #fff,0 10px 18px rgba(0,0,0,.25);display:flex;flex-direction:column;align-items:center;justify-content:space-around;cursor:pointer;z-index:2}
 .vh-light::after{content:'';position:absolute;left:50%;top:100%;width:10px;height:18px;margin-left:-5px;background:#6B7280}
 .vh-light b{width:40px;height:40px;border-radius:50%;background:#374151;transition:background .2s,box-shadow .2s}
 .vh-light.red .r{background:#EF4444;box-shadow:0 0 18px 6px rgba(239,68,68,.7)}
@@ -62,17 +60,34 @@
 @keyframes vhRumble{to{translate:0 -3px}}
 .vh-car.fly{z-index:4;animation:vhBob 1.4s ease-in-out infinite alternate}
 @keyframes vhBob{to{translate:0 -16px}}
-.vh-car.flip{scale:-1 1}
+.vh-car span{display:inline-block}
+.vh-car.flip span{transform:scaleX(-1)}
 .vh-car.honk{animation:vhHonk .35s ease-in-out}
 @keyframes vhHonk{40%{scale:1.3;translate:0 -14px}}
-.vh-car.flip.honk{animation:vhHonkFlip .35s ease-in-out}
-@keyframes vhHonkFlip{0%,100%{scale:-1 1}40%{scale:-1.3 1.3;translate:0 -14px}}
 .vh-water{position:absolute;font-size:2rem;z-index:5;pointer-events:none;animation:vhSpray .8s ease-out forwards}
 @keyframes vhSpray{0%{transform:translate(0,0) scale(.6)}50%{transform:translate(calc(var(--dx) * .5),calc(var(--dy) * .5 - 60px)) scale(1)}100%{transform:translate(var(--dx),var(--dy)) scale(.8);opacity:.3}}
-.vh-bar{position:absolute;left:0;right:0;bottom:10px;height:92px;display:flex;justify-content:center;gap:clamp(6px,1.5vw,14px);padding:0 10px;z-index:6}
-.vh-btn{flex:0 1 84px;min-width:0;height:84px;font-size:clamp(2rem,6vw,3rem);background:#fff;padding:0}
+.vh-bar{position:absolute;left:0;right:0;bottom:8px;height:156px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;gap:clamp(6px,1.5vw,14px);padding:0 10px;z-index:6}
+.vh-btn{flex:0 0 clamp(64px,10vw,92px);height:66px;font-size:clamp(2rem,6vw,3rem);background:#fff;padding:0}
 .vh-btn.pulse{background:#FEE2E2;animation:toolPulse .5s ease-in-out infinite alternate;outline:4px solid #EF4444}
 
+/* 🔥 flames to tap, 🚑 ouchie on the pavement, 🚏 bus stop */
+.vh-flame{position:absolute;font-size:52%;line-height:1;opacity:0;transform:scale(0);transition:transform .3s,opacity .3s;cursor:pointer;z-index:2}
+.vh-flame.f1{left:6%;top:-22%}.vh-flame.f2{left:38%;top:-36%}.vh-flame.f3{left:68%;top:-18%}
+.vh-flame.on{opacity:1;transform:scale(1);animation:vhFlicker .25s ease-in-out infinite alternate}
+.vh-house.ready .vh-flame.on{font-size:70%;filter:drop-shadow(0 0 12px #FB923C)}
+.vh-flame.out{opacity:0;transform:scale(0) translateY(-30px)}
+.vh-ouch{position:absolute;left:30%;bottom:calc(170px + 22% - 6px);font-size:min(10vmin,64px);line-height:1;z-index:2;opacity:0;transform:translateY(20px);transition:opacity .3s,transform .3s}
+.vh-ouch.hurt,.vh-ouch.fixed{opacity:1;transform:none}
+.vh-ouch.hurt .vh-kid{display:inline-block;animation:vhSob .5s ease-in-out infinite alternate}
+@keyframes vhSob{to{transform:rotate(-8deg) translateY(4px)}}
+.vh-band{position:absolute;left:30%;top:20%;font-size:55%;opacity:0;transform:scale(0);transition:transform .3s cubic-bezier(.2,.9,.3,1.6),opacity .2s}
+.vh-ouch.fixed .vh-band{opacity:1;transform:scale(1)}
+.vh-ouch.fixed .vh-kid{display:inline-block;animation:vhJoy .35s ease-in-out infinite alternate}
+@keyframes vhJoy{to{transform:translateY(-16px) rotate(8deg)}}
+.vh-stop{position:absolute;left:76%;bottom:calc(170px + 22% - 6px);font-size:min(10vmin,64px);line-height:1;z-index:2;display:flex;align-items:flex-end}
+.vh-riders{display:flex;font-size:80%}
+.vh-riders i{font-style:normal;transition:transform .5s cubic-bezier(.4,-0.4,.6,1),opacity .5s}
+.vh-riders i.hop{transform:translate(-30px,40px) scale(.4);opacity:0}
 /* ---------- 🎵 Dino Band ---------- */
 .mu-stage{background:radial-gradient(ellipse at 50% 0%,#7C3AED 0%,#4C1D95 55%,#2E1065 100%);display:flex;flex-direction:column;padding:10px;gap:10px}
 .mu-lights{position:absolute;inset:0;pointer-events:none;overflow:hidden}
@@ -188,3 +203,8 @@
 .pt-moon circle{fill:none;stroke:#FDE047;stroke-width:3;stroke-dasharray:114;stroke-dashoffset:114}
 .pt-moon.holding circle{transition:stroke-dashoffset 3s linear;stroke-dashoffset:0}
 body.quiet .confetti i{display:none}
+.vh-row{display:flex;align-items:center;gap:clamp(6px,1.4vw,14px);padding:5px 10px;border-radius:22px;max-width:100%}
+.vh-row.road{background:#FDE68A;box-shadow:inset 0 -4px 0 #FBBF24}
+.vh-row.sky{background:#BAE6FD;box-shadow:inset 0 -4px 0 #7DD3FC}
+.vh-row-tag{font-size:1.8rem;line-height:1;padding:0 4px;flex-shrink:0}
+.vh-row .vh-btn{font-size:clamp(1.8rem,4.4vw,2.6rem)}
